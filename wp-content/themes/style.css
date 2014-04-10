@@ -1,0 +1,16 @@
+/*
+ Theme Name:   Arcade Basic Child
+ Description:  Arcade Basic Child Theme
+ Author:       Rue
+ Template:     arcade-basic
+ Version:      1.0.0
+*/
+
+@import url("../arcade-basic/style.css");
+
+/* =Theme customization starts here
+-------------------------------------------------------------- */
+
+.fa-scream-o {
+  //background-image: url('/wp-content/uploads/2014/04/The_Scream-e1397075229965-1024x356.jpg');
+}

@@ -1344,12 +1344,11 @@ function upgrade_network() {
 		 * transient_timeout record from table b.
 		 */
 		$time = time();
-		$wpdb->query("WITH bx AS (DELETE FROM $wpdb->sitemeta a USING $wpdb->sitemeta b WHERE
+		$wpdb->query("DELETE a, b FROM $wpdb->sitemeta a, $wpdb->sitemeta b WHERE
 			a.meta_key LIKE '\_site\_transient\_%' AND
 			a.meta_key NOT LIKE '\_site\_transient\_timeout\_%' AND
 			b.meta_key = CONCAT( '_site_transient_timeout_', SUBSTRING( a.meta_key, 17 ) )
-			AND b.meta_value < text($time) RETURNING b.option_id)
-                        DELETE FROM wp_options WHERE option_id in (select option_id from bx)");
+			AND b.meta_value < $time");
 	}
 
 	// 2.8.
