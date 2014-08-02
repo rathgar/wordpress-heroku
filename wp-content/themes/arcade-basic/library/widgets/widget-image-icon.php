@@ -17,15 +17,14 @@ class Bavotasan_Custom_Text_Widget extends WP_Widget {
 		wp_enqueue_script( 'bavotasan_image_widget', BAVOTASAN_THEME_URL . '/library/js/admin/image-widget.js', array( 'jquery' ), '', true );
 
 		wp_enqueue_style( 'bavotasan_image_widget_css', BAVOTASAN_THEME_URL . '/library/css/admin/image-widget.css' );
-		wp_enqueue_style( 'font_awesome', '//netdna.bootstrapcdn.com/font-awesome/' . FONT_AWESOME_VERSION . '/css/font-awesome.css' );
+		wp_enqueue_style( 'font_awesome', BAVOTASAN_THEME_URL .'/library/css/font-awesome.css', false, '4.1.0', 'all' );
 	}
 
 	function widget( $args, $instance ) {
 		extract( $args );
 		$title = apply_filters( 'widget_title', empty( $instance['title'] ) ? '' : $instance['title'], $instance, $this->id_base );
-		$icon = strip_tags( $instance['icon'] );
 		$text = apply_filters( 'widget_text', empty( $instance['text'] ) ? '' : $instance['text'], $instance );
-		$icon =  ( empty( $icon ) ) ? '' : '<i class="' . esc_attr( $instance['button_color'] ) . ' fa ' . $icon. '"></i>';
+		$icon =  ( empty( $instance['icon'] ) ) ? '' : '<i class="' . esc_attr( $instance['button_color'] ) . ' fa ' . strip_tags( $instance['icon'] ). '"></i>';
 		$url = esc_url( $instance['url'] );
 		$button_text = ( empty( $instance['button_text'] ) ) ? '' : $instance['button_text'];
 

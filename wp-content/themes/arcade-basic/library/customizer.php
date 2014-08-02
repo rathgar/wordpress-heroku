@@ -8,6 +8,7 @@ function bavotasan_theme_options() {
 	//delete_option( 'arcade_basic_theme_options' );
 	$default_theme_options = array(
 		'arc' => 400,
+		'fittext' => '',
 		'header_icon' => 'fa-heart',
 		'width' => '1170',
 		'layout' => 'right',
@@ -100,7 +101,7 @@ class Bavotasan_Customizer {
 	public function customize_controls_print_styles() {
 		wp_enqueue_script( 'bavotasan_image_widget', BAVOTASAN_THEME_URL . '/library/js/admin/image-widget.js', array( 'jquery' ), '', true );
 		wp_enqueue_style( 'bavotasan_image_widget_css', BAVOTASAN_THEME_URL . '/library/css/admin/image-widget.css' );
-		wp_enqueue_style( 'font_awesome', '//netdna.bootstrapcdn.com/font-awesome/' . FONT_AWESOME_VERSION . '/css/font-awesome.css' );
+		wp_enqueue_style( 'font_awesome', BAVOTASAN_THEME_URL .'/library/css/font-awesome.css', false, '4.1.0', 'all' );
 	}
 
 	/**
@@ -128,6 +129,20 @@ class Bavotasan_Customizer {
 			'settings' => 'arcade_basic_theme_options[arc]',
 			'description' => __( 'The space and rotation for each letter will be calculated using the arc radius and the width of the site title. Leave blank for no arc.', 'arcade' ),
 		) ) );
+
+		$wp_customize->add_setting( 'arcade_basic_theme_options[fittext]', array(
+			'default' => $bavotasan_theme_options['fittext'],
+			'type' => 'option',
+			'capability' => 'edit_theme_options',
+            'sanitize_callback' => array( $this, 'sanitize_checkbox' ),
+		) );
+
+		$wp_customize->add_control( 'bavotasan_fittext', array(
+			'label' => __( 'Use Fittext for long site title', 'arcade' ),
+			'section' => 'title_tagline',
+			'settings' => 'arcade_basic_theme_options[fittext]',
+			'type' => 'checkbox',
+		) );
 
 		$wp_customize->add_setting( 'arcade_basic_theme_options[header_icon]', array(
 			'default' => $bavotasan_theme_options['header_icon'],

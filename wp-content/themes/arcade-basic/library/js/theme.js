@@ -47,8 +47,11 @@
 
     // Arc the site title
     if ( 0 != theme_js_vars.arc )
-        $( '#site-title a' ).arctext( { radius: theme_js_vars.arc, rotate: is_rtl } );
-
+        $( '#site-title a' ).arctext( {
+        	radius: theme_js_vars.arc,
+        	rotate: is_rtl,
+        	fitText	: theme_js_vars.fittext
+        } );
     // Set up jumbo header image
     if ( $card.length ) {
         $window

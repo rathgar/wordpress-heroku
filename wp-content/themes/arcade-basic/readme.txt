@@ -63,6 +63,20 @@ License: Public domain/No copyright
 
 == CHANGELOG ==
 
+06/12/2014 v1.0.4.1
+* Fix for missing icon from widget
+
+06/11/2014 v1.0.4
+* Tweaked CSS for custom widget
+* Fixed custom header image on blog/attachment pages
+* Fixed jumbo headline validation
+* Fixed for RTL menu
+* Updated Font Awesome to 4.1.0
+* Validated custom widget
+* Added fittext option
+* Added post block page template
+* Updated language file
+
 03/05/2014 v1.0.3
 * Removed "From the Blog" when static front page is set
 * Updated archive meta

@@ -44,7 +44,10 @@ $space_class = '';
 				</div>
 
 				<div class="collapse navbar-collapse">
-				<?php wp_nav_menu( array( 'theme_location' => 'primary', 'container' => '', 'menu_class' => 'nav navbar-nav', 'fallback_cb' => 'bavotasan_default_menu', 'depth' => 2 ) ); ?>
+					<?php
+					$menu_class = ( is_rtl() ) ? ' navbar-right' : '';
+					wp_nav_menu( array( 'theme_location' => 'primary', 'container' => '', 'menu_class' => 'nav navbar-nav' . $menu_class, 'fallback_cb' => 'bavotasan_default_menu', 'depth' => 2 ) );
+					?>
 				</div>
 			</nav><!-- #site-navigation -->
 
