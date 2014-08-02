@@ -11,6 +11,6 @@
 /* =Theme customization starts here
 -------------------------------------------------------------- */
 
-.fa-scream-o {
-  //background-image: url('/wp-content/uploads/2014/04/The_Scream-e1397075229965-1024x356.jpg');
+article.error404 .entry-title {
+  font-size: 200%;
 }
