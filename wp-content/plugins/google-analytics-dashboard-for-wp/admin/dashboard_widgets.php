@@ -18,68 +18,93 @@ if (! class_exists ( 'GADASH_Widgets' )) {
 					$this,
 					'ga_dash_admin_enqueue_styles' 
 			) );
+			// Admin Menu
 			add_action ( 'admin_menu', array (
 					$this,
 					'ga_dash_admin_actions' 
+			) );
+			// Network Menu
+			add_action ( 'network_admin_menu', array (
+					$this,
+					'ga_dash_network_actions' 
 			) );
 			// Plugin Settings link
 			add_filter ( "plugin_action_links_" . plugin_basename ( $GADASH_Config->plugin_path ) . '/gadwp.php', array (
 					$this,
 					'ga_dash_settings_link' 
 			) );
-			//Realtime action
+			// Realtime action
 			add_action ( 'wp_ajax_gadash_get_online_data', array (
 					$this,
-					'gadash_realtime_data'
-			) );			
-			
+					'gadash_realtime_data' 
+			) );
 		}
-		//Realtime Ajax Response
-		function gadash_realtime_data() { 
+		// Realtime Ajax Response
+		function gadash_realtime_data() {
 			global $GADASH_Config;
 			
-			if (!isset($_REQUEST['gadash_security']) OR !wp_verify_nonce($_REQUEST['gadash_security'],'gadash_get_online_data')){
+			if (! isset ( $_REQUEST ['gadash_security'] ) or ! wp_verify_nonce ( $_REQUEST ['gadash_security'], 'gadash_get_online_data' )) {
 				return;
 			}
 			
-			if ($GADASH_Config->options ['ga_dash_token'] and function_exists('curl_version')) {
+			if ($GADASH_Config->options ['ga_dash_token'] and function_exists ( 'curl_version' )) {
 				include_once ($GADASH_Config->plugin_path . '/tools/gapi.php');
 				global $GADASH_GAPI;
-			} else{
-				die();
+			} else {
+				die ();
 			}
 			
-			print_r(stripslashes(json_encode($GADASH_GAPI->gadash_realtime_data($GADASH_Config->options ['ga_dash_tableid'])))); 
-
-			die();
+			if (current_user_can ( 'manage_options' ) and ! $GADASH_Config->options ['ga_dash_jailadmins']) {
+				print_r ( stripslashes ( json_encode ( $GADASH_GAPI->gadash_realtime_data ( $GADASH_Config->options ['ga_dash_tableid'] ) ) ) );
+			} else {
+				print_r ( stripslashes ( json_encode ( $GADASH_GAPI->gadash_realtime_data ( $GADASH_Config->options ['ga_dash_tableid_jail'] ) ) ) );
+			}
+			
+			die ();
 		}
-		
 		function ga_dash_admin_actions() {
 			global $GADASH_Config;
 			global $wp_version;
-
+			
 			if (current_user_can ( 'manage_options' )) {
 				include ($GADASH_Config->plugin_path . '/admin/ga_dash_settings.php');
 				
-				add_menu_page ( __( "Google Analytics",'ga-dash' ), __( "Google Analytics",'ga-dash' ), 'manage_options', 'gadash_settings', array (
+				add_menu_page ( __ ( "Google Analytics", 'ga-dash' ), __ ( "Google Analytics", 'ga-dash' ), 'manage_options', 'gadash_settings', array (
 						'GADASH_Settings',
 						'general_settings' 
-				), version_compare($wp_version, '3.8.0', '>=')?'dashicons-chart-area':$GADASH_Config->plugin_url . '/admin/images/gadash-icon.png' );
-				add_submenu_page ( 'gadash_settings', __( "General Settings",'ga-dash' ), __( "General Settings",'ga-dash' ), 'manage_options', 'gadash_settings', array (
+				), version_compare ( $wp_version, '3.8.0', '>=' ) ? 'dashicons-chart-area' : $GADASH_Config->plugin_url . '/admin/images/gadash-icon.png' );
+				add_submenu_page ( 'gadash_settings', __ ( "General Settings", 'ga-dash' ), __ ( "General Settings", 'ga-dash' ), 'manage_options', 'gadash_settings', array (
 						'GADASH_Settings',
 						'general_settings' 
 				) );
-				add_submenu_page ( 'gadash_settings', __( "Backend Settings",'ga-dash' ), __( "Backend Settings",'ga-dash' ), 'manage_options', 'gadash_backend_settings', array (
+				add_submenu_page ( 'gadash_settings', __ ( "Backend Settings", 'ga-dash' ), __ ( "Backend Settings", 'ga-dash' ), 'manage_options', 'gadash_backend_settings', array (
 						'GADASH_Settings',
 						'backend_settings' 
 				) );
-				add_submenu_page ( 'gadash_settings', __( "Frontend Settings",'ga-dash' ), __( "Frontend Settings",'ga-dash' ), 'manage_options', 'gadash_frontend_settings', array (
+				add_submenu_page ( 'gadash_settings', __ ( "Frontend Settings", 'ga-dash' ), __ ( "Frontend Settings", 'ga-dash' ), 'manage_options', 'gadash_frontend_settings', array (
 						'GADASH_Settings',
 						'frontend_settings' 
 				) );
-				add_submenu_page ( 'gadash_settings', __( "Tracking Code",'ga-dash' ), __ ( "Tracking Code",'ga-dash' ), 'manage_options', 'gadash_tracking_settings', array (
+				add_submenu_page ( 'gadash_settings', __ ( "Tracking Code", 'ga-dash' ), __ ( "Tracking Code", 'ga-dash' ), 'manage_options', 'gadash_tracking_settings', array (
 						'GADASH_Settings',
 						'tracking_settings' 
+				) );
+			}
+		}
+		function ga_dash_network_actions() {
+			global $GADASH_Config;
+			global $wp_version;
+			
+			if (current_user_can ( 'manage_netwrok' )) {
+				include ($GADASH_Config->plugin_path . '/admin/ga_dash_settings.php');
+				
+				add_menu_page ( __ ( "Google Analytics", 'ga-dash' ), __ ( "Google Analytics", 'ga-dash' ), 'manage_netwrok', 'gadash_settings', array (
+						'GADASH_Settings',
+						'general_settings_network' 
+				), version_compare ( $wp_version, '3.8.0', '>=' ) ? 'dashicons-chart-area' : $GADASH_Config->plugin_url . '/admin/images/gadash-icon.png' );
+				add_submenu_page ( 'gadash_settings', __ ( "General Settings", 'ga-dash' ), __ ( "General Settings", 'ga-dash' ), 'manage_netwrok', 'gadash_settings', array (
+						'GADASH_Settings',
+						'general_settings_network' 
 				) );
 			}
 		}
@@ -107,7 +132,9 @@ if (! class_exists ( 'GADASH_Widgets' )) {
 			wp_enqueue_script ( 'wp-color-picker-script-handle', plugins_url ( 'js/wp-color-picker-script.js', __FILE__ ), array (
 					'wp-color-picker' 
 			), false, true );
-			wp_enqueue_script ( 'gadash-general-settings', plugins_url ( 'js/admin.js', __FILE__ ), array('jquery') );
+			wp_enqueue_script ( 'gadash-general-settings', plugins_url ( 'js/admin.js', __FILE__ ), array (
+					'jquery' 
+			) );
 		}
 		function ga_dash_settings_link($links) {
 			$settings_link = '<a href="' . get_admin_url ( null, 'admin.php?page=gadash_settings' ) . '">' . __ ( "Settings", 'ga-dash' ) . '</a>';
@@ -119,11 +146,11 @@ if (! class_exists ( 'GADASH_Widgets' )) {
 			
 			/*
 			 * Include Tools
-			*/
+			 */
 			include_once ($GADASH_Config->plugin_path . '/tools/tools.php');
 			$tools = new GADASH_Tools ();
-						
-			if ($tools->check_roles($GADASH_Config->options ['ga_dash_access_back'])) {
+			
+			if ($tools->check_roles ( $GADASH_Config->options ['ga_dash_access_back'] )) {
 				wp_add_dashboard_widget ( 'ga-dash-widget', __ ( "Google Analytics Dashboard", 'ga-dash' ), array (
 						$this,
 						'gadash_dashboard_widgets' 
@@ -136,11 +163,11 @@ if (! class_exists ( 'GADASH_Widgets' )) {
 			/*
 			 * Include GAPI
 			 */
-			if ($GADASH_Config->options ['ga_dash_token'] and function_exists('curl_version')) {
+			if ($GADASH_Config->options ['ga_dash_token'] and function_exists ( 'curl_version' )) {
 				include_once ($GADASH_Config->plugin_path . '/tools/gapi.php');
 				global $GADASH_GAPI;
 			} else {
-				echo '<p>' . __( "This plugin needs an authorization:", 'ga-dash' ) . '</p><form action="' . menu_page_url ( 'gadash_settings', false ) . '" method="POST">' . get_submit_button ( __( "Authorize Plugin", 'ga-dash' ), 'secondary' ) . '</form>';
+				echo '<p>' . __ ( "This plugin needs an authorization:", 'ga-dash' ) . '</p><form action="' . menu_page_url ( 'gadash_settings', false ) . '" method="POST">' . get_submit_button ( __ ( "Authorize Plugin", 'ga-dash' ), 'secondary' ) . '</form>';
 				return;
 			}
 			
@@ -150,10 +177,10 @@ if (! class_exists ( 'GADASH_Widgets' )) {
 			include_once ($GADASH_Config->plugin_path . '/tools/tools.php');
 			$tools = new GADASH_Tools ();
 			
-			$tools->ga_dash_cleanup_timeouts();
+			$tools->ga_dash_cleanup_timeouts ();
 			
 			if (! $GADASH_GAPI->client->getAccessToken ()) {
-				echo '<p>' . __( "Something went wrong. Please check the Debugging Data section for possible errors", 'ga-dash' ) . '</p><form action="' . menu_page_url ( 'gadash_settings', false ) . '" method="POST">' . get_submit_button ( __( "Error Log", 'ga-dash' ), 'secondary' ) . '</form>';
+				echo '<p>' . __ ( "Something went wrong. Please check the Debugging Data section for possible errors", 'ga-dash' ) . '</p><form action="' . menu_page_url ( 'gadash_settings', false ) . '" method="POST">' . get_submit_button ( __ ( "Error Log", 'ga-dash' ), 'secondary' ) . '</form>';
 				return;
 			}
 			
@@ -168,29 +195,29 @@ if (! class_exists ( 'GADASH_Widgets' )) {
 				
 				if (is_array ( $profiles )) {
 					if (! $GADASH_Config->options ['ga_dash_tableid']) {
-						if ($GADASH_Config->options ['ga_dash_tableid_jail'] ) {
+						if ($GADASH_Config->options ['ga_dash_tableid_jail']) {
 							$GADASH_Config->options ['ga_dash_tableid'] = $GADASH_Config->options ['ga_dash_tableid_jail'];
 						} else {
 							$GADASH_Config->options ['ga_dash_tableid'] = $tools->guess_default_domain ( $profiles );
 						}
-					} else if ($GADASH_Config->options['ga_dash_jailadmins'] AND $GADASH_Config->options ['ga_dash_tableid_jail']){
+					} else if ($GADASH_Config->options ['ga_dash_jailadmins'] and $GADASH_Config->options ['ga_dash_tableid_jail']) {
 						$GADASH_Config->options ['ga_dash_tableid'] = $GADASH_Config->options ['ga_dash_tableid_jail'];
 					}
-
+					
 					$profile_switch .= '<select id="ga_dash_profile_select" name="ga_dash_profile_select" onchange="this.form.submit()">';
 					foreach ( $profiles as $profile ) {
 						if (! $GADASH_Config->options ['ga_dash_tableid']) {
 							$GADASH_Config->options ['ga_dash_tableid'] = $profile [1];
 						}
 						if (isset ( $profile [3] )) {
-							$profile_switch .= '<option value="' . $profile [1] . '" ';
+							$profile_switch .= '<option value="' . esc_attr ( $profile [1] ) . '" ';
 							$profile_switch .= selected ( $profile [1], $GADASH_Config->options ['ga_dash_tableid'], false );
-							$profile_switch .= ' title="' . __( "View Name:", 'ga-dash' ) . ' ' . $profile [0] . '">' . $tools->ga_dash_get_profile_domain ( $profile [3] ) . '</option>';
+							$profile_switch .= ' title="' . __ ( "View Name:", 'ga-dash' ) . ' ' . esc_attr ( $profile [0] ) . '">' . esc_attr ( $tools->ga_dash_get_profile_domain ( $profile [3] ) ) . '</option>';
 						}
 					}
 					$profile_switch .= "</select>";
 				} else {
-					echo '<p>' . __( "Something went wrong while retrieving profiles list.", 'ga-dash' ) . '</p><form action="' . menu_page_url ( 'gadash_settings', false ) . '" method="POST">' . get_submit_button ( __( "More details", 'ga-dash' ), 'secondary' ) . '</form>';
+					echo '<p>' . __ ( "Something went wrong while retrieving profiles list.", 'ga-dash' ) . '</p><form action="' . menu_page_url ( 'gadash_settings', false ) . '" method="POST">' . get_submit_button ( __ ( "More details", 'ga-dash' ), 'secondary' ) . '</form>';
 					return;
 				}
 			}
@@ -198,15 +225,15 @@ if (! class_exists ( 'GADASH_Widgets' )) {
 			$GADASH_Config->set_plugin_options ();
 			
 			?>
-				<form id="ga-dash" method="POST">
-			<?php			
+<form id="ga-dash" method="POST">
+						<?php
 			
 			if (current_user_can ( 'manage_options' )) {
 				if ($GADASH_Config->options ['ga_dash_jailadmins']) {
 					if ($GADASH_Config->options ['ga_dash_tableid_jail']) {
 						$projectId = $GADASH_Config->options ['ga_dash_tableid_jail'];
 					} else {
-						echo '<p>' . __( "An admin should asign a default Google Analytics Profile.", 'ga-dash' ) . '</p><form action="' . menu_page_url ( 'gadash_settings', false ) . '" method="POST">' . get_submit_button ( __( "Select Domain", 'ga-dash' ), 'secondary' ) . '</form>';
+						echo '<p>' . __ ( "An admin should asign a default Google Analytics Profile.", 'ga-dash' ) . '</p><form action="' . menu_page_url ( 'gadash_settings', false ) . '" method="POST">' . get_submit_button ( __ ( "Select Domain", 'ga-dash' ), 'secondary' ) . '</form>';
 						return;
 					}
 				} else {
@@ -217,13 +244,13 @@ if (! class_exists ( 'GADASH_Widgets' )) {
 				if ($GADASH_Config->options ['ga_dash_tableid_jail']) {
 					$projectId = $GADASH_Config->options ['ga_dash_tableid_jail'];
 				} else {
-					echo '<p>' . __( "An admin should asign a default Google Analytics Profile.", 'ga-dash' ) . '</p><form action="' . menu_page_url ( 'gadash_settings', false ) . '" method="POST">' . get_submit_button ( __( "Select Domain", 'ga-dash' ), 'secondary' ) . '</form>';
+					echo '<p>' . __ ( "An admin should asign a default Google Analytics Profile.", 'ga-dash' ) . '</p><form action="' . menu_page_url ( 'gadash_settings', false ) . '" method="POST">' . get_submit_button ( __ ( "Select Domain", 'ga-dash' ), 'secondary' ) . '</form>';
 					return;
 				}
 			}
 			
 			if (! ($projectId)) {
-				echo '<p>' . __( "Something went wrong while retrieving property data. You need to create and properly configure a Google Analytics account:", 'ga-dash' ) . '</p> <form action="http://deconf.com/how-to-set-up-google-analytics-on-your-website/" method="POST">' . get_submit_button ( __( "Find out more!", 'ga-dash' ), 'secondary' ) . '</form>';
+				echo '<p>' . __ ( "Something went wrong while retrieving property data. You need to create and properly configure a Google Analytics account:", 'ga-dash' ) . '</p> <form action="http://deconf.com/how-to-set-up-google-analytics-on-your-website/" method="POST">' . get_submit_button ( __ ( "Find out more!", 'ga-dash' ), 'secondary' ) . '</form>';
 				return;
 			} else {
 				$profile_info = $tools->get_selected_profile ( $GADASH_Config->options ['ga_dash_profile_list'], $projectId );
@@ -234,23 +261,20 @@ if (! class_exists ( 'GADASH_Widgets' )) {
 				}
 			}
 			
-			if (isset ( $_REQUEST ['query'] )){
+			if (isset ( $_REQUEST ['query'] )) {
 				$query = $_REQUEST ['query'];
 				$GADASH_Config->options ['ga_dash_default_metric'] = $query;
 				$GADASH_Config->set_plugin_options ();
-			}else{
-				$query = isset($GADASH_Config->options ['ga_dash_default_metric'])?$GADASH_Config->options ['ga_dash_default_metric']:'visits';
-			}	
+			} else {
+				$query = isset ( $GADASH_Config->options ['ga_dash_default_metric'] ) ? $GADASH_Config->options ['ga_dash_default_metric'] : 'visits';
+			}
 			
 			if (isset ( $_REQUEST ['period'] )) {
 				$period = $_REQUEST ['period'];
-				if ($period <> 'today'){
-					$GADASH_Config->options ['ga_dash_default_dimension'] = $period;
-					$GADASH_Config->set_plugin_options ();
-				}
-
+				$GADASH_Config->options ['ga_dash_default_dimension'] = $period;
+				$GADASH_Config->set_plugin_options ();
 			} else {
-					$period = isset($GADASH_Config->options ['ga_dash_default_dimension'])?$GADASH_Config->options ['ga_dash_default_dimension']:'30daysAgo';
+				$period = isset ( $GADASH_Config->options ['ga_dash_default_dimension'] ) ? $GADASH_Config->options ['ga_dash_default_dimension'] : '30daysAgo';
 			}
 			
 			if ($period == "realtime") {
@@ -258,11 +282,12 @@ if (! class_exists ( 'GADASH_Widgets' )) {
 				$period = '';
 			} else {
 				$realtime = '';
-			}			
+			}
 			
 			?>
-
-	<select id="ga_dash_period" name="period" onchange="this.form.submit()">
+			
+				<select id="ga_dash_period" name="period"
+		onchange="this.form.submit()">
 		<option value="realtime"
 			<?php selected ( "realtime", $period, true ); ?>><?php _e("Real-Time",'ga-dash'); ?></option>
 		<option value="today" <?php selected ( "today", $period, true ); ?>><?php _e("Today",'ga-dash'); ?></option>
@@ -277,8 +302,9 @@ if (! class_exists ( 'GADASH_Widgets' )) {
 		<option value="90daysAgo"
 			<?php selected ( "90daysAgo", $period, true ); ?>><?php _e("Last 90 Days",'ga-dash'); ?></option>
 	</select>
-	<?php if (!$realtime) {?>
-	<select id="ga_dash_query" name="query" onchange="this.form.submit()">
+				<?php if (!$realtime) {?>
+				<select id="ga_dash_query" name="query"
+		onchange="this.form.submit()">
 		<option value="visits" <?php selected ( "visits", $query, true ); ?>><?php _e("Visits",'ga-dash'); ?></option>
 		<option value="visitors"
 			<?php selected ( "visitors", $query, true ); ?>><?php _e("Visitors",'ga-dash'); ?></option>
@@ -289,8 +315,8 @@ if (! class_exists ( 'GADASH_Widgets' )) {
 		<option value="visitBounceRate"
 			<?php selected ( "visitBounceRate", $query, true ); ?>><?php _e("Bounce Rate",'ga-dash'); ?></option>
 	</select> 	
-	<?php }?>
-</form>
+				<?php }?>
+			</form>
 <?php
 			switch ($period) {
 				
@@ -357,10 +383,9 @@ if (! class_exists ( 'GADASH_Widgets' )) {
 				if (! wp_script_is ( 'jquery-ui-position' )) {
 					wp_enqueue_script ( "jquery-ui-position" );
 				}
-
-				wp_register_script ( "jquery-ui-tooltip-html", $GADASH_Config->plugin_url . '/realtime/jquery/jquery.ui.tooltip.html.js' );				
+				
+				wp_register_script ( "jquery-ui-tooltip-html", $GADASH_Config->plugin_url . '/realtime/jquery/jquery.ui.tooltip.html.js' );
 				wp_enqueue_script ( "jquery-ui-tooltip-html" );
-								
 			} else {
 				
 				switch ($query) {
@@ -399,13 +424,13 @@ if (! class_exists ( 'GADASH_Widgets' )) {
 			
 			$ga_dash_statsdata = $GADASH_GAPI->ga_dash_main_charts ( $projectId, $period, $from, $to, $query );
 			if (! $ga_dash_statsdata) {
-				echo '<p>' . __( "No stats available. Please check the Debugging Data section for possible errors", 'ga-dash' ) . '</p><form action="' . menu_page_url ( 'gadash_settings', false ) . '" method="POST">' . get_submit_button ( __( "Error Log", 'ga-dash' ), 'secondary' ) . '</form>';
+				echo '<p>' . __ ( "No stats available. Please check the Debugging Data section for possible errors", 'ga-dash' ) . '</p><form action="' . menu_page_url ( 'gadash_settings', false ) . '" method="POST">' . get_submit_button ( __ ( "Error Log", 'ga-dash' ), 'secondary' ) . '</form>';
 				return;
 			}
 			
 			$ga_dash_bottom_stats = $GADASH_GAPI->ga_dash_bottom_stats ( $projectId, $period, $from, $to );
 			if (! $ga_dash_bottom_stats) {
-				echo '<p>' . __( "No stats available. Please check the Debugging Data section for possible errors", 'ga-dash' ) . '</p><form action="' . menu_page_url ( 'gadash_settings', false ) . '" method="POST">' . get_submit_button ( __( "Error Log", 'ga-dash' ), 'secondary' ) . '</form>';
+				echo '<p>' . __ ( "No stats available. Please check the Debugging Data section for possible errors", 'ga-dash' ) . '</p><form action="' . menu_page_url ( 'gadash_settings', false ) . '" method="POST">' . get_submit_button ( __ ( "Error Log", 'ga-dash' ), 'secondary' ) . '</form>';
 				return;
 			}
 			
@@ -418,268 +443,330 @@ if (! class_exists ( 'GADASH_Widgets' )) {
 				$css = "";
 				$color = "#3366CC";
 			}
-			
-			$code = '<script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <script type="text/javascript">
-      google.load("visualization", "1", {packages:["corechart"]});
-      google.setOnLoadCallback(ga_dash_callback);
-		
-	  function ga_dash_callback(){
-			if(typeof ga_dash_drawstats == "function"){
-				ga_dash_drawstats();
-			}
-			if(typeof ga_dash_drawmap == "function"){
-				ga_dash_drawmap();
-			}
-			if(typeof ga_dash_drawpgd == "function"){
-				ga_dash_drawpgd();
-			}
-			if(typeof ga_dash_drawrd == "function"){
-				ga_dash_drawrd();
-			}
-			if(typeof ga_dash_drawsd == "function"){
-				ga_dash_drawsd();
-			}
-			if(typeof ga_dash_drawtraffic == "function"){
-				ga_dash_drawtraffic();
-			}
-	  }';
+			?>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+		      google.load("visualization", "1", {packages:["corechart"]});
+		      google.setOnLoadCallback(ga_dash_callback);
+				
+			  function ga_dash_callback(){
+					if(typeof ga_dash_drawstats == "function"){
+						ga_dash_drawstats();
+					}
+					if(typeof ga_dash_drawmap == "function"){
+						ga_dash_drawmap();
+					}
+					if(typeof ga_dash_drawpgd == "function"){
+						ga_dash_drawpgd();
+					}
+					if(typeof ga_dash_drawrd == "function"){
+						ga_dash_drawrd();
+					}
+					if(typeof ga_dash_drawsd == "function"){
+						ga_dash_drawsd();
+					}
+					if(typeof ga_dash_drawtraffic == "function"){
+						ga_dash_drawtraffic();
+					}
+			  };
+			  
+			<?php
 			
 			if ($realtime != "realtime") {
 				
-				$code .= 'function ga_dash_drawstats() {
-        var data = google.visualization.arrayToDataTable([' . "
-          ['" . $dh . "', '" . $title . "']," . $ga_dash_statsdata . "
-        ]);
-		
-        var options = {
-		  legend: {position: 'none'},
-		  pointSize: 3," . $css . "
-          title: '" . $title . "',
-		  chartArea: {width: '85%'},
-		  vAxis: {minValue: 0},
-          hAxis: { title: '" . $dh . "',  titleTextStyle: {color: '" . $dark_color . "'}, showTextEvery: " . $haxis . "}
-		};
-		" . $formater . "
-        var chart = new google.visualization.AreaChart(document.getElementById('ga_dash_statsdata'));
-		chart.draw(data, options);
-		
-      }";
+				?>
+					
+				function ga_dash_drawstats() {
+		        var data = google.visualization.arrayToDataTable([
+		          ['<?php echo $dh; ?>', '<?php echo $title; ?>'], <?php echo $ga_dash_statsdata ?>]);
+				
+		        var options = {
+				  legend: {position: 'none'},
+				  pointSize: 3,<?php echo $css;?>
+		          title: '<?php echo $title;?>',
+				  chartArea: {width: '85%'},
+				  vAxis: {minValue: 0},
+		          hAxis: { title: '<?php echo $dh;?>',  titleTextStyle: {color: '<?php echo $dark_color;?>'}, showTextEvery: <?php echo $haxis;?>}
+				};
+				<?php echo $formater?>
+		        var chart = new google.visualization.AreaChart(document.getElementById('ga_dash_statsdata'));
+				chart.draw(data, options);
+	      		};
+	      		
+	      	<?php
 			}
-			
-			if ($GADASH_Config->options ['ga_dash_map'] and $tools->check_roles($GADASH_Config->options ['ga_dash_access_back'])) {
+			$ga_dash_visits_country = '';
+			if ($GADASH_Config->options ['ga_dash_map'] and $tools->check_roles ( $GADASH_Config->options ['ga_dash_access_back'] )) {
 				$ga_dash_visits_country = $GADASH_GAPI->ga_dash_visits_country ( $projectId, $from, $to );
 				if ($ga_dash_visits_country) {
+					?>		
+					google.load("visualization", "1", {packages:["geochart"]})
+					function ga_dash_drawmap() {
+						var data = google.visualization.arrayToDataTable([
+						  ['<?php _e( "Country/City", 'ga-dash' ) ?>', ' <?php _e( "Visits", 'ga-dash' ) ?>'], <?php echo $ga_dash_visits_country; ?>
+						]);
 					
-					$code .= '
-			google.load("visualization", "1", {packages:["geochart"]})
-			function ga_dash_drawmap() {
-			var data = google.visualization.arrayToDataTable([' . "
-			  ['" . __ ( "Country/City", 'ga-dash' ) . "', '" . __ ( "Visits", 'ga-dash' ) . "']," . $ga_dash_visits_country . "
-			]);
-		
-			var options = {";
-					
-					$code .= "colors: ['" . $light_color . "', '" . $dark_color . "'],";
-					
+						var options = {
+							colors: ['<?php echo $light_color; ?>', '<?php echo $dark_color; ?>'],
+							<?php
 					if ($GADASH_Config->options ['ga_target_geomap']) {
-						$code .= "\nregion : '" . $GADASH_Config->options ['ga_target_geomap'] . "',";
-						$code .= "\ndisplayMode : 'markers',";
-						$code .= "\ndatalessRegionColor : 'EFEFEF'";
+						?>
+								region : '<?php echo esc_html($GADASH_Config->options ['ga_target_geomap']); ?>',
+								displayMode : 'markers',
+								datalessRegionColor : 'EFEFEF'
+							<?php
 					}
-					
-					$code .= "\n};\nvar chart = new google.visualization.GeoChart(document.getElementById('ga_dash_mapdata'));
-			chart.draw(data, options);
-		
-		  }";
+					?>		
+							}
+						var chart = new google.visualization.GeoChart(document.getElementById('ga_dash_mapdata'));
+						chart.draw(data, options);
+					}
+				<?php
 				}
 			}
-			if ($GADASH_Config->options ['ga_dash_traffic'] and $tools->check_roles($GADASH_Config->options ['ga_dash_access_back'])) {
+			$ga_dash_traffic_sources = '';
+			$ga_dash_new_return = '';
+			if ($GADASH_Config->options ['ga_dash_traffic'] and $tools->check_roles ( $GADASH_Config->options ['ga_dash_access_back'] )) {
 				$ga_dash_traffic_sources = $GADASH_GAPI->ga_dash_traffic_sources ( $projectId, $from, $to );
 				$ga_dash_new_return = $GADASH_GAPI->ga_dash_new_return ( $projectId, $from, $to );
 				if ($ga_dash_traffic_sources and $ga_dash_new_return) {
-					$code .= '
-			google.load("visualization", "1", {packages:["corechart"]})
-			function ga_dash_drawtraffic() {
-			var data = google.visualization.arrayToDataTable([' . "
-			  ['" . __ ( "Source", 'ga-dash' ) . "', '" . __ ( "Visits", 'ga-dash' ) . "']," . $ga_dash_traffic_sources . '
-			]);
+					?>
+					google.load("visualization", "1", {packages:["corechart"]})
+					function ga_dash_drawtraffic() {
+						var data = google.visualization.arrayToDataTable([
+						  ['<?php _e( "Source", 'ga-dash' ); ?>', '<?php _e( "Visits", 'ga-dash' ); ?>'], <?php echo $ga_dash_traffic_sources;?> ]);
 		
-			var datanvr = google.visualization.arrayToDataTable([' . "
-			  ['" . __ ( "Type", 'ga-dash' ) . "', '" . __ ( "Visits", 'ga-dash' ) . "']," . $ga_dash_new_return . "
-			]);
+						var datanvr = google.visualization.arrayToDataTable([
+						  ['<?php echo _e( "Type", 'ga-dash' );?>', '<?php  _e( "Visits", 'ga-dash' ); ?>'], <?php echo $ga_dash_new_return; ?> 
+						]);
 		
-			var chart = new google.visualization.PieChart(document.getElementById('ga_dash_trafficdata'));
-			chart.draw(data, {
-				is3D: false,
-				tooltipText: 'percentage',
-				legend: 'none',
-				title: '" . __ ( "Traffic Sources", 'ga-dash' ) . "',
-				colors:['" . $GADASH_Config->options ['ga_dash_style'] . "','" . $tools->colourVariator ( $GADASH_Config->options ['ga_dash_style'], - 10 ) . "','" . $tools->colourVariator ( $GADASH_Config->options ['ga_dash_style'], +20 ) . "','" . $tools->colourVariator ( $GADASH_Config->options ['ga_dash_style'], +10 ) . "','" . $tools->colourVariator ( $GADASH_Config->options ['ga_dash_style'], -20 ) . "']
-			});
+						var chart = new google.visualization.PieChart(document.getElementById('ga_dash_trafficdata'));
+						chart.draw(data, {
+							is3D: false,
+							tooltipText: 'percentage',
+							legend: 'none',
+							title: '<?php _e( "Traffic Sources", 'ga-dash' ); ?>',
+							colors:['<?php echo esc_html($GADASH_Config->options ['ga_dash_style']); ?>','<?php echo esc_html($tools->colourVariator ( $GADASH_Config->options ['ga_dash_style'], - 10 )); ?>','<?php echo esc_html($tools->colourVariator ( $GADASH_Config->options ['ga_dash_style'], + 20 )); ?>','<?php echo esc_html($tools->colourVariator ( $GADASH_Config->options ['ga_dash_style'], + 10 )); ?>','<?php echo esc_html($tools->colourVariator ( $GADASH_Config->options ['ga_dash_style'], - 20 )); ?>']
+						});
 		
-			var chart1 = new google.visualization.PieChart(document.getElementById('ga_dash_nvrdata'));
-			chart1.draw(datanvr,  {
-				is3D: false,
-				tooltipText: 'percentage',
-				legend: 'none',
-				title: '" . __ ( "New vs. Returning", 'ga-dash' ) . "',
-				colors:['" . $GADASH_Config->options ['ga_dash_style'] . "','" . $tools->colourVariator ( $GADASH_Config->options ['ga_dash_style'], - 10 ) . "','" . $tools->colourVariator ( $GADASH_Config->options ['ga_dash_style'], +20 ) . "','" . $tools->colourVariator ( $GADASH_Config->options ['ga_dash_style'], +10 ) . "','" . $tools->colourVariator ( $GADASH_Config->options ['ga_dash_style'], -20 ) . "']				
-			});
+						var chart1 = new google.visualization.PieChart(document.getElementById('ga_dash_nvrdata'));
+						chart1.draw(datanvr,  {
+							is3D: false,
+							tooltipText: 'percentage',
+							legend: 'none',
+							title: '<?php _e( "New vs. Returning", 'ga-dash' ); ?>',
+							colors:['<?php echo esc_html($GADASH_Config->options ['ga_dash_style']); ?>','<?php echo esc_html($tools->colourVariator ( $GADASH_Config->options ['ga_dash_style'], - 10 )); ?>','<?php echo esc_html($tools->colourVariator ( $GADASH_Config->options ['ga_dash_style'], + 20 )); ?>','<?php echo esc_html($tools->colourVariator ( $GADASH_Config->options ['ga_dash_style'], + 10 )); ?>','<?php echo esc_html($tools->colourVariator ( $GADASH_Config->options ['ga_dash_style'], - 20 )); ?>']				
+						});
 		
-		  }";
+		  			}
+		  		<?php
 				}
 			}
-			if ($GADASH_Config->options ['ga_dash_pgd'] and $tools->check_roles($GADASH_Config->options ['ga_dash_access_back'])) {
+			
+			$ga_dash_top_pages = '';
+			if ($GADASH_Config->options ['ga_dash_pgd'] and $tools->check_roles ( $GADASH_Config->options ['ga_dash_access_back'] )) {
 				$ga_dash_top_pages = $GADASH_GAPI->ga_dash_top_pages ( $projectId, $from, $to );
 				if ($ga_dash_top_pages) {
-					$code .= '
-			google.load("visualization", "1", {packages:["table"]})
-			function ga_dash_drawpgd() {
-			var data = google.visualization.arrayToDataTable([' . "
-			  ['" . __ ( "Top Pages", 'ga-dash' ) . "', '" . __ ( "Visits", 'ga-dash' ) . "']," . $ga_dash_top_pages . "
-			]);
+					?>
+					google.load("visualization", "1", {packages:["table"]})
+					function ga_dash_drawpgd() {
+					var data = google.visualization.arrayToDataTable([
+					  ['<?php _e( "Top Pages", 'ga-dash' ); ?>', '<?php  _e( "Visits", 'ga-dash' ); ?>'], <?php echo $ga_dash_top_pages; ?>
+					]);
 		
-			var options = {
-				page: 'enable',
-				pageSize: 6,
-				width: '100%',
-				allowHtml:true			
-			};
+					var options = {
+						page: 'enable',
+						pageSize: 6,
+						width: '100%',
+						allowHtml:true			
+					};
 		
-			var chart = new google.visualization.Table(document.getElementById('ga_dash_pgddata'));
-			chart.draw(data, options);
+					var chart = new google.visualization.Table(document.getElementById('ga_dash_pgddata'));
+					chart.draw(data, options);
 		
-		  }";
+					};
+				<?php
 				}
 			}
-			if ($GADASH_Config->options ['ga_dash_rd'] and $tools->check_roles($GADASH_Config->options ['ga_dash_access_back'])) {
+			
+			$ga_dash_top_referrers = '';
+			if ($GADASH_Config->options ['ga_dash_rd'] and $tools->check_roles ( $GADASH_Config->options ['ga_dash_access_back'] )) {
 				$ga_dash_top_referrers = $GADASH_GAPI->ga_dash_top_referrers ( $projectId, $from, $to );
 				if ($ga_dash_top_referrers) {
-					$code .= '
-			google.load("visualization", "1", {packages:["table"]})
-			function ga_dash_drawrd() {
-			var datar = google.visualization.arrayToDataTable([' . "
-			  ['" . __ ( "Top Referrers", 'ga-dash' ) . "', '" . __ ( "Visits", 'ga-dash' ) . "']," . $ga_dash_top_referrers . "
-			]);
-		
-			var options = {
-				page: 'enable',
-				pageSize: 6,
-				width: '100%',
-				allowHtml:true	
-			};
-		
-			var chart = new google.visualization.Table(document.getElementById('ga_dash_rdata'));
-			chart.draw(datar, options);
-		
-		  }";
+					?>
+					google.load("visualization", "1", {packages:["table"]})
+					function ga_dash_drawrd() {
+						var datar = google.visualization.arrayToDataTable([
+				  			['<?php _e( "Top Referrers", 'ga-dash' ); ?>', '<?php _e( "Visits", 'ga-dash' ); ?>'], <?php echo $ga_dash_top_referrers; ?>
+						]);
+			
+						var options = {
+							page: 'enable',
+							pageSize: 6,
+							width: '100%',
+							allowHtml:true	
+						};
+			
+						var chart = new google.visualization.Table(document.getElementById('ga_dash_rdata'));
+						chart.draw(datar, options);
+		  			}
+		  		<?php
 				}
 			}
-			if ($GADASH_Config->options ['ga_dash_sd'] and $tools->check_roles($GADASH_Config->options ['ga_dash_access_back'])) {
+			
+			$ga_dash_top_searches = '';
+			if ($GADASH_Config->options ['ga_dash_sd'] and $tools->check_roles ( $GADASH_Config->options ['ga_dash_access_back'] )) {
 				$ga_dash_top_searches = $GADASH_GAPI->ga_dash_top_searches ( $projectId, $from, $to );
 				if ($ga_dash_top_searches) {
-					$code .= '
-			google.load("visualization", "1", {packages:["table"]})
-			function ga_dash_drawsd() {
+					?>
+					google.load("visualization", "1", {packages:["table"]})
+					function ga_dash_drawsd() {
 		
-			var datas = google.visualization.arrayToDataTable([' . "
-			  ['" . __ ( "Top Searches", 'ga-dash' ) . "', '" . __ ( "Visits", 'ga-dash' ) . "']," . $ga_dash_top_searches . "
-			]);
+						var datas = google.visualization.arrayToDataTable([
+						  ['<?php echo _e( "Top Searches", 'ga-dash' );?>', '<?php _e( "Visits", 'ga-dash' );?>'], <?php echo $ga_dash_top_searches; ?>
+						]);
+					
+						var options = {
+							page: 'enable',
+							pageSize: 6,
+							width: '100%'
+						};
+					
+						var chart = new google.visualization.Table(document.getElementById('ga_dash_sdata'));
+						chart.draw(datas, options);
 		
-			var options = {
-				page: 'enable',
-				pageSize: 6,
-				width: '100%'
-			};
-		
-			var chart = new google.visualization.Table(document.getElementById('ga_dash_sdata'));
-			chart.draw(datas, options);
-		
-		  }";
+					}
+				<?php
 				}
 			}
-			$code .= "</script>";
-			$code .= "</script>";
-			
+			?>
+			</script>
+</script>
+<?php
 			if ($realtime != "realtime") {
-				$code .= '<div id="ga_dash_statsdata" class="widefat" style="height: 350px;"></div>
-		<div id="details_div">
-		
-			<table class="gatable" cellpadding="4">
-			<tr>
-			<td width="24%">' . __ ( "Visits:", 'ga-dash' ) . '</td>
-			<td width="12%" class="gavalue"><a href="?query=visits&period=' . $period . '" class="gatable">' . $ga_dash_bottom_stats ['rows'] [0] [1] . '</td>
-			<td width="24%">' . __ ( "Visitors:", 'ga-dash' ) . '</td>
-			<td width="12%" class="gavalue"><a href="?query=visitors&period=' . $period . '" class="gatable">' . $ga_dash_bottom_stats ['rows'] [0] [2] . '</a></td>
-			<td width="24%">' . __ ( "Page Views:", 'ga-dash' ) . '</td>
-			<td width="12%" class="gavalue"><a href="?query=pageviews&period=' . $period . '" class="gatable">' . $ga_dash_bottom_stats ['rows'] [0] [3] . '</a></td>
-			</tr>
-			<tr>
-			<td>' . __ ( "Bounce Rate:", 'ga-dash' ) . '</td>
-			<td class="gavalue"><a href="?query=visitBounceRate&period=' . $period . '" class="gatable">' . round ( $ga_dash_bottom_stats ['rows'] [0] [4], 2 ) . '%</a></td>
-			<td>' . __ ( "Organic Search:", 'ga-dash' ) . '</td>
-			<td class="gavalue"><a href="?query=organicSearches&period=' . $period . '" class="gatable">' . $ga_dash_bottom_stats ['rows'] [0] [5] . '</a></td>
-			<td>' . __ ( "Pages per Visit:", 'ga-dash' ) . '</td>
-			<td class="gavalue"><a href="#" class="gatable">' . (($ga_dash_bottom_stats ['rows'] [0] [1]) ? round ( $ga_dash_bottom_stats ['rows'] [0] [3] / $ga_dash_bottom_stats ['rows'] [0] [1], 2 ) : '0') . '</a></td>
-			</tr>
-			</table>
-			
-		</div>';
+				?>
+<div id="ga_dash_statsdata" class="widefat" style="height: 350px;"></div>
+<div id="details_div">
+
+	<table class="gatable" cellpadding="4">
+		<tr>
+			<td width="24%"><?php _e( "Visits:", 'ga-dash' );?></td>
+			<td width="12%" class="gavalue"><a
+				href="?query=visits&period=<?php echo $period; ?>" class="gatable"><?php echo ( int ) $ga_dash_bottom_stats ['rows'] [0] [1];?></td>
+			<td width="24%"><?php _e( "Visitors:", 'ga-dash' );?></td>
+			<td width="12%" class="gavalue"><a
+				href="?query=visitors&period=<?php echo $period; ?>" class="gatable"><?php echo ( int ) $ga_dash_bottom_stats ['rows'] [0] [2];?></a></td>
+			<td width="24%"><?php _e( "Page Views:", 'ga-dash' );?></td>
+			<td width="12%" class="gavalue"><a
+				href="?query=pageviews&period=<?php echo $period; ?>"
+				class="gatable"><?php echo ( int ) $ga_dash_bottom_stats ['rows'] [0] [3];?></a></td>
+		</tr>
+		<tr>
+			<td><?php _e( "Bounce Rate:", 'ga-dash' );?></td>
+			<td class="gavalue"><a
+				href="?query=visitBounceRate&period=<?php echo $period; ?>"
+				class="gatable"><?php echo ( double ) round ( $ga_dash_bottom_stats ['rows'] [0] [4], 2 );?>%</a></td>
+			<td><?php _e( "Organic Search:", 'ga-dash' );?></td>
+			<td class="gavalue"><a
+				href="?query=organicSearches&period=<?php echo $period; ?>"
+				class="gatable"><?php echo ( int ) $ga_dash_bottom_stats ['rows'] [0] [5];?></a></td>
+			<td><?php _e( "Pages per Visit:", 'ga-dash' );?></td>
+			<td class="gavalue"><a href="#" class="gatable"><?php echo ( double ) (($ga_dash_bottom_stats ['rows'] [0] [1]) ? round ( $ga_dash_bottom_stats ['rows'] [0] [3] / $ga_dash_bottom_stats ['rows'] [0] [1], 2 ) : '0');?></a></td>
+		</tr>
+	</table>
+
+</div>
+<?php
 			} else {
 				
 				if ($GADASH_Config->options ['ga_dash_userapi']) {
-					$code .= "<p style='padding:100px;line-height:2em;'>" . __ ( "This is a beta feature and is only available when using my Developer Key! (", 'ga-dash' ) . '<a href="http://deconf.com/google-analytics-dashboard-real-time-reports/" target="_blank">' . __ ( "more about this feature", 'ga-dash' ) . '</a>' . __ ( ")", 'ga-dash' ) . "</p>";
+					?>
+<p style='padding: 100px; line-height: 2em;'> <?php _e( "This is a beta feature and is only available when using my Developer Key! (", 'ga-dash' )?> <a
+		href="http://deconf.com/google-analytics-dashboard-real-time-reports/"
+		target="_blank"><?php _e( "more about this feature", 'ga-dash' );?></a>)
+</p>
+<?php
 				} else {
+					?>
+<table width='90%' class='realtime'>
+	<tr>
+		<td class='gadash-tdo-left'>
+			<div>
+				<span class='gadash-online' id='gadash-online'>&nbsp;</span>
+			</div>
+		</td>
+		<td class='gadash-tdo-right' id='gadash-tdo-right'><span
+			class="gadash-bigtext"><?php _e( "REFERRAL", 'ga-dash' );?>: 0</span><br />
+		<br /> <span class="gadash-bigtext"><?php _e( "ORGANIC", 'ga-dash' );?>: 0</span><br />
+		<br /> <span class="gadash-bigtext"><?php _e( "SOCIAL", 'ga-dash' );?>: 0</span><br />
+		<br /></td>
+		<td class='gadash-tdo-rights' id='gadash-tdo-rights'><span
+			class="gadash-bigtext"><?php _e( "DIRECT", 'ga-dash' );?>: 0</span><br />
+		<br /> <span class="gadash-bigtext"><?php _e( "NEW", 'ga-dash' );?>: 0</span><br />
+		<br /> <span class="gadash-bigtext"><?php _e( "RETURN", 'ga-dash' );?>: 0</span><br />
+		<br /></td>
+	</tr>
+	<tr>
+		<td id='gadash-pages' class='gadash-pages' colspan='3'>&nbsp;</td>
+	</tr>
+</table>
+<?php
 					
-					$code .= "<table width='90%' class='realtime'>
-						<tr>
-							<td class='gadash-tdo-left'>
-								<div><span class='gadash-online' id='gadash-online'>&nbsp;</span></div>
-							</td>
-							<td class='gadash-tdo-right' id='gadash-tdo-right'>
-								<span class=\"gadash-bigtext\">" . __ ( "REFERRAL", 'ga-dash' ) . ": 0</span><br /><br />
-								<span class=\"gadash-bigtext\">" . __ ( "ORGANIC", 'ga-dash' ) . ": 0</span><br /><br />
-								<span class=\"gadash-bigtext\">" . __ ( "SOCIAL", 'ga-dash' ) . ": 0</span><br /><br />
-							</td>
-							<td class='gadash-tdo-rights' id='gadash-tdo-rights'>
-								<span class=\"gadash-bigtext\">" . __ ( "DIRECT", 'ga-dash' ) . ": 0</span><br /><br />
-								<span class=\"gadash-bigtext\">" . __ ( "NEW", 'ga-dash' ) . ": 0</span><br /><br />
-								<span class=\"gadash-bigtext\">" . __ ( "RETURNING", 'ga-dash' ) . ": 0</span><br /><br />
-							</td>
-						</tr>
-						<tr>
-						<td id='gadash-pages' class='gadash-pages' colspan='3'>&nbsp;</td>
-						</tr>
-					</table>";
-					$code .= $GADASH_GAPI->ga_realtime ();
+echo $GADASH_GAPI->ga_realtime ();
 				}
 			}
-			if ($GADASH_Config->options ['ga_dash_map'] and $tools->check_roles($GADASH_Config->options ['ga_dash_access_back']) and $ga_dash_visits_country) {
-				$code .= '<br /><h3>';
+			if ($GADASH_Config->options ['ga_dash_map'] and $tools->check_roles ( $GADASH_Config->options ['ga_dash_access_back'] ) and $ga_dash_visits_country) {
+				?>
+<br />
+<h3>
+				<?php
 				if ($GADASH_Config->options ['ga_target_geomap']) {
 					$GADASH_GAPI->getcountrycodes ();
-					$code .= __ ( "Visits from ", 'ga-dash' ) . $GADASH_GAPI->country_codes [$GADASH_Config->options ['ga_target_geomap']];
+					echo __ ( "Visits from ", 'ga-dash' ) . esc_html ( $GADASH_GAPI->country_codes [$GADASH_Config->options ['ga_target_geomap']] );
 				} else {
-					$code .= __ ( "Visits by Country", 'ga-dash' );
+					echo __ ( "Visits by Country", 'ga-dash' );
 				}
-				$code .= '</h3>
-		<div id="ga_dash_mapdata"></div>';
+				?>
+				</h3>
+<div id="ga_dash_mapdata"></div>
+
+			<?php
 			}
 			
-			if ($GADASH_Config->options ['ga_dash_traffic'] and $tools->check_roles($GADASH_Config->options ['ga_dash_access_back']) and ($ga_dash_top_referrers or $ga_dash_top_pages or ($ga_dash_traffic_sources and $ga_dash_new_return))) {
-				$code .= '<br /><h3>' . __ ( "Traffic Overview", 'ga-dash' ) . '</h3>
-		<table width="100%"><tr><td width="50%"><div id="ga_dash_trafficdata"></div></td><td width="50%"><div id="ga_dash_nvrdata"></div></td></tr></table>';
+			if ($GADASH_Config->options ['ga_dash_traffic'] and $tools->check_roles ( $GADASH_Config->options ['ga_dash_access_back'] ) and ($ga_dash_top_referrers or $ga_dash_top_pages or ($ga_dash_traffic_sources and $ga_dash_new_return))) {
+				?>
+<br />
+<h3>
+				<?php _e( "Traffic Overview", 'ga-dash' );?>
+				</h3>
+<div style="width: 100%; clear: both;">
+	<div style="width: 50%; float: left;">
+		<div id="ga_dash_trafficdata"></div>
+	</div>
+	<div style="width: 50%; float: left;">
+		<div id="ga_dash_nvrdata"></div>
+	</div>
+</div>
+<div style="clear: both;"></div>
+
+			<?php
 			}
 			
-			if ($GADASH_Config->options ['ga_dash_pgd'] and $tools->check_roles($GADASH_Config->options ['ga_dash_access_back']))
-				$code .= '<div id="ga_dash_pgddata"></div>';
-			if ($GADASH_Config->options ['ga_dash_rd'] and $tools->check_roles($GADASH_Config->options ['ga_dash_access_back']))
-				$code .= '<div id="ga_dash_rdata"></div>';
-			if ($GADASH_Config->options ['ga_dash_sd'] and $tools->check_roles($GADASH_Config->options ['ga_dash_access_back']))
-				$code .= '<div id="ga_dash_sdata"></div>';
-			
-			echo $code;
+			if ($GADASH_Config->options ['ga_dash_pgd'] and $tools->check_roles ( $GADASH_Config->options ['ga_dash_access_back'] )) {
+				?>
+<div id="ga_dash_pgddata"></div>
+<?php
+			}
+			if ($GADASH_Config->options ['ga_dash_rd'] and $tools->check_roles ( $GADASH_Config->options ['ga_dash_access_back'] )) {
+				?>
+<div id="ga_dash_rdata"></div>
+<?php
+			}
+			if ($GADASH_Config->options ['ga_dash_sd'] and $tools->check_roles ( $GADASH_Config->options ['ga_dash_access_back'] )) {
+				?>
+<div id="ga_dash_sdata"></div>
+<?php
+			}
 		}
 	}
 }
