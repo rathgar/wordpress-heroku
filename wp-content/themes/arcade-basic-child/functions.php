@@ -1,4 +1,9 @@
 <?php
+add_filter('opengraph_locale', 'override_og_locale');
+function override_og_locale($locale) {
+  return "en_GB";
+}
+
 add_action( 'widgets_init', 'rue_widgets_init' );
 if ( ! function_exists( 'rue_widgets_init' ) ) :
 /**
