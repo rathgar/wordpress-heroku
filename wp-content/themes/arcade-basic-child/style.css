@@ -14,3 +14,11 @@
 article.error404 .entry-title {
   font-size: 200%;
 }
+
+.rue-stamp {
+  background-image: url("library/images/rue-stamp.svg");
+  display: inline-block;
+  background-size: 100px 100px;
+  width: 100px;
+  height: 100px;
+}

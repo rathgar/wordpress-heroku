@@ -10,7 +10,7 @@ function bavotasan_default_theme_options() {
 		'arc' => 400,
 		'arc_inner' => 400,
 		'fittext' => '',
-		'header_icon' => 'fa-heart',
+		'header_icon' => 'rue-stamp',
 		'width' => '1170',
 		'layout' => 'right',
 		'primary' => 'col-md-8',
