@@ -1,7 +1,7 @@
 <?php
 /**
  * +--------------------------------------------------------------------------+
- * | Copyright (c) 2008-2012 Add This, LLC                                    |
+ * | Copyright (c) 2008-2016 AddThis, LLC                                     |
  * +--------------------------------------------------------------------------+
  * | This program is free software; you can redistribute it and/or modify     |
  * | it under the terms of the GNU General Public License as published by     |
@@ -17,32 +17,13 @@
  * | along with this program; if not, write to the Free Software              |
  * | Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA |
  * +--------------------------------------------------------------------------+
- *
- * PHP version 5.3.6
- *
- * @category Class
- * @package  Wordpress_Widget
- * @author   The AddThis Team <srijith@addthis.com>
- * @license  http://www.php.net/license/3_01.txt  PHP License 3.01
- * @version  SVN: 1.0
- * @link     http://www.addthis.com/blog
  */
 
-/**
- * Class for Widget for Horizontal Recommended Content
- *
- * @category Class
- * @package  Wordpress_Widget
- * @author   The AddThis Team <srijith@addthis.com>
- * @license  http://www.php.net/license/3_01.txt  PHP License 3.01
- * @version  Release: 1.0
- * @link     http://www.addthis.com/blog
- */
 class Addthis_Horizontal_Recommended_Content_Widget extends WP_Widget
 {
 
     const HORIZONTAL_RECOMMENDED_CONTENT = "addthis_recommended_horizontal";
-    
+
     /**
      * Register widget with WordPress.
      *
@@ -56,11 +37,11 @@ class Addthis_Horizontal_Recommended_Content_Widget extends WP_Widget
                 'Addthis Horizontal Recommended Content',
                 'hor_recomended_widget_domain'
             ), // Name
-            array( 'description' => 
+            array( 'description' =>
                 __(
-                    'An Addthis Widget to add horizontal recommended content', 
+                    'An Addthis Widget to add horizontal recommended content',
                     'hor_recomended_widget_domain'
-                ) 
+                )
             ) // Args
         );
     }
@@ -107,7 +88,13 @@ class Addthis_Horizontal_Recommended_Content_Widget extends WP_Widget
                 '<input id="'.$this->get_field_id('title').'" '.
                        'name="'.$this->get_field_name('title').'" '.
                        'type="text" value="'.esc_attr($title).'">'.
-             "</p>";
+             "</p>
+              <p>
+                  <small>
+                      "._addthis_eula_text(esc_html__('Save'))."
+                  </small>
+              </p>
+             ";
     }
 
     /**
@@ -120,8 +107,8 @@ class Addthis_Horizontal_Recommended_Content_Widget extends WP_Widget
      */
     public function update($new_instance, $old_instance)
     {
-        $new_instance['title'] = (! empty($new_instance['title'])) ? 
-                                mysql_real_escape_string($new_instance['title'])
+        $new_instance['title'] = (! empty($new_instance['title'])) ?
+                                sanitize_text_field($new_instance['title'])
                                 : '';
         return $new_instance;
     }
@@ -142,10 +129,10 @@ class Addthis_Vertical_Recommended_Content_Widget extends WP_Widget
 {
 
     const VERTICAL_RECOMMENDED_CONTENT = "addthis_recommended_vertical";
-    
+
     /**
      * Register widget with WordPress.
-     * 
+     *
      * @return null
      */
     function __construct()
@@ -156,11 +143,11 @@ class Addthis_Vertical_Recommended_Content_Widget extends WP_Widget
                 'Addthis Vertical Recommended Content',
                 'vertical_recomended_widget_domain'
             ), // Name
-            array( 'description' => 
+            array( 'description' =>
                 __(
-                    'An Addthis Widget to add vertical recommended content', 
+                    'An Addthis Widget to add vertical recommended content',
                     'vertical_recomended_widget_domain'
-                ) 
+                )
             ) // Args
         );
     }
@@ -170,7 +157,7 @@ class Addthis_Vertical_Recommended_Content_Widget extends WP_Widget
      *
      * @param array $args     Widget arguments.
      * @param array $instance Saved values from database.
-     * 
+     *
      * @return null
      */
     public function widget($args, $instance)
@@ -190,7 +177,7 @@ class Addthis_Vertical_Recommended_Content_Widget extends WP_Widget
      * Back-end widget form.
      *
      * @param array $instance Previously saved values from database.
-     * 
+     *
      * @return null
      */
     public function form($instance)
@@ -207,7 +194,13 @@ class Addthis_Vertical_Recommended_Content_Widget extends WP_Widget
                 '<input id="'.$this->get_field_id('title').'" '.
                        'name="'.$this->get_field_name('title').'" '.
                        'type="text" value="'.esc_attr($title).'">'.
-             "</p>";
+             "</p>
+              <p>
+                  <small>
+                      "._addthis_eula_text(esc_html__('Save'))."
+                  </small>
+              </p>
+             ";
     }
 
     /**
@@ -220,8 +213,8 @@ class Addthis_Vertical_Recommended_Content_Widget extends WP_Widget
      */
     public function update($new_instance, $old_instance)
     {
-        $new_instance['title'] = (! empty($new_instance['title'])) ? 
-                                mysql_real_escape_string($new_instance['title'])
+        $new_instance['title'] = (! empty($new_instance['title'])) ?
+                                sanitize_text_field($new_instance['title'])
                                 : '';
         return $new_instance;
     }
@@ -230,7 +223,7 @@ class Addthis_Vertical_Recommended_Content_Widget extends WP_Widget
 
 /**
  * Register widgets
- * 
+ *
  * @return null
  */
 function register_addthis_widget()
