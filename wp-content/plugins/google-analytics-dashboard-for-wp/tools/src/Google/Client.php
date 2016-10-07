@@ -6,7 +6,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,18 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-require_once 'Google/Auth/AssertionCredentials.php';
-require_once 'Google/Cache/File.php';
-require_once 'Google/Cache/Memcache.php';
-require_once 'Google/Config.php';
-require_once 'Google/Collection.php';
-require_once 'Google/Exception.php';
-require_once 'Google/IO/Curl.php';
-require_once 'Google/IO/Stream.php';
-require_once 'Google/Model.php';
-require_once 'Google/Service.php';
-require_once 'Google/Service/Resource.php';
+require_once realpath(dirname(__FILE__) . '/../../autoload.php');
 
 /**
  * The Google API Client
@@ -36,79 +25,78 @@ require_once 'Google/Service/Resource.php';
  */
 class Google_Client
 {
-  const LIBVER = "1.0.5-beta";
+  const LIBVER = "1.1.2";
   const USER_AGENT_SUFFIX = "google-api-php-client/";
   /**
+   *
    * @var Google_Auth_Abstract $auth
    */
   private $auth;
-
   /**
+   *
    * @var Google_IO_Abstract $io
    */
   private $io;
-
   /**
+   *
    * @var Google_Cache_Abstract $cache
    */
   private $cache;
-
   /**
+   *
    * @var Google_Config $config
    */
   private $config;
-
   /**
+   *
+   * @var Google_Logger_Abstract $logger
+   */
+  private $logger;
+  /**
+   *
    * @var boolean $deferExecution
    */
   private $deferExecution = false;
-
-  /** @var array $scopes */
+  /**
+   *
+   * @var array $scopes
+   */
   // Scopes requested by the client
   protected $requestedScopes = array();
-
   // definitions of services that are discovered.
   protected $services = array();
-
   // Used to track authenticated state, can't discover services after doing authenticate()
   private $authenticated = false;
 
   /**
    * Construct the Google Client.
    *
-   * @param $config Google_Config or string for the ini file to load
+   * @param $config Google_Config
+   *          or string for the ini file to load
    */
   public function __construct($config = null)
   {
-    if (! ini_get('date.timezone') &&
-        function_exists('date_default_timezone_set')) {
-      date_default_timezone_set('UTC');
-    }
-
     if (is_string($config) && strlen($config)) {
       $config = new Google_Config($config);
-    } else if ( !($config instanceof Google_Config)) {
-      $config = new Google_Config();
-
-      if ($this->isAppEngine()) {
-        // Automatically use Memcache if we're in AppEngine.
-        $config->setCacheClass('Google_Cache_Memcache');
+    } else 
+      if (! ($config instanceof Google_Config)) {
+        $config = new Google_Config();
+        if ($this->isAppEngine()) {
+          // Automatically use Memcache if we're in AppEngine.
+          $config->setCacheClass('Google_Cache_Memcache');
+        }
+        if (version_compare(phpversion(), "5.3.4", "<=") || $this->isAppEngine()) {
+          // Automatically disable compress.zlib, as currently unsupported.
+          $config->setClassConfig('Google_Http_Request', 'disable_gzip', true);
+        }
       }
-
-      if (version_compare(phpversion(), "5.3.4", "<=") || $this->isAppEngine()) {
-        // Automatically disable compress.zlib, as currently unsupported.
-        $config->setClassConfig('Google_Http_Request', 'disable_gzip', true);
-      }
-    }
-    
     if ($config->getIoClass() == Google_Config::USE_AUTO_IO_SELECTION) {
-      if (function_exists('curl_version') && function_exists('curl_exec')) {
+      if (function_exists('curl_version') && function_exists('curl_exec') && ! $this->isAppEngine()) {
         $config->setIoClass("Google_IO_Curl");
       } else {
         $config->setIoClass("Google_IO_Stream");
       }
     }
-
     $this->config = $config;
   }
 
@@ -126,7 +114,8 @@ class Google_Client
    * Attempt to exchange a code for an valid authentication token.
    * Helper wrapped around the OAuth 2.0 implementation.
    *
-   * @param $code string code from accounts.google.com
+   * @param $code string
+   *          code from accounts.google.com
    * @return string token
    */
   public function authenticate($code)
@@ -140,13 +129,16 @@ class Google_Client
    * This structure should match the file downloaded from
    * the "Download JSON" button on in the Google Developer
    * Console.
-   * @param string $json the configuration json
+   *
+   * @param string $json
+   *          the configuration json
+   * @throws Google_Exception
    */
   public function setAuthConfig($json)
   {
     $data = json_decode($json);
     $key = isset($data->installed) ? 'installed' : 'web';
-    if (!isset($data->$key)) {
+    if (! isset($data->$key)) {
       throw new Google_Exception("Invalid client secret JSON file.");
     }
     $this->setClientId($data->$key->client_id);
@@ -158,10 +150,13 @@ class Google_Client
 
   /**
    * Set the auth config from the JSON file in the path
-   * provided. This should match the file downloaded from
+   * provided.
+   * This should match the file downloaded from
    * the "Download JSON" button on in the Google Developer
    * Console.
-   * @param string $file the file location of the client json
+   *
+   * @param string $file
+   *          the file location of the client json
    */
   public function setAuthConfigFile($file)
   {
@@ -169,8 +164,9 @@ class Google_Client
   }
 
   /**
-   * @return array
-   * @visible For Testing
+   *
+   * @throws Google_Auth_Exception
+   * @return array @visible For Testing
    */
   public function prepareScopes()
   {
@@ -184,9 +180,11 @@ class Google_Client
   /**
    * Set the OAuth 2.0 access token using the string that resulted from calling createAuthUrl()
    * or Google_Client#getAccessToken().
-   * @param string $accessToken JSON encoded string containing in the following format:
-   * {"access_token":"TOKEN", "refresh_token":"TOKEN", "token_type":"Bearer",
-   *  "expires_in":3600, "id_token":"TOKEN", "created":1320790426}
+   *
+   * @param string $accessToken
+   *          JSON encoded string containing in the following format:
+   *          {"access_token":"TOKEN", "refresh_token":"TOKEN", "token_type":"Bearer",
+   *          "expires_in":3600, "id_token":"TOKEN", "created":1320790426}
    */
   public function setAccessToken($accessToken)
   {
@@ -196,11 +194,10 @@ class Google_Client
     $this->getAuth()->setAccessToken($accessToken);
   }
 
-
-
   /**
    * Set the authenticator object
-   * @param Google_Auth_Abstract $auth
+   *
+   * @param Google_Auth_Abstract $auth          
    */
   public function setAuth(Google_Auth_Abstract $auth)
   {
@@ -210,9 +207,10 @@ class Google_Client
 
   /**
    * Set the IO object
-   * @param Google_Io_Abstract $auth
+   *
+   * @param Google_IO_Abstract $io          
    */
-  public function setIo(Google_Io_Abstract $io)
+  public function setIo(Google_IO_Abstract $io)
   {
     $this->config->setIoClass(get_class($io));
     $this->io = $io;
@@ -220,7 +218,8 @@ class Google_Client
 
   /**
    * Set the Cache object
-   * @param Google_Cache_Abstract $auth
+   *
+   * @param Google_Cache_Abstract $cache          
    */
   public function setCache(Google_Cache_Abstract $cache)
   {
@@ -229,7 +228,19 @@ class Google_Client
   }
 
   /**
+   * Set the Logger object
+   *
+   * @param Google_Logger_Abstract $logger          
+   */
+  public function setLogger(Google_Logger_Abstract $logger)
+  {
+    $this->config->setLoggerClass(get_class($logger));
+    $this->logger = $logger;
+  }
+
+  /**
    * Construct the OAuth 2.0 authorization request URI.
+   *
    * @return string
    */
   public function createAuthUrl()
@@ -240,9 +251,10 @@ class Google_Client
 
   /**
    * Get the OAuth 2.0 access token.
+   *
    * @return string $accessToken JSON encoded string in the following format:
-   * {"access_token":"TOKEN", "refresh_token":"TOKEN", "token_type":"Bearer",
-   *  "expires_in":3600,"id_token":"TOKEN", "created":1320790426}
+   *         {"access_token":"TOKEN", "refresh_token":"TOKEN", "token_type":"Bearer",
+   *         "expires_in":3600,"id_token":"TOKEN", "created":1320790426}
    */
   public function getAccessToken()
   {
@@ -254,7 +266,18 @@ class Google_Client
   }
 
   /**
+   * Get the OAuth 2.0 refresh token.
+   *
+   * @return string $refreshToken refresh token or null if not available
+   */
+  public function getRefreshToken()
+  {
+    return $this->getAuth()->getRefreshToken();
+  }
+
+  /**
    * Returns if the access_token is expired.
+   *
    * @return bool Returns True if the access_token is expired.
    */
   public function isAccessTokenExpired()
@@ -264,8 +287,9 @@ class Google_Client
 
   /**
    * Set OAuth 2.0 "state" parameter to achieve per-request customization.
+   *
    * @see http://tools.ietf.org/html/draft-ietf-oauth-v2-22#section-3.1.2.2
-   * @param string $state
+   * @param string $state          
    */
   public function setState($state)
   {
@@ -273,9 +297,11 @@ class Google_Client
   }
 
   /**
-   * @param string $accessType Possible values for access_type include:
-   *  {@code "offline"} to request offline access from the user.
-   *  {@code "online"} to request online access from the user.
+   *
+   * @param string $accessType
+   *          Possible values for access_type include:
+   *          {@code "offline"} to request offline access from the user.
+   *          {@code "online"} to request online access from the user.
    */
   public function setAccessType($accessType)
   {
@@ -283,9 +309,11 @@ class Google_Client
   }
 
   /**
-   * @param string $approvalPrompt Possible values for approval_prompt include:
-   *  {@code "force"} to force the approval UI to appear. (This is the default value)
-   *  {@code "auto"} to request auto-approval when possible.
+   *
+   * @param string $approvalPrompt
+   *          Possible values for approval_prompt include:
+   *          {@code "force"} to force the approval UI to appear. (This is the default value)
+   *          {@code "auto"} to request auto-approval when possible.
    */
   public function setApprovalPrompt($approvalPrompt)
   {
@@ -293,8 +321,19 @@ class Google_Client
   }
 
   /**
+   * Set the login hint, email address or sub id.
+   *
+   * @param string $loginHint          
+   */
+  public function setLoginHint($loginHint)
+  {
+    $this->config->setLoginHint($loginHint);
+  }
+
+  /**
    * Set the application name, this is included in the User-Agent HTTP header.
-   * @param string $applicationName
+   *
+   * @param string $applicationName          
    */
   public function setApplicationName($applicationName)
   {
@@ -303,7 +342,8 @@ class Google_Client
 
   /**
    * Set the OAuth 2.0 Client ID.
-   * @param string $clientId
+   *
+   * @param string $clientId          
    */
   public function setClientId($clientId)
   {
@@ -312,7 +352,8 @@ class Google_Client
 
   /**
    * Set the OAuth 2.0 Client Secret.
-   * @param string $clientSecret
+   *
+   * @param string $clientSecret          
    */
   public function setClientSecret($clientSecret)
   {
@@ -321,7 +362,8 @@ class Google_Client
 
   /**
    * Set the OAuth 2.0 Redirect URI.
-   * @param string $redirectUri
+   *
+   * @param string $redirectUri          
    */
   public function setRedirectUri($redirectUri)
   {
@@ -332,9 +374,11 @@ class Google_Client
    * If 'plus.login' is included in the list of requested scopes, you can use
    * this method to define types of app activities that your app will write.
    * You can find a list of available types here:
-   * @link https://developers.google.com/+/api/moment-types
    *
-   * @param array $requestVisibleActions Array of app activity types
+   * @link https://developers.google.com/+/api/moment-types
+   *      
+   * @param array $requestVisibleActions
+   *          Array of app activity types
    */
   public function setRequestVisibleActions($requestVisibleActions)
   {
@@ -346,8 +390,9 @@ class Google_Client
 
   /**
    * Set the developer key to use, these are obtained through the API Console.
+   *
    * @see http://code.google.com/apis/console-help/#generatingdevkeys
-   * @param string $developerKey
+   * @param string $developerKey          
    */
   public function setDeveloperKey($developerKey)
   {
@@ -355,20 +400,77 @@ class Google_Client
   }
 
   /**
-   * Fetches a fresh OAuth 2.0 access token with the given refresh token.
-   * @param string $refreshToken
-   * @return void
+   * Set the hd (hosted domain) parameter streamlines the login process for
+   * Google Apps hosted accounts.
+   * By including the domain of the user, you
+   * restrict sign-in to accounts at that domain.
+   *
+   * @param $hd string
+   *          - the domain to use.
    */
-  public function refreshToken($refreshToken)
+  public function setHostedDomain($hd)
   {
-    return $this->getAuth()->refreshToken($refreshToken);
+    $this->config->setHostedDomain($hd);
   }
 
   /**
-   * Revoke an OAuth2 access token or refresh token. This method will revoke the current access
+   * Set the prompt hint.
+   * Valid values are none, consent and select_account.
+   * If no value is specified and the user has not previously authorized
+   * access, then the user is shown a consent screen.
+   *
+   * @param $prompt string          
+   */
+  public function setPrompt($prompt)
+  {
+    $this->config->setPrompt($prompt);
+  }
+
+  /**
+   * openid.realm is a parameter from the OpenID 2.0 protocol, not from OAuth
+   * 2.0.
+   * It is used in OpenID 2.0 requests to signify the URL-space for which
+   * an authentication request is valid.
+   *
+   * @param $realm string
+   *          - the URL-space to use.
+   */
+  public function setOpenidRealm($realm)
+  {
+    $this->config->setOpenidRealm($realm);
+  }
+
+  /**
+   * If this is provided with the value true, and the authorization request is
+   * granted, the authorization will include any previous authorizations
+   * granted to this user/application combination for other scopes.
+   *
+   * @param $include boolean
+   *          - the URL-space to use.
+   */
+  public function setIncludeGrantedScopes($include)
+  {
+    $this->config->setIncludeGrantedScopes($include);
+  }
+
+  /**
+   * Fetches a fresh OAuth 2.0 access token with the given refresh token.
+   *
+   * @param string $refreshToken          
+   */
+  public function refreshToken($refreshToken)
+  {
+    $this->getAuth()->refreshToken($refreshToken);
+  }
+
+  /**
+   * Revoke an OAuth2 access token or refresh token.
+   * This method will revoke the current access
    * token, if a token isn't provided.
+   *
    * @throws Google_Auth_Exception
-   * @param string|null $token The token (access token or a refresh token) that should be revoked.
+   * @param string|null $token
+   *          The token (access token or a refresh token) that should be revoked.
    * @return boolean Returns True if the revocation was successful, otherwise False.
    */
   public function revokeToken($token = null)
@@ -377,12 +479,15 @@ class Google_Client
   }
 
   /**
-   * Verify an id_token. This method will verify the current id_token, if one
+   * Verify an id_token.
+   * This method will verify the current id_token, if one
    * isn't provided.
+   *
    * @throws Google_Auth_Exception
-   * @param string|null $token The token (id_token) that should be verified.
+   * @param string|null $token
+   *          The token (id_token) that should be verified.
    * @return Google_Auth_LoginTicket Returns an apiLoginTicket if the verification was
-   * successful.
+   *         successful.
    */
   public function verifyIdToken($token = null)
   {
@@ -392,12 +497,17 @@ class Google_Client
   /**
    * Verify a JWT that was signed with your own certificates.
    *
-   * @param $jwt the token
-   * @param $certs array of certificates
-   * @param $required_audience the expected consumer of the token
-   * @param [$issuer] the expected issues, defaults to Google
-   * @param [$max_expiry] the max lifetime of a token, defaults to MAX_TOKEN_LIFETIME_SECS
-   * @return token information if valid, false if not
+   * @param $id_token string
+   *          The JWT token
+   * @param $cert_location array
+   *          of certificates
+   * @param $audience string
+   *          the expected consumer of the token
+   * @param $issuer string
+   *          the expected issuer, defaults to Google
+   * @param
+   *          [$max_expiry] the max lifetime of a token, defaults to MAX_TOKEN_LIFETIME_SECS
+   * @return mixed token information if valid, false if not
    */
   public function verifySignedJwt($id_token, $cert_location, $audience, $issuer, $max_expiry = null)
   {
@@ -407,8 +517,8 @@ class Google_Client
   }
 
   /**
-   * @param Google_Auth_AssertionCredentials $creds
-   * @return void
+   *
+   * @param $creds Google_Auth_AssertionCredentials          
    */
   public function setAssertionCredentials(Google_Auth_AssertionCredentials $creds)
   {
@@ -416,10 +526,13 @@ class Google_Client
   }
 
   /**
-   * Set the scopes to be requested. Must be called before createAuthUrl().
+   * Set the scopes to be requested.
+   * Must be called before createAuthUrl().
    * Will remove any previously configured scopes.
-   * @param array $scopes, ie: array('https://www.googleapis.com/auth/plus.login',
-   * 'https://www.googleapis.com/auth/moderator')
+   *
+   * @param array $scopes,
+   *          ie: array('https://www.googleapis.com/auth/plus.login',
+   *          'https://www.googleapis.com/auth/moderator')
    */
   public function setScopes($scopes)
   {
@@ -432,35 +545,41 @@ class Google_Client
    * Will append any scopes not previously requested to the scope parameter.
    * A single string will be treated as a scope to request. An array of strings
    * will each be appended.
-   * @param $scope_or_scopes string|array e.g. "profile"
+   *
+   * @param $scope_or_scopes string|array
+   *          e.g. "profile"
    */
   public function addScope($scope_or_scopes)
   {
-    if (is_string($scope_or_scopes) && !in_array($scope_or_scopes, $this->requestedScopes)) {
+    if (is_string($scope_or_scopes) && ! in_array($scope_or_scopes, $this->requestedScopes)) {
       $this->requestedScopes[] = $scope_or_scopes;
-    } else if (is_array($scope_or_scopes)) {
-      foreach ($scope_or_scopes as $scope) {
-        $this->addScope($scope);
+    } else 
+      if (is_array($scope_or_scopes)) {
+        foreach ($scope_or_scopes as $scope) {
+          $this->addScope($scope);
+        }
       }
-    }
   }
 
   /**
    * Returns the list of scopes requested by the client
-   * @return array the list of scopes
    *
+   * @return array the list of scopes
+   *        
    */
   public function getScopes()
   {
-     return $this->requestedScopes;
+    return $this->requestedScopes;
   }
 
   /**
-   * Declare whether batch calls should be used. This may increase throughput
+   * Declare whether batch calls should be used.
+   * This may increase throughput
    * by making multiple requests in one connection.
    *
-   * @param boolean $useBatch True if the batch support should
-   * be enabled. Defaults to False.
+   * @param boolean $useBatch
+   *          True if the batch support should
+   *          be enabled. Defaults to False.
    */
   public function setUseBatch($useBatch)
   {
@@ -472,7 +591,8 @@ class Google_Client
    * Declare whether making API calls should make the call immediately, or
    * return a request which can be called with ->execute();
    *
-   * @param boolean $defer True if calls should not be executed right away.
+   * @param boolean $defer
+   *          True if calls should not be executed right away.
    */
   public function setDefer($defer)
   {
@@ -482,30 +602,30 @@ class Google_Client
   /**
    * Helper method to execute deferred HTTP requests.
    *
-   * @returns object of the type of the expected class or array.
+   * @param $request Google_Http_Request|Google_Http_Batch          
+   * @throws Google_Exception
+   * @return object of the type of the expected class or array.
    */
   public function execute($request)
   {
     if ($request instanceof Google_Http_Request) {
-      $request->setUserAgent(
-          $this->getApplicationName()
-          . " " . self::USER_AGENT_SUFFIX
-          . $this->getLibraryVersion()
-      );
-      if (!$this->getClassConfig("Google_Http_Request", "disable_gzip")) {
+      $request->setUserAgent($this->getApplicationName() . " " . self::USER_AGENT_SUFFIX . $this->getLibraryVersion());
+      if (! $this->getClassConfig("Google_Http_Request", "disable_gzip")) {
         $request->enableGzip();
       }
       $request->maybeMoveParametersToBody();
       return Google_Http_REST::execute($this, $request);
-    } else if ($request instanceof Google_Http_Batch) {
-      return $request->execute();
-    } else {
-      throw new Google_Exception("Do not know how to execute this type of object.");
-    }
+    } else 
+      if ($request instanceof Google_Http_Batch) {
+        return $request->execute();
+      } else {
+        throw new Google_Exception("Do not know how to execute this type of object.");
+      }
   }
 
   /**
    * Whether or not to return raw requests
+   *
    * @return boolean
    */
   public function shouldDefer()
@@ -514,11 +634,12 @@ class Google_Client
   }
 
   /**
+   *
    * @return Google_Auth_Abstract Authentication implementation
    */
   public function getAuth()
   {
-    if (!isset($this->auth)) {
+    if (! isset($this->auth)) {
       $class = $this->config->getAuthClass();
       $this->auth = new $class($this);
     }
@@ -526,11 +647,12 @@ class Google_Client
   }
 
   /**
+   *
    * @return Google_IO_Abstract IO implementation
    */
   public function getIo()
   {
-    if (!isset($this->io)) {
+    if (! isset($this->io)) {
       $class = $this->config->getIoClass();
       $this->io = new $class($this);
     }
@@ -538,11 +660,12 @@ class Google_Client
   }
 
   /**
+   *
    * @return Google_Cache_Abstract Cache implementation
    */
   public function getCache()
   {
-    if (!isset($this->cache)) {
+    if (! isset($this->cache)) {
       $class = $this->config->getCacheClass();
       $this->cache = new $class($this);
     }
@@ -550,13 +673,30 @@ class Google_Client
   }
 
   /**
+   *
+   * @return Google_Logger_Abstract Logger implementation
+   */
+  public function getLogger()
+  {
+    if (! isset($this->logger)) {
+      $class = $this->config->getLoggerClass();
+      $this->logger = new $class($this);
+    }
+    return $this->logger;
+  }
+
+  /**
    * Retrieve custom configuration for a specific class.
-   * @param $class string|object - class or instance of class to retrieve
-   * @param $key string optional - key to retrieve
+   *
+   * @param $class string|object
+   *          - class or instance of class to retrieve
+   * @param $key string
+   *          optional - key to retrieve
+   * @return array
    */
   public function getClassConfig($class, $key = null)
   {
-    if (!is_string($class)) {
+    if (! is_string($class)) {
       $class = get_class($class);
     }
     return $this->config->getClassConfig($class, $key);
@@ -565,22 +705,26 @@ class Google_Client
   /**
    * Set configuration specific to a given class.
    * $config->setClassConfig('Google_Cache_File',
-   *   array('directory' => '/tmp/cache'));
-   * @param $class The class name for the configuration
-   * @param $config string key or an array of configuration values
-   * @param $value optional - if $config is a key, the value
+   * array('directory' => '/tmp/cache'));
    *
+   * @param $class string|object
+   *          - The class name for the configuration
+   * @param $config string
+   *          key or an array of configuration values
+   * @param $value string
+   *          optional - if $config is a key, the value
+   *          
    */
   public function setClassConfig($class, $config, $value = null)
   {
-    if (!is_string($class)) {
+    if (! is_string($class)) {
       $class = get_class($class);
     }
-    return $this->config->setClassConfig($class, $config, $value);
-
+    $this->config->setClassConfig($class, $config, $value);
   }
 
   /**
+   *
    * @return string the base URL to use for calls to the APIs
    */
   public function getBasePath()
@@ -589,6 +733,7 @@ class Google_Client
   }
 
   /**
+   *
    * @return string the name of the application
    */
   public function getApplicationName()
@@ -602,7 +747,6 @@ class Google_Client
    */
   public function isAppEngine()
   {
-    return (isset($_SERVER['SERVER_SOFTWARE']) &&
-        strpos($_SERVER['SERVER_SOFTWARE'], 'Google App Engine') !== false);
+    return (isset($_SERVER['SERVER_SOFTWARE']) && strpos($_SERVER['SERVER_SOFTWARE'], 'Google App Engine') !== false);
   }
 }

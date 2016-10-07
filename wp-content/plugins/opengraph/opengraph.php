@@ -1,11 +1,11 @@
 <?php
 /*
  Plugin Name: Open Graph
- Plugin URI: http://wordpress.org/extend/plugins/opengraph
+ Plugin URI: http://wordpress.org/plugins/opengraph
  Description: Adds Open Graph metadata to your pages
  Author: Will Norris
  Author URI: http://willnorris.com/
- Version: 1.5.1
+ Version: 1.6
  License: Apache License, Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0.html)
  Text Domain: opengraph
  */
@@ -29,7 +29,7 @@ function opengraph_add_prefix( $output ) {
   $prefixes = apply_filters('opengraph_prefixes', $prefixes);
 
   $prefix_str = '';
-  foreach( $prefixes as $k => $v ) {
+  foreach ( $prefixes as $k => $v ) {
     $prefix_str .= $k . ': ' . $v . ' ';
   }
   $prefix_str = trim($prefix_str);
@@ -51,6 +51,9 @@ function opengraph_additional_prefixes( $prefixes ) {
   if ( is_author() ) {
     $prefixes['profile'] = 'http://ogp.me/ns/profile#';
   }
+  if ( is_singular() ) {
+    $prefixes['article'] = 'http://ogp.me/ns/article#';
+  }
   return $prefixes;
 }
 
@@ -59,6 +62,7 @@ function opengraph_additional_prefixes( $prefixes ) {
  * Get the Open Graph metadata for the current page.
  *
  * @uses apply_filters() Calls 'opengraph_{$name}' for each property name
+ * @uses apply_filters() Calls 'twitter_{$name}' for each property name
  * @uses apply_filters() Calls 'opengraph_metadata' before returning metadata array
  */
 function opengraph_metadata() {
@@ -73,10 +77,18 @@ function opengraph_metadata() {
     'audio', 'description', 'determiner', 'locale', 'site_name', 'video',
   );
 
-  foreach ($properties as $property) {
+  foreach ( $properties as $property ) {
     $filter = 'opengraph_' . $property;
     $metadata["og:$property"] = apply_filters($filter, '');
   }
+
+  $twitter_properties = array('card');
+
+  foreach ( $twitter_properties as $property ) {
+    $filter = 'twitter_' . $property;
+    $metadata["twitter:$property"] = apply_filters($filter, '');
+  }
+
   return apply_filters('opengraph_metadata', $metadata);
 }
 
@@ -100,6 +112,12 @@ function opengraph_default_metadata() {
 
   // additional profile metadata
   add_filter('opengraph_metadata', 'opengraph_profile_metadata');
+
+  // additional article metadata
+  add_filter('opengraph_metadata', 'opengraph_article_metadata');
+
+  // twitter card metadata
+  add_filter('twitter_card', 'twitter_default_card', 5);
 }
 add_filter('wp', 'opengraph_default_metadata');
 
@@ -110,13 +128,18 @@ add_filter('wp', 'opengraph_default_metadata');
 function opengraph_default_title( $title ) {
   if ( empty($title) ) {
     if ( is_singular() ) {
-      $post = get_queried_object();
-      if ( isset($post->post_title) ) {
-        $title = $post->post_title;
-      }
+      $title = get_the_title( get_queried_object_id() );
     } else if ( is_author() ) {
       $author = get_queried_object();
       $title = $author->display_name;
+    } else if ( is_category() && single_cat_title( '', false ) ) {
+      $title = single_cat_title( '', false );
+    } else if ( is_tag() && single_tag_title( '', false ) ) {
+      $title = single_tag_title( '', false );
+    } else if ( is_archive() && get_post_format()) {
+      $title = get_post_format_string( get_post_format() );
+    } else if ( is_archive() && function_exists ("get_the_archive_title") && get_the_archive_title() ) { // new in version 4.1 to get all other archive titles
+      $title = get_the_archive_title();
     }
   }
   return $title;
@@ -128,12 +151,12 @@ function opengraph_default_title( $title ) {
  */
 function opengraph_default_type( $type ) {
   if ( empty($type) ) {
-    if ( is_singular( array('post', 'page', 'aside', 'status') ) ) {
+    if ( is_singular( array('post', 'page') ) ) {
       $type = 'article';
     } else if ( is_author() ) {
       $type = 'profile';
     } else {
-      $type = 'blog';
+      $type = 'website';
     }
   }
   return $type;
@@ -148,6 +171,9 @@ function opengraph_default_image( $image ) {
     $id = get_queried_object_id();
     $image_ids = array();
 
+    // As of July 2014, Facebook seems to only let you select from the first 3 images
+    $max_images = apply_filters('opengraph_max_images', 3);
+
     // list post thumbnail first if this post has one
     if ( function_exists('has_post_thumbnail') ) {
       if ( is_singular() && has_post_thumbnail($id) ) {
@@ -159,15 +185,18 @@ function opengraph_default_image( $image ) {
     $attachments = get_children( array('post_parent' => $id, 'post_status' => 'inherit',
       'post_type' => 'attachment', 'post_mime_type' => 'image', 'order' => 'ASC',
       'orderby' => 'menu_order ID') );
-    foreach($attachments as $attachment) {
+    foreach ( $attachments as $attachment ) {
       if ( !in_array($attachment->ID, $image_ids) ) {
         $image_ids[] = $attachment->ID;
+        if (sizeof($image_ids) >= $max_images) {
+          break;
+        }
       }
     }
 
     // get URLs for each image
     $image = array();
-    foreach($image_ids as $id) {
+    foreach ( $image_ids as $id ) {
       $thumbnail = wp_get_attachment_image_src( $id, 'medium');
       if ($thumbnail) {
         $image[] = $thumbnail[0];
@@ -213,26 +242,28 @@ function opengraph_default_description( $description ) {
     if ( is_singular() ) {
       $post = get_queried_object();
       if ( !empty($post->post_excerpt) ) {
-        $description = strip_tags($post->post_excerpt);
+        $description = $post->post_excerpt;
       } else {
-        // fallback to first 55 words of post content.
-        $description = strip_tags(strip_shortcodes($post->post_content));
-        $description = __opengraph_trim_text($description);
+        $description = $post->post_content;
       }
     } else if ( is_author() ) {
       $id = get_queried_object_id();
       $description = get_user_meta($id, 'description', true);
-      $description = __opengraph_trim_text($description);
     } else if ( is_category() && category_description() ) {
       $description = category_description();
-      $description = __opengraph_trim_text($description);
     } else if ( is_tag() && tag_description() ) {
       $description = tag_description();
-      $description = __opengraph_trim_text($description);
+    } else if ( is_archive() && function_exists("get_the_archive_description") && get_the_archive_description() ) { // new in version 4.1 to get all other archive descriptions
+      $description = get_the_archive_description();
     } else {
       $description = get_bloginfo('description');
     }
   }
+
+  // strip description to first 55 words.
+  $description = strip_tags(strip_shortcodes($description));
+  $description = __opengraph_trim_text($description);
+
   return $description;
 }
 
@@ -249,6 +280,19 @@ function opengraph_default_locale( $locale ) {
 
 
 /**
+ * Default twitter-card type.
+ */
+function twitter_default_card( $card ) {
+  $post_type = apply_filters('opengraph_type', null);
+  if ( $post_type == 'article' ) {
+    return "summary";
+  }
+
+  return '';
+}
+
+
+/**
  * Output Open Graph <meta> tags in the page header.
  */
 function opengraph_meta_tags() {
@@ -259,7 +303,8 @@ function opengraph_meta_tags() {
     }
     $value = (array) $value;
     foreach ( $value as $v ) {
-      echo '<meta property="' . esc_attr($key) . '" content="' . esc_attr($v) . '" />' . "\n";
+      printf('<meta property="%1$s" name="%1$s" content="%2$s" />' . "\n",
+        esc_attr($key), esc_attr($v));
     }
   }
 }
@@ -276,6 +321,34 @@ function opengraph_profile_metadata( $metadata ) {
     $metadata['profile:last_name'] = get_the_author_meta('last_name', $id);
     $metadata['profile:username'] = get_the_author_meta('nicename', $id);
   }
+  return $metadata;
+}
+
+
+/**
+ * Include profile metadata for author pages.
+ *
+ * @link http://ogp.me/#type_article
+ */
+function opengraph_article_metadata( $metadata ) {
+  if ( is_singular() ) {
+    $post = get_queried_object();
+
+    $tags = wp_get_post_tags($post->ID);
+
+    // check if page/post has tags
+    if ( $tags ) {
+      foreach ( $tags as $tag ) {
+        $metadata['article:tag'][] = $tag->name;
+      }
+    }
+
+    $metadata['article:published_time'] = get_the_time( 'c', $post->ID );
+    $metadata['article:author:first_name'] = get_the_author_meta('first_name', $post->post_author);
+    $metadata['article:author:last_name'] = get_the_author_meta('last_name', $post->post_author);
+    $metadata['article:author:username'] = get_the_author_meta('nicename', $post->post_author);
+  }
+
   return $metadata;
 }
 
