@@ -6,9 +6,9 @@
  */
 ?>
 	<article id="post-0" class="post error404 not-found">
-   	   	<h1 class="entry-title"><?php _e( 'Nothing found', 'arcade' ); ?></h1>
+   	   	<h1 class="entry-title"><?php _e( 'Nothing found', 'arcade-basic' ); ?></h1>
 
 		<div class="entry-content description clearfix">
-            <p><?php _e( 'No results were found. Please try again.', 'arcade' ); ?></p>
+            <p><?php _e( 'No results were found. Please try again.', 'arcade-basic' ); ?></p>
         </div>
     </article><!-- #post-0.post -->

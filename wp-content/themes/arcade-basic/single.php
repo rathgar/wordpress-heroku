@@ -11,12 +11,12 @@ get_header(); ?>
 			<div id="primary" <?php bavotasan_primary_attr(); ?>>
 				<?php while ( have_posts() ) : the_post(); ?>
 
-					<?php get_template_part( 'content', get_post_format() ); ?>
+					<?php get_template_part( 'template-parts/content', get_post_format() ); ?>
 
 					<div id="posts-pagination" class="clearfix">
-						<h3 class="sr-only"><?php _e( 'Post navigation', 'arcade' ); ?></h3>
-						<div class="previous pull-left"><?php previous_post_link( '%link', __( '&larr; %title', 'arcade' ) ); ?></div>
-						<div class="next pull-right"><?php next_post_link( '%link', __( '%title &rarr;', 'arcade' ) ); ?></div>
+						<h3 class="sr-only"><?php _e( 'Post navigation', 'arcade-basic' ); ?></h3>
+						<div class="previous pull-left"><?php previous_post_link( '%link', __( '&larr; %title', 'arcade-basic' ) ); ?></div>
+						<div class="next pull-right"><?php next_post_link( '%link', __( '%title &rarr;', 'arcade-basic' ) ); ?></div>
 					</div><!-- #posts-pagination -->
 
 					<?php comments_template( '', true ); ?>

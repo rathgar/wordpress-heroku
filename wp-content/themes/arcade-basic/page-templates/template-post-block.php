@@ -13,16 +13,22 @@ if ( ! is_front_page() )
 		<div class="row">
 			<div id="primary" class="col-md-12 hfeed">
 				<div class="page-header clearfix">
-					<h1 class="pull-left"><?php the_title(); ?></h1>
+					<h2 class="pull-left"><?php the_title(); ?></h2>
 				</div>
 
 				<div class="row">
 					<?php
-					$bavotasan_post_block_query = new WP_Query( array(
+					/**
+					 * You can overwrite the following arguments in your child theme's functions.php by
+					 * hooking into the 'bavotasan_post_block_query' and returning a custom array.
+					 *
+				 	 * https://codex.wordpress.org/Function_Reference/add_filter
+					 */
+					$bavotasan_post_block_query = new WP_Query( apply_filters( 'bavotasan_post_block_query', array(
 						'posts_per_page' => 4,
 						'ignore_sticky_posts' => 1,
 						'no_found_rows' => true,
-					) );
+					) ) );
 
 					while ( $bavotasan_post_block_query->have_posts() ) : $bavotasan_post_block_query->the_post();
 						global $bavotasan_custom_excerpt_length;
@@ -36,7 +42,7 @@ if ( ! is_front_page() )
 						if ( 1 == $bavotasan_post_block_query->current_post )
 							echo '<div class="col-md-6">';
 
-						get_template_part( 'content' );
+						get_template_part( 'template-parts/content' );
 
 						if ( 1 > $bavotasan_post_block_query->current_post )
 							echo '</div>';

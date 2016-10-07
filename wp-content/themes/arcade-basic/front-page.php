@@ -16,16 +16,24 @@ $bavotasan_theme_options = bavotasan_theme_options();
 
 if ( 2 > $paged ) {
 	// Display jumbo headline is the option is set
-	if ( ! empty( $bavotasan_theme_options['jumbo_headline_title'] ) ) {
+	if ( is_active_sidebar( 'jumbo-headline' ) || ! empty( $bavotasan_theme_options['jumbo_headline_title'] ) ) {
 	?>
 	<div class="home-top">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12">
-					<div class="home-jumbotron jumbotron">
-						<h1><?php echo apply_filters( 'the_title', html_entity_decode( $bavotasan_theme_options['jumbo_headline_title'] ) ); ?></h1>
-						<p class="lead"><?php echo wp_kses_post( html_entity_decode( $bavotasan_theme_options['jumbo_headline_text'] ) ); ?></p>
-					</div>
+					<?php
+					if ( is_active_sidebar( 'jumbo-headline' ) ) {
+						dynamic_sidebar( 'jumbo-headline' );
+					} else {
+						?>
+						<div class="home-jumbotron jumbotron">
+							<h2><?php echo apply_filters( 'the_title', html_entity_decode( $bavotasan_theme_options['jumbo_headline_title'] ) ); ?></h2>
+							<p><?php echo wp_kses_post( html_entity_decode( $bavotasan_theme_options['jumbo_headline_text'] ) ); ?></p>
+						</div>
+						<?php
+					}
+					?>
 				</div>
 			</div>
 		</div>
@@ -56,24 +64,24 @@ if ( 'page' == get_option('show_on_front') ) {
                 <?php
 				if ( have_posts() ) {
 					while ( have_posts() ) : the_post();
-						get_template_part( 'content', get_post_format() );
+						get_template_part( 'template-parts/content', get_post_format() );
 					endwhile;
 
-					bavotasan_pagination();
+					the_posts_navigation();
 				} else {
 					if ( current_user_can( 'edit_posts' ) ) {
 						// Show a different message to a logged-in user who can add posts.
 						?>
 						<article id="post-0" class="post no-results not-found">
-							<h1 class="entry-title"><?php _e( 'Nothing Found', 'arcade' ); ?></h1>
+							<h1 class="entry-title"><?php _e( 'Nothing Found', 'arcade-basic' ); ?></h1>
 
 							<div class="entry-content description clearfix">
-								<p><?php printf( __( 'Ready to publish your first post? <a href="%s">Get started here</a>.', 'arcade' ), admin_url( 'post-new.php' ) ); ?></p>
+								<p><?php printf( __( 'Ready to publish your first post? <a href="%s">Get started here</a>.', 'arcade-basic' ), admin_url( 'post-new.php' ) ); ?></p>
 							</div><!-- .entry-content -->
 						</article>
 						<?php
 					} else {
-						get_template_part( 'content', 'none' );
+						get_template_part( 'template-parts/content', 'none' );
 					} // end current_user_can() check
 				}
 				?>

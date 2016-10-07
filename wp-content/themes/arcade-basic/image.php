@@ -48,16 +48,16 @@ get_header(); ?>
 
 						<footer class="entry">
 						    <?php
-						    wp_link_pages( array( 'before' => '<p id="pages">' . __( 'Pages:', 'arcade' ) ) );
-						    edit_post_link( __( '(edit)', 'arcade' ), '<p class="edit-link">', '</p>' );
+						    wp_link_pages( array( 'before' => '<p id="pages">' . __( 'Pages:', 'arcade-basic' ) ) );
+						    edit_post_link( __( '(edit)', 'arcade-basic' ), '<p class="edit-link">', '</p>' );
 						    ?>
 						</footer><!-- .entry -->
 					</article><!-- #post-## -->
 
 					<div id="posts-pagination" class="clearfix">
-						<h3 class="sr-only"><?php _e( 'Post navigation', 'arcade' ); ?></h3>
-						<div class="previous pull-left"><?php previous_image_link( false, __( '&larr; Previous Image', 'arcade' ) ); ?></div>
-						<div class="next pull-right"><?php next_image_link( false, __( 'Next Image &rarr;', 'arcade' ) ); ?></div>
+						<h3 class="sr-only"><?php _e( 'Post navigation', 'arcade-basic' ); ?></h3>
+						<div class="previous pull-left"><?php previous_image_link( false, __( '&larr; Previous Image', 'arcade-basic' ) ); ?></div>
+						<div class="next pull-right"><?php next_image_link( false, __( 'Next Image &rarr;', 'arcade-basic' ) ); ?></div>
 					</div><!-- #posts-pagination -->
 
 					<?php comments_template(); ?>

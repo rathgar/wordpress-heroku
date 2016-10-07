@@ -19,6 +19,10 @@ body {
 	padding: 0;
 }
 
+.navbar-nav.navbar-right {
+	margin-right: 0 !important;
+}
+
 blockquote {
 	border-left: 0;
 	border-right: 5px solid #eeeeee;
@@ -79,6 +83,10 @@ i.quote,
 	#author-info .author-text {
 		padding-right: 90px;
 	}
+
+.home-widget {
+	float: right;
+}
 
 /* =Pullquotes
 -------------------------------------------------------------- */

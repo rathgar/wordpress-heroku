@@ -6,11 +6,11 @@
  */
 ?>
 	<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-		<h3 class="post-format"><?php _e( '<i class="fa fa-link"></i> Link', 'arcade' ); ?></h3>
+		<h3 class="post-format"><?php _e( '<i class="fa fa-link"></i> Link', 'arcade-basic' ); ?></h3>
 
 		<div class="entry-content description clearfix">
-		    <?php the_content( __( 'Read more', 'arcade') ); ?>
+		    <?php the_content( __( 'Read more', 'arcade-basic') ); ?>
 	    </div><!-- .entry-content -->
 
-	    <?php get_template_part( 'content', 'footer' ); ?>
+	    <?php get_template_part( 'template-parts/content', 'footer' ); ?>
 	</article>

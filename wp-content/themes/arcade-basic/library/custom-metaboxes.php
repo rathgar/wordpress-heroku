@@ -26,8 +26,8 @@ class Bavotasan_Custom_Metaboxes {
 	 * @since 1.0.0
 	 */
 	public function add_custom_metabox() {
-		add_meta_box( 'theme-slider-image', __( 'Custom Header Image', 'arcade' ), array( $this, 'custom_image' ), 'post', 'normal', 'high' );
-		add_meta_box( 'theme-slider-image', __( 'Custom Header Image', 'arcade' ), array( $this, 'custom_image' ), 'page', 'normal', 'high' );
+		add_meta_box( 'theme-slider-image', __( 'Custom Header Image', 'arcade-basic' ), array( $this, 'custom_image' ), 'post', 'normal', 'high' );
+		add_meta_box( 'theme-slider-image', __( 'Custom Header Image', 'arcade-basic' ), array( $this, 'custom_image' ), 'page', 'normal', 'high' );
 	}
 
 	public function custom_image( $post ) {
@@ -39,8 +39,8 @@ class Bavotasan_Custom_Metaboxes {
 
 		echo '<p id="custom-image-container">' . $img_src . '</p>';
 		echo '<input type="hidden" id="arcade_basic_custom_image" name="arcade_basic_custom_image" value="' . esc_attr( $slider_image ) . '" />';
-		echo '<p><button class="button-primary select_image">' . __( 'Set Image', 'arcade' ) . '</button> <button class="button delete_image">' . __( 'Remove Image', 'arcade' ) . '</button></p>';
-		echo '<p>' . __( 'Set a custom image for the header if you want to use something other than the featured image.', 'arcade' ) . '</p>';
+		echo '<p><button class="button-primary select_image">' . __( 'Set Image', 'arcade-basic' ) . '</button> <button class="button delete_image">' . __( 'Remove Image', 'arcade-basic' ) . '</button></p>';
+		echo '<p>' . __( 'Set a custom image for the header if you want to use something other than the featured image.', 'arcade-basic' ) . '</p>';
 	}
 
 	/**

@@ -6,16 +6,16 @@
  */
 ?>
 	<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-	    <?php get_template_part( 'content', 'header' ); ?>
+	    <?php get_template_part( 'template-parts/content', 'header' ); ?>
 
 		<div class="entry-content description clearfix">
 	        <?php
 			if( has_post_thumbnail() && ! is_single() )
 				the_post_thumbnail( 'full', array( 'class' => 'alignnone' ) );
 			else
-				the_content( __( 'Read more', 'arcade') );
+				the_content( __( 'Read more', 'arcade-basic') );
 			?>
 	    </div><!-- .entry-content -->
 
-	    <?php get_template_part( 'content', 'footer' ); ?>
+	    <?php get_template_part( 'template-parts/content', 'footer' ); ?>
 	</article>

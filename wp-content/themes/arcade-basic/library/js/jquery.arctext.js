@@ -154,7 +154,7 @@
 			this.$el.lettering();
 
 			if( this.options.fitText )
-				this.$el.fitText();
+				this.$el.fitText(1.3);
 
 			this.$letters	= this.$el.find('span').css('display', 'inline-block');
 
