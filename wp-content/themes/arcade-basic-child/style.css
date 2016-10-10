@@ -21,4 +21,5 @@ article.error404 .entry-title {
   background-size: 100px 100px;
   width: 100px;
   height: 100px;
+  opacity: 0.6;
 }
