@@ -1,3 +1,16 @@
+<?php
+/**
+ * Author: Alin Marcu
+ * Author URI: https://deconf.com
+ * Copyright 2013 Alin Marcu
+ * License: GPLv2 or later
+ * License URI: http://www.gnu.org/licenses/gpl-2.0.html
+ */
+
+// Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) )
+	exit();
+?>
 <script type="text/javascript">
 (function($){
     $(window).load(function() {
@@ -15,7 +28,7 @@
                 }
             };
             $('a').filter(function() {
-                return this.href.match(/.*\.(<?php echo esc_js($GADASH_Config->options['ga_event_downloads']);?>)(\?.*)?$/);
+                return this.href.match(/.*\.(<?php echo esc_js($this->gadwp->config->options['ga_event_downloads']);?>)(\?.*)?$/);
             }).click(function(e) {
                 ga_track(['_trackEvent', 'download', 'click', this.href]);
             });

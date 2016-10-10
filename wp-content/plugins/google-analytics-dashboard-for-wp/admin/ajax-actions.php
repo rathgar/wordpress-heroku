@@ -1,139 +1,133 @@
 <?php
 /**
  * Author: Alin Marcu
- * Author URI: http://deconf.com
+ * Author URI: https://deconf.com
+ * Copyright 2013 Alin Marcu
  * License: GPLv2 or later
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  */
-if (! class_exists('GADASH_Backend_Ajax')) {
 
-  final class GADASH_Backend_Ajax
-  {
+// Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) )
+	exit();
 
-    function __construct()
-    {
-      // Backend Widget Realtime action
-      add_action('wp_ajax_gadashadmin_get_realtime', array(
-        $this,
-        'ajax_adminwidget_realtime'
-      ));
-      // Admin Widget get Reports action
-      add_action('wp_ajax_gadashadmin_get_widgetreports', array(
-        $this,
-        'ajax_adminwidget_reports'
-      ));
-    }
+if ( ! class_exists( 'GADWP_Backend_Ajax' ) ) {
 
-    function send_json($response)
-    {
-      @header('Content-Type: application/json; charset=' . get_option('blog_charset'));
-      echo json_encode($response);
-      if (defined('DOING_AJAX') && DOING_AJAX)
-        wp_die();
-      else
-        die();
-    }
+	final class GADWP_Backend_Ajax {
 
-    /**
-     * Ajax handler for getting reports for Admin Widget
-     *
-     * @return string|int
-     */
-    function ajax_adminwidget_reports()
-    {
-      global $GADASH_Config;
-      if (! isset($_REQUEST['gadashadmin_security_widget_reports']) or ! wp_verify_nonce($_REQUEST['gadashadmin_security_widget_reports'], 'gadashadmin_get_widgetreports')) {
-        wp_die(- 30);
-      }
-      $projectId = $_REQUEST['projectId'];
-      $from = $_REQUEST['from'];
-      $to = $_REQUEST['to'];
-      $query = $_REQUEST['query'];
-      if (ob_get_length()) {
-        ob_clean();
-      }
-      /*
-       * Include Tools
-       */
-      include_once ($GADASH_Config->plugin_path . '/tools/tools.php');
-      $tools = new GADASH_Tools();
-      if (! $tools->check_roles($GADASH_Config->options['ga_dash_access_back'])) {
-        wp_die(- 31);
-      }
-      if ($GADASH_Config->options['ga_dash_token'] and $projectId and $from and $to) {
-        include_once ($GADASH_Config->plugin_path . '/tools/gapi.php');
-        global $GADASH_GAPI;
-      } else {
-        wp_die(- 24);
-      }
-      switch ($query) {
-        case 'referrers':
-          $this->send_json($GADASH_GAPI->get_referrers($projectId, $from, $to));
-          break;
-        case 'contentpages':
-          $this->send_json($GADASH_GAPI->get_contentpages($projectId, $from, $to));
-          break;
-        case 'locations':
-          $this->send_json($GADASH_GAPI->get_locations($projectId, $from, $to));
-          break;
-        case 'bottomstats':
-          $this->send_json($GADASH_GAPI->get_bottomstats($projectId, $from, $to));
-          break;
-        case 'trafficchannels':
-          $this->send_json($GADASH_GAPI->get_trafficchannels($projectId, $from, $to));
-          break;
-        case 'medium':
-          $this->send_json($GADASH_GAPI->get_trafficdetails($projectId, $from, $to, 'medium'));
-          break;
-        case 'visitorType':
-          $this->send_json($GADASH_GAPI->get_trafficdetails($projectId, $from, $to, 'visitorType'));
-          break;
-        case 'socialNetwork':
-          $this->send_json($GADASH_GAPI->get_trafficdetails($projectId, $from, $to, 'socialNetwork'));
-          break;
-        case 'source':
-          $this->send_json($GADASH_GAPI->get_trafficdetails($projectId, $from, $to, 'source'));
-          break;
-        case 'searches':
-          $this->send_json($GADASH_GAPI->get_searches($projectId, $from, $to));
-          break;
-        default:
-          $this->send_json($GADASH_GAPI->get_mainreport($projectId, $from, $to, $query));
-          break;
-      }
-    }
-    // Real-Time Request
-    /**
-     * Ajax handler for getting realtime analytics data for Admin widget
-     *
-     * @return string|int
-     */
-    function ajax_adminwidget_realtime()
-    {
-      global $GADASH_Config;
-      if (! isset($_REQUEST['gadashadmin_security_widgetrealtime']) or ! wp_verify_nonce($_REQUEST['gadashadmin_security_widgetrealtime'], 'gadashadmin_get_realtime')) {
-        wp_die(- 30);
-      }
-      $projectId = $_REQUEST['projectId'];
-      if (ob_get_length()) {
-        ob_clean();
-      }
-      /*
-       * Include Tools
-       */
-      include_once ($GADASH_Config->plugin_path . '/tools/tools.php');
-      $tools = new GADASH_Tools();
-      if (! $tools->check_roles($GADASH_Config->options['ga_dash_access_back'])) {
-        wp_die(- 31);
-      }
-      if ($GADASH_Config->options['ga_dash_token'] and $projectId) {
-        include_once ($GADASH_Config->plugin_path . '/tools/gapi.php');
-        global $GADASH_GAPI;
-      } else {
-        wp_die(- 24);
-      }
-      $this->send_json($GADASH_GAPI->gadash_realtime_data($projectId));
-    }
-  }
+		private $gadwp;
+
+		public function __construct() {
+			$this->gadwp = GADWP();
+			
+			if ( GADWP_Tools::check_roles( $this->gadwp->config->options['ga_dash_access_back'] ) && ( ( 1 == $this->gadwp->config->options['backend_item_reports'] ) || ( 1 == $this->gadwp->config->options['dashboard_widget'] ) ) ) {
+				// Items action
+				add_action( 'wp_ajax_gadwp_backend_item_reports', array( $this, 'ajax_item_reports' ) );
+			}
+			if ( current_user_can( 'manage_options' ) ) {
+				// Admin Widget action
+				add_action( 'wp_ajax_gadwp_dismiss_notices', array( $this, 'ajax_dismiss_notices' ) );
+			}
+		}
+
+		/**
+		 * Ajax handler for Item Reports
+		 *
+		 * @return json|int
+		 */
+		public function ajax_item_reports() {
+			if ( ! isset( $_POST['gadwp_security_backend_item_reports'] ) || ! wp_verify_nonce( $_POST['gadwp_security_backend_item_reports'], 'gadwp_backend_item_reports' ) ) {
+				wp_die( - 30 );
+			}
+			if ( isset( $_POST['projectId'] ) && $this->gadwp->config->options['switch_profile'] && $_POST['projectId'] !== 'false' ) {
+				$projectId = $_POST['projectId'];
+			} else {
+				$projectId = false;
+			}
+			$from = $_POST['from'];
+			$to = $_POST['to'];
+			$query = $_POST['query'];
+			if ( isset( $_POST['filter'] ) ) {
+				$filter_id = $_POST['filter'];
+			} else {
+				$filter_id = false;
+			}
+			if ( ob_get_length() ) {
+				ob_clean();
+			}
+			
+			if ( ! ( GADWP_Tools::check_roles( $this->gadwp->config->options['ga_dash_access_back'] ) && ( ( 1 == $this->gadwp->config->options['backend_item_reports'] ) || ( 1 == $this->gadwp->config->options['dashboard_widget'] ) ) ) ) {
+				wp_die( - 31 );
+			}
+			if ( $this->gadwp->config->options['ga_dash_token'] && $this->gadwp->config->options['ga_dash_tableid_jail'] && $from && $to ) {
+				if ( null === $this->gadwp->gapi_controller ) {
+					$this->gadwp->gapi_controller = new GADWP_GAPI_Controller();
+				}
+			} else {
+				wp_die( - 24 );
+			}
+			if ( $projectId == false ) {
+				$projectId = $this->gadwp->config->options['ga_dash_tableid_jail'];
+			}
+			$profile_info = GADWP_Tools::get_selected_profile( $this->gadwp->config->options['ga_dash_profile_list'], $projectId );
+			if ( isset( $profile_info[4] ) ) {
+				$this->gadwp->gapi_controller->timeshift = $profile_info[4];
+			} else {
+				$this->gadwp->gapi_controller->timeshift = (int) current_time( 'timestamp' ) - time();
+			}
+			
+			if ( $filter_id ) {
+				$uri_parts = explode( '/', get_permalink( $filter_id ), 4 );
+				
+				if ( isset( $uri_parts[3] ) ) {
+					$uri = '/' . $uri_parts[3];
+				} else {
+					wp_die( - 25 );
+				}
+				
+				// allow URL correction before sending an API request
+				$filter = apply_filters( 'gadwp_backenditem_uri', $uri );
+				
+				$lastchar = substr( $filter, - 1 );
+				
+				if ( isset( $profile_info[6] ) && $profile_info[6] && $lastchar == '/' ) {
+					$filter = $filter . $profile_info[6];
+				}
+				
+				// Encode URL
+				$filter = rawurlencode( rawurldecode( $filter ) );
+			} else {
+				$filter = false;
+			}
+			
+			$queries = explode( ',', $query );
+			
+			$results = array();
+			
+			foreach ( $queries as $value ) {
+				$results[] = $this->gadwp->gapi_controller->get( $projectId, $value, $from, $to, $filter );
+			}
+			
+			wp_send_json( $results );
+		}
+
+		/**
+		 * Ajax handler for dismissing Admin notices
+		 *
+		 * @return json|int
+		 */
+		public function ajax_dismiss_notices() {
+			if ( ! isset( $_POST['gadwp_security_dismiss_notices'] ) || ! wp_verify_nonce( $_POST['gadwp_security_dismiss_notices'], 'gadwp_dismiss_notices' ) ) {
+				wp_die( - 30 );
+			}
+			
+			if ( ! current_user_can( 'manage_options' ) ) {
+				wp_die( - 31 );
+			}
+			
+			delete_option( 'gadwp_got_updated' );
+			
+			wp_die();
+		}
+	}
 }
-$GADASH_Backend_Ajax = new GADASH_Backend_Ajax();

@@ -1,4 +1,7 @@
 <?php
+/**
+ * @package GoogleAnalytics\Frontend
+ */
 
 /**
  * The basic frontend tracking class for the GA plugin, extendable for the children
@@ -9,7 +12,7 @@ abstract class Yoast_GA_Tracking {
 	 * Regular expression for Ga.js and universal tracking to detect links
 	 * @var string
 	 */
-	protected $link_regex = '/<a\s+([^>]*?)href=[\'\"](.*?):(\/\/)?([^\'\"]+?)[\'\"]\s?(.*?)>(.*?)<\/a>/i';
+	protected $link_regex = '/<a([^>]*)\shref=([\'\"])([a-zA-Z]+):(?:\/){2}?(.*)\2([^>]*)>(.*)<\/a>/isU';
 
 	/**
 	 * Storage for the currently set options
@@ -18,8 +21,7 @@ abstract class Yoast_GA_Tracking {
 	public $options;
 
 	/**
-	 * Should the tracking code be added
-	 * @var bool
+	 * @var boolean $do_tracking Should the tracking code be added
 	 */
 	protected $do_tracking = null;
 
@@ -35,8 +37,8 @@ abstract class Yoast_GA_Tracking {
 	/**
 	 * Output tracking link
 	 *
-	 * @param $label
-	 * @param $matches
+	 * @param string $label
+	 * @param array  $matches
 	 *
 	 * @return mixed
 	 */
@@ -86,7 +88,7 @@ abstract class Yoast_GA_Tracking {
 	/**
 	 * Parse article link
 	 *
-	 * @param $matches
+	 * @param array $matches
 	 *
 	 * @return mixed
 	 */
@@ -97,7 +99,7 @@ abstract class Yoast_GA_Tracking {
 	/**
 	 * Parse comment link
 	 *
-	 * @param $matches
+	 * @param array $matches
 	 *
 	 * @return mixed
 	 */
@@ -108,7 +110,7 @@ abstract class Yoast_GA_Tracking {
 	/**
 	 * Parse widget link
 	 *
-	 * @param $matches
+	 * @param array $matches
 	 *
 	 * @return mixed
 	 */
@@ -119,7 +121,7 @@ abstract class Yoast_GA_Tracking {
 	/**
 	 * Parse menu link
 	 *
-	 * @param $matches
+	 * @param array $matches
 	 *
 	 * @return mixed
 	 */
@@ -130,7 +132,7 @@ abstract class Yoast_GA_Tracking {
 	/**
 	 * Parse the_content or the_excerpt for links
 	 *
-	 * @param $text
+	 * @param string $text
 	 *
 	 * @return mixed
 	 */
@@ -149,7 +151,7 @@ abstract class Yoast_GA_Tracking {
 	/**
 	 * Parse the widget content for links
 	 *
-	 * @param $text
+	 * @param string $text
 	 *
 	 * @return mixed
 	 */
@@ -165,7 +167,7 @@ abstract class Yoast_GA_Tracking {
 	/**
 	 * Parse the nav menu for links
 	 *
-	 * @param $text
+	 * @param string $text
 	 *
 	 * @return mixed
 	 */
@@ -184,7 +186,7 @@ abstract class Yoast_GA_Tracking {
 	/**
 	 * Parse comment text for links
 	 *
-	 * @param $text
+	 * @param string $text
 	 *
 	 * @return mixed
 	 */
@@ -203,7 +205,7 @@ abstract class Yoast_GA_Tracking {
 	/**
 	 * Parse the domain
 	 *
-	 * @param $uri
+	 * @param string $uri
 	 *
 	 * @return array|bool
 	 */
@@ -217,7 +219,8 @@ abstract class Yoast_GA_Tracking {
 			$host = $matches[2];
 			if ( preg_match( '/.*\..*\..*\..*$/', $host ) ) {
 				preg_match( $domainPatternUK, $host, $matches );
-			} else {
+			}
+			else {
 				preg_match( $domainPatternUS, $host, $matches );
 			}
 
@@ -246,10 +249,12 @@ abstract class Yoast_GA_Tracking {
 			$link_attribute = str_replace( "onclick='" . $matches[1] . "'", $js_snippet_single, $link_attribute );
 
 			return $link_attribute;
-		} else {
+		}
+		else {
 			if ( ! is_null( $onclick ) ) {
 				return 'onclick="' . $onclick . '" ' . $link_attribute;
-			} else {
+			}
+			else {
 				return $link_attribute;
 			}
 		}
@@ -296,16 +301,23 @@ abstract class Yoast_GA_Tracking {
 	 */
 	public function do_tracking() {
 		if ( $this->do_tracking === null ) {
-			global $current_user;
-
-			get_currentuserinfo();
-
+			$user = wp_get_current_user();
 			$this->do_tracking = true;
 
-			if ( 0 != $current_user->ID && isset( $this->options['ignore_users'] ) ) {
-				if ( ! empty( $current_user->roles ) && in_array( $current_user->roles[0], $this->options['ignore_users'] ) ) {
+			if ( 0 != $user->ID && isset( $this->options['ignore_users'] ) ) {
+				if ( ! empty( $user->roles ) && in_array( $user->roles[0], $this->options['ignore_users'] ) ) {
 					$this->do_tracking = false;
 				}
+			}
+
+			/**
+			 * Filter: 'yst_ga_track_super_admin' - Allows filtering if the Super admin should be tracked in a multi-site setup
+			 *
+			 * @api array $all_roles
+			 */
+			$track_super_admin = apply_filters( 'yst_ga_track_super_admin', true );
+			if ( $track_super_admin === false && is_super_admin() ) {
+				$this->do_tracking = false;
 			}
 		}
 
@@ -321,10 +333,11 @@ abstract class Yoast_GA_Tracking {
 	 * @return array
 	 */
 	protected function get_target( $category, $matches ) {
-		$protocol     = $matches[2];
+		$protocol     = $matches[3];
 		$original_url = $matches[4];
 		$domain       = $this->yoast_ga_get_domain( $matches[4] );
-		$origin       = $this->yoast_ga_get_domain( $_SERVER['HTTP_HOST'] );
+		$http_host    = empty( $_SERVER['HTTP_HOST'] ) ? '' : $_SERVER['HTTP_HOST'];
+		$origin       = $this->yoast_ga_get_domain( $http_host );
 		$extension    = substr( strrchr( $original_url, '.' ), 1 );
 		$type         = $this->get_target_type( $extension, $domain, $origin, $matches );
 
@@ -337,7 +350,7 @@ abstract class Yoast_GA_Tracking {
 			'origin_domain'   => $origin['domain'],
 			'origin_host'     => $origin['host'],
 			'extension'       => $extension,
-			'link_attributes' => rtrim( $matches[1] . ' ' . $matches[5] ),
+			'link_attributes' => trim( $matches[1] . ' ' . $matches[5] ),
 			'link_text'       => $matches[6],
 			'original_url'    => $original_url,
 		);
@@ -356,19 +369,22 @@ abstract class Yoast_GA_Tracking {
 	protected function get_target_type( $extension, $domain, $origin, $matches ) {
 		$download_extensions = explode( ',', str_replace( '.', '', $this->options['extensions_of_files'] ) );
 		$download_extensions = array_map( 'trim', $download_extensions );
-		$protocol            = $matches[2];
+		$protocol            = $matches[3];
 		$original_url        = $matches[4];
 
 		// Break out immediately if the link is not an http or https link.
 		$type = null;
 		if ( $protocol !== 'http' && $protocol !== 'https' && $protocol !== 'mailto' ) {
 			$type = null;
-		} else {
+		}
+		else {
 			if ( ( $protocol == 'mailto' ) ) {
 				$type = 'email';
-			} elseif ( in_array( $extension, $download_extensions ) ) {
+			}
+			elseif ( in_array( $extension, $download_extensions ) ) {
 				$type = 'download';
-			} else {
+			}
+			else {
 				$type = $this->parse_outbound_type( $domain, $origin, $original_url );
 			}
 		}
@@ -403,7 +419,8 @@ abstract class Yoast_GA_Tracking {
 			if ( ! isset( $type ) ) {
 				$type = 'internal';
 			}
-		} elseif ( $domain['domain'] != $origin['domain'] ) {
+		}
+		elseif ( $domain['domain'] != $origin['domain'] ) {
 			$type = 'outbound';
 		}
 
@@ -428,6 +445,49 @@ abstract class Yoast_GA_Tracking {
 		}
 
 		return $label;
+	}
+
+	/**
+	 * When a usergroup is disabled, show a message in the source to notify the user they are in a disabled user group.
+	 */
+	protected function disabled_usergroup() {
+		/* translators %1$s is the product name 'Google Analytics by MonsterInsights'. %2$s displays the plugin version the website uses and a link to the plugin on MonsterInsights.com */
+		echo '<!-- ' . sprintf( __( 'This site uses the %1$s plugin version %2$s', 'google-analytics-for-wordpress' ), 'Google Analytics by MonsterInsights', GAWP_VERSION . ' - https://www.monsterinsights.com/' ) . ' -->';
+
+		if ( current_user_can( 'manage_options' ) ) {
+			echo '<!-- ' . __( '@Webmaster, normally you will find the Google Analytics tracking code here, but you are in the disabled user groups. To change this, navigate to Analytics -> Settings (Ignore usergroups)', 'google-analytics-for-wordpress' ) . ' -->';
+		}
+		else {
+			echo '<!-- ' . __( 'Normally you will find the Google Analytics tracking code here, but the webmaster disabled your user group.', 'google-analytics-for-wordpress' ) . ' -->';
+		}
+
+		// Do not make this translatable, as this is the product name.
+		echo '<!-- / Google Analytics by MonsterInsights -->';
+	}
+
+	/**
+	 * When the debug mode is enabled, display a message in the source.
+	 *
+	 * @return bool
+	 */
+	protected function debug_mode() {
+		if ( $this->options['debug_mode'] === 1 ) {
+			/* translators %1$s is the product name 'Google Analytics by MonsterInsights'. %2$s displays the plugin version the website uses and a link to the plugin on MonsterInsights.com */
+			echo '<!-- ' . sprintf( __( 'This site uses the %1$s plugin version %2$s', 'google-analytics-for-wordpress' ), 'Google Analytics by MonsterInsights', GAWP_VERSION . ' - https://www.monsterinsights.com/' ) . ' -->';
+
+			if ( current_user_can( 'manage_options' ) ) {
+				echo '<!-- ' . __( '@Webmaster, normally you will find the Google Analytics tracking code here, but the Debug Mode is enabled. To change this, navigate to Analytics -> Settings -> (Tab) Debug Mode and disable Debug Mode to enable tracking of your site.', 'google-analytics-for-wordpress' ) . ' -->';
+			}
+			else {
+				echo '<!-- ' . __( 'Normally you will find the Google Analytics tracking code here, but the webmaster has enabled the Debug Mode.', 'google-analytics-for-wordpress' ) . ' -->';
+			}
+
+			// Do not make this translatable, as this is the product name.
+			echo '<!-- / Google Analytics by MonsterInsights -->';
+
+			return true;
+		}
+		return false;
 	}
 
 }
