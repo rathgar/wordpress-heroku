@@ -17,7 +17,7 @@ class Bavotasan_Custom_Text_Widget extends WP_Widget {
 		wp_enqueue_script( 'bavotasan_image_widget', BAVOTASAN_THEME_URL . '/library/js/admin/image-widget.js', array( 'jquery' ), '', true );
 
 		wp_enqueue_style( 'bavotasan_image_widget_css', BAVOTASAN_THEME_URL . '/library/css/admin/image-widget.css' );
-		wp_enqueue_style( 'font-awesome', BAVOTASAN_THEME_URL .'/library/css/font-awesome.css', false, '4.6.3', 'all' );
+		wp_enqueue_style( 'font-awesome', BAVOTASAN_THEME_URL .'/library/css/font-awesome.css', false, '4.7.0', 'all' );
 	}
 
 	function widget( $args, $instance ) {

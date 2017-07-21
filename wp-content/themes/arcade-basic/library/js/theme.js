@@ -53,7 +53,7 @@
 	} );
 
     // Arc the site title
-    if ( 0 !== arcade_basic_vars.arc ) {
+    if ( 0 != arcade_basic_vars.arc ) {
         $( '#site-title a' ).arctext( {
         	radius: arcade_basic_vars.arc,
         	rotate: is_rtl,

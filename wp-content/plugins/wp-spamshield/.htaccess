@@ -1,8 +1,8 @@
 # WP-SpamShield - "/wp-spamshield/" .htaccess
-# File Version 1.9.9.3
+# File Version 1.9.9.9.4
 
 # Control direct access to certain files.
-# Apache 2.2 and 2.4 compatible
+# Apache 2.2 and 2.4+ compatible
 
 # Disable caching and proxy caching for .txt files
 <IfModule mod_headers.c>
@@ -23,7 +23,6 @@
 	<Files ~ "^(.+)\.txt$">
 		SetOutputFilter DEFLATE
 	</Files>
-	AddOutputFilterByType DEFLATE text/plain
 </IfModule>
 
 # Apache 2.2
@@ -32,7 +31,7 @@
 	Allow from all
 </IfModule>
 
-# Apache 2.4
+# Apache 2.4+
 <IfModule mod_authz_core.c>
 	Require all granted
 </IfModule>

@@ -74,6 +74,16 @@ Source: https://unsplash.com/search/tricycle?photo=GG0jOrmwqtw
 
 == CHANGELOG ==
 
+03/09/2017 v1.1.0
+* Fixed mixed placeholders
+* Fixed upgrade button
+* Fixed customize section error
+* Updated Font Awesome 4.7.0
+* Updated language files
+
+10/12/2016 v1.0.10
+* Fix for no arc in site name
+
 10/05/2016 v1.0.9
 * Updated Font Awesome
 * Updated Bootstrap

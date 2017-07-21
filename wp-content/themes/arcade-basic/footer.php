@@ -14,8 +14,8 @@ $bavotasan_theme_options = bavotasan_theme_options();
 		<div id="footer-content" class="container">
 			<div class="row">
 				<div class="copyright col-lg-12">
-					<span class="pull-left"><?php printf( __( 'Copyright &copy; %s %s. All Rights Reserved.', 'arcade-basic' ), date( 'Y' ), ' <a href="' . home_url() . '">' . get_bloginfo( 'name' ) .'</a>' ); ?></span>
-					<span class="credit-link pull-right"><i class="fa fa-leaf"></i><?php printf( __( 'The %s Theme by %s.', 'arcade-basic' ), BAVOTASAN_THEME_NAME, '<a href="https://themes.bavotasan.com/themes/arcade">bavotasan.com</a>' ); ?></span>
+					<span class="pull-left"><?php printf( __( 'Copyright &copy; %1$s %2$s. All Rights Reserved.', 'arcade-basic' ), date( 'Y' ), ' <a href="' . home_url() . '">' . get_bloginfo( 'name' ) .'</a>' ); ?></span>
+					<span class="credit-link pull-right"><i class="fa fa-leaf"></i><?php printf( __( 'The %1$s Theme by %2$s.', 'arcade-basic' ), BAVOTASAN_THEME_NAME, '<a href="https://themes.bavotasan.com/themes/arcade">bavotasan.com</a>' ); ?></span>
 				</div><!-- .col-lg-12 -->
 			</div><!-- .row -->
 		</div><!-- #footer-content.container -->

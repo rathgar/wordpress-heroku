@@ -61,7 +61,6 @@ class Addthis_Wordpress
         $this->addThisConfigs = $addThisConfigs;
         $this->cmsConnector = $cmsConnector;
         // Save async load settings via ajax request
-        add_action( 'wp_ajax_at_async_loading', array($this, 'addthisAsyncLoading'));
         $this->_upgrade = $upgrade;
         $this->_getVariables = $_GET;
         $this->_postVariables = $_POST;
@@ -202,26 +201,6 @@ class Addthis_Wordpress
                          && wp_verify_nonce( $this->_postVariables['pubid_nonce'], 'update_pubid' );
 
         return $successReturn;
-    }
-
-    /**
-     *  Check if there is request to update async loading
-     *
-     *  @return boolean
-     */
-    private function _checkAsyncLoading()
-    {
-        $successReturn = isset ($this->_postVariables['async_loading']);
-
-        return $successReturn;
-    }
-
-    public function addthisAsyncLoading()
-    {
-        if (current_user_can( 'manage_options' ) && $this->_checkAsyncLoading()) {
-            $updateResult = $this->updateSettings($this->_postVariables);
-        }
-        die; //exit from the ajax request
     }
 
     /**

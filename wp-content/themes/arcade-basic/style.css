@@ -4,7 +4,7 @@ Theme URI: https://themes.bavotasan.com/themes/arcade-wordpress-theme/
 Author: c.bavota
 Author URI: http://bavotasan.com/
 Description: Create a truly unique design with Arcade, a lightweight and fully responsive HTML5 theme. Use the theme customizer to add your own header image, page layout, site width and more. Distinguish each post with one of the eight supported post formats, such as: Video, Image, Aside, Status, Audio, Quote, Link and Gallery. Install JetPack to display each of your galleries through a tiled view and jQuery carousel. Compatible with bbPress, BuddyPress, WPML & Woocommerce. Uses Google Fonts for improved typeface readability and works perfectly in desktop browsers, tablets and handheld devices.
-Version: 1.0.9
+Version: 1.1.0
 Text Domain: arcade
 Domain Path: /languages/
 Tags: one-column, two-columns, left-sidebar, right-sidebar, buddypress, custom-background, custom-colors, custom-header, custom-menu, editor-style, featured-image-header, featured-images, flexible-header, microformats, post-formats, rtl-language-support, sticky-post, theme-options, threaded-comments, translation-ready
@@ -12,8 +12,8 @@ Tags: one-column, two-columns, left-sidebar, right-sidebar, buddypress, custom-b
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Arcade WordPress Theme, Copyright 2016 Bavotasan Web Development Inc.
-Arcade is distributed under the terms of the GNU GPL
+Arcade Basic WordPress Theme, Copyright 2017 Bavotasan Web Development Inc.
+Arcade Basic is distributed under the terms of the GNU GPL
 */
 /*!
  * Bootstrap v3.3.7 (http://getbootstrap.com)
@@ -4919,7 +4919,7 @@ article {
       color: #777; }
 
 .entry-meta {
-  line-height: 1;
+  line-height: 1.3;
   margin: 10px 0 30px; }
   .basic .entry-meta {
     font-size: 13px; }

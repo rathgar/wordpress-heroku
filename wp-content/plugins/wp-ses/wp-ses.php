@@ -2,14 +2,16 @@
 
 /*
   Plugin Name: WP SES
-  Version: 0.4.8
+  Version: 0.7.1
   Plugin URI: http://wp-ses.com
   Description: Uses Amazon Simple Email Service instead of local mail for all outgoing WP emails.
   Author: Sylvain Deaure
   Author URI: http://www.blog-expert.fr
+ * Text Domain: wpses
+ * Domain Path: /
  */
 
-define('WPSES_VERSION', 0.48);
+define('WPSES_VERSION', 0.71);
 
 // TODO
 // stats cache (beware of directory)
@@ -76,9 +78,10 @@ function wpses_install() {
 function wpses_options() {
     global $wpdb, $wpses_options;
     global $current_user;
-    get_currentuserinfo();
+    //get_currentuserinfo();
+    wp_get_current_user(); // Thanks @jmichaelward
     if (!in_array('administrator', $current_user->roles)) {
-        //die('Pas admin');
+        //die('Not admin');
     }
     $authorized = '';
     if (($wpses_options['access_key'] != '') and ( $wpses_options['secret_key'] != '')) {
@@ -582,27 +585,34 @@ function wpses_mail($to, $subject, $message, $headers = '', $attachments = '') {
     if ('' != $wpses_options['reply_to']) {
         if ('headers' == strtolower($wpses_options['reply_to'])) {
             // extract replyto from headers
+            wpses_log('extract headers');
             $rto = array();
             //if (preg_match('/^Reply-To: ([a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4})\b/imsU', $headers, $rto)) {
             //if (preg_match('/^Reply-To: (.*)\b/imsU', $headers, $rto)) {
             if (preg_match('/^Reply-To: (.*)/im', $headers, $rto)) {
                 // does only support one email for now.
                 $m->addReplyTo($rto[1]);
+                wpses_log('add Reply-To ' . $rto[1]);
             }
             if (preg_match('/^From: (.*)/im', $headers, $rto)) {
                 // Uses "From:" header - was /isU which broke things, see https://wordpress.org/support/topic/gravity-forms-18205-latest-contact-form-7-403-latest-not-working
                 $from = $rto[1];
+                wpses_log('add from ' . $rto[1]);
             }
             // Handle multiple cc and bcc: from headers too ? Guess so... TODO
             if ('' != $headers) {
                 $headers = str_replace("\r\n", "\n", $headers);
+                //wpses_log('headers are ' . $headers);
                 $lines = explode("\n", $headers);
                 foreach ($lines as $line) {
+                    wpses_log('Line ' . $line);
                     if (preg_match('/^cc: (.*)/im', $line, $cc)) {
                         $m->addCC($cc[1]);
+                        wpses_log('add cc ' . $cc[1]);
                     }
                     if (preg_match('/^Bcc: (.*)/im', $line, $Bcc)) {
                         $m->addBCC($Bcc[1]);
+                        wpses_log('add Bcc ' . $Bcc[1]);
                     }
                 }
             }

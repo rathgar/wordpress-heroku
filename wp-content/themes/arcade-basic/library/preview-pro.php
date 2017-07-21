@@ -1,6 +1,6 @@
 <?php
 class Bavotasan_Preview_Pro {
-	private $theme_url = 'http://themes.bavotasan.com/themes/arcade/';
+	private $theme_url = 'https://themes.bavotasan.com/themes/arcade-wordpress-theme/';
 	private $theme_name = 'Arcade';
 
 	public function __construct() {
@@ -15,7 +15,7 @@ class Bavotasan_Preview_Pro {
 	 * @since 1.0.0
 	 */
 	public function admin_menu() {
-		add_theme_page( sprintf( __( 'Welcome to %s %s', 'arcade-basic' ), BAVOTASAN_THEME_NAME, BAVOTASAN_THEME_VERSION ), __( 'Upgrade to Premium', 'arcade-basic' ), 'edit_theme_options', 'bavotasan_preview_pro', array( $this, 'bavotasan_preview_pro' ) );
+		add_theme_page( sprintf( __( 'Welcome to %1$s %2$s', 'arcade-basic' ), BAVOTASAN_THEME_NAME, BAVOTASAN_THEME_VERSION ), __( 'Upgrade to Premium', 'arcade-basic' ), 'edit_theme_options', 'bavotasan_preview_pro', array( $this, 'bavotasan_preview_pro' ) );
 
 		// Remove upgrade page from Appearance menu
 		remove_submenu_page( 'themes.php', 'bavotasan_preview_pro' );
@@ -26,6 +26,10 @@ class Bavotasan_Preview_Pro {
 		<style>
 		.featured-image {
 			margin: 20px auto !important;
+		}
+
+		.featured-image img {
+			width: 100%;
 		}
 
 		.about-wrap .headline-feature h2 {
@@ -74,7 +78,7 @@ class Bavotasan_Preview_Pro {
 		</style>
 
 		<div class="wrap about-wrap" id="custom-background">
-			<h1><?php printf( __( 'Welcome to %s %s', 'arcade-basic' ), BAVOTASAN_THEME_NAME, BAVOTASAN_THEME_VERSION ); ?></h1>
+			<h1><?php printf( __( 'Welcome to %1$s %2$s', 'arcade-basic' ), BAVOTASAN_THEME_NAME, BAVOTASAN_THEME_VERSION ); ?></h1>
 
 			<div class="about-text">
 				<?php printf( __( 'Take your site to the next level with the full version of %s. Check out some of the advanced features that&rsquo;ll give you more control over your site&rsquo;s layout and design.', 'arcade-basic' ), '<em>' . $this->theme_name . '</em>' ); ?>

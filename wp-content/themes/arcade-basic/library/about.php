@@ -23,7 +23,7 @@ class Bavotasan_Documentation {
 	public function welcome_admin_notice() {
 		?>
 		<div class="updated fade">
-			<p><?php echo sprintf( esc_html__( 'Thanks for choosing %s! You can learn how to use the available theme options on the %sabout page%s.', 'arcade-basic' ), BAVOTASAN_THEME_NAME, '<a href="' . esc_url( admin_url( 'themes.php?page=bavotasan_documentation' ) ) . '">', '</a>' ); ?></p>
+			<p><?php echo sprintf( esc_html__( 'Thanks for choosing %1$s! You can learn how to use the available theme options on the %2$sabout page%3$s.', 'arcade-basic' ), BAVOTASAN_THEME_NAME, '<a href="' . esc_url( admin_url( 'themes.php?page=bavotasan_documentation' ) ) . '">', '</a>' ); ?></p>
 
 			<p><a href="<?php echo esc_url( admin_url( 'themes.php?page=bavotasan_documentation' ) ); ?>" class="button" style="text-decoration: none;"><?php printf( __( 'Learn more about %s', 'arcade-basic' ), BAVOTASAN_THEME_NAME ); ?></a></p>
 		</div>
@@ -38,7 +38,7 @@ class Bavotasan_Documentation {
 	 * @since 1.0.0
 	 */
 	public function admin_menu() {
-		add_theme_page( sprintf( __( 'Welcome to %s %s', 'arcade-basic' ), BAVOTASAN_THEME_NAME, BAVOTASAN_THEME_VERSION ), sprintf( __( 'About %s', 'arcade-basic' ), BAVOTASAN_THEME_NAME ), 'edit_theme_options', 'bavotasan_documentation', array( $this, 'bavotasan_documentation' ) );
+		add_theme_page( sprintf( __( 'Welcome to %1$s %2$s', 'arcade-basic' ), BAVOTASAN_THEME_NAME, BAVOTASAN_THEME_VERSION ), sprintf( __( 'About %s', 'arcade-basic' ), BAVOTASAN_THEME_NAME ), 'edit_theme_options', 'bavotasan_documentation', array( $this, 'bavotasan_documentation' ) );
 	}
 
 	public function bavotasan_documentation() {
@@ -119,7 +119,7 @@ class Bavotasan_Documentation {
 					<img src="<?php echo BAVOTASAN_THEME_URL; ?>/library/images/customizer.jpg" />
 				</div>
 
-				<p><?php printf( __( 'All theme options for <em>%s</em> are controlled under %sAppearance &rarr; Customize%s. From there, you can modify layout, custom menus, and more.', 'arcade-basic' ), BAVOTASAN_THEME_NAME, '<a href="' . admin_url( 'customize.php' ) . '">', '</a>' ); ?></p>
+				<p><?php printf( __( 'All theme options for <em>%1$s</em> are controlled under %2$sAppearance &rarr; Customize%3$s. From there, you can modify layout, custom menus, and more.', 'arcade-basic' ), BAVOTASAN_THEME_NAME, '<a href="' . admin_url( 'customize.php' ) . '">', '</a>' ); ?></p>
 
 				<h3><?php _e( 'Site Title Arc', 'arcade-basic' ); ?></h3>
 				<p><?php printf( __( '<em>%s</em> uses Arctext.js to create a cool curved effect on your site title. The space and rotation for each letter is calculated using the Arc Radius and the width of the site title. If you don&rsquo;t want your site title to arc, leave the field blank.', 'arcade-basic' ), BAVOTASAN_THEME_NAME ); ?></p>
@@ -139,7 +139,7 @@ class Bavotasan_Documentation {
 
 				<p><?php printf( __( '<em>%s</em> includes one Custom Menu locations: the Primary top menu.', 'arcade-basic' ), BAVOTASAN_THEME_NAME ); ?></p>
 
-				<p><?php printf( __( 'To add a navigation menu to the header, go to %sAppearance &rarr; Menus%s. By default, a list of categories will appear in this location if no custom menu is set.', 'arcade-basic' ), '<a href="' . admin_url( 'nav-menus.php' ) . '">', '</a>' ); ?></p>
+				<p><?php printf( __( 'To add a navigation menu to the header, go to %1$sAppearance &rarr; Menus%2$s. By default, a list of categories will appear in this location if no custom menu is set.', 'arcade-basic' ), '<a href="' . admin_url( 'nav-menus.php' ) . '">', '</a>' ); ?></p>
 
 				<p><?php _e( 'Clicking on a top-level link in the primary navigation will open up the first dropdown list of sub-menu links.', 'arcade-basic' ); ?></p>
 
@@ -153,7 +153,7 @@ class Bavotasan_Documentation {
 					<img src="<?php echo BAVOTASAN_THEME_URL; ?>/library/images/jumbo-headline.jpg" />
 				</div>
 
-				<p><?php printf( __( 'The Jumbo Headline is a widgetized area on the home page designed for a Text widget. Go to %sAppearance &rarr; Widgets%s to add the widget and customize the text.', 'arcade-basic' ), '<a href="' . admin_url( 'widgets.php' ) . '">', '</a>' ); ?></p>
+				<p><?php printf( __( 'The Jumbo Headline is a widgetized area on the home page designed for a Text widget. Go to %1$sAppearance &rarr; Widgets%2$s to add the widget and customize the text.', 'arcade-basic' ), '<a href="' . admin_url( 'widgets.php' ) . '">', '</a>' ); ?></p>
 			</div>
 			<hr />
 
@@ -164,7 +164,7 @@ class Bavotasan_Documentation {
 					<img src="<?php echo BAVOTASAN_THEME_URL; ?>/library/images/home-page-widgets.jpg" />
 				</div>
 
-				<p><?php printf( __( 'The section where the four widgets appear on the homepage will only display once a widget is added to the Homepage Top Area in %sAppearance &rarr; Widgets%s. The demo uses the custom Icon & Text widget that comes with <em>%s</em> to display an icon accompanied by text. You can even have the icon and text link to a page or a post, by adding a URL in the field provided.', 'arcade-basic' ), '<a href="' . admin_url( 'widgets.php' ) . '">', '</a>', BAVOTASAN_THEME_NAME ); ?></p>
+				<p><?php printf( __( 'The section where the four widgets appear on the homepage will only display once a widget is added to the Homepage Top Area in %1$sAppearance &rarr; Widgets%2$s. The demo uses the custom Icon & Text widget that comes with <em>%3$s</em> to display an icon accompanied by text. You can even have the icon and text link to a page or a post, by adding a URL in the field provided.', 'arcade-basic' ), '<a href="' . admin_url( 'widgets.php' ) . '">', '</a>', BAVOTASAN_THEME_NAME ); ?></p>
 			</div>
 			<hr />
 
@@ -201,15 +201,15 @@ class Bavotasan_Documentation {
 
 				<h3><?php _e( 'Infinite Scroll', 'arcade-basic' ); ?></h3>
 
-				<p><?php printf( __( '%sJetpack&rsquo;s Infinite Scroll%s allows your visitors to view all your posts without having to click through to the next page. As they scroll, new posts will be added. To activate go to %sJetpack &rarr; Settings%s. ', 'arcade-basic' ), '<a href="//jetpack.me/support/infinite-scroll/">', '</a>', '<a href="' . admin_url( 'admin.php?page=jetpack_modules' ) . '">', '</a>' ); ?></p>
+				<p><?php printf( __( '%1$sJetpack&rsquo;s Infinite Scroll%2$s allows your visitors to view all your posts without having to click through to the next page. As they scroll, new posts will be added. To activate go to %3$sJetpack &rarr; Settings%4$s. ', 'arcade-basic' ), '<a href="//jetpack.me/support/infinite-scroll/">', '</a>', '<a href="' . admin_url( 'admin.php?page=jetpack_modules' ) . '">', '</a>' ); ?></p>
 
 				<h3><?php _e( 'Tiled Galleries', 'arcade-basic' ); ?></h3>
 
-				<p><?php printf( __( '%sJetpack&rsquo;s Tiled Galleries%s will display your images in a beautiful mosaic layout. Go to %sJetpack &rarr; Settings%s to turn it on. ', 'arcade-basic' ), '<a href="//jetpack.me/support/tiled-galleries/">', '</a>', '<a href="' . admin_url( 'admin.php?page=jetpack_modules' ) . '">', '</a>' ); ?></p>
+				<p><?php printf( __( '%1$sJetpack&rsquo;s Tiled Galleries%2%s will display your images in a beautiful mosaic layout. Go to %3$sJetpack &rarr; Settings%4$s to turn it on. ', 'arcade-basic' ), '<a href="//jetpack.me/support/tiled-galleries/">', '</a>', '<a href="' . admin_url( 'admin.php?page=jetpack_modules' ) . '">', '</a>' ); ?></p>
 
 				<h3><?php _e( 'Carousel', 'arcade-basic' ); ?></h3>
 
-				<p><?php printf( __( 'With %sJetpack&rsquo;s Carousel%s, clicking on one of your gallery images will open up a featured lightbox slideshow. Turn it on by going to %sJetpack &rarr; Settings%s. ', 'arcade-basic' ), '<a href="//jetpack.me/support/carousel/">', '</a>', '<a href="' . admin_url( 'admin.php?page=jetpack_modules' ) . '">', '</a>' ); ?></p>
+				<p><?php printf( __( 'With %1$sJetpack&rsquo;s Carousel%2$s, clicking on one of your gallery images will open up a featured lightbox slideshow. Turn it on by going to %3$sJetpack &rarr; Settings%4$s. ', 'arcade-basic' ), '<a href="//jetpack.me/support/carousel/">', '</a>', '<a href="' . admin_url( 'admin.php?page=jetpack_modules' ) . '">', '</a>' ); ?></p>
 			</div>
 			<hr />
 
@@ -229,7 +229,7 @@ class Bavotasan_Documentation {
 			</div>
 			<hr />
 
-			<p><?php printf( __( 'For more information, check out the %sDocumentation &amp; FAQs%s section on my site.', 'arcade-basic' ), '<a href="//themes.bavotasan.com/documentation/" target="_blank">', '</a>' ); ?></p>
+			<p><?php printf( __( 'For more information, check out the %1$sDocumentation &amp; FAQs%2$s section on my site.', 'arcade-basic' ), '<a href="//themes.bavotasan.com/documentation/" target="_blank">', '</a>' ); ?></p>
 		</div>
 		<?php
 	}
