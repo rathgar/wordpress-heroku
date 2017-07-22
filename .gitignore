@@ -1,1 +1,4 @@
 wp-content/uploads/**/*
+Gemfile
+Gemfile.lock
+config.ru
