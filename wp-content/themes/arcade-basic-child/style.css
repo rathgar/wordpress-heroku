@@ -23,3 +23,16 @@ article.error404 .entry-title {
   height: 100px;
   opacity: 0.6;
 }
+
+.entry-meta {
+    margin: 10px 0 15px;
+}
+
+article {
+    padding-bottom: 0px;
+    border-bottom: 2px solid #eee;
+}
+
+.excerpt a {  /* Stop wrapping in "Read more ->" links */
+  white-space: nowrap;
+}
