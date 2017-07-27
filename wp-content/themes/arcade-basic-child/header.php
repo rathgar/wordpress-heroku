@@ -35,6 +35,9 @@ $space_class = '';
 				        <span class="icon-bar"></span>
 				        <span class="icon-bar"></span>
 				    </button>
+          <a class="navbar-brand" href="/" rel="home">
+            <img alt="Rue" width="20" height="20" src="/wp-content/themes/arcade-basic-child/library/images/rue-stamp.svg">
+          </a>
 				</div>
 
 				<div class="collapse navbar-collapse">
