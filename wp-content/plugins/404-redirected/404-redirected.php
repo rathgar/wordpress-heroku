@@ -3,10 +3,10 @@
 	Plugin Name: Redirectioner
 	Plugin URI:  https://redirectioner.com
 	Description: Creates automatic redirects for 404 traffic and page suggestions when matches are not found providing better service to your web visitors
-	Author:      ThemeMix
-	Author URI:  https://thememix.com
+	Author:      Remkus de Vries
+	Author URI:  https://remkus.devries.frl
 
-	Version: 1.4.9
+	Version: 1.4.10
 
 	License:     GPL2
 	License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -37,7 +37,7 @@
 define( 'WBZ404_URL', plugin_dir_url( __FILE__ ) );
 define( 'WBZ404_PATH', plugin_dir_path( __FILE__ ) );
 define( 'WBZ404_NAME', plugin_basename( __FILE__ ) );
-define( 'WBZ404_VERSION', '1.4.9' );
+define( 'WBZ404_VERSION', '1.4.10' );
 define( 'WBZ404_HOME', 'https://redirectioner.com/' );
 define( 'WBZ404_TRANS', 'wbz404_redirected' );
 

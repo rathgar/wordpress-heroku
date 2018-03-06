@@ -8,15 +8,15 @@ if (!isset($wpses_options)) {
 }
 
 if ($wpses_options['credentials_ok'] != 1) {
-    $WPSESMSG = __('Amazon API credentials have not been checked.<br />Please go to settings -> WP SES and setup the plugin', 'wpses');
+    $WPSESMSG = __('Amazon API credentials have not been checked.<br />Please go to settings -> WP SES and setup the plugin', 'wp-ses');
     include ('error.tmpl.php');
 }
 
-require_once (WP_PLUGIN_DIR . '/wp-ses/ses.class.0.8.6.php');
-$SES = new SimpleEmailService($wpses_options['access_key'], $wpses_options['secret_key']);
+require_once plugin_dir_path( __FILE__ ) . 'ses.class.0.8.6.php';
+$SES = new SimpleEmailService($wpses_options['access_key'], $wpses_options['secret_key'], $wpses_options['endpoint']);
 
 if (!is_object($SES)) {
-    $WPSESMSG = __('Error initializing SES. Please check your settings.', 'wpses');
+    $WPSESMSG = __('Error initializing SES. Please check your settings.', 'wp-ses');
     include ('error.tmpl.php');
 }
 

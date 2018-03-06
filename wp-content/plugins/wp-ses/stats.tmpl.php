@@ -1,13 +1,9 @@
 <div class="wrap">
     <div id="icon-options-general" class="icon32"><br /></div>
-    <h2><?php _e('Amazon SES Stats', 'wpses') ?></h2>
+    <h2><?php _e('Amazon SES Stats', 'wp-ses') ?></h2>
 
 
-    <h3><?php _e('Sending limits', 'wpses') ?></h3>
-    <div style="border:1px solid#ccc; padding:10px; float:right; ">
-        Don't forget to check online FAQs on <a href="http://wp-ses.com/" target="_blank">WP-SES</a> website.<br />
-        We also provide useful tips on email deliverability<br />and successful list building.
-    </div>
+    <h3><?php _e('Sending limits', 'wp-ses') ?></h3>
 
     <?php
     /*
@@ -23,18 +19,18 @@
      */
     ?>
     <table>
-        <tr><td><?php _e('Max24HourSend', 'wpses') ?>&nbsp;</td><td><?php echo $quota['Max24HourSend'] ?></td><td>&nbsp;<i><?php _e('Max email quota for 24 hours period', 'wpses') ?></i></td></tr>
-        <tr><td><?php _e('MaxSendRate', 'wpses') ?>&nbsp;</td><td><?php echo $quota['MaxSendRate'] ?> /s</td><td>&nbsp;<i><?php _e('Max email sending rate par second', 'wpses') ?></i></td></tr>
-        <tr><td><?php _e('SentLast24Hours', 'wpses') ?>&nbsp;</td><td><?php echo $quota['SentLast24Hours'] ?></td><td>&nbsp;<i><?php _e('Emails sent for the last 24 hours', 'wpses') ?></i></td></tr>
-        <tr><td><?php _e('SendRemaining', 'wpses') ?>&nbsp;</td><td><?php echo $quota['SendRemaining'] ?></td><td>&nbsp;<i><?php _e('Email sending quota remaining', 'wpses') ?></i></td></tr>
-        <tr><td><?php _e('SendUsage', 'wpses') ?>&nbsp;</td><td><?php echo $quota['SendUsage'] ?> %</td><td>&nbsp;<i><?php _e('Usage percentage per 24h', 'wpses') ?></i></td></tr>
+        <tr><td><?php _e('Max24HourSend', 'wp-ses') ?>&nbsp;</td><td><?php echo $quota['Max24HourSend'] ?></td><td>&nbsp;<i><?php _e('Max email quota for 24 hours period', 'wp-ses') ?></i></td></tr>
+        <tr><td><?php _e('MaxSendRate', 'wp-ses') ?>&nbsp;</td><td><?php echo $quota['MaxSendRate'] ?> /s</td><td>&nbsp;<i><?php _e('Max email sending rate par second', 'wp-ses') ?></i></td></tr>
+        <tr><td><?php _e('SentLast24Hours', 'wp-ses') ?>&nbsp;</td><td><?php echo $quota['SentLast24Hours'] ?></td><td>&nbsp;<i><?php _e('Emails sent for the last 24 hours', 'wp-ses') ?></i></td></tr>
+        <tr><td><?php _e('SendRemaining', 'wp-ses') ?>&nbsp;</td><td><?php echo $quota['SendRemaining'] ?></td><td>&nbsp;<i><?php _e('Email sending quota remaining', 'wp-ses') ?></i></td></tr>
+        <tr><td><?php _e('SendUsage', 'wp-ses') ?>&nbsp;</td><td><?php echo $quota['SendUsage'] ?> %</td><td>&nbsp;<i><?php _e('Usage percentage per 24h', 'wp-ses') ?></i></td></tr>
     </table>
 
     <br />&nbsp;
-    <h3><?php _e('Sending Stats', 'wpses') ?></h3>
-    <?php _e('Last 15 days of email statistics', 'wpses') ?>
+    <h3><?php _e('Sending Stats', 'wp-ses') ?></h3>
+    <?php _e('Last 15 days of email statistics', 'wp-ses') ?>
     <br />
-    <?php _e('Each line contains statistics for a 15 minutes period of sending activity. <br />Periods without any activity are not shown', 'wpses') ?>
+    <?php _e('Each line contains statistics for a 15 minutes period of sending activity. <br />Periods without any activity are not shown', 'wp-ses') ?>
     <br />&nbsp;
     <?php /*
       $stats=Array
@@ -67,13 +63,13 @@
     ?>
     <table cellpadding="2">
         <tr style="background-color:#ccc">
-            <td><?php _e('Timestamp', 'wpses') ?>&nbsp;</td>
-            <td><?php _e('DeliveryAttempts', 'wpses') ?>&nbsp;</td>
-            <td><?php _e('Bounces', 'wpses') ?>&nbsp;</td>
-            <td><?php _e('Complaints', 'wpses') ?>&nbsp;</td>
-            <td><?php _e('Rejects', 'wpses') ?>&nbsp;</td>
-            <td><?php _e('Total Ok', 'wpses') ?>&nbsp;</td>
-            <td><?php _e('Total Errors', 'wpses') ?>&nbsp;</td>
+            <td><?php _e('Timestamp', 'wp-ses') ?>&nbsp;</td>
+            <td><?php _e('DeliveryAttempts', 'wp-ses') ?>&nbsp;</td>
+            <td><?php _e('Bounces', 'wp-ses') ?>&nbsp;</td>
+            <td><?php _e('Complaints', 'wp-ses') ?>&nbsp;</td>
+            <td><?php _e('Rejects', 'wp-ses') ?>&nbsp;</td>
+            <td><?php _e('Total Ok', 'wp-ses') ?>&nbsp;</td>
+            <td><?php _e('Total Errors', 'wp-ses') ?>&nbsp;</td>
         </tr>
         <?php
         $i = 1;
@@ -103,8 +99,6 @@
     </table>
     <br />&nbsp;
 
-    <?php _e('WP SES is a plugin by', 'wpses') ?> <a href="http://www.blog-expert.fr/" target="_blank">http://www.blog-expert.fr/</a>
-    <br />&nbsp;
     <div style="width:80%">
         <?php
         if (function_exists('sd_rss_widget')) {

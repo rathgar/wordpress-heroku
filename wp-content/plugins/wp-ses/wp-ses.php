@@ -2,16 +2,16 @@
 
 /*
   Plugin Name: WP SES
-  Version: 0.7.1
-  Plugin URI: http://wp-ses.com
-  Description: Uses Amazon Simple Email Service instead of local mail for all outgoing WP emails.
-  Author: Sylvain Deaure
-  Author URI: http://www.blog-expert.fr
- * Text Domain: wpses
+  Version: 0.8
+  Plugin URI: https://wordpress.org/plugins/wp-ses/
+  Description: Uses Amazon SES for sending all site email
+  Author: Delicious Brains Inc
+  Author URI: https://deliciousbrains.com
+ * Text Domain: wp-ses
  * Domain Path: /
  */
 
-define('WPSES_VERSION', 0.71);
+define('WPSES_VERSION', 0.721);
 
 // TODO
 // stats cache (beware of directory)
@@ -39,10 +39,13 @@ if (is_admin()) {
     register_activation_hook(__FILE__, 'wpses_install');
     register_deactivation_hook(__FILE__, 'wpses_uninstall');
 }
-require_once (WP_PLUGIN_DIR . '/wp-ses/ses.class.0.8.6.php');
+
+//require_once (WP_PLUGIN_DIR . '/wp-ses/ses.class.0.8.6.php');
+// May be in wpmu folder, thanks to @positonic
+require_once plugin_dir_path( __FILE__ ) . 'ses.class.0.8.6.php';
 
 function wpses_init() {
-    load_plugin_textdomain('wpses', false, basename(dirname(__FILE__)));
+    load_plugin_textdomain('wp-ses', false, basename(dirname(__FILE__)));
     wpses_admin_warnings();
 }
 
@@ -105,7 +108,7 @@ function wpses_options() {
                 $updated = true;
             } else {
                 if (!$senders[$email][1]) {
-                    // activate the new emails 
+                    // activate the new emails
                     $senders[$email][1] = true;
                     $updated = true;
                 }
@@ -185,8 +188,13 @@ function wpses_options() {
             wpses_log('Normal activation');
             update_option('wpses_options', $wpses_options);
             echo '<div id="message" class="updated fade">
-			<p>' . __('Plugin is activated and functionnal', 'wpses') . '</p>
+			<p>' . __('Sending emails through Amazon SES has been turned <strong>ON</strong>', 'wp-ses') . '</p>
 			</div>' . "\n";
+        }
+        else {
+            echo '<div id="message" class="error notice">
+            <p>' . __('Could not turn ON sending emails through Amazon SES. Please resolve the issues below.', 'wp-ses') . '</p>
+            </div>' . "\n";
         }
         if (isset($_POST['force']) and 1 == $_POST['force']) {
             // bad hack to force plugin activation with IAM credentials
@@ -196,6 +204,9 @@ function wpses_options() {
             $wpses_options['force'] = 1;
             wpses_log('Forced activation');
             update_option('wpses_options', $wpses_options);
+            echo '<div id="message" class="updated fade">
+            <p>' . __('Sending emails through Amazon SES has been forced <strong>ON</strong>', 'wp-ses') . '</p>
+            </div>' . "\n";
         }
     }
     if (!empty($_POST['deactivate'])) {
@@ -203,7 +214,7 @@ function wpses_options() {
         wpses_log('Manual deactivation');
         update_option('wpses_options', $wpses_options);
         echo '<div id="message" class="updated fade">
-			<p>' . __('Plugin de-activated', 'wpses') . '</p>
+			<p>' . __('Sending emails through Amazon SES has been turned <strong>OFF</strong>', 'wp-ses') . '</p>
 			</div>' . "\n";
     }
     if (!empty($_POST['activatelogs'])) {
@@ -212,12 +223,12 @@ function wpses_options() {
         @ touch(WP_PLUGIN_DIR . '/wp-ses/log/wpses.log');
         if (!file_exists(WP_PLUGIN_DIR . '/wp-ses/log/wpses.log')) {
             echo '<div id="message" class="updated">
-	    <p>' . __('Unable to create dir ', 'wpses') . WP_PLUGIN_DIR . '/wp-ses/log/' . __(' Please create it and give WP proper rights ', 'wpses') . '</p>
+	    <p>' . __('Unable to create dir ', 'wp-ses') . WP_PLUGIN_DIR . '/wp-ses/log/' . __(' Please create it and give WP proper rights ', 'wp-ses') . '</p>
             </div>' . "\n";
         } else {
             @ unlink(WP_PLUGIN_DIR . '/wp-ses/log/wpses.log');
             echo '<div id="message" class="updated fade">
-			<p>' . __('Logs activated', 'wpses') . '</p>
+			<p>' . __('Logging enabled', 'wp-ses') . '</p>
 			</div>' . "\n";
             $wpses_options['log'] = 1;
             update_option('wpses_options', $wpses_options);
@@ -229,7 +240,7 @@ function wpses_options() {
         update_option('wpses_options', $wpses_options);
         @ unlink(WP_PLUGIN_DIR . '/wp-ses/log/wpses.log');
         echo '<div id="message" class="updated fade">
-	<p>' . __('Logs deactivated and cleared', 'wpses') . '</p>
+	<p>' . __('Logging disabled and logs cleared', 'wp-ses') . '</p>
 	</div>' . "\n";
     }
     if (!empty($_POST['viewlogs'])) {
@@ -238,7 +249,7 @@ function wpses_options() {
             die();
         } else {
             echo '<div id="message" class="updated fade">
-	<p>' . __('No log file', 'wpses') . '</p>
+	<p>' . __('No log file', 'wp-ses') . '</p>
 	</div>' . "\n";
         }
     }
@@ -282,7 +293,7 @@ function wpses_options() {
         // TODO si credentials different, resetter credentials_ok
 
         update_option('wpses_options', $wpses_options);
-        echo '<div id="message" class="updated fade"><p>' . __('Settings updated', 'wpses') . '</p></div>' . "\n";
+        echo '<div id="message" class="updated fade"><p>' . __('Settings updated', 'wp-ses') . '</p></div>' . "\n";
     }
     wpses_getoptions();
     //$wpses_options = get_option('wpses_options');
@@ -331,19 +342,19 @@ function wpses_admin_warnings() {
 
         function wpses_curl_warning() {
             global $wpses_options;
-            echo "<div id='wpses-curl-warning' class='updated fade'><p><strong>" . __("WP SES - CURL extension not available. SES Won't work without Curl. Ask your host.", 'wpses') . "</strong></p></div>";
+            echo "<div id='wpses-curl-warning' class='updated fade'><p><strong>" . __("WP SES - CURL extension not available. SES Won't work without Curl. Ask your host.", 'wp-ses') . "</strong></p></div>";
         }
 
         add_action('admin_notices', 'wpses_curl_warning');
         return;
     }
     $active = $wpses_options['active'];
-    if ($active <= 0) {
+    if ($active <= 0 && (!isset($_GET['page']) || 'wp-ses/wp-ses.php' !== $_GET['page'])) {
 
         function wpses_warning() {
             global $wpses_options;
-            echo "<div id='wpses-warning' class='updated fade'><p><strong>" . __("WP SES - Simple Email Service is not fully activated. Please check it's config: ", 'wpses') .
-            '<a href="options-general.php?page=wp-ses/wp-ses.php">' . __("Settings &rarr; WP SES", 'wpses') . '</a>.' . "</strong></p></div>";
+            echo "<div id='wpses-warning' class='updated fade'><p>" . __("<strong>WP SES</strong> &mdash; Some configuration is required before your site's emails will be sent through Amazon SES. ", 'wp-ses') .
+            '<a href="options-general.php?page=wp-ses/wp-ses.php">' . __("Settings &rarr; WP SES", 'wp-ses') . '</a>' . "</p></div>";
         }
 
         add_action('admin_notices', 'wpses_warning');
@@ -352,11 +363,28 @@ function wpses_admin_warnings() {
 }
 
 function wpses_admin_menu() {
-    add_options_page('wpses', __('WP SES', 'wpses'), 'manage_options', __FILE__, 'wpses_options');
+    $hook_suffix = add_options_page('wpses', __('WP SES', 'wp-ses'), 'manage_options', __FILE__, 'wpses_options');
+    add_action( 'load-' . $hook_suffix, 'wpses_load_assets' );
+
     // Quota and Stats
     if (!defined('WP_SES_HIDE_STATS') or ( false == WP_SES_HIDE_STATS)) {
-        add_submenu_page('index.php', 'SES Stats', 'SES Stats', 'manage_options', 'wp-ses/ses-stats.php');
+        $hook_suffix = add_submenu_page('index.php', 'SES Stats', 'SES Stats', 'manage_options', 'wp-ses/ses-stats.php');
+        add_action( 'load-' . $hook_suffix, 'wpses_load_assets' );
     }
+}
+
+function wpses_get_asset_url( $asset ) {
+    $plugin_dir_path    = plugin_dir_path( __FILE__ );
+    $plugin_folder_name = basename( $plugin_dir_path );
+    $plugins_url = trailingslashit( plugins_url( $plugin_folder_name ) );
+    return $plugins_url . 'asset/' . ltrim( $asset, '/' );
+}
+
+function wpses_load_assets() {
+    $version            = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? time() : WPSES_VERSION;
+
+    $src = wpses_get_asset_url( 'css/styles.css' );
+    wp_enqueue_style( 'wp-ses-styles', $src, array(), $version );
 }
 
 function wpses_from($mail_from_email) {
@@ -381,11 +409,11 @@ function wpses_from_name($mail_from_name) {
 
 function wpses_message_step1done() {
     global $WPSESMSG;
-    echo "<div id='wpses-warning' class='updated fade'><p><strong>" . __("A confirmation request has been sent. You will receive at the stated email a confirmation request from amazon SES. You MUST click on the provided link in order to confirm your sender Email.<br />SES Answer - ", 'wpses') . $WPSESMSG . "</strong></p></div>";
+    echo "<div id='wpses-warning' class='updated fade'><p><strong>" . __("A confirmation request has been sent. You will receive at the stated email a confirmation request from amazon SES. You MUST click on the provided link in order to confirm your sender Email.<br />SES Answer - ", 'wp-ses') . $WPSESMSG . "</strong></p></div>";
 }
 
 /**
- * 
+ *
  * @global type $wpses_options
  * @global type $SES
  * @return Fetches verifiedIdentities
@@ -415,7 +443,7 @@ function wpses_check_SES() {
 /*
   function wpses_error_handler($level, $message, $file, $line, $context) {
   global $WPSESMSG;
-  $WPSESMSG = __('SES Error: ', 'wpses') . $message;
+  $WPSESMSG = __('SES Error: ', 'wp-ses') . $message;
   wpses_log("SES Error\t" . $message['Error']['Code'] . "\t" . $message['Error']['Message'] . "\t" . $message['Error']['RequestId']);
   return (true); //And prevent the PHP error handler from continuing
   }
@@ -449,7 +477,7 @@ function wpses_verify_sender_step1($mail) {
         //echo("rid ");
         //print_r($rid);
     } catch (Exception $e) {
-        $WPSESMSG = __('Got exception: ', 'wpses') . $e->getMessage() . "\n";
+        $WPSESMSG = __('Got exception: ', 'wp-ses') . $e->getMessage() . "\n";
         wpses_log('SES Exception ' . $e->getMessage());
     }
     restore_error_handler();
@@ -465,7 +493,7 @@ function wpses_remove_sender($mail) {
     $WPSESMSG = '';
     $rid = $SES->deleteVerifiedEmailAddress($mail);
     $WPSESMSG .= ' id ' . var_export($rid, true);
-    echo "<div id='wpses-warning' class='updated fade'><p><strong>" . $mail . '<br />' . __("This email address has been removed from verified senders.", 'wpses') . "</strong></p></div>";
+    echo "<div id='wpses-warning' class='updated fade'><p><strong>" . $mail . '<br />' . __("This email address has been removed from verified senders.", 'wp-ses') . "</strong></p></div>";
 }
 
 /**
@@ -492,7 +520,7 @@ function wpses_sender_confirmed() {
 
 function wpses_message_testdone() {
     global $WPSESMSG;
-    echo "<div id='wpses-warning' class='updated fade'><p><strong>" . __("Test message has been sent to your sender Email address.<br />SES Answer - ", 'wpses') . $WPSESMSG . "</strong></p></div>";
+    echo "<div id='wpses-warning' class='updated fade'><p><strong>" . __("Test message has been sent to your sender Email address.<br />SES Answer - ", 'wp-ses') . $WPSESMSG . "</strong></p></div>";
 }
 
 function wpses_test_email($mail) {
@@ -500,7 +528,7 @@ function wpses_test_email($mail) {
     global $SES, $WPSESMSG;
     wpses_check_SES();
     $WPSESMSG = '';
-    $rid = wpses_mail($wpses_options['from_email'], __('WP SES - Test Message', 'wpses'), __("This is WP SES Test message. It has been sent via Amazon SES Service.\nAll looks fine !\n\n", 'wpses') . __('WP SES is a plugin by', 'wpses') . ' http://www.blog-expert.fr/');
+    $rid = wpses_mail($wpses_options['from_email'], __('WP SES - Test Message', 'wp-ses'), __("This is WP SES Test message. It has been sent via Amazon SES Service.\nAll looks fine !\n\n", 'wp-ses'));
     $WPSESMSG .= ' id ' . var_export($rid, true);
     wpses_message_testdone();
 }
@@ -512,14 +540,14 @@ function wpses_prod_email($mail, $subject, $content) {
     $WPSESMSG = '';
     $rid = wpses_mail($mail, $subject, $content);
     $WPSESMSG .= ' id ' . var_export($rid, true);
-    echo "<div id='wpses-warning' class='updated fade'><p><strong>" . __("Test message has been sent.<br />SES Answer - ", 'wpses') . $WPSESMSG . "</strong></p></div>";
+    echo "<div id='wpses-warning' class='updated fade'><p><strong>" . __("Test message has been sent.<br />SES Answer - ", 'wp-ses') . $WPSESMSG . "</strong></p></div>";
 }
 
 function wpses_error_handler($errno, $errstr, $errfile, $errline) {
     switch ($errno) {
         case E_USER_WARNING:
             if (is_admin()) {
-                echo "<div id='wpses-warning' class='updated fade'><p><strong>" . __("Error : ", 'wpses') . "[$errno] $errstr" . "</strong></p></div>";
+                echo "<div id='wpses-warning' class='updated fade'><p><strong>" . __("Error : ", 'wp-ses') . "[$errno] $errstr" . "</strong></p></div>";
             }
             wpses_log("Error\t$errstr");
             break;
@@ -735,7 +763,7 @@ if ($wpses_options['active'] == 1) {
         wpses_log("ERROR\twp_mail override by another plugin !!");
 
         function wpses_warningmail() {
-            echo "<div id='wpses-warning' class='updated fade'><p><strong>" . __('Another plugin did override wp-mail function. Please de-activate the other plugin if you want WP SES to work properly.', 'wpses') . "</strong></p></div>";
+            echo "<div id='wpses-warning' class='updated fade'><p><strong>" . __('Another plugin did override wp-mail function. Please de-activate the other plugin if you want WP SES to work properly.', 'wp-ses') . "</strong></p></div>";
         }
 
         add_action('admin_notices', 'wpses_warningmail');
@@ -746,7 +774,7 @@ if ($wpses_options['active'] == 1) {
                 $func = new ReflectionFunction('wp_mail');
                 wpses_log('wp_mail already defined in ' . $func->getFileName());
             } catch (Exception $e) {
-                
+
             }
 
             $wpses_options['active'] = 0;

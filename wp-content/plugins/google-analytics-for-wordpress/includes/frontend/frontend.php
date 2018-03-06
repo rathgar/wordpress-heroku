@@ -21,67 +21,33 @@ if ( ! defined( 'ABSPATH' ) ) {
  * for the frontend_output() function to output. These are 
  * generally dimensions and turned on GA features.
  *
- * @since 6.0.0
+ * @since 7.0.0
  * @access public
  *
  * @return array Array of the options to use.
  */
 function monsterinsights_tracking_script( ) {
-
-    $tracking_mode = monsterinsights_get_option( 'tracking_mode', 'analytics' );
     require_once plugin_dir_path( MONSTERINSIGHTS_PLUGIN_FILE ) . 'includes/frontend/class-tracking-abstract.php';
-    $mode = '';
 
-    if ( is_preview() ) {
-        $mode = 'preview';
-    } else if ( ! monsterinsights_track_user() ) {
-        $mode = 'disabled';
-    } else if ( $tracking_mode === 'analytics' ) {
-        $mode = 'analytics';
-    } else if ( $tracking_mode === 'ga' ) {
-        $mode = 'ga';
-    } else {
-        //$mode = apply_filters( 'monsterinsights_custom_tracking_name', 'name-of-method' );
-    }
+    $mode = is_preview() ? 'preview' : 'analytics';
 
     do_action( 'monsterinsights_tracking_before_' . $mode );
     do_action( 'monsterinsights_tracking_before', $mode );
-
-    switch ( $mode ) {
-        case 'preview':
-            require_once plugin_dir_path( MONSTERINSIGHTS_PLUGIN_FILE ) . 'includes/frontend/tracking/class-tracking-preview.php';
-            $tracking = new MonsterInsights_Tracking_Preview();
-            echo $tracking->frontend_output();
-            break;
-
-        case 'disabled':
-            require_once plugin_dir_path( MONSTERINSIGHTS_PLUGIN_FILE ) . 'includes/frontend/tracking/class-tracking-disabled.php';
-            $tracking = new MonsterInsights_Tracking_Disabled();
-            echo $tracking->frontend_output();
-            break;
-
-        case 'analytics':
-            require_once plugin_dir_path( MONSTERINSIGHTS_PLUGIN_FILE ) . 'includes/frontend/tracking/class-tracking-analytics.php';
-            $tracking = new MonsterInsights_Tracking_Analytics();
-            echo $tracking->frontend_output();
-            break;
-
-        case 'ga':
-            require_once plugin_dir_path( MONSTERINSIGHTS_PLUGIN_FILE ) . 'includes/frontend/tracking/class-tracking-ga.php';
-            $tracking = new MonsterInsights_Tracking_GA();
-            echo $tracking->frontend_output();
-            break;
-
-        default:
-            //do_action( 'monsterinsights_custom_tracking' );
-            break;
+    if ( $mode === 'preview' ) {
+        require_once plugin_dir_path( MONSTERINSIGHTS_PLUGIN_FILE ) . 'includes/frontend/tracking/class-tracking-preview.php';
+        $tracking = new MonsterInsights_Tracking_Preview();
+        echo $tracking->frontend_output();
+    } else {
+         require_once plugin_dir_path( MONSTERINSIGHTS_PLUGIN_FILE ) . 'includes/frontend/tracking/class-tracking-analytics.php';
+         $tracking = new MonsterInsights_Tracking_Analytics();
+         echo $tracking->frontend_output();
     }
 
     do_action( 'monsterinsights_tracking_after_' . $mode );
     do_action( 'monsterinsights_tracking_after', $mode );
 }
-add_action( 'wp_head', 'monsterinsights_tracking_script', 8 );
-//add_action( 'login_head', 'monsterinsights_tracking_script', 8 );
+add_action( 'wp_head', 'monsterinsights_tracking_script', 6 );
+//add_action( 'login_head', 'monsterinsights_tracking_script', 6 );
 
 /**
  * Get frontend tracking options.
@@ -97,15 +63,11 @@ add_action( 'wp_head', 'monsterinsights_tracking_script', 8 );
  */
 function monsterinsights_events_tracking( ) {
     $events_mode   = monsterinsights_get_option( 'events_mode', false );
-    $tracking_mode = monsterinsights_get_option( 'tracking_mode', 'analytics' );
     $track_user    = monsterinsights_track_user();
 
-    if ( $track_user && $events_mode === 'php' && ( $tracking_mode === 'ga' || $tracking_mode === 'analytics' ) ) {
-        require_once plugin_dir_path( MONSTERINSIGHTS_PLUGIN_FILE ) . 'includes/frontend/events/class-events-php.php';
-        new MonsterInsights_Events_PHP();
-    } else if ( $track_user && $events_mode === 'js' && $tracking_mode === 'analytics' ) {
-        require_once plugin_dir_path( MONSTERINSIGHTS_PLUGIN_FILE ) . 'includes/frontend/events/class-events-js.php';
-        new MonsterInsights_Events_JS();
+    if ( $track_user && ( $events_mode === 'js' || $events_mode === 'php' ) ) {
+        require_once plugin_dir_path( MONSTERINSIGHTS_PLUGIN_FILE ) . 'includes/frontend/events/class-analytics-events.php';
+        new MonsterInsights_Analytics_Events();
     } else {
         // User is in the disabled group or events mode is off
     }

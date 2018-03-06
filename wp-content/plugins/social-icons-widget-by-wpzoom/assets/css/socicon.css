@@ -56,6 +56,15 @@
     content: "\e03e"
 }
 
+.socicon-angieslist {
+    background-color: #299F37;
+    color: #299F37;
+}
+
+.socicon-angieslist:before {
+    content: "\e916"
+}
+
 .socicon-apple {
     background-color: #B9BFC1;
     color: #B9BFC1;
@@ -72,6 +81,15 @@
 
 .socicon-appnet:before {
     content: "\e013"
+}
+
+.socicon-appstore {
+    background-color: #007AFF;
+    color: #007AFF;
+}
+
+.socicon-appstore:before {
+    content: "\e91f"
 }
 
 .socicon-baidu {
@@ -146,6 +164,24 @@
     content: "\e011"
 }
 
+.socicon-codered {
+    background-color: #FF033B;
+    color: #FF033B;
+}
+
+.socicon-codered:before {
+    content: "\e940"
+}
+
+.socicon-crunchbase {
+    background-color: #0288d1;
+    color: #0288d1;
+}
+
+.socicon-crunchbase:before {
+    content: "\e93b"
+}
+
 .socicon-dailymotion {
     background-color: #004e72;
     color: #004e72;
@@ -173,6 +209,15 @@
     content: "\e029"
 }
 
+.socicon-deezer {
+    background-color: #32323d;
+    color: #32323d;
+}
+
+.socicon-deezer:before {
+    content: "\e06c"
+}
+
 .socicon-digg {
     background-color: #1d1d1b;
     color: #1d1d1b;
@@ -180,6 +225,24 @@
 
 .socicon-digg:before {
     content: "\e025"
+}
+
+.socicon-discord {
+    background-color: #7289da;
+    color: #7289da;
+}
+
+.socicon-discord:before {
+    content: "\e903";
+}
+
+.socicon-discord2 {
+    background-color: #7289da;
+    color: #7289da;
+}
+
+.socicon-discord2:before {
+    content: "\e079";
 }
 
 .socicon-disqus {
@@ -232,11 +295,6 @@
     color: #000000;
 }
 
-.zoom-social-icons-list .socicon.socicon-eyeem {
-    font-size: 1.8em;
-    padding: 4px;
-}
-
 .socicon-eyeem:before {
     content: "\e901"
 }
@@ -275,6 +333,24 @@
 
 .socicon-flattr:before {
     content: "\e02f"
+}
+
+.socicon-flipboard {
+    background-color: #E12828;
+    color: #E12828;
+}
+
+.socicon-flipboard:before {
+    content: "\e904";
+}
+
+.socicon-flipboard2 {
+    background-color: #E12828;
+    color: #E12828;
+}
+
+.socicon-flipboard2:before {
+    content: "\e905";
 }
 
 .socicon-flickr {
@@ -439,6 +515,15 @@
     content: "\e03c"
 }
 
+.socicon-messenger {
+    background-color: #0084ff;
+    color: #0084ff;
+}
+
+.socicon-messenger:before {
+    content: "\e906"
+}
+
 .socicon-myspace {
     background-color: #323232;
     color: #323232;
@@ -457,6 +542,15 @@
     content: "\e033"
 }
 
+.socicon-nextdoor {
+    background-color: #01B247;
+    color: #01B247;
+}
+
+.socicon-nextdoor:before {
+    content: "\e942"
+}
+
 .socicon-odnoklassniki {
     background-color: #f48420;
     color: #f48420;
@@ -464,6 +558,15 @@
 
 .socicon-odnoklassniki:before {
     content: "\e00d"
+}
+
+.socicon-overwatch {
+    background-color: #9E9E9E;
+    color: #9E9E9E;
+}
+
+.socicon-overwatch:before {
+    content: "\e076"
 }
 
 .socicon-outlook {
@@ -529,6 +632,15 @@
     content: "\e02b"
 }
 
+.socicon-playstation {
+    background-color: #000000;
+    color: #000000;
+}
+
+.socicon-playstation:before {
+    content: "\e03d"
+}
+
 .socicon-reddit {
     background-color: #e74a1e;
     color: #e74a1e;
@@ -536,6 +648,15 @@
 
 .socicon-reddit:before {
     content: "\e022"
+}
+
+.socicon-researchgate {
+    background-color: #00CCBB;
+    color: #00CCBB;
+}
+
+.socicon-researchgate:before {
+    content: "\e078"
 }
 
 .socicon-rss {
@@ -619,6 +740,15 @@
     content: "\e037"
 }
 
+.socicon-strava {
+    background-color: #FC4C02;
+    color: #FC4C02;
+}
+
+.socicon-strava:before {
+    content: "\e081"
+}
+
 .socicon-stumbleupon {
     background-color: #e64011;
     color: #e64011;
@@ -655,6 +785,18 @@
     content: "\e06e"
 }
 
+.socicon-tidal {
+    background-color: #01FFFF;
+    color: #01FFFF;
+}
+
+.socicon-tidal:before {
+    content: "\e910"
+}
+
+.socicon-tripadvisor:before {
+    content: "\e012"
+}
 .socicon-tripadvisor {
     background-color: #589442;
     color: #589442;
@@ -700,6 +842,24 @@
     content: "\e040"
 }
 
+.socicon-unsplash {
+    background-color: #000;
+    color: #000;
+}
+
+.socicon-unsplash:before {
+    content: "\e914"
+}
+
+.socicon-udemy {
+    background-color: #17aa1c;
+    color: #17aa1c;
+}
+
+.socicon-udemy:before {
+    content: "\e93f"
+}
+
 .socicon-viadeo {
     background-color: #e4a000;
     color: #e4a000;
@@ -709,7 +869,6 @@
     content: "\e04a"
 }
 
-
 .socicon-viber {
     background-color: #7b519d;
     color: #7b519d;
@@ -718,7 +877,6 @@
 .socicon-viber:before {
     content: "\e071"
 }
-
 
 .socicon-vimeo {
     background-color: #51b5e7;
@@ -745,6 +903,15 @@
 
 .socicon-vkontakte:before {
     content: "\e01a"
+}
+
+.socicon-whatsapp {
+    background-color: #20B038;
+    color: #20B038;
+}
+
+.socicon-whatsapp:before {
+    content: "\e01b"
 }
 
 .socicon-wikipedia {

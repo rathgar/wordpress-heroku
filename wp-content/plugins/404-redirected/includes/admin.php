@@ -800,8 +800,6 @@ function wbz404_adminHeader( $sub = 'list', $message = '' ) {
 	echo __( 'by', '404-redirected' ) . " <a href=\"https://redirectioner.com\" title=\"Redirectioner\" target=\"_blank\">Redirectioner</a><br>";
 	echo __( 'Version', '404-redirected' ) . ": " . WBZ404_VERSION . " | ";
 	echo "<a href=\"" . WBZ404_HOME . "\" title=\"" . __( 'Plugin Home Page', '404-redirected' ) . "\" target=\"_blank\">" . __( 'Plugin Home Page', '404-redirected' ) . "</a> | ";
-	echo "<a href=\"https://twitter.com/wpredirectioner\" title=\"Redirectioner on Twitter\" target=\"_blank\">Redirectioner plugin on Twitter</a> | ";
-	echo "<a href=\"https://www.facebook.com/ThemeMix\" title=\"ThemeMix on Facebook\" target=\"_blank\">ThemeMix on Facebook</a><br>";
 	echo "<br>";
 
 	$class="";
@@ -842,10 +840,7 @@ function wbz404_adminFooter() {
 	echo "<br>";
 	echo "<strong>Credits:</strong><br>";
 	echo "<a href=\"" . WBZ404_HOME . "\" title=\"" . __( '404 Redirected' ) . "\" target=\"_blank\">" . __( '404 Redirected' ) . "</a> ";
-	echo __( 'is maintained', '404-redirected' );
-	echo " ";
-	echo "<a href=\"http://twitter.com/ThemeMix/\" title=\"ThemeMix\" target=\"_blank\">ThemeMix</a>. ";
-	echo __( 'It\'s released under the GNU GPL version 2 License.', '404-redirected' );
+	echo __( 'is released under the GNU GPL version 2 License.', '404-redirected' );
 	echo "</div>";
 	echo "</div>";
 }

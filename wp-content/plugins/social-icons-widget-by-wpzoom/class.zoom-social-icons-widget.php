@@ -29,7 +29,11 @@ class Zoom_Social_Icons_Widget extends WP_Widget {
 				'category' => array( 'software' ),
 				'color'    => '#8ec047'
 			),
-
+            array(
+                'icon'     => 'angieslist',
+                'category' => array( 'business' ),
+                'color'    => '#299F37'
+            ),
 			array(
 				'icon'     => 'apple',
 				'category' => array( 'software' ),
@@ -40,6 +44,11 @@ class Zoom_Social_Icons_Widget extends WP_Widget {
 				'category' => array( 'software' ),
 				'color'    => '#494949'
 			),
+            array(
+                'icon'     => 'appstore',
+                'category' => array( 'software' ),
+                'color'    => '#007AFF'
+            ),
 			array(
 				'icon'     => 'baidu',
 				'category' => array( 'search-engines' ),
@@ -75,11 +84,21 @@ class Zoom_Social_Icons_Widget extends WP_Widget {
 				'category' => array( 'blogging', 'social-media' ),
 				'color'    => '#000000'
 			),
+            array(
+                'icon'     => 'codered',
+                'category' => array( 'learning', 'programming' ),
+                'color'    => '#FF033B'
+            ),
 			array(
 				'icon'     => 'coderwall',
 				'category' => array( 'learning', 'programming' ),
 				'color'    => '#3E8DCC'
 			),
+            array(
+                'icon'     => 'crunchbase',
+                'category' => array( 'business' ),
+                'color'    => '#0288d1'
+            ),
 			array(
 				'icon'     => 'dailymotion',
 				'category' => array( 'video' ),
@@ -95,11 +114,26 @@ class Zoom_Social_Icons_Widget extends WP_Widget {
 				'category' => array( 'design' ),
 				'color'    => '#c5d200'
 			),
+            array(
+                'icon'     => 'deezer',
+                'category' => array( 'music' ),
+                'color'    => '#32323d'
+            ),
 			array(
 				'icon'     => 'digg',
 				'category' => array( 'news' ),
 				'color'    => '#1d1d1b'
 			),
+            array(
+                'icon'     => 'discord',
+                'category' => array( 'chat' ),
+                'color'    => '#7289da'
+            ),
+            array(
+                'icon'     => 'discord2',
+                'category' => array( 'chat' ),
+                'color'    => '#7289da'
+            ),
 			array(
 				'icon'     => 'disqus',
 				'category' => array( 'communication', 'web-tools' ),
@@ -150,6 +184,16 @@ class Zoom_Social_Icons_Widget extends WP_Widget {
 				'category' => array( 'web-tools', 'payment' ),
 				'color'    => '#F67C1A'
 			),
+            array(
+                'icon'     => 'flipboard',
+                'category' => array( 'news', 'reader' ),
+                'color'    => '#E12828'
+            ),
+            array(
+                'icon'     => 'flipboard2',
+                'category' => array( 'news', 'reader' ),
+                'color'    => '#E12828'
+            ),
 			array(
 				'icon'     => 'flickr',
 				'category' => array( 'web-tools', 'photography' ),
@@ -240,6 +284,11 @@ class Zoom_Social_Icons_Widget extends WP_Widget {
 				'category' => array( 'social-media' ),
 				'color'    => '#e2373c'
 			),
+            array(
+                'icon'     => 'messenger',
+                'category' => array( 'social-media', 'communication' ),
+                'color'    => '#0084ff'
+            ),
 			array(
 				'icon'     => 'myspace',
 				'category' => array( 'social-media' ),
@@ -250,6 +299,11 @@ class Zoom_Social_Icons_Widget extends WP_Widget {
 				'category' => array( 'news' ),
 				'color'    => '#075B2F'
 			),
+            array(
+                'icon'     => 'nextdoor',
+                'category' => array( 'business' ),
+                'color'    => '#01B247'
+            ),
 			array(
 				'icon'     => 'odnoklassniki',
 				'category' => array( 'social-media' ),
@@ -260,6 +314,11 @@ class Zoom_Social_Icons_Widget extends WP_Widget {
 				'category' => array( 'communication', 'web-tools' ),
 				'color'    => '#0072C6'
 			),
+            array(
+                'icon'     => 'overwatch',
+                'category' => array( 'social-media', 'video', 'games' ),
+                'color'    => '#9E9E9E'
+            ),
 			array(
 				'icon'     => 'patreon',
 				'category' => array( 'payment', 'web-tools' ),
@@ -290,11 +349,21 @@ class Zoom_Social_Icons_Widget extends WP_Widget {
 				'category' => array( 'ecommerce' ),
 				'color'    => '#000000'
 			),
+            array(
+                'icon'     => 'playstation',
+                'category' => array( 'games', 'video' ),
+                'color'    => '#000000'
+            ),
 			array(
 				'icon'     => 'reddit',
 				'category' => array( 'news', 'social-media' ),
 				'color'    => '#e74a1e'
 			),
+            array(
+                'icon'     => 'researchgate',
+                'category' => array( 'education' ),
+                'color'    => '#00CCBB'
+            ),
 			array(
 				'icon'     => 'rss',
 				'category' => array( 'news', 'communication', 'web-tools' ),
@@ -340,6 +409,11 @@ class Zoom_Social_Icons_Widget extends WP_Widget {
 				'category' => array( 'games' ),
 				'color'    => '#8F8D8A'
 			),
+            array(
+                'icon'     => 'strava',
+                'category' => array( 'fitness', 'sport'),
+                'color'    => '#FC4C02'
+            ),
 			array(
 				'icon'     => 'stumbleupon',
 				'category' => array( 'search-engines' ),
@@ -360,6 +434,11 @@ class Zoom_Social_Icons_Widget extends WP_Widget {
 				'category' => array( 'communication', 'software' ),
 				'color'    => '#0088cc'
 			),
+            array(
+                'icon'     => 'tidal',
+                'category' => array( 'music' ),
+                'color'    => '#01FFFF'
+            ),
 			array(
 				'icon'     => 'tripadvisor',
 				'category' => array( 'travel' ),
@@ -385,6 +464,16 @@ class Zoom_Social_Icons_Widget extends WP_Widget {
 				'category' => array( 'social-media' ),
 				'color'    => '#55acee'
 			),
+            array(
+                'icon'     => 'unsplash',
+                'category' => array( 'photography'),
+                'color'    => '#000'
+            ),
+            array(
+                'icon'     => 'udemy',
+                'category' => array( 'learning'),
+                'color'    => '#17aa1c'
+            ),
 			array(
 				'icon'     => 'viadeo',
 				'category' => array( 'social-media' ),
@@ -410,6 +499,11 @@ class Zoom_Social_Icons_Widget extends WP_Widget {
 				'category' => array( 'social-media' ),
 				'color'    => '#5a7fa6'
 			),
+            array(
+                'icon'     => 'whatsapp',
+                'category' => array( 'communication' ),
+                'color'    => '#20B038'
+            ),
 			array(
 				'icon'     => 'wikipedia',
 				'category' => array( 'learning' ),
@@ -8928,14 +9022,25 @@ class Zoom_Social_Icons_Widget extends WP_Widget {
 
 		$this->plugin_file = dirname( __FILE__ ) . '/social-icons-widget-by-wpzoom.php';
 
-		add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ) );
-		add_action( 'admin_print_footer_scripts', array( $this, 'admin_js_templates' ) );
-
+		add_action('current_screen', array($this, 'check_current_screen'));
 		add_action( 'wp_enqueue_scripts', array( $this, 'scripts' ) );
 
+		//Hooks to enqueue javascript file in SiteOrigin builder.
 		add_action( 'siteorigin_panel_enqueue_admin_scripts', array( $this, 'admin_scripts' ) );
 		add_action( 'siteorigin_panel_enqueue_admin_scripts', array( $this, 'admin_js_templates' ) );
 
+	}
+
+	/**
+	 * Enqueue admin javascript only on widgets and customizer pages.
+	 */
+	public function check_current_screen() {
+		$current_screen = get_current_screen();
+
+		if ( ! empty( $current_screen->id ) && ( $current_screen->id === 'widgets' || $current_screen->id === 'customize' ) ) {
+			add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ) );
+			add_action( 'admin_print_footer_scripts', array( $this, 'admin_js_templates' ) );
+		}
 	}
 
 	/**
@@ -8954,7 +9059,7 @@ class Zoom_Social_Icons_Widget extends WP_Widget {
 		?>
 		<div class="modal-mask">
 			<div class="media-modal wp-core-ui zoom-social-modal-wrapper">
-				<button type="button" class="button-link media-modal-close" @click="$emit('close')"><span
+				<button type="button" class="media-modal-close" @click="$emit('close')"><span
 						class="media-modal-icon"><span class="screen-reader-text">Close media panel</span></span>
 				</button>
 				<div class="media-modal-content">
@@ -9113,7 +9218,7 @@ class Zoom_Social_Icons_Widget extends WP_Widget {
 			'zoom-social-icons-widget',
 			plugin_dir_url( $this->plugin_file ) . 'assets/js/social-icons-widget-backend.js',
 			array( 'jquery', 'underscore', 'wp-util', 'wp-color-picker' ),
-			'20170209',
+			'20170913',
 			true
 		);
 
@@ -9228,6 +9333,7 @@ class Zoom_Social_Icons_Widget extends WP_Widget {
 		$instance['description']               = balanceTags( wp_kses( $new_instance['description'], wp_kses_allowed_html() ), true );
 		$instance['show_icon_labels']          = (! empty( $new_instance['show_icon_labels'] ) && $new_instance['show_icon_labels'] === 'true' ) ? 'true' : 'false';
 		$instance['open_new_tab']              = (! empty( $new_instance['open_new_tab']) && $new_instance['open_new_tab'] === 'true')  ? 'true' : 'false';
+		$instance['no_follow']              = (! empty( $new_instance['no_follow']) && $new_instance['no_follow'] === 'true')  ? 'true' : 'false';
 		$instance['icon_padding_size']         = (int) $new_instance['icon_padding_size'];
 		$instance['icon_font_size']            = (int) $new_instance['icon_font_size'];
 		$instance['global_color_picker']       = $new_instance['global_color_picker'];
@@ -9274,9 +9380,13 @@ class Zoom_Social_Icons_Widget extends WP_Widget {
 	public function form( $instance ) {
 		$defaults = $this->get_defaults();
 
-		if ( isset( $instance['show-icon-labels'] ) or isset( $instance['open-new-tab'] ) ) {
+		if ( isset( $instance['show-icon-labels'] ) or
+		     isset( $instance['open-new-tab'] ) or
+		     isset( $instance['no-follow'] )
+		) {
 			$instance['show-icon-labels'] = ! empty( $instance['show-icon-labels'] ) ? "true" : "false";
 			$instance['open-new-tab']     = ! empty( $instance['open-new-tab'] ) ? "true" : "false";
+			$instance['no-follow']        = ! empty( $instance['no-follow'] ) ? "true" : "false";
 		}
 
 		$instance = $this->normalize_data_array( $instance );
@@ -9344,6 +9454,18 @@ class Zoom_Social_Icons_Widget extends WP_Widget {
 			</p>
 
 			<p>
+				<input class="checkbox" type="checkbox"
+				       v-model="no_follow"
+				       :true-value="'true'"
+				       :false-value="'false'"
+				       :value="no_follow"
+				       id="<?php echo $this->get_field_id( 'no_follow' ); ?>"
+				       name="<?php echo $this->get_field_name( 'no_follow' ); ?>"/>
+				<label
+					for="<?php echo $this->get_field_id( 'no_follow' ); ?>"><?php _e( 'Add <code>rel="nofollow"</code> to links', 'zoom-social-icons-widget' ); ?></label>
+			</p>
+
+			<p>
 				<label
 					for="<?php echo $this->get_field_id( 'icon_style' ); ?>"><?php _e( 'Icon Style:', 'zoom-social-icons-widget' ); ?>
 				</label>
@@ -9386,7 +9508,7 @@ class Zoom_Social_Icons_Widget extends WP_Widget {
 			<p>
 				<label
 					for="<?php echo $this->get_field_id( 'icon_padding_size' ) ?>"><?php _e( 'Icon Padding (pixels):', 'zoom-social-icons-widget' ) ?>
-					<input type="number" min="5" max="200"
+					<input type="number" min="0" max="200"
 					       id="<?php echo $this->get_field_id( 'icon_padding_size' ) ?>"
 					       name="<?php echo $this->get_field_name( 'icon_padding_size' ) ?>"
 					       v-model="icon_padding_size"
@@ -9397,7 +9519,7 @@ class Zoom_Social_Icons_Widget extends WP_Widget {
 			<p>
 				<label
 					for="<?php echo $this->get_field_id( 'icon_font_size' ) ?>"><?php _e( 'Icon Size (pixels):', 'zoom-social-icons-widget' ) ?>
-					<input type="number" min="5" max="200"
+					<input type="number" min="0" max="200"
 					       id="<?php echo $this->get_field_id( 'icon_font_size' ) ?>"
 					       name="<?php echo $this->get_field_name( 'icon_font_size' ) ?>"
 					       v-model="icon_font_size"
@@ -9434,9 +9556,18 @@ class Zoom_Social_Icons_Widget extends WP_Widget {
 			<p style="margin-bottom: 0;"><?php _e( 'Icons:', 'zoom-social-icons-widget' ); ?></p>
 
 			<div class="must-remove">
+				<input type="hidden" value="<?php echo $defaults['title'] ?>"
+				       id="<?php echo $this->get_field_id( 'title' ); ?>"
+				       name="<?php echo $this->get_field_name( 'title' ); ?>"/>
+				<input type="hidden" value="<?php echo $defaults['description'] ?>"
+				       id="<?php echo $this->get_field_id( 'description' ); ?>"
+				       name="<?php echo $this->get_field_name( 'description' ); ?>"/>
 				<input type='hidden' value="<?php echo $defaults['open_new_tab'] ?>"
 				       id="<?php echo $this->get_field_id( 'open_new_tab' ); ?>"
 				       name="<?php echo $this->get_field_name( 'open_new_tab' ); ?>"/>
+				<input type='hidden' value="<?php echo $defaults['no_follow'] ?>"
+				       id="<?php echo $this->get_field_id( 'no_follow' ); ?>"
+				       name="<?php echo $this->get_field_name( 'no_follow' ); ?>"/>
 				<input type='hidden' value="<?php echo $defaults['show_icon_labels'] ?>"
 				       id="<?php echo $this->get_field_id( 'show_icon_labels' ); ?>"
 				       name="<?php echo $this->get_field_name( 'show_icon_labels' ); ?>"/>
@@ -9588,19 +9719,20 @@ class Zoom_Social_Icons_Widget extends WP_Widget {
 	 */
 	public function get_defaults() {
 		return apply_filters( 'zoom_social_icons_get_defaults', array(
-				'title'                     => '',
+				'title'                     => esc_html__('Follow us', 'zoom-social-icons-widget'),
 				'description'               => '',
 				'show_icon_labels'          => 'false',
-				'open_new_tab'              => 'false',
+				'open_new_tab'              => 'true',
+				'no_follow'              => 'false',
 				'icon_style'                => 'with-canvas',
 				'icon_canvas_style'         => 'rounded',
-				'icon_padding_size'         => 0,
-				'icon_font_size'            => 16,
+				'icon_padding_size'         => 8,
+				'icon_font_size'            => 18,
 				'global_color_picker'       => '#1e73be',
 				'global_color_picker_hover' => '#1e73be',
 				'fields'                    => array(
 					array(
-						'url'                => 'https://facebook.com',
+						'url'                => 'https://facebook.com/wpzoom',
 						'label'              => 'Facebook',
 						'icon'               => 'facebook',
 						'icon_kit'           => 'socicon',
@@ -9608,7 +9740,7 @@ class Zoom_Social_Icons_Widget extends WP_Widget {
 						'color_picker_hover' => '#3b5998'
 					),
 					array(
-						'url'                => 'https://twitter.com',
+						'url'                => 'https://twitter.com/wpzoom',
 						'label'              => 'Twitter',
 						'icon'               => 'twitter',
 						'icon_kit'           => 'socicon',
@@ -9616,7 +9748,7 @@ class Zoom_Social_Icons_Widget extends WP_Widget {
 						'color_picker_hover' => '#55acee'
 					),
 					array(
-						'url'                => 'https://instagram.com',
+						'url'                => 'https://instagram.com/wpzoom',
 						'label'              => 'Instagram',
 						'icon'               => 'instagram',
 						'icon_kit'           => 'socicon',
@@ -9673,6 +9805,10 @@ class Zoom_Social_Icons_Widget extends WP_Widget {
 				$color                       = empty( $field['color_picker'] ) ? $socicons[ $parsed_icon ] : $this->rgb2hex( $field['color_picker'] );
 				$field['color_picker']       = $color;
 				$field['color_picker_hover'] = $color;
+			}
+
+			if ( empty( $field['color_picker_hover'] ) ) {
+				$field['color_picker_hover'] = $field['color_picker'];
 			}
 		}
 	}
@@ -9839,6 +9975,10 @@ class Zoom_Social_Icons_Widget extends WP_Widget {
 			$instance['open_new_tab'] = $instance['open_new_tab'] === true ? 'true' : 'false';
 		}
 
+		if ( is_bool( $instance['no_follow'] ) ) {
+			$instance['no_follow'] = $instance['no_follow'] === true ? 'true' : 'false';
+		}
+
 		if ( $instance['show_icon_labels'] === 'false' ) {
 			$class_list[] = 'zoom-social-icons-list--no-labels';
 		}
@@ -9862,6 +10002,7 @@ class Zoom_Social_Icons_Widget extends WP_Widget {
 					<a class="zoom-social_icons-list__link"
 					   href="<?php echo esc_url( $field['url'], $this->protocols ); ?>"
 						<?php echo( $instance['open_new_tab'] === 'true' ? 'target="_blank"' : '' ); ?>
+						<?php echo( $instance['no_follow'] === 'true' ? 'rel="nofollow"' : '' ); ?>
 					>
 						<?php if ( ! empty( $field['icon'] ) && ! empty( $field['icon_kit'] ) && ! empty( $field['color_picker'] ) ) {
 							$class = $field['icon_kit'] . ' ' . $field['icon_kit'] . '-' . $field['icon'];

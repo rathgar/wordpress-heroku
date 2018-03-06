@@ -1,9 +1,9 @@
 === Follow Buttons by AddThis ===
-Contributors: abramsm, jgrodel, bradaddthis.com, addthis_paul, addthis_matt, ribin_addthis, addthis_elsa, AddThis_Mike
+Contributors: abramsm, jgrodel, bradaddthis.com, addthis_paul, addthis_matt, ribin_addthis, addthis_elsa, addthisleland
 Tags: AddThis, follow buttons, follow buttons plugin, followers, social buttons, widget, plugin, shortcode, Facebook, Twitter, LinkedIn, Pinterest, Instagram
 Requires at least: 3.0
-Tested up to: 4.7.3
-Stable tag: 4.0.0
+Tested up to: 4.9
+Stable tag: 4.1.2
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -139,8 +139,7 @@ As of release 2.0.2, this plugin supports follow buttons for the services below.
 
 = Is AddThis free? =
 
-Many of our tools are free, but Pro users get the benefit of exclusive widgets, including mobile­ friendly tools
-and retina icons, priority support and deeper analytics.
+Many of our tools are free, but Pro users get the benefit of exclusive widgets, priority support and deeper analytics.
 
 = Do I need to create an account? =
 
@@ -166,9 +165,10 @@ This plugin requires PHP 5.2.4 or greater and is tested on the following version
 * 5.2.17
 * 5.3.29
 * 5.4.45
-* 5.5.34
-* 5.6.20
-* 7.0.5
+* 5.5.38
+* 5.6.31
+* 7.0.22
+* 7.1.8
 
 = Who else uses AddThis? =
 
@@ -200,21 +200,29 @@ See our <a href="https://plugins.svn.wordpress.org/addthis-all/trunk/documentati
 
 
 
-== Screenshots ==
-
-1. AddThis follow tools on a page
-2. Analytics on the AddThis Dashboard
-3. Follow tools listings page
-4. Vertical follow tool settings page
-5. Home screen for an unregistered user
-6. Home screen for a registered user
-7. Advanced Settings screen
-8. Adding widgets
-9. Edit screen using shortcode
-
-
-
 == Changelog ==
+
+= 4.1.2 =
+* Updated error messaging that is no longer relevant regarding related post tools
+* Tested compatibility with Wordpress 4.9
+
+= 4.1.1 =
+* Fix for PHP notice from AddThisPlugin.php on line 610
+* Changing the permission capability used for determining when users can edit AddThis settings from activate_plugins to manage_options. This will allow most admins on multi-site instances to edit settings. <a href="https://codex.wordpress.org/Roles_and_Capabilities">More information on WordPress roles and capabilities.</a>
+
+= 4.1.0 =
+* Fix for PHP notice from AddThisFeature.php line 652
+* Correcting language for widgets in conflict mode after upgrade
+* Removing line breaks from HTML added to public pages
+* Disabling the wp_trim_excerpt by default as it's the most likely to cause theme issues
+* Adding error message if browser can't talk to addthis.com and communication with AddThis APIs are required for funtionality.
+* Compatibility updates for version 6.1.0 of <a href="https://wordpress.org/plugins/addthis/">Share Buttons by AddThis</a>.
+* Adding requested AddThisWidgetByDomClass functionality that will allow users adding a widget via PHP to customze the URL, title, description and image used for that share. Please see the <a href="https://plugins.svn.wordpress.org/addthis-all/trunk/documentation.widgets.md">widget documentation</a> for more infromation.
+
+= 4.0.1 =
+* Fixing shortcode bug.
+* Eliminating PHP Notice on AddThisPlugin.php line 1433
+* Compatibility updates for version 6.0.0 of <a href="https://wordpress.org/plugins/addthis/">Share Buttons by AddThis</a>. This plugin is no longer compatible with version before 6.0.0 of <a href="https://wordpress.org/plugins/addthis/">Share Buttons by AddThis</a>.
 
 = 4.0.0 =
 * Adding meta box to allow site editors to disable automatically added tools when editing posts and pages. Compatible with the <a href="https://wordpress.org/support/plugin/addthis">Share Button by AddThis</a> meta box. If disabled in one, auto adding of tools will be disabled in both.
@@ -289,31 +297,18 @@ See our <a href="https://plugins.svn.wordpress.org/addthis-all/trunk/documentati
 = 1.0.0 =
 * Initial Version
 
-== Upgrade Notice ==
-= 1.2.5 =
-Minor bug fix
-
-= 1.2.4 =
-Minor updates
-
-= 1.2.3 =
-Better compatibility with other AddThis plugins.
-
-= 1.2.2 =
-Linkedin Company profile support, Bug fixes
-
-= 1.2.1 =
-Bug fixes
-
-= 1.1 =
-Updated UI on widget setup and widget framework
-
-= 1.0.0 =
-If you're upgrading to this, you are super special
-
 
 
 == Upgrade Notice ==
+
+= 4.1.1 =
+Fix for PHP notice from AddThisPlugin.php on line 610. Changing the permission capability used for determining when users can edit AddThis settings from activate_plugins to manage_options. This will allow most admins on multi-site instances to edit settings. <a href="https://codex.wordpress.org/Roles_and_Capabilities">More information on WordPress roles and capabilities.</a>
+
+= 4.1.0 =
+Fixs for PHP errors, whitespace issues, changes in default and upgraded settings. Adding requested AddThisWidgetByDomClass functionality that will allow users adding a widget via PHP to customze the URL, title, description and image used for that share.
+
+= 4.0.1 =
+Fixing shortcode bug. Eliminating PHP Notice on AddThisPlugin.php line 1433.
 
 = 4.0.0 =
 Fix for PHP Warning on AddThisFollowButtonsToolParent.php line 127. Doing profile ID validation and follow service list retreival directly in the browser rather than proxying through a WordPress backend AJAX call. This will make this plugin work for "Ignore the tool configurations in this profile" mode in environments where the WordPress server can't talk to AddThis.com. Redesigned the plugin's widgets (including renaming classes) to work with AddThis.com's support of multiple definitions of the same tool type (see changelog for details). Adding meta box support.
