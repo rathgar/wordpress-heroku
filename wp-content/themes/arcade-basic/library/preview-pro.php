@@ -93,6 +93,17 @@ class Bavotasan_Preview_Pro {
 			</h2>
 
 			<div class="changelog headline-feature dfw">
+				<h2><?php _e( '<strong style="color: #ff0000;">NEW</strong> - Header Video', 'arcade-basic' ); ?></h2>
+
+				<div class="featured-image dfw-container">
+					<img alt="" src="<?php echo BAVOTASAN_THEME_URL; ?>/library/images/video-header.jpg" />
+				</div>
+				<p><?php _e( 'Having is full size header image is great, but why not step it up a notch with a video instead?', 'arcade-basic' );?>
+				<p><?php _e( 'Easily go to the Customizer and select a YouTube video or upload your own.', 'arcade-basic' ); ?></p>
+			</div>
+			<hr />
+
+			<div class="changelog headline-feature dfw">
 				<h2><?php _e( 'Grid Page Template', 'arcade-basic' ); ?></h2>
 
 				<div class="featured-image dfw-container">

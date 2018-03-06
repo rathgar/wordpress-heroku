@@ -74,6 +74,10 @@ Source: https://unsplash.com/search/tricycle?photo=GG0jOrmwqtw
 
 == CHANGELOG ==
 
+10/10/2017 v1.1.1
+* Fixed Icon & Text widget
+* Cleaned up CSS
+
 03/09/2017 v1.1.0
 * Fixed mixed placeholders
 * Fixed upgrade button

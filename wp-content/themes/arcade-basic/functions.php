@@ -564,7 +564,7 @@ function bavotasan_font_awesome_icons( $display_name = true ) {
 		<?php
 		foreach ( $icons as $icon => $code ) {
 			?>
-			<div class="c4" data-value="<?php echo $icon; ?>"><div><i class="fa <?php echo $icon; ?>"></i><?php if ( $display_name ) echo $icon; ?></div></div>
+			<div class="c4" data-value="<?php echo $icon; ?>"><div><i class="fa <?php echo $icon; ?>"></i></div></div>
 			<?php
 		}
 		?>

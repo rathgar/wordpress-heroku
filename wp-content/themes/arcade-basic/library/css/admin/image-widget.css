@@ -39,14 +39,8 @@
 		width: 100%;
 		margin-bottom: 10px;
 		padding: 10px 0;
-		font-size: 11px;
-		height: 81px;
 		cursor: pointer;
 	}
-
-		.customize-control .font-awesome-picker .c4 div {
-			height: 65px;
-		}
 
 		.font-awesome-picker .c4 div:hover {
 			background: #ddd;
