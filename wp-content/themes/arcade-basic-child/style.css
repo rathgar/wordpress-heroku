@@ -71,7 +71,19 @@ article {
 }
 
 article.tag-sold .wp-caption-text {
+  background: url(library/images/red_dot.svg) right 4px top 4px no-repeat, #fff;
+  background-size: 10px;
+}
 
-  background: url(library/images/red_dot.svg) right 3px bottom 3px no-repeat, #fff;
-  background-size: 8px;
+figure.artwork img {
+  max-height: 500px;
+}
+figure.wp-caption .artwork-meta {
+  border-bottom: solid black 2px;
+}
+
+figcaption.artwork-caption {
+  width: 50%;
+  max-width: 500px;
+  padding-bottom: 4em;
 }
