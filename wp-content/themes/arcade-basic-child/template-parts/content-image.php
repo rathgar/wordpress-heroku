@@ -16,20 +16,19 @@
     <?php if ( is_singular() && ! is_front_page() ) : ?>
       <figure class="wp-caption artwork">
         <?php the_post_thumbnail(); ?>
-        <figcaption class="wp-caption-text artwork-caption">
+        <figcaption class="wp-caption-text artwork-caption clearfix">
           <h2><?php echo $post->post_title; ?></h2>
           <dl class="artwork-meta">
             <dd title="Dimensions"><?php echo $post->dimensions; ?></dd>
             <dd title="Media"><?php echo $post->media; ?></dd>
           </dl>
           <?php the_content( __( 'Read more', 'arcade-basic-child') ); ?>
+
+          <?php if (has_category('for-sale')): ?>
+            <p class="for-sale">This work may be available <a href="/index.php/artwork-enquiry?artwork-id=<?php echo urlencode(get_the_ID()); ?>&artwork-title=<?php echo urlencode($post->post_title); ?>">for sale</a>.</p>
+          <?php endif ?>
         </figcaption>
       </figure>
-
-      <?php if (has_category('for-sale')): ?>
-        This work may be available <a href="/index.php/artwork-enquiry?artwork-title=<?php echo urlencode($post->post_title); ?>">for sale</a>.
-      <?php endif ?>
-
     <?php
       else :
         the_excerpt();
