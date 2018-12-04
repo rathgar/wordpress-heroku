@@ -49,7 +49,7 @@ function monsterinsights_track_user() {
 	if ( $track_super_admin === false && is_multisite() && is_super_admin() ) {
 		$track_user = false;
 	}
-	
+
 	// or if UA code is not entered
 	$ua_code = monsterinsights_get_ua();
 	if ( empty( $ua_code ) ) {
@@ -64,7 +64,7 @@ function monsterinsights_get_client_id( $payment_id = false ) {
 		$payment_id = $payment_id->ID;
 	}
 	$user_cid    = monsterinsights_get_uuid();
-	$payment_cid = get_post_meta( $payment_id, '_yoast_gau_uuid', true );
+	$saved_cid   = ! empty( $payment_id ) ? get_post_meta( $payment_id, '_yoast_gau_uuid', true ) : false;
 
 	if ( ! empty( $payment_id ) && ! empty( $saved_cid ) ) {
 		return $saved_cid;
@@ -463,7 +463,7 @@ function monsterinsights_get_country_list( $translated = false ) {
 			'LT' => __( 'Lithuania', 'google-analytics-for-wordpress' ),
 			'LU' => __( 'Luxembourg', 'google-analytics-for-wordpress' ),
 			'MO' => __( 'Macau', 'google-analytics-for-wordpress' ),
-			'MK' => __( 'Macedonia', 'google-analytics-for-wordpress' ),
+			'MK' => __( 'Macedonia (FYROM)', 'google-analytics-for-wordpress' ),
 			'MG' => __( 'Madagascar', 'google-analytics-for-wordpress' ),
 			'MW' => __( 'Malawi', 'google-analytics-for-wordpress' ),
 			'MY' => __( 'Malaysia', 'google-analytics-for-wordpress' ),
@@ -740,7 +740,7 @@ function monsterinsights_get_country_list( $translated = false ) {
 			'MS' => 'Montserrat',
 			'MA' => 'Morocco',
 			'MZ' => 'Mozambique',
-			'MM' => 'Myanmar',
+			'MM' => 'Myanmar (Burma)',
 			'NA' => 'Namibia',
 			'NR' => 'Nauru',
 			'NP' => 'Nepal',
@@ -773,7 +773,7 @@ function monsterinsights_get_country_list( $translated = false ) {
 			'XK' => 'Republic of Kosovo',
 			'RE' => 'Reunion Island',
 			'RO' => 'Romania',
-			'RU' => 'Russian Federation',
+			'RU' => 'Russia',
 			'RW' => 'Rwanda',
 			'BL' => 'Saint Barth&eacute;lemy',
 			'SH' => 'Saint Helena',
@@ -845,7 +845,7 @@ function monsterinsights_get_country_list( $translated = false ) {
 }
 
 function monsterinsights_get_api_url(){
-	return apply_filters( 'monsterinsights_get_api_url', 'www.monsterinsights.com/v1/' );
+	return apply_filters( 'monsterinsights_get_api_url', 'api.monsterinsights.com/v2/' );
 }
 
 function monsterinsights_get_licensing_url(){
@@ -983,3 +983,27 @@ if ( ! function_exists ( 'remove_class_action' ) ) {
 		remove_class_filter( $tag, $class_name, $method_name, $priority );
 	}
 } // End function exists
+
+/**
+ * Format a big number, instead of 1000000 you get 1.0M, works with billions also.
+ *
+ * @param int $number
+ * @param int $precision
+ *
+ * @return string
+ */
+function monsterinsights_round_number( $number, $precision = 2 ) {
+
+	if ( $number < 1000000 ) {
+		// Anything less than a million
+		$number = number_format_i18n( $number );
+	} else if ( $number < 1000000000 ) {
+		// Anything less than a billion
+		$number = number_format_i18n( $number / 1000000, $precision ) . 'M';
+	} else {
+		// At least a billion
+		$number = number_format_i18n( $number / 1000000000, $precision ) . 'B';
+	}
+
+	return $number;
+}

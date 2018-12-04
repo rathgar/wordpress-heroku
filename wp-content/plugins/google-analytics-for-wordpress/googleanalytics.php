@@ -1,17 +1,17 @@
 <?php
 /**
  * Plugin Name:         Google Analytics for WordPress by MonsterInsights
- * Plugin URI:          https://www.monsterinsights.com/?utm_source=wordpress&utm_medium=plugin&utm_campaign=wpmipluginpro&utm_content=v700
+ * Plugin URI:          https://www.monsterinsights.com/?utm_source=liteplugin&utm_medium=pluginheader&utm_campaign=pluginurl&utm_content=7%2E0%2E0
  * Description:         The best Google Analytics plugin for WordPress. See how visitors find and use your website, so you can keep them coming back.
  * Author:              MonsterInsights
- * Author URI:          https://www.monsterinsights.com/
+ * Author URI:          https://www.monsterinsights.com/?utm_source=liteplugin&utm_medium=pluginheader&utm_campaign=authoruri&utm_content=7%2E0%2E0
  *
- * Version:             7.0.3
+ * Version:             7.3.2
  * Requires at least:   3.8.0
- * Tested up to:        4.9
+ * Tested up to:        5.0
  *
  * License:             GPL v3
- * 
+ *
  * Text Domain:         google-analytics-for-wordpress
  * Domain Path:         /languages
  *
@@ -69,7 +69,7 @@ final class MonsterInsights_Lite {
 	 * @access public
 	 * @var string $version Plugin version.
 	 */
-	public $version = '7.0.3';
+	public $version = '7.3.2';
 
 	/**
 	 * Plugin file.
@@ -78,7 +78,7 @@ final class MonsterInsights_Lite {
 	 * @access public
 	 * @var string $file PHP File constant for main file.
 	 */
-	public $file = __FILE__;
+	public $file;
 
 	/**
 	 * The name of the plugin.
@@ -133,7 +133,7 @@ final class MonsterInsights_Lite {
 	 * @var MonsterInsights_Reporting $reporting Instance of Reporting class.
 	 */
 	public $reporting;
-	
+
 	/**
 	 * Holds instance of MonsterInsights Auth class.
 	 *
@@ -174,6 +174,7 @@ final class MonsterInsights_Lite {
 
 		if ( ! isset( self::$instance ) && ! ( self::$instance instanceof MonsterInsights_Lite ) ) {
 			self::$instance = new MonsterInsights_Lite();
+			self::$instance->file = __FILE__;
 
 			global $wp_version;
 
@@ -182,7 +183,7 @@ final class MonsterInsights_Lite {
 				add_action( 'admin_notices', array( self::$instance, 'monsterinsights_wp_notice' ) );
 				return;
 			}
-	
+
 			// Detect Pro version and return early
 			if ( class_exists( 'MonsterInsights' ) && defined( 'GAWP_VERSION' ) ) {
 				add_action( 'admin_notices', array( self::$instance, 'monsterinsights_pro_notice' ) );
@@ -192,7 +193,7 @@ final class MonsterInsights_Lite {
 			if ( defined( 'GAWP_ECOMMERCE_PATH' ) ) {
 				add_action( 'admin_notices', array( self::$instance, 'monsterinsights_old_ecommerce' ) );
 			}
-			
+
 			// Define constants
 			self::$instance->define_globals();
 
@@ -268,7 +269,7 @@ final class MonsterInsights_Lite {
 	 * Disable unserializing of the class
 	 *
 	 * Attempting to wakeup an MonsterInsights instance will throw a doing it wrong notice.
-	 * 
+	 *
 	 * @since 6.0.0
 	 * @access public
 	 *
@@ -365,7 +366,7 @@ final class MonsterInsights_Lite {
 		if ( ! defined( 'GAWP_URL' ) ) {
 			define( 'GAWP_URL', MONSTERINSIGHTS_PLUGIN_URL  );
 		}
-	}	
+	}
 
 	/**
 	 * Loads the plugin textdomain for translation.
@@ -384,8 +385,8 @@ final class MonsterInsights_Lite {
 
 		// Traditional WordPress plugin locale filter.
 		$mi_locale  = apply_filters( 'plugin_locale',  $mi_locale, 'google-analytics-for-wordpress' );
-		$mi_mofile  = sprintf( '%1$s-%2$s.mo', 'google-analytics-for-wordpress', $mi_locale ); 
-	
+		$mi_mofile  = sprintf( '%1$s-%2$s.mo', 'google-analytics-for-wordpress', $mi_locale );
+
 		// Look for wp-content/languages/google-analytics-for-wordpress/google-analytics-for-wordpress-{lang}_{country}.mo
 		$mi_mofile1 = WP_LANG_DIR . '/google-analytics-for-wordpress/' . $mi_mofile;
 
@@ -449,7 +450,7 @@ final class MonsterInsights_Lite {
 		</div>
 		<?php
 	}
-	
+
 	/**
 	 * Output a nag notice if the user has both Lite and Pro activated
 	 *
@@ -479,7 +480,7 @@ final class MonsterInsights_Lite {
 	 *
 	 * @since 6.0.0
 	 * @access public
-	 * 
+	 *
 	 * @return void
 	 */
 	public function load_settings() {
@@ -498,7 +499,7 @@ final class MonsterInsights_Lite {
 	 *
 	 * @since 7.0.0
 	 * @access public
-	 * 
+	 *
 	 * @return void
 	 */
 	public function load_licensing(){
@@ -515,7 +516,7 @@ final class MonsterInsights_Lite {
 	 *
 	 * @since 7.0.0
 	 * @access public
-	 * 
+	 *
 	 * @return void
 	 */
 	public function load_auth() {
@@ -540,6 +541,7 @@ final class MonsterInsights_Lite {
 			// Lite and Pro files
 				require_once MONSTERINSIGHTS_PLUGIN_DIR . 'assets/lib/pandora/class-am-notification.php';
 				require_once MONSTERINSIGHTS_PLUGIN_DIR . 'assets/lib/pandora/class-am-deactivation-survey.php';
+				require_once MONSTERINSIGHTS_PLUGIN_DIR . 'assets/lib/pandora/class-am-dashboard-widget-extend-feed.php';
 				require_once MONSTERINSIGHTS_PLUGIN_DIR . 'includes/admin/ajax.php';
 				require_once MONSTERINSIGHTS_PLUGIN_DIR . 'includes/admin/admin.php';
 				require_once MONSTERINSIGHTS_PLUGIN_DIR . 'includes/admin/common.php';
@@ -547,6 +549,7 @@ final class MonsterInsights_Lite {
 				require_once MONSTERINSIGHTS_PLUGIN_DIR . 'includes/admin/capabilities.php';
 				require_once MONSTERINSIGHTS_PLUGIN_DIR . 'includes/admin/licensing/license-actions.php';
 				require_once MONSTERINSIGHTS_PLUGIN_DIR . 'includes/admin/licensing/autoupdate.php';
+				require_once MONSTERINSIGHTS_PLUGIN_DIR . 'includes/admin/review.php';
 
 			// Pages
 				// Multisite
@@ -557,8 +560,8 @@ final class MonsterInsights_Lite {
 					require_once MONSTERINSIGHTS_PLUGIN_DIR . 'includes/admin/pages/tracking.php';
 					require_once MONSTERINSIGHTS_PLUGIN_DIR . 'includes/admin/pages/tools.php';
 					require_once MONSTERINSIGHTS_PLUGIN_DIR . 'includes/admin/pages/reports.php';
-				
-				// Both	
+
+				// Both
 					require_once MONSTERINSIGHTS_PLUGIN_DIR . 'includes/admin/pages/addons.php';
 
 			// Settings Tabs
@@ -566,10 +569,10 @@ final class MonsterInsights_Lite {
 				require_once MONSTERINSIGHTS_PLUGIN_DIR . 'includes/admin/settings/tab-tracking.php';
 				//require_once MONSTERINSIGHTS_PLUGIN_DIR . 'includes/admin/settings/tab-status.php';
 				//require_once MONSTERINSIGHTS_PLUGIN_DIR . 'includes/admin/settings/tab-support.php';
-			
+
 			// Register Settings + Settings API
 				require_once MONSTERINSIGHTS_PLUGIN_DIR . 'includes/admin/settings/settings-api.php';
-				require_once MONSTERINSIGHTS_PLUGIN_DIR . 'includes/admin/settings/register-settings.php';	
+				require_once MONSTERINSIGHTS_PLUGIN_DIR . 'includes/admin/settings/register-settings.php';
 
 			require_once MONSTERINSIGHTS_PLUGIN_DIR . 'includes/admin/api-auth.php';
 
@@ -589,6 +592,7 @@ final class MonsterInsights_Lite {
 		}
 
 		require_once MONSTERINSIGHTS_PLUGIN_DIR . 'includes/frontend/frontend.php';
+		require_once MONSTERINSIGHTS_PLUGIN_DIR . 'includes/frontend/seedprod.php';
 		require_once MONSTERINSIGHTS_PLUGIN_DIR . 'includes/measurement-protocol.php';
 	}
 
@@ -631,21 +635,21 @@ final class MonsterInsights_Lite {
 function monsterinsights_lite_activation_hook( $network_wide ) {
 
 	global $wp_version;
-	
+
 	$url = admin_url( 'plugins.php' );
 	// Check for MS dashboard
 	if ( is_network_admin() ) {
 		$url = network_admin_url( 'plugins.php' );
 	}
-	
+
 	if ( version_compare( $wp_version, '3.8', '<' ) && ( ! defined( 'MONSTERINSIGHTS_FORCE_ACTIVATION' ) || ! MONSTERINSIGHTS_FORCE_ACTIVATION ) ) {
 		deactivate_plugins( plugin_basename( __FILE__ ) );
 		wp_die( sprintf( esc_html__( 'Sorry, but your version of WordPress does not meet MonsterInsight\'s required version of %1$s3.8%2$s to run properly. The plugin not been activated. %3$sClick here to return to the Dashboard%4$s.', 'google-analytics-by-wordpress' ), '<strong>', '</strong>', '<a href="' . $url . '">', '</a>' ) );
 	}
-	
+
 	if ( class_exists( 'MonsterInsights' ) ) {
 		deactivate_plugins( plugin_basename( __FILE__ ) );
-		wp_die( sprintf( esc_html__( 'Please uninstall and remove MonsterInsights Pro before activating MonsterInsights Lite. The Lite version has not been activated. %1$sClick here to return to the Dashboard%2$s.', 'google-analytics-by-wordpress' ), '<a href="' . $url . '">', '</a>' ) );
+		wp_die( sprintf( esc_html__( 'Please uninstall and remove MonsterInsights Pro before activating Google Analytics for WordPress by MonsterInsights. The Lite version has not been activated. %1$sClick here to return to the Dashboard%2$s.', 'google-analytics-by-wordpress' ), '<a href="' . $url . '">', '</a>' ) );
 	}
 }
 register_activation_hook( __FILE__, 'monsterinsights_lite_activation_hook' );
@@ -655,10 +659,10 @@ register_activation_hook( __FILE__, 'monsterinsights_lite_activation_hook' );
  *
  * @access public
  * @since 6.0.0
- * 
+ *
  * @return 	void
  */
-function monsterinsights_lite_uninstall_hook( $network_wide ) {
+function monsterinsights_lite_uninstall_hook() {
 	wp_cache_flush();
 
 	// Note, if both MI Pro and Lite are active, this is an MI Pro instance
@@ -667,18 +671,8 @@ function monsterinsights_lite_uninstall_hook( $network_wide ) {
 	// has that method.
 	$instance = MonsterInsights();
 
-	if ( is_multisite() && $network_wide ) {
-		// Delete network auth
-		$instance->api_auth->delete_auth();
-
-		// Delete network data
-		$instance->reporting->delete_aggregate_data('network');
-
-		// Delete network license
-		$instance->license->delete_network_license();
-
+	if ( is_multisite() ) {
 		$site_list = get_sites();
-
 		foreach ( (array) $site_list as $site ) {
 			switch_to_blog( $site->blog_id );
 
@@ -693,6 +687,14 @@ function monsterinsights_lite_uninstall_hook( $network_wide ) {
 
 			restore_current_blog();
 		}
+		// Delete network auth using a custom function as some variables are not initiated.
+		$instance->api_auth->uninstall_network_auth();
+
+		// Delete network data
+		$instance->reporting->delete_aggregate_data('network');
+
+		// Delete network license
+		$instance->license->delete_network_license();
 	} else {
 		// Delete auth
 		$instance->api_auth->delete_auth();
@@ -719,7 +721,7 @@ register_uninstall_hook( __FILE__, 'monsterinsights_lite_uninstall_hook' );
  * @since 6.0.0
  *
  * @uses MonsterInsights_Lite::get_instance() Retrieve MonsterInsights_Lite instance.
- * 
+ *
  * @return MonsterInsights_Lite The singleton MonsterInsights_Lite instance.
  */
 function MonsterInsights_Lite() {
@@ -739,7 +741,7 @@ function MonsterInsights_Lite() {
  * @global string $wp_version WordPress version (provided by WordPress core).
  * @uses MonsterInsights_Lite::load_settings() Loads MonsterInsights settings
  * @uses MonsterInsights_Install::init() Runs upgrade process
- * 
+ *
  * @return void
  */
 function monsterinsights_lite_install_and_upgrade() {
@@ -790,7 +792,7 @@ function monsterinsights_lite_install_and_upgrade() {
  * @access public
  *
  * @uses MonsterInsights_Install() Runs install and upgrade process.
- * 
+ *
  * @return void
  */
 function monsterinsights_lite_call_install_and_upgrade(){
@@ -799,10 +801,10 @@ function monsterinsights_lite_call_install_and_upgrade(){
 
 /**
  * Returns the MonsterInsights combined object that you can use for both
- * MonsterInsights Lite and Pro Users. When both plugins active, defers to the 
- * more complete Pro object. 
+ * MonsterInsights Lite and Pro Users. When both plugins active, defers to the
+ * more complete Pro object.
  *
- * Warning: Do not use this in Lite or Pro specific code (use the individual objects instead). 
+ * Warning: Do not use this in Lite or Pro specific code (use the individual objects instead).
  * Also do not use in the MonsterInsights Lite/Pro upgrade and install routines.
  *
  * Use this function like you would a global variable, except without needing
@@ -817,7 +819,7 @@ function monsterinsights_lite_call_install_and_upgrade(){
  *
  * @uses MonsterInsights::get_instance() Retrieve MonsterInsights Pro instance.
  * @uses MonsterInsights_Lite::get_instance() Retrieve MonsterInsights Lite instance.
- * 
+ *
  * @return MonsterInsights The singleton MonsterInsights instance.
  */
 if ( ! function_exists( 'MonsterInsights' ) ) {

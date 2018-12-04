@@ -64,7 +64,7 @@ class ChildThemeConfiguratorPreview {
     public function parse_stylesheet() {
         echo '<script>/*<![CDATA[' . LF;
         global $wp_styles, $wp_filter;
-        $queue = implode( "\n", $wp_styles->queue );
+        $queue = implode( "\n", array_keys( $wp_styles->registered ) );
         echo 'BEGIN WP QUEUE' . LF . $queue . LF . 'END WP QUEUE' . LF;
         if ( is_child_theme() ):
             // check for signals that indicate specific settings
@@ -126,6 +126,12 @@ class ChildThemeConfiguratorPreview {
             endif;
         endforeach;
         echo 'END CTC IRREGULAR' . LF;
+        if ( defined( 'WP_CACHE' ) && WP_CACHE )
+            echo 'HAS_WP_CACHE' . LF;
+        if ( defined( 'AUTOPTIMIZE_PLUGIN_DIR' ) )
+            echo 'HAS_AUTOPTIMIZE' . LF;
+        if ( defined( 'WP_ROCKET_VERSION' ) )
+            echo 'HAS_WP_ROCKET' . LF;
         echo ']]>*/</script>' . LF;
     }
     

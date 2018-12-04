@@ -3,22 +3,19 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: MonsterInsights Lite\n"
-"Report-Msgid-Bugs-To: https://github.com/awesomemotive/monsterinsights/"
-"issues\n"
-"POT-Creation-Date: 2018-02-26 11:38-0500\n"
+"Report-Msgid-Bugs-To: https://github.com/awesomemotive/monsterinsights/issues\n"
+"POT-Creation-Date: 2018-10-30 09:26-0400\n"
 "PO-Revision-Date: 2016-07-21 17:01-0400\n"
 "Last-Translator: Chris Christoff <support@monsterinsights.com>\n"
 "Language-Team: Chris Christoff <support@monsterinsights.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 2.2\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-WPHeader: googleanalytics.php\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
-"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
-"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 "X-Poedit-SearchPathExcluded-1: .roboci\n"
@@ -35,47 +32,32 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-12: *.css\n"
 "X-Poedit-SearchPathExcluded-13: googleanalytics-premium.php\n"
 
-#: googleanalytics.php:264 googleanalytics.php:278
+#: googleanalytics.php:265 googleanalytics.php:279
 msgid "Cheatin&#8217; huh?"
 msgstr ""
 
-#: googleanalytics.php:426
-msgid ""
-"The version of MonsterInsights eCommerce addon you have is not compatible "
-"with the version of MonsterInsights installed. Please update the eCommerce "
-"addon as soon as possible"
+#: googleanalytics.php:427
+msgid "The version of MonsterInsights eCommerce addon you have is not compatible with the version of MonsterInsights installed. Please update the eCommerce addon as soon as possible"
 msgstr ""
 
-#: googleanalytics.php:448
+#: googleanalytics.php:449
 #, php-format
-msgid ""
-"Sorry, but your version of WordPress does not meet MonsterInsights's "
-"required version of %1$s3.8%2$s to run properly. The plugin not been "
-"activated. %3$sClick here to return to the Dashboard%4$s."
+msgid "Sorry, but your version of WordPress does not meet MonsterInsights's required version of %1$s3.8%2$s to run properly. The plugin not been activated. %3$sClick here to return to the Dashboard%4$s."
 msgstr ""
 
-#: googleanalytics.php:469
+#: googleanalytics.php:470
 #, php-format
-msgid ""
-"Please %1$suninstall%2$s the MonsterInsights Lite Plugin. Your Pro version "
-"of MonsterInsights may not work as expected until the Lite version is "
-"uninstalled."
+msgid "Please %1$suninstall%2$s the MonsterInsights Lite Plugin. Your Pro version of MonsterInsights may not work as expected until the Lite version is uninstalled."
 msgstr ""
 
-#: googleanalytics.php:643
+#: googleanalytics.php:647
 #, php-format
-msgid ""
-"Sorry, but your version of WordPress does not meet MonsterInsight's required "
-"version of %1$s3.8%2$s to run properly. The plugin not been activated. "
-"%3$sClick here to return to the Dashboard%4$s."
+msgid "Sorry, but your version of WordPress does not meet MonsterInsight's required version of %1$s3.8%2$s to run properly. The plugin not been activated. %3$sClick here to return to the Dashboard%4$s."
 msgstr ""
 
-#: googleanalytics.php:648
+#: googleanalytics.php:652
 #, php-format
-msgid ""
-"Please uninstall and remove MonsterInsights Pro before activating "
-"MonsterInsights Lite. The Lite version has not been activated. %1$sClick "
-"here to return to the Dashboard%2$s."
+msgid "Please uninstall and remove MonsterInsights Pro before activating Google Analytics for WordPress by MonsterInsights. The Lite version has not been activated. %1$sClick here to return to the Dashboard%2$s."
 msgstr ""
 
 #: includes/admin/admin.php:37 includes/admin/admin.php:40
@@ -146,6 +128,7 @@ msgid "Documentation"
 msgstr ""
 
 #: includes/admin/admin.php:126 includes/admin/reports/abstract-report.php:337
+#: lite/includes/admin/dashboard-widget.php:115
 msgid "Get MonsterInsights Pro"
 msgstr ""
 
@@ -155,9 +138,7 @@ msgstr ""
 
 #: includes/admin/admin.php:245
 #, php-format
-msgid ""
-"Please rate %sMonsterInsights%s %s on %sWordPress.org%s to help us spread "
-"the word. Thank you from the MonsterInsights team!"
+msgid "Please rate %sMonsterInsights%s %s on %sWordPress.org%s to help us spread the word. Thank you from the MonsterInsights team!"
 msgstr ""
 
 #: includes/admin/admin.php:275
@@ -167,377 +148,318 @@ msgstr ""
 
 #: includes/admin/admin.php:284
 #, php-format
-msgid ""
-"Warning: No valid license key has been entered for MonsterInsights. You are "
-"currently not getting updates, and are not able to view reports. %1$sPlease "
-"click here to enter your license key and begin receiving updates and reports."
-"%2$s"
+msgid "Warning: No valid license key has been entered for MonsterInsights. You are currently not getting updates, and are not able to view reports. %1$sPlease click here to enter your license key and begin receiving updates and reports.%2$s"
 msgstr ""
 
 #: includes/admin/admin.php:294 includes/license.php:278
 #: includes/license.php:289
 #, php-format
-msgid ""
-"Your license key for MonsterInsights has expired. %1$sPlease click here to "
-"renew your license key.%2$s"
+msgid "Your license key for MonsterInsights has expired. %1$sPlease click here to renew your license key.%2$s"
 msgstr ""
 
 #: includes/admin/admin.php:296 includes/license.php:280
 #: includes/license.php:291
-msgid ""
-"Your license key for MonsterInsights has been disabled. Please use a "
-"different key."
+msgid "Your license key for MonsterInsights has been disabled. Please use a different key."
 msgstr ""
 
 #: includes/admin/admin.php:298 includes/license.php:282
 #: includes/license.php:293
-msgid ""
-"Your license key for MonsterInsights is invalid. The key no longer exists or "
-"the user associated with the key has been deleted. Please use a different "
-"key."
+msgid "Your license key for MonsterInsights is invalid. The key no longer exists or the user associated with the key has been deleted. Please use a different key."
 msgstr ""
 
 #: includes/admin/admin.php:302
 #, php-format
-msgid ""
-"Your network license key for MonsterInsights has expired. %1$sPlease click "
-"here to renew your license key.%2$s"
+msgid "Your network license key for MonsterInsights has expired. %1$sPlease click here to renew your license key.%2$s"
 msgstr ""
 
 #: includes/admin/admin.php:304
-msgid ""
-"Your network license key for MonsterInsights has been disabled. Please use a "
-"different key."
+msgid "Your network license key for MonsterInsights has been disabled. Please use a different key."
 msgstr ""
 
 #: includes/admin/admin.php:306
-msgid ""
-"Your network license key for MonsterInsights is invalid. The key no longer "
-"exists or the user associated with the key has been deleted. Please use a "
-"different key."
+msgid "Your network license key for MonsterInsights is invalid. The key no longer exists or the user associated with the key has been deleted. Please use a different key."
 msgstr ""
 
-#: includes/admin/admin.php:327
-msgid ""
-"Allow MonsterInsights to track plugin usage? Opt-in to tracking and our "
-"newsletter to stay informed of the latest changes to MonsterInsights and "
-"help us ensure compatibility."
-msgstr ""
-
-#: includes/admin/admin.php:328
-msgid "Allow"
-msgstr ""
-
-#: includes/admin/admin.php:329
-msgid "Do not allow"
-msgstr ""
-
-#: includes/admin/admin.php:354
+#: includes/admin/admin.php:352
 #, php-format
-msgid ""
-"Important: You are currently using manual UA code output. We highly "
-"recommend %1$sauthenticating with MonsterInsights%2$s so that you can access "
-"our new reporting area and take advantage of new MonsterInsights features."
+msgid "Important: You are currently using manual UA code output. We highly recommend %1$sauthenticating with MonsterInsights%2$s so that you can access our new reporting area and take advantage of new MonsterInsights features."
 msgstr ""
 
-#: includes/admin/admin.php:368
-#, php-format
-msgid ""
-"Important: Please %1$sconfigure the Automatic Updates Settings%2$s in "
-"MonsterInsights."
-msgstr ""
-
-#: includes/admin/admin.php:395 includes/admin/admin.php:424
+#: includes/admin/admin.php:394 includes/admin/admin.php:425
 #, php-format
 msgid "%1$sGet MonsterInsights Pro%2$s"
 msgstr ""
 
-#: includes/admin/api-auth.php:71
+#: includes/admin/api-auth.php:83
 msgid "You don't have permission to authenticate MonsterInsights."
 msgstr ""
 
-#: includes/admin/api-auth.php:81
-msgid ""
-"Cannot authenticate. Please enter a valid, active license key for "
-"MonsterInsights Pro into the settings."
+#: includes/admin/api-auth.php:93
+msgid "Cannot authenticate. Please enter a valid, active license key for MonsterInsights Pro into the settings."
 msgstr ""
 
-#: includes/admin/api-auth.php:86
+#: includes/admin/api-auth.php:98
 msgid "Cannot authenticate. Please re-authenticate."
 msgstr ""
 
-#: includes/admin/api-auth.php:88
-msgid ""
-"Cannot network authenticate. Please re-authenticate on the network settings "
-"panel."
+#: includes/admin/api-auth.php:100
+msgid "Cannot network authenticate. Please re-authenticate on the network settings panel."
 msgstr ""
 
-#: includes/admin/api-auth.php:185
+#: includes/admin/api-auth.php:285
 msgid "You don't have permission to re-authenticate MonsterInsights."
 msgstr ""
 
-#: includes/admin/api-auth.php:195
-msgid ""
-"Cannot re-authenticate. Please enter a valid, active license key for "
-"MonsterInsights Pro into the settings."
-msgstr ""
-
-#: includes/admin/api-auth.php:200
-msgid "Cannot re-authenticate. Please authenticate."
-msgstr ""
-
-#: includes/admin/api-auth.php:202
-msgid ""
-"Cannot re-authenticate the network. Please authenticate on the network "
-"settings panel."
+#: includes/admin/api-auth.php:295
+msgid "Cannot re-authenticate. Please enter a valid, active license key for MonsterInsights Pro into the settings."
 msgstr ""
 
 #: includes/admin/api-auth.php:300
+msgid "Cannot re-authenticate. Please authenticate."
+msgstr ""
+
+#: includes/admin/api-auth.php:302
+msgid "Cannot re-authenticate the network. Please authenticate on the network settings panel."
+msgstr ""
+
+#: includes/admin/api-auth.php:404
 msgid "You don't have permission to verify MonsterInsights."
 msgstr ""
 
-#: includes/admin/api-auth.php:309 includes/admin/api-auth.php:311
+#: includes/admin/api-auth.php:413 includes/admin/api-auth.php:415
 msgid "Cannot verify. Please authenticate."
 msgstr ""
 
-#: includes/admin/api-auth.php:316
-msgid ""
-"Cannot verify. Please enter a valid, active license key for MonsterInsights "
-"Pro into the settings."
+#: includes/admin/api-auth.php:420
+msgid "Cannot verify. Please enter a valid, active license key for MonsterInsights Pro into the settings."
 msgstr ""
 
-#: includes/admin/api-auth.php:321
+#: includes/admin/api-auth.php:425
 msgid "Successfully verified."
 msgstr ""
 
-#: includes/admin/api-auth.php:323
+#: includes/admin/api-auth.php:427
 msgid "Could not verify."
 msgstr ""
 
-#: includes/admin/api-auth.php:351
+#: includes/admin/api-auth.php:435
+msgid "Verify auth key not passed"
+msgstr ""
+
+#: includes/admin/api-auth.php:456
 msgid "You don't have permission to deauthenticate MonsterInsights."
 msgstr ""
 
-#: includes/admin/api-auth.php:360 includes/admin/api-auth.php:362
+#: includes/admin/api-auth.php:465 includes/admin/api-auth.php:467
 msgid "Cannot deauthenticate. You are not currently authed."
 msgstr ""
 
-#: includes/admin/api-auth.php:367
-msgid ""
-"Cannot deauthenticate. Please enter a valid, active license key for "
-"MonsterInsights Pro into the settings."
+#: includes/admin/api-auth.php:472
+msgid "Cannot deauthenticate. Please enter a valid, active license key for MonsterInsights Pro into the settings."
 msgstr ""
 
-#: includes/admin/api-auth.php:374
+#: includes/admin/api-auth.php:479
 msgid "Successfully deauthenticated."
 msgstr ""
 
-#: includes/admin/api-auth.php:377
+#: includes/admin/api-auth.php:482
 msgid "Successfully force deauthenticated."
 msgstr ""
 
-#: includes/admin/api-auth.php:379
+#: includes/admin/api-auth.php:484
 msgid "Could not deauthenticate."
 msgstr ""
 
-#: includes/admin/common.php:130
+#: includes/admin/common.php:134
 msgid "Loading..."
 msgstr ""
 
-#: includes/admin/common.php:131
-msgid ""
-"Warning: You have unsaved setting changes. If you leave the settings page "
-"without saving your changes will be lost. Did you still want to leave the "
-"page?"
+#: includes/admin/common.php:135
+msgid "Warning: You have unsaved setting changes. If you leave the settings page without saving your changes will be lost. Did you still want to leave the page?"
 msgstr ""
 
-#: includes/admin/common.php:133
+#: includes/admin/common.php:137
 msgid "Status: Active"
 msgstr ""
 
-#: includes/admin/common.php:134 includes/admin/pages/addons.php:468
+#: includes/admin/common.php:138 includes/admin/pages/addons.php:468
 msgid "Activate"
 msgstr ""
 
-#: includes/admin/common.php:135
+#: includes/admin/common.php:139
 msgid "Status: Network Activated"
 msgstr ""
 
-#: includes/admin/common.php:136 includes/admin/pages/addons.php:466
+#: includes/admin/common.php:140 includes/admin/pages/addons.php:466
 msgid "Network activate"
 msgstr ""
 
-#: includes/admin/common.php:138
+#: includes/admin/common.php:142
 msgid "Activating..."
 msgstr ""
 
-#: includes/admin/common.php:139 includes/admin/pages/addons.php:441
+#: includes/admin/common.php:143 includes/admin/pages/addons.php:441
 #: includes/admin/pages/addons.php:443
 msgid "Deactivate"
 msgstr ""
 
-#: includes/admin/common.php:140 includes/admin/pages/addons.php:439
+#: includes/admin/common.php:144 includes/admin/pages/addons.php:439
 msgid "Network deactivate"
 msgstr ""
 
-#: includes/admin/common.php:142
+#: includes/admin/common.php:146
 msgid "Deactivating..."
 msgstr ""
 
-#: includes/admin/common.php:143
+#: includes/admin/common.php:147
 msgid "Status: Inactive"
 msgstr ""
 
-#: includes/admin/common.php:144
+#: includes/admin/common.php:148
 msgid "Status: Network inactive"
 msgstr ""
 
-#: includes/admin/common.php:145 includes/admin/pages/addons.php:398
+#: includes/admin/common.php:149 includes/admin/pages/addons.php:398
 msgid "Install"
 msgstr ""
 
-#: includes/admin/common.php:147
+#: includes/admin/common.php:151
 msgid "Installing..."
 msgstr ""
 
-#: includes/admin/common.php:148
+#: includes/admin/common.php:152
 msgid "Proceed"
 msgstr ""
 
-#: includes/admin/common.php:150
+#: includes/admin/common.php:154
 msgid "Copied!"
 msgstr ""
 
-#: includes/admin/common.php:151
+#: includes/admin/common.php:155
 msgid "Copy to Clipboard"
 msgstr ""
 
-#: includes/admin/common.php:152
+#: includes/admin/common.php:156
 msgid "Failed!"
 msgstr ""
 
-#: includes/admin/common.php:154
+#: includes/admin/common.php:158
 msgid "Shorten URL"
 msgstr ""
 
-#: includes/admin/common.php:155
+#: includes/admin/common.php:159
 msgid "Shortened!"
 msgstr ""
 
-#: includes/admin/common.php:156
+#: includes/admin/common.php:160
 msgid "Working..."
 msgstr ""
 
-#: includes/admin/common.php:157 includes/admin/pages/tools.php:87
+#: includes/admin/common.php:161 includes/admin/pages/tools.php:87
 msgid "Import"
 msgstr ""
 
-#: includes/admin/common.php:158
+#: includes/admin/common.php:162
 msgid "Imported!"
 msgstr ""
 
-#: includes/admin/common.php:159
+#: includes/admin/common.php:163
 msgid "Preparing to redirect:"
 msgstr ""
 
-#: includes/admin/common.php:160
-msgid ""
-"You'll be redirected momentarily to complete authentication. This may take a "
-"couple seconds."
-msgstr ""
-
-#: includes/admin/common.php:161
-msgid "Authentication Error:"
-msgstr ""
-
-#: includes/admin/common.php:162
-msgid "Deauthenticating...."
-msgstr ""
-
-#: includes/admin/common.php:163
-msgid "We're deactivating your site. This may take a couple seconds."
-msgstr ""
-
 #: includes/admin/common.php:164
-msgid "Deactivation Error:"
+msgid "You'll be redirected momentarily to complete authentication. This may take a couple seconds."
 msgstr ""
 
 #: includes/admin/common.php:165
-msgid "Deactivated Successfully!"
+msgid "Authentication Error:"
 msgstr ""
 
 #: includes/admin/common.php:166
-msgid ""
-"You've disconnected your site from MonsterInsights. Your site is no longer "
-"being tracked by Google Analytics and you won't see reports anymore."
+msgid "Deauthenticating...."
 msgstr ""
 
 #: includes/admin/common.php:167
-msgid "Verifying...."
+msgid "We're deactivating your site. This may take a couple seconds."
 msgstr ""
 
 #: includes/admin/common.php:168
-msgid "We're verifying your site. This may take a couple seconds."
+msgid "Deactivation Error:"
 msgstr ""
 
 #: includes/admin/common.php:169
-msgid "Verification Error:"
+msgid "Deactivated Successfully!"
 msgstr ""
 
 #: includes/admin/common.php:170
-msgid "Verified Successfully!"
+msgid "You've disconnected your site from MonsterInsights. Your site is no longer being tracked by Google Analytics and you won't see reports anymore."
 msgstr ""
 
 #: includes/admin/common.php:171
-msgid "Your site is connected to MonsterInsights!"
+msgid "Verifying...."
 msgstr ""
 
 #: includes/admin/common.php:172
-msgid "OK"
+msgid "We're verifying your site. This may take a couple seconds."
 msgstr ""
 
 #: includes/admin/common.php:173
-msgid "Force Deauthenticate"
+msgid "Verification Error:"
 msgstr ""
 
 #: includes/admin/common.php:174
-msgid "Refreshing Report"
+msgid "Verified Successfully!"
 msgstr ""
 
 #: includes/admin/common.php:175
-msgid "Loading new report data..."
+msgid "Your site is connected to MonsterInsights!"
 msgstr ""
 
 #: includes/admin/common.php:176
-msgid "Success"
+msgid "OK"
 msgstr ""
 
 #: includes/admin/common.php:177
-msgid "Retrieved the new report data successfully"
+msgid "Force Deauthenticate"
 msgstr ""
 
 #: includes/admin/common.php:178
+msgid "Refreshing Report"
+msgstr ""
+
+#: includes/admin/common.php:179
+msgid "Loading new report data..."
+msgstr ""
+
+#: includes/admin/common.php:180
+msgid "Success"
+msgstr ""
+
+#: includes/admin/common.php:181
+msgid "Retrieved the new report data successfully"
+msgstr ""
+
+#: includes/admin/common.php:182
 msgid "Error"
 msgstr ""
 
-#: includes/admin/common.php:473
+#: includes/admin/common.php:184
+msgid "Real-Time Report Paused"
+msgstr ""
+
+#: includes/admin/common.php:185
+msgid "The Real-Time Report automatically paused due to inactivity. Please refresh the page to resume the Real-Time Report."
+msgstr ""
+
+#: includes/admin/common.php:644
 #, php-format
-msgid ""
-"MonsterInsights has detected that it's files are being blocked. This is "
-"usually caused by a adblock browser plugin (particularly uBlock Origin), or "
-"a conflicting WordPress theme or plugin. This issue only affects the admin "
-"side of MonsterInsights. To solve this, ensure MonsterInsights is "
-"whitelisted for your website URL in any adblock browser plugin you use. For "
-"step by step directions on how to do this, %1$sclick here%2$s. If this "
-"doesn't solve the issue (rare), send us a ticket %3$shere%2$s and we'll be "
-"happy to help diagnose the issue."
+msgid "MonsterInsights has detected that it's files are being blocked. This is usually caused by a adblock browser plugin (particularly uBlock Origin), or a conflicting WordPress theme or plugin. This issue only affects the admin side of MonsterInsights. To solve this, ensure MonsterInsights is whitelisted for your website URL in any adblock browser plugin you use. For step by step directions on how to do this, %1$sclick here%2$s. If this doesn't solve the issue (rare), send us a ticket %3$shere%2$s and we'll be happy to help diagnose the issue."
 msgstr ""
 
 #: includes/admin/licensing/license-actions.php:110
 #: includes/admin/licensing/license-actions.php:162
 #: includes/admin/licensing/license-actions.php:248
-msgid ""
-"There was an error connecting to the remote key API. Please try again later."
+msgid "There was an error connecting to the remote key API. Please try again later."
 msgstr ""
 
 #: includes/admin/licensing/license-actions.php:127
@@ -549,8 +471,7 @@ msgid "Congratulations! Your key has been refreshed successfully."
 msgstr ""
 
 #: includes/admin/licensing/license-actions.php:259
-msgid ""
-"Congratulations! You have deactivated the key from this site successfully."
+msgid "Congratulations! You have deactivated the key from this site successfully."
 msgstr ""
 
 #: includes/admin/licensing/skin.php:86
@@ -578,15 +499,11 @@ msgid "Sort Descending (Z-A)"
 msgstr ""
 
 #: includes/admin/pages/addons.php:123
-msgid ""
-"In order to get access to Addons, you need to resolve your license key "
-"errors."
+msgid "In order to get access to Addons, you need to resolve your license key errors."
 msgstr ""
 
 #: includes/admin/pages/addons.php:139
-msgid ""
-"There was an issue retrieving the addons for this site. Please click on the "
-"button below the refresh the addons data."
+msgid "There was an issue retrieving the addons for this site. Please click on the button below the refresh the addons data."
 msgstr ""
 
 #: includes/admin/pages/addons.php:142
@@ -603,9 +520,7 @@ msgstr ""
 
 #: includes/admin/pages/addons.php:181
 #, php-format
-msgid ""
-"%1$sWant even more addons?%2$sUpgrade your MonsterInsights account%3$s and "
-"unlock the following addons:"
+msgid "%1$sWant even more addons?%2$sUpgrade your MonsterInsights account%3$s and unlock the following addons:"
 msgstr ""
 
 #: includes/admin/pages/addons.php:373
@@ -643,9 +558,7 @@ msgid "Status: %1$sInactive%2$s"
 msgstr ""
 
 #: includes/admin/pages/network-settings.php:52
-msgid ""
-"Activate your MonsterInsights license key on this panel to hide the license "
-"key settings and addon pages for subsites."
+msgid "Activate your MonsterInsights license key on this panel to hide the license key settings and addon pages for subsites."
 msgstr ""
 
 #: includes/admin/pages/network-settings.php:65
@@ -670,10 +583,7 @@ msgstr ""
 
 #: includes/admin/pages/network-settings.php:77
 #: includes/admin/settings/tab-general.php:69
-msgid ""
-"The license key is used to enable updates for MonsterInsights Pro & addons, "
-"as well enable the ability to view reports. Deactivate your license if you "
-"want to use it on another WordPress site."
+msgid "The license key is used to enable updates for MonsterInsights Pro & addons, as well enable the ability to view reports. Deactivate your license if you want to use it on another WordPress site."
 msgstr ""
 
 #: includes/admin/pages/network-settings.php:86
@@ -699,8 +609,7 @@ msgstr ""
 
 #: includes/admin/pages/network-settings.php:98
 #: includes/admin/settings/tab-general.php:95
-msgid ""
-"Click refresh if your license has been upgraded or the type is incorrect."
+msgid "Click refresh if your license has been upgraded or the type is incorrect."
 msgstr ""
 
 #: includes/admin/pages/network-settings.php:106
@@ -717,9 +626,7 @@ msgstr ""
 #: includes/admin/pages/network-settings.php:125
 #: includes/admin/settings/tab-general.php:112
 #: includes/admin/settings/tab-general.php:122
-msgid ""
-"Please activate MonsterInsights Pro with an active, valid license key in "
-"order to use MonsterInsights Pro."
+msgid "Please activate MonsterInsights Pro with an active, valid license key in order to use MonsterInsights Pro."
 msgstr ""
 
 #: includes/admin/pages/network-settings.php:117
@@ -749,10 +656,7 @@ msgstr ""
 
 #: includes/admin/pages/network-settings.php:129
 #, php-format
-msgid ""
-"This is the default Google profile to use for subsites of a network (can be "
-"overriden at the single site level). Having issues automatically "
-"authenticating? %s Click here to authenticate manually %s."
+msgid "This is the default Google profile to use for subsites of a network (can be overriden at the single site level). Having issues automatically authenticating? %s Click here to authenticate manually %s."
 msgstr ""
 
 #: includes/admin/pages/network-settings.php:142
@@ -764,9 +668,7 @@ msgid "Save Network UA code"
 msgstr ""
 
 #: includes/admin/pages/network-settings.php:146
-msgid ""
-"This is the default UA code to use for subsites of a network (can be "
-"overriden at the single site level)."
+msgid "This is the default UA code to use for subsites of a network (can be overriden at the single site level)."
 msgstr ""
 
 #: includes/admin/pages/network-settings.php:156
@@ -777,19 +679,23 @@ msgstr ""
 #: includes/admin/pages/network-settings.php:160
 #: includes/admin/settings/tab-general.php:180
 #, php-format
-msgid ""
-"Already purchased an upgrade to MonsterInsights Pro? To unlock your Pro "
-"features and addons, %sfollow our upgrade guide%s to install MonsterInsights "
-"Pro."
+msgid "Already purchased an upgrade to MonsterInsights Pro? To unlock your Pro features and addons, %sfollow our upgrade guide%s to install MonsterInsights Pro."
 msgstr ""
 
 #: includes/admin/pages/network-settings.php:163
 #: includes/admin/settings/tab-general.php:183
 #, php-format
-msgid ""
-"Don't yet have a Pro license? %sVisit our website%s to upgrade and learn "
-"more about all the amazing features, expanded report and powerful addons you "
-"unlock when you go Pro."
+msgid "Don't yet have a Pro license? %sVisit our website%s to upgrade and learn more about all the amazing features, expanded report and powerful addons you unlock when you go Pro."
+msgstr ""
+
+#: includes/admin/pages/network-settings.php:169
+#: includes/admin/settings/register-settings.php:396
+msgid "Hide Announcements"
+msgstr ""
+
+#: includes/admin/pages/network-settings.php:170
+#: includes/admin/settings/register-settings.php:397
+msgid "Hides plugin announcements and update details. This includes critical notices we use to inform about deprecations and important required configuration changes."
 msgstr ""
 
 #: includes/admin/pages/reports.php:93
@@ -814,9 +720,7 @@ msgid "You must authenticate with MonsterInsights before you can view reports."
 msgstr ""
 
 #: includes/admin/pages/reports.php:171 includes/admin/pages/reports.php:177
-msgid ""
-"Unknown report. Try refreshing and retrying. Contact support if this issue "
-"persists."
+msgid "Unknown report. Try refreshing and retrying. Contact support if this issue persists."
 msgstr ""
 
 #: includes/admin/pages/settings.php:78 includes/admin/pages/settings.php:79
@@ -854,9 +758,7 @@ msgid "Setting Tools"
 msgstr ""
 
 #: includes/admin/pages/tools.php:61
-msgid ""
-"You can use the below tools to import settings from other MonsterInsights "
-"websites or export settings to import into another MonsterInsights install."
+msgid "You can use the below tools to import settings from other MonsterInsights websites or export settings to import into another MonsterInsights install."
 msgstr ""
 
 #: includes/admin/pages/tools.php:68
@@ -868,8 +770,7 @@ msgid "Successfully imported settings!"
 msgstr ""
 
 #: includes/admin/pages/tools.php:82
-msgid ""
-"Paste the import field content from another MonsterInsights site in above."
+msgid "Paste the import field content from another MonsterInsights site in above."
 msgstr ""
 
 #: includes/admin/pages/tools.php:95
@@ -894,6 +795,7 @@ msgstr ""
 
 #. Author of the plugin/theme
 #: includes/admin/partials/header.php:19
+#: lite/includes/admin/dashboard-widget.php:58
 msgid "MonsterInsights"
 msgstr ""
 
@@ -916,21 +818,16 @@ msgstr ""
 
 #: includes/admin/reports/abstract-report.php:75
 #, php-format
-msgid ""
-"You do not have an active license. Please %1$scheck your license "
-"configuration.%2$s"
+msgid "You do not have an active license. Please %1$scheck your license configuration.%2$s"
 msgstr ""
 
 #: includes/admin/reports/abstract-report.php:86
 #, php-format
-msgid ""
-"Please %1$sauthenticate %2$swith Google Analytics to allow the plugin to "
-"fetch data."
+msgid "Please %1$sauthenticate %2$swith Google Analytics to allow the plugin to fetch data."
 msgstr ""
 
 #: includes/admin/reports/abstract-report.php:92
-msgid ""
-"The Google oAuth authentication needs to be re-authenticated to view data."
+msgid "The Google oAuth authentication needs to be re-authenticated to view data."
 msgstr ""
 
 #: includes/admin/reports/abstract-report.php:117
@@ -951,9 +848,7 @@ msgstr ""
 
 #: includes/admin/reports/abstract-report.php:306
 #, php-format
-msgid ""
-"You currently have a %s level license, but this report requires at least a "
-"%s level license to view the %s. Please upgrade to view this report."
+msgid "You currently have a %s level license, but this report requires at least a %s level license to view the %s. Please upgrade to view this report."
 msgstr ""
 
 #: includes/admin/reports/abstract-report.php:315
@@ -973,241 +868,232 @@ msgstr ""
 
 #: includes/admin/reports/abstract-report.php:321
 #, php-format
-msgid ""
-"Do you you want to access to %s reporting right now%s in your WordPress "
-"Dashboard? That comes with %s level%s of our paid packages. You'll need to "
-"upgrade your license to get instant access."
+msgid "Do you want to access to %s reporting right now%s in your WordPress Dashboard? That comes with the %s level%s of our paid packages. You'll need to upgrade your license to get instant access."
 msgstr ""
 
 #: includes/admin/reports/abstract-report.php:322
 #, php-format
-msgid ""
-"It's easy! To upgrade, navigate to %sMy Account%s on MonsterInsights.com, go "
-"to the licenses tab, and click upgrade. We also have a %sstep by step guide"
-"%s with pictures of this process."
+msgid "It's easy! To upgrade, navigate to %sMy Account%s on MonsterInsights.com, go to the licenses tab, and click upgrade. We also have a %sstep by step guide%s with pictures of this process."
 msgstr ""
 
 #: includes/admin/reports/abstract-report.php:323
 #: includes/admin/reports/abstract-report.php:330
-msgid ""
-"If you have any questions, don't hesitate to reach out. We're here to help."
+msgid "If you have any questions, don't hesitate to reach out. We're here to help."
 msgstr ""
 
 #: includes/admin/reports/abstract-report.php:325
 #, php-format
 msgid ""
-"Hey there! %s It looks like you've got the free version of MonsterInsights "
-"installed on your site.\n"
+"Hey there! %s It looks like you've got the free version of MonsterInsights installed on your site.\n"
 "\t\t\t\t\t\t\t\t\t  That's awesome!"
 msgstr ""
 
 #: includes/admin/reports/abstract-report.php:328
 #, php-format
-msgid ""
-"Do you you want to access to %s reporting right now%s in your WordPress "
-"Dashboard? That comes with %s level%s of our paid packages. To get instant "
-"access, you'll want to buy a MonsterInsights license, which also gives you "
-"access to powerful addons, expanded reporting (including the ability to use "
-"custom date ranges), comprehensive tracking features (like UserID tracking) "
-"and access to our world-class support team."
+msgid "Do you you want to access to %s reporting right now%s in your WordPress Dashboard? That comes with %s level%s of our paid packages. To get instant access, you'll want to buy a MonsterInsights license, which also gives you access to powerful addons, expanded reporting (including the ability to use custom date ranges), comprehensive tracking features (like UserID tracking) and access to our world-class support team."
 msgstr ""
 
 #: includes/admin/reports/abstract-report.php:329
 #, php-format
-msgid ""
-"Upgrading is easy! To upgrade, navigate to %sour pricing page%s, purchase "
-"the required license, and then follow the %sinstructions in the email receipt"
-"%s to upgrade. It only takes a few minutes to unlock the most powerful, yet "
-"easy to use analytics tracking system for WordPress."
+msgid "Upgrading is easy! To upgrade, navigate to %sour pricing page%s, purchase the required license, and then follow the %sinstructions in the email receipt%s to upgrade. It only takes a few minutes to unlock the most powerful, yet easy to use analytics tracking system for WordPress."
+msgstr ""
+
+#: includes/admin/reports/abstract-report.php:369
+msgid "Visit addons page"
 msgstr ""
 
 #: includes/admin/reports/overview.php:34
 msgid "Overview"
 msgstr ""
 
-#: includes/admin/reports/overview.php:47
+#: includes/admin/reports/overview.php:80
+msgid "UP"
+msgstr ""
+
 #: includes/admin/reports/overview.php:81
-#: includes/admin/reports/overview.php:600
+msgid "DOWN"
+msgstr ""
+
+#: includes/admin/reports/overview.php:82
+msgid "Unique"
+msgstr ""
+
+#: includes/admin/reports/overview.php:82
+#: includes/admin/reports/overview.php:354
+#: includes/admin/reports/overview.php:394
 msgid "Sessions"
 msgstr ""
 
-#: includes/admin/reports/overview.php:52
-#: includes/admin/reports/overview.php:600
-msgid "Page Views"
+#: includes/admin/reports/overview.php:82
+#: includes/admin/reports/overview.php:359
+#: includes/admin/reports/overview.php:421
+#: includes/admin/reports/overview.php:423
+msgid "Pageviews"
 msgstr ""
 
-#: includes/admin/reports/overview.php:75
+#: includes/admin/reports/overview.php:388
 msgid "Up"
 msgstr ""
 
-#: includes/admin/reports/overview.php:76
+#: includes/admin/reports/overview.php:389
 msgid "Down"
 msgstr ""
 
-#: includes/admin/reports/overview.php:83
+#: includes/admin/reports/overview.php:396
 msgid "Session"
 msgstr ""
 
-#: includes/admin/reports/overview.php:83
+#: includes/admin/reports/overview.php:396
 msgid "A session is the browsing session of a single user to your site."
 msgstr ""
 
-#: includes/admin/reports/overview.php:89
-#: includes/admin/reports/overview.php:116
-#: includes/admin/reports/overview.php:143
-#: includes/admin/reports/overview.php:170
+#: includes/admin/reports/overview.php:402
+#: includes/admin/reports/overview.php:429
+#: includes/admin/reports/overview.php:456
+#: includes/admin/reports/overview.php:483
 msgid "No change"
 msgstr ""
 
-#: includes/admin/reports/overview.php:103
-#: includes/admin/reports/overview.php:130
-#: includes/admin/reports/overview.php:157
-#: includes/admin/reports/overview.php:184
+#: includes/admin/reports/overview.php:416
+#: includes/admin/reports/overview.php:443
+#: includes/admin/reports/overview.php:470
+#: includes/admin/reports/overview.php:497
 #, php-format
 msgid "vs. Previous %s Days"
 msgstr ""
 
-#: includes/admin/reports/overview.php:108
-#: includes/admin/reports/overview.php:110
-msgid "Pageviews"
+#: includes/admin/reports/overview.php:423
+msgid "A pageview is defined as a view of a page on your site that is being tracked by the Analytics tracking code. Each refresh of a page is also a new pageview."
 msgstr ""
 
-#: includes/admin/reports/overview.php:110
-msgid ""
-"A pageview is defined as a view of a page on your site that is being tracked "
-"by the Analytics tracking code. Each refresh of a page is also a new "
-"pageview."
-msgstr ""
-
-#: includes/admin/reports/overview.php:135
+#: includes/admin/reports/overview.php:448
 msgid "Avg. Session Duration"
 msgstr ""
 
-#: includes/admin/reports/overview.php:137
+#: includes/admin/reports/overview.php:450
 msgid "Average Session Duration"
 msgstr ""
 
-#: includes/admin/reports/overview.php:137
+#: includes/admin/reports/overview.php:450
 msgid "Total duration of all sessions (in seconds) / number of sessions."
 msgstr ""
 
-#: includes/admin/reports/overview.php:162
-#: includes/admin/reports/overview.php:164
+#: includes/admin/reports/overview.php:475
+#: includes/admin/reports/overview.php:477
 msgid "Bounce Rate"
 msgstr ""
 
-#: includes/admin/reports/overview.php:164
-msgid ""
-"Percentage of single page visits (or web sessions). It is the number of "
-"visits in which a person leaves your website from the landing page without "
-"browsing any further."
+#: includes/admin/reports/overview.php:477
+msgid "Percentage of single page visits (or web sessions). It is the number of visits in which a person leaves your website from the landing page without browsing any further."
 msgstr ""
 
-#: includes/admin/reports/overview.php:194
-#: includes/admin/reports/overview.php:196
+#: includes/admin/reports/overview.php:509
+#: includes/admin/reports/overview.php:511
 msgid "New vs. Returning Visitors"
 msgstr ""
 
-#: includes/admin/reports/overview.php:196
-msgid ""
-"This graph shows what percent of your user sessions come from new versus "
-"repeat visitors."
+#: includes/admin/reports/overview.php:511
+msgid "This graph shows what percent of your user sessions come from new versus repeat visitors."
 msgstr ""
 
-#: includes/admin/reports/overview.php:284
+#: includes/admin/reports/overview.php:603
 msgid "New"
 msgstr ""
 
-#: includes/admin/reports/overview.php:285
+#: includes/admin/reports/overview.php:604
 msgid "Returning"
 msgstr ""
 
-#: includes/admin/reports/overview.php:343
-#: includes/admin/reports/overview.php:345
+#: includes/admin/reports/overview.php:683
+#: includes/admin/reports/overview.php:685
 msgid "Device Breakdown"
 msgstr ""
 
-#: includes/admin/reports/overview.php:345
-msgid ""
-"This graph shows what percent of your visitor sessions are done using a "
-"traditional computer or laptop, tablet or mobile device to view your site."
+#: includes/admin/reports/overview.php:685
+msgid "This graph shows what percent of your visitor sessions are done using a traditional computer or laptop, tablet or mobile device to view your site."
 msgstr ""
 
-#: includes/admin/reports/overview.php:435
+#: includes/admin/reports/overview.php:779
 msgid "Desktop"
 msgstr ""
 
-#: includes/admin/reports/overview.php:436
+#: includes/admin/reports/overview.php:780
 msgid "Tablet"
 msgstr ""
 
-#: includes/admin/reports/overview.php:437
+#: includes/admin/reports/overview.php:781
 msgid "Mobile"
 msgstr ""
 
-#: includes/admin/reports/overview.php:500
-#: includes/admin/reports/overview.php:502
+#: includes/admin/reports/overview.php:860
+#: includes/admin/reports/overview.php:862
 msgid "Top 10 Countries"
 msgstr ""
 
-#: includes/admin/reports/overview.php:502
+#: includes/admin/reports/overview.php:862
 msgid "This list shows the top countries your website visitors are from."
 msgstr ""
 
-#: includes/admin/reports/overview.php:523
+#: includes/admin/reports/overview.php:883
 msgid "View Full Countries Report"
 msgstr ""
 
-#: includes/admin/reports/overview.php:523
+#: includes/admin/reports/overview.php:883
 msgid "View All Countries Report"
 msgstr ""
 
-#: includes/admin/reports/overview.php:530
-#: includes/admin/reports/overview.php:532
+#: includes/admin/reports/overview.php:895
+#: includes/admin/reports/overview.php:897
 msgid "Referrals"
 msgstr ""
 
-#: includes/admin/reports/overview.php:532
-msgid ""
-"This list shows the top websites that send your website traffic, known as "
-"\"referral traffic\"."
+#: includes/admin/reports/overview.php:897
+msgid "This list shows the top websites that send your website traffic, known as \"referral traffic\"."
 msgstr ""
 
-#: includes/admin/reports/overview.php:548
-msgid "View All Referral Resources"
+#: includes/admin/reports/overview.php:924
+msgid "View All Referral Sources"
 msgstr ""
 
-#: includes/admin/reports/overview.php:558
-#: includes/admin/reports/overview.php:561
+#: includes/admin/reports/overview.php:935
+#: includes/admin/reports/overview.php:938
 msgid "Top Posts / Pages"
 msgstr ""
 
-#: includes/admin/reports/overview.php:561
+#: includes/admin/reports/overview.php:938
 msgid "This list shows the most viewed posts and pages on your website."
 msgstr ""
 
-#: includes/admin/reports/overview.php:578
+#: includes/admin/reports/overview.php:970
 msgid "Show"
 msgstr ""
 
-#: includes/admin/reports/overview.php:579
+#: includes/admin/reports/overview.php:971
 msgid "How many to show"
 msgstr ""
 
-#: includes/admin/reports/overview.php:584
+#: includes/admin/reports/overview.php:982
 msgid "View Full Post/Page Report"
 msgstr ""
 
-#: includes/admin/reports/overview.php:598
-msgid "UP"
+#: includes/admin/review.php:100
+msgid "Hey, I noticed you've been using MonsterInsights for a while - that’s awesome! Could you please do me a BIG favor and give it a 5-star rating on WordPress to help us spread the word and boost our motivation?"
 msgstr ""
 
-#: includes/admin/reports/overview.php:599
-msgid "DOWN"
+#: includes/admin/review.php:101
+msgid "~ Syed Balkhi<br>Co-Founder of MonsterInsights"
 msgstr ""
 
-#: includes/admin/reports/overview.php:600
-msgid "Unique"
+#: includes/admin/review.php:103
+msgid "Ok, you deserve it"
+msgstr ""
+
+#: includes/admin/review.php:104
+msgid "Nope, maybe later"
+msgstr ""
+
+#: includes/admin/review.php:105
+msgid "I already did"
 msgstr ""
 
 #: includes/admin/settings/register-settings.php:23
@@ -1239,6 +1125,7 @@ msgid "Ads"
 msgstr ""
 
 #: includes/admin/settings/register-settings.php:52
+#: lite/includes/admin/reports/report-forms.php:22
 msgid "Forms"
 msgstr ""
 
@@ -1292,256 +1179,208 @@ msgid "Compatibility"
 msgstr ""
 
 #: includes/admin/settings/register-settings.php:109
+msgid "EU Compliance"
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:113
 msgid "Permissions"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:153
+#: includes/admin/settings/register-settings.php:157
 msgid "Ignore these user roles from tracking:"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:154
-msgid ""
-"Users that have at least one of these roles will not be tracked into Google "
-"Analytics."
+#: includes/admin/settings/register-settings.php:158
+msgid "Users that have at least one of these roles will not be tracked into Google Analytics."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:163
+#: includes/admin/settings/register-settings.php:167
 msgid "Enable MonsterInsights events tracking:"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:164
-msgid ""
-"This turns on our Javascript based tracking system which among other things "
-"tracks clicks on outbound, affiliate, mail, telephone, hashed and download "
-"links."
+#: includes/admin/settings/register-settings.php:168
+msgid "This turns on our Javascript based tracking system which among other things tracks clicks on outbound, affiliate, mail, telephone, hashed and download links."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:168
+#: includes/admin/settings/register-settings.php:172
 msgid "Yes (Recommended)"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:169
+#: includes/admin/settings/register-settings.php:173
 msgid "No"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:179
-msgid ""
-"Enable Demographics and Interests Reports for Remarketing and Advertising"
+#: includes/admin/settings/register-settings.php:183
+msgid "Enable Demographics and Interests Reports for Remarketing and Advertising"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:180
+#: includes/admin/settings/register-settings.php:184
 #, php-format
-msgid ""
-"Check this setting to add the Demographics and Remarketing features to your "
-"Google Analytics tracking code. Make sure to enable Demographics and "
-"Remarketing in your Google Analytics account. We have a guide for how to do "
-"that in our %1$sknowledge base%2$s. For more information about Remarketing, "
-"we refer you to %3$sGoogle's documentation%2$s. Note that usage of this "
-"function is affected by privacy and cookie laws around the world. Be sure to "
-"follow the laws that affect your target audience."
+msgid "Check this setting to add the Demographics and Remarketing features to your Google Analytics tracking code. Make sure to enable Demographics and Remarketing in your Google Analytics account. We have a guide for how to do that in our %1$sknowledge base%2$s. For more information about Remarketing, we refer you to %3$sGoogle's documentation%2$s. Note that usage of this function is affected by privacy and cookie laws around the world. Be sure to follow the laws that affect your target audience."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:187
+#: includes/admin/settings/register-settings.php:191
 msgid "Anonymize IP addresses?"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:188
+#: includes/admin/settings/register-settings.php:192
 #, php-format
-msgid ""
-"This adds %1$s, telling Google Analytics to anonymize the information sent "
-"by the tracker objects by removing the last octet of the IP address prior to "
-"its storage."
+msgid "This adds %1$s, telling Google Analytics to anonymize the information sent by the tracker objects by removing the last octet of the IP address prior to its storage."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:198
+#: includes/admin/settings/register-settings.php:202
 msgid "Enable enhanced link attribution?"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:199
+#: includes/admin/settings/register-settings.php:203
 #, php-format
 msgid "Add %1$sEnhanced Link Attribution%2$s to your tracking code."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:204
+#: includes/admin/settings/register-settings.php:208
 msgid "Turn on anchor tracking"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:205
-msgid ""
-"Many WordPress \"1-page\" style themes rely on anchor tags for navigation to "
-"show virtual pages. The problem is that to Google Analytics, these are all "
-"just a single page, and it makes it hard to get meaningful statistics about "
-"pages viewed. This feature allows proper tracking in those themes."
+#: includes/admin/settings/register-settings.php:209
+msgid "Many WordPress \"1-page\" style themes rely on anchor tags for navigation to show virtual pages. The problem is that to Google Analytics, these are all just a single page, and it makes it hard to get meaningful statistics about pages viewed. This feature allows proper tracking in those themes."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:210
+#: includes/admin/settings/register-settings.php:214
 msgid "Turn on allowAnchor"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:211
+#: includes/admin/settings/register-settings.php:215
 #, php-format
-msgid ""
-"This adds a %1$s call to your tracking code, and makes RSS link tagging use "
-"a %2$s as well."
+msgid "This adds a %1$s call to your tracking code, and makes RSS link tagging use a %2$s as well."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:216
+#: includes/admin/settings/register-settings.php:220
 msgid "Turn on allowLinker"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:217
+#: includes/admin/settings/register-settings.php:221
 #, php-format
-msgid ""
-"This adds a %1$s call to your tracking code, allowing you to use %2$s and "
-"related functions."
+msgid "This adds a %1$s call to your tracking code, allowing you to use %2$s and related functions."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:222
+#: includes/admin/settings/register-settings.php:226
 msgid "Turn on tag links in RSS"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:223
+#: includes/admin/settings/register-settings.php:227
 #, php-format
-msgid ""
-"Do not use this feature if you use FeedBurner, as FeedBurner can do this "
-"automatically and better than this plugin can. Check %1$sthis help page%2$s "
-"for info on how to enable this feature in FeedBurner."
+msgid "Do not use this feature if you use FeedBurner, as FeedBurner can do this automatically and better than this plugin can. Check %1$sthis help page%2$s for info on how to enable this feature in FeedBurner."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:233
+#: includes/admin/settings/register-settings.php:237
 msgid "Track downloads as an:"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:234
-msgid ""
-"Tracking as pageviews is not recommended, as this would skew your "
-"statistics, but it does make it possible to track downloads as goals. This "
-"feature requires that event tracking be turned on."
+#: includes/admin/settings/register-settings.php:238
+msgid "Tracking as pageviews is not recommended, as this would skew your statistics, but it does make it possible to track downloads as goals. This feature requires that event tracking be turned on."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:238
+#: includes/admin/settings/register-settings.php:242
 msgid "Event (recommended)"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:239
+#: includes/admin/settings/register-settings.php:243
 msgid "Pageview"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:244
+#: includes/admin/settings/register-settings.php:248
 msgid "Extensions of files to track as downloads:"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:245
-msgid ""
-"If you have enabled event tracking, MonsterInsights will send an event/"
-"pageview to GA if a link to a local file has one of the above extensions."
+#: includes/admin/settings/register-settings.php:249
+msgid "If you have enabled event tracking, MonsterInsights will send an event/pageview to GA if a link to a file has one of the above extensions."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:255
+#: includes/admin/settings/register-settings.php:259
 msgid "Set path for internal links to track as outbound links"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:256
+#: includes/admin/settings/register-settings.php:260
 #, php-format
-msgid ""
-"If you want to track all internal links that begin with %1$s, enter %1$s in "
-"the box above. If you have multiple prefixes you can separate them with "
-"comma's: %2$s"
+msgid "If you want to track all internal links that begin with %1$s, enter %1$s in the box above. If you have multiple prefixes you can separate them with comma's: %2$s"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:261
+#: includes/admin/settings/register-settings.php:265
 msgid "Label for those links:"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:262
+#: includes/admin/settings/register-settings.php:266
 #, php-format
-msgid ""
-"The label to use for these links, this will be added to where the click came "
-"from, so if the label is %s, the label for a click from the content of an "
-"article becomes \"outbound-link-aff\"."
+msgid "The label to use for these links, this will be added to where the click came from, so if the label is %s, the label for a click from the content of an article becomes \"outbound-link-aff\"."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:328
+#: includes/admin/settings/register-settings.php:332
 msgid "Domain to track as:"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:329
+#: includes/admin/settings/register-settings.php:333
 #, php-format
-msgid ""
-"This allows you to %1$sset the domain%2$s that's used for tracking. Only is "
-"used if set to a value, else defaults to automatic determination. It is very "
-"rare that you would need to use this setting."
+msgid "This allows you to %1$sset the domain%2$s that's used for tracking. Only is used if set to a value, else defaults to automatic determination. It is very rare that you would need to use this setting."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:334
+#: includes/admin/settings/register-settings.php:338
 msgid "Custom code"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:335
+#: includes/admin/settings/register-settings.php:339
 #, php-format
-msgid ""
-"Not for the average user: this allows you to add a line of code, to be added "
-"before the %1$s call."
+msgid "Not for the average user: this allows you to add a line of code, to be added before the %1$s call."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:340
+#: includes/admin/settings/register-settings.php:344
 msgid "Enable Debug Mode"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:341
-msgid ""
-"Turns on debugging in JS events tracking, logging of eCommerce requests and "
-"enables debug settings."
+#: includes/admin/settings/register-settings.php:345
+msgid "Turns on debugging in JS events tracking, logging of eCommerce requests and enables debug settings."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:351
+#: includes/admin/settings/register-settings.php:359
 msgid "Let these user roles see reports:"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:361
+#: includes/admin/settings/register-settings.php:369
 msgid "Let these user roles save settings:"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:362
+#: includes/admin/settings/register-settings.php:370
 #, php-format
-msgid ""
-"Users that have at least one of these roles will be able to view and save "
-"the settings panel, along with any user with the %s capability."
+msgid "Users that have at least one of these roles will be able to view and save the settings panel, along with any user with the %s capability."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:371
+#: includes/admin/settings/register-settings.php:379
 #: includes/admin/settings/tab-general.php:200
 msgid "Automatic Updates"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:375
+#: includes/admin/settings/register-settings.php:383
 #: includes/admin/settings/tab-general.php:203
-msgid ""
-"Yes (Recommended) - Get the latest features, bugfixes, and security updates "
-"as they are released."
+msgid "Yes (Recommended) - Get the latest features, bugfixes, and security updates as they are released."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:376
+#: includes/admin/settings/register-settings.php:384
 #: includes/admin/settings/tab-general.php:204
-msgid ""
-"Minor Only - Only get bugfixes and security updates, but not major features."
+msgid "Minor Only - Only get bugfixes and security updates, but not major features."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:377
+#: includes/admin/settings/register-settings.php:385
 #: includes/admin/settings/tab-general.php:205
 msgid "None - Manually update everything."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:382
+#: includes/admin/settings/register-settings.php:390
 #: includes/admin/settings/tab-general.php:212
 msgid "Allow Usage Tracking"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:383
+#: includes/admin/settings/register-settings.php:391
 #: includes/admin/settings/tab-general.php:213
-msgid ""
-"By allowing us to track usage data we can better help you, because we know "
-"with which WordPress configurations, themes and plugins we should test."
+msgid "By allowing us to track usage data we can better help you, because we know with which WordPress configurations, themes and plugins we should test."
 msgstr ""
 
 #: includes/admin/settings/settings-api.php:747
@@ -1566,10 +1405,7 @@ msgid "Save Changes"
 msgstr ""
 
 #: includes/admin/settings/tab-general.php:67
-msgid ""
-"Your website is network licensed for MonsterInsights. Enter a license above "
-"only if you want to use a different Google Analytics profile for the reports "
-"and tracking on this subsite."
+msgid "Your website is network licensed for MonsterInsights. Enter a license above only if you want to use a different Google Analytics profile for the reports and tracking on this subsite."
 msgstr ""
 
 #: includes/admin/settings/tab-general.php:87
@@ -1578,16 +1414,12 @@ msgstr ""
 
 #: includes/admin/settings/tab-general.php:126
 #, php-format
-msgid ""
-"Already have a Google Account, but don’t know if you’ve setup Google "
-"Analytics? %s Click here to login and find out%s."
+msgid "Already have a Google Account, but don’t know if you’ve setup Google Analytics? %s Click here to login and find out%s."
 msgstr ""
 
 #: includes/admin/settings/tab-general.php:128
 #, php-format
-msgid ""
-"Having issues automatically authenticating? %s Click here to authenticate "
-"manually%s."
+msgid "Having issues automatically authenticating? %s Click here to authenticate manually%s."
 msgstr ""
 
 #: includes/admin/settings/tab-general.php:147
@@ -1595,8 +1427,7 @@ msgid "Manually enter your UA code"
 msgstr ""
 
 #: includes/admin/settings/tab-general.php:151
-msgid ""
-"Warning: If you use a manual UA code, you won't be able to use the reports."
+msgid "Warning: If you use a manual UA code, you won't be able to use the reports."
 msgstr ""
 
 #: includes/admin/settings/tab-general.php:164
@@ -1605,9 +1436,7 @@ msgstr ""
 
 #: includes/admin/settings/tab-general.php:167
 #, php-format
-msgid ""
-"If you do not authenticate with MonsterInsights above, the network default "
-"%s will be used as the Google UA code."
+msgid "If you do not authenticate with MonsterInsights above, the network default %s will be used as the Google UA code."
 msgstr ""
 
 #: includes/admin/settings/tab-general.php:191
@@ -1624,42 +1453,54 @@ msgid "Want even more fine tuned control over your website analytics?"
 msgstr ""
 
 #: includes/admin/settings/tab-tracking.php:108
-msgid ""
-"By upgrading to MonsterInsights Pro, you get access to numerous addons and "
-"tools that help you better understand what people are doing on your website, "
-"so you can keep doing more of what's working. Some of the features include: "
-"Ecommerce tracking, Author tracking, Post Type tracking, Ads tracking, "
-"Google AMP tracking, Performance optimization, and so much more!"
+msgid "By upgrading to MonsterInsights Pro, you get access to numerous addons and tools that help you better understand what people are doing on your website, so you can keep doing more of what's working. Some of the features include: Ecommerce tracking, Author tracking, Post Type tracking, Ads tracking, Google AMP tracking, Performance optimization, and so much more!"
 msgstr ""
 
-#: includes/admin/tracking.php:216
+#: includes/admin/tracking.php:243
 msgid "Once Weekly"
 msgstr ""
 
-#: includes/api-request.php:171
-msgid ""
-"The firewall of your server is blocking outbound calls. Please contact your "
-"hosting provider to fix this issue."
+#: includes/api-request.php:181
+#, php-format
+msgid "The firewall of your server is blocking outbound calls. Please contact your hosting provider to fix this issue. %s"
 msgstr ""
 
-#: includes/api-request.php:273
+#: includes/api-request.php:183
+msgid "The firewall of your server is blocking outbound calls. Please contact your hosting provider to fix this issue."
+msgstr ""
+
+#: includes/api-request.php:290
 msgid "The API was unreachable."
 msgstr ""
 
-#: includes/api-request.php:277
+#: includes/api-request.php:294
 #, php-format
 msgid "The API returned a <strong>%s</strong> response"
 msgstr ""
 
-#: includes/api-request.php:281 includes/api-request.php:285
+#: includes/api-request.php:298 includes/api-request.php:302
 #, php-format
-msgid ""
-"The API returned a <strong>%d</strong> response with this message: <strong>"
-"%s</strong>"
+msgid "The API returned a <strong>%d</strong> response with this message: <strong>%s</strong>"
 msgstr ""
 
-#: includes/api-request.php:293
+#: includes/api-request.php:310
 msgid "Improper API request."
+msgstr ""
+
+#: includes/api-request.php:370
+msgid "Reason: The API was unreachable because the Airplane Mode plugin is active."
+msgstr ""
+
+#: includes/api-request.php:383
+msgid "Reason: The API was unreachable because the API url is on the WP HTTP blocklist."
+msgstr ""
+
+#: includes/api-request.php:398 includes/api-request.php:420
+msgid "Reason: The API was unreachable because the call to Google failed."
+msgstr ""
+
+#: includes/api-request.php:403
+msgid "Reason: The API was unreachable because no external hosts are allowed on this site."
 msgstr ""
 
 #: includes/deprecated.php:126
@@ -1672,39 +1513,28 @@ msgstr ""
 msgid "%1$s is %3$sdeprecated%4$s since MonsterInsights version %2$s."
 msgstr ""
 
-#: includes/frontend/tracking/class-tracking-analytics.php:185
-msgid ""
-"Note: MonsterInsights is not currently configured on this site. The site "
-"owner needs to authenticate with Google Analytics in the MonsterInsights "
-"settings panel."
+#: includes/frontend/tracking/class-tracking-analytics.php:205
+msgid "Note: MonsterInsights is not currently configured on this site. The site owner needs to authenticate with Google Analytics in the MonsterInsights settings panel."
 msgstr ""
 
-#: includes/frontend/tracking/class-tracking-analytics.php:188
-msgid ""
-"Note: MonsterInsights does not track you as a logged in site administrator "
-"to prevent site owners from accidentally skewing their own Google Analytics "
-"data."
+#: includes/frontend/tracking/class-tracking-analytics.php:208
+msgid "Note: MonsterInsights does not track you as a logged in site administrator to prevent site owners from accidentally skewing their own Google Analytics data."
 msgstr ""
 
-#: includes/frontend/tracking/class-tracking-analytics.php:191
-msgid ""
-"Note: The site owner has disabled Google Analytics tracking for your user "
-"role."
+#: includes/frontend/tracking/class-tracking-analytics.php:211
+msgid "Note: The site owner has disabled Google Analytics tracking for your user role."
 msgstr ""
 
-#: includes/frontend/tracking/class-tracking-analytics.php:266
+#: includes/frontend/tracking/class-tracking-analytics.php:291
 msgid "Not running function"
 msgstr ""
 
-#: includes/frontend/tracking/class-tracking-analytics.php:266
-#, php-format
-msgid "because you're not being tracked. %s"
+#: includes/frontend/tracking/class-tracking-analytics.php:291
+msgid "because you are not being tracked."
 msgstr ""
 
 #: includes/frontend/tracking/class-tracking-preview.php:77
-msgid ""
-"You are currently in a preview window. MonsterInsights doesn't track preview "
-"window traffic to avoid false visit reports."
+msgid "You are currently in a preview window. MonsterInsights doesn't track preview window traffic to avoid false visit reports."
 msgstr ""
 
 #: includes/helpers.php:334
@@ -2236,7 +2066,7 @@ msgid "Macau"
 msgstr ""
 
 #: includes/helpers.php:466
-msgid "Macedonia"
+msgid "Macedonia (FYROM)"
 msgstr ""
 
 #: includes/helpers.php:467
@@ -2715,6 +2545,40 @@ msgstr ""
 msgid "Zimbabwe"
 msgstr ""
 
+#: lite/includes/admin/dashboard-widget.php:88
+#: lite/includes/admin/dashboard-widget.php:96
+#, php-format
+msgid "Last %d days"
+msgstr ""
+
+#: lite/includes/admin/dashboard-widget.php:102
+msgid "Show in full-width mode"
+msgstr ""
+
+#: lite/includes/admin/dashboard-widget.php:113
+msgid "View All Analytics on the WordPress Dashboard"
+msgstr ""
+
+#: lite/includes/admin/dashboard-widget.php:114
+msgid "Once you upgrade to MonsterInsights Pro, you can see your analytics on the Dashboard"
+msgstr ""
+
+#: lite/includes/admin/dashboard-widget.php:117
+msgid "Go to MonsterInsights Reports"
+msgstr ""
+
+#: lite/includes/admin/dashboard-widget.php:133
+msgid "Reports are not available"
+msgstr ""
+
+#: lite/includes/admin/dashboard-widget.php:134
+msgid "Please connect MonsterInsights to Google Analytics to see reports."
+msgstr ""
+
+#: lite/includes/admin/dashboard-widget.php:135
+msgid "Configure MonsterInsights"
+msgstr ""
+
 #: lite/includes/admin/reports/report-dimensions.php:22
 msgid "Dimensions"
 msgstr ""
@@ -2727,120 +2591,100 @@ msgstr ""
 msgid "Search Console"
 msgstr ""
 
-#: lite/includes/admin/settings.php:14 lite/includes/admin/settings.php:23
-#: lite/includes/admin/settings.php:32 lite/includes/admin/settings.php:41
-#: lite/includes/admin/settings.php:50 lite/includes/admin/settings.php:59
-#: lite/includes/admin/settings.php:68 lite/includes/admin/settings.php:77
-#: lite/includes/admin/settings.php:122 lite/includes/admin/settings.php:131
+#: lite/includes/admin/reports/report-realtime.php:22
+msgid "Real Time"
+msgstr ""
+
+#: lite/includes/admin/settings.php:14 lite/includes/admin/settings.php:32
+#: lite/includes/admin/settings.php:41 lite/includes/admin/settings.php:50
+#: lite/includes/admin/settings.php:59 lite/includes/admin/settings.php:68
+#: lite/includes/admin/settings.php:77 lite/includes/admin/settings.php:86
+#: lite/includes/admin/settings.php:131 lite/includes/admin/settings.php:140
 msgid "Want to increase your traffic, conversion, & engagement?"
 msgstr ""
 
 #: lite/includes/admin/settings.php:16
-msgid ""
-"By upgrading to MonsterInsights Pro, you can add Social tracking to see "
-"who's clicking on your social share links, so you can track and maximize "
-"your social sharing exposure."
+msgid "By upgrading to MonsterInsights Pro, you can add Social tracking to see who's clicking on your social share links, so you can track and maximize your social sharing exposure."
+msgstr ""
+
+#: lite/includes/admin/settings.php:23
+msgid "Google Analytics EU Compliance"
 msgstr ""
 
 #: lite/includes/admin/settings.php:25
-msgid ""
-"By upgrading to MonsterInsights Pro, you can add Ads tracking to see who's "
-"clicking on your Google Ads, so you can increase your revenue."
+msgid "The MonsterInsights EU Compliance addon allows you to improve compliance with GDPR and other privacy regulations."
 msgstr ""
 
 #: lite/includes/admin/settings.php:34
-msgid ""
-"By upgrading to MonsterInsights Pro, you can add Forms tracking to see who's "
-"seeing and submitting your forms, so you can increase your conversion rate."
+msgid "By upgrading to MonsterInsights Pro, you can add Ads tracking to see who's clicking on your Google Ads, so you can increase your revenue."
 msgstr ""
 
 #: lite/includes/admin/settings.php:43
-msgid ""
-"By upgrading to MonsterInsights Pro, you can add Media tracking to see who's "
-"interacting with the media on your site, so you know what your users are "
-"most interested in on your site. You can use this to tailor future content "
-"to meet your audience's interest to promote repeat visitors and expand your "
-"average user's time spent visiting your website on each visit."
+msgid "By upgrading to MonsterInsights Pro, you can add Forms tracking to see who's seeing and submitting your forms, so you can increase your conversion rate."
 msgstr ""
 
 #: lite/includes/admin/settings.php:52
-msgid "By upgrading to MonsterInsights Pro, you can add Membership tracking."
+msgid "By upgrading to MonsterInsights Pro, you can add Media tracking to see who's interacting with the media on your site, so you know what your users are most interested in on your site. You can use this to tailor future content to meet your audience's interest to promote repeat visitors and expand your average user's time spent visiting your website on each visit."
 msgstr ""
 
 #: lite/includes/admin/settings.php:61
-msgid ""
-"By upgrading to MonsterInsights Pro, you can add Custom Dimensions and track "
-"who's the most popular author on your site, which post types get the most "
-"traffic, and more. Why not check it out?"
+msgid "By upgrading to MonsterInsights Pro, you can add Membership tracking."
 msgstr ""
 
 #: lite/includes/admin/settings.php:70
-msgid ""
-"By upgrading to MonsterInsights Pro, you can adjust the sample rate so you "
-"don't exceed Google Analytics' processing limit. You can also use it to "
-"enable Google Optimize for A/B testing and personalization."
+msgid "By upgrading to MonsterInsights Pro, you can add Custom Dimensions and track who's the most popular author on your site, which post types get the most traffic, and more. Why not check it out?"
 msgstr ""
 
 #: lite/includes/admin/settings.php:79
-msgid "By upgrading to MonsterInsights Pro, you can enable enhanced reporting."
-msgstr ""
-
-#: lite/includes/admin/settings.php:86
-msgid "Want to use track users visiting your AMP pages?"
+msgid "By upgrading to MonsterInsights Pro, you can adjust the sample rate so you don't exceed Google Analytics' processing limit. You can also use it to enable Google Optimize for A/B testing and personalization."
 msgstr ""
 
 #: lite/includes/admin/settings.php:88
-msgid "By upgrading to MonsterInsights Pro, you can enable AMP page tracking."
+msgid "By upgrading to MonsterInsights Pro, you can enable enhanced reporting."
 msgstr ""
 
 #: lite/includes/admin/settings.php:95
-msgid ""
-"Want to use Google Optimize to retarget your website visitors and perform A/"
-"B split tests with ease?"
+msgid "Want to use track users visiting your AMP pages?"
 msgstr ""
 
 #: lite/includes/admin/settings.php:97
-msgid "By upgrading to MonsterInsights Pro, you can enable Google Optimize."
+msgid "By upgrading to MonsterInsights Pro, you can enable AMP page tracking."
 msgstr ""
 
 #: lite/includes/admin/settings.php:104
-msgid ""
-"Want to expand your website audience beyond your website with Facebook "
-"Instant Articles?"
+msgid "Want to use Google Optimize to retarget your website visitors and perform A/B split tests with ease?"
 msgstr ""
 
 #: lite/includes/admin/settings.php:106
-msgid ""
-"By upgrading to MonsterInsights Pro, you can track your Facebook Instant "
-"Article visitors with MonsterInsights."
+msgid "By upgrading to MonsterInsights Pro, you can enable Google Optimize."
 msgstr ""
 
 #: lite/includes/admin/settings.php:113
-msgid "Want to adjust your website bounce rate?"
+msgid "Want to expand your website audience beyond your website with Facebook Instant Articles?"
 msgstr ""
 
 #: lite/includes/admin/settings.php:115
-msgid ""
-"By upgrading to MonsterInsights Pro, you can adjust your Google Analytics "
-"bounce rate with MonsterInsights."
+msgid "By upgrading to MonsterInsights Pro, you can track your Facebook Instant Article visitors with MonsterInsights."
+msgstr ""
+
+#: lite/includes/admin/settings.php:122
+msgid "Want to adjust your website bounce rate?"
 msgstr ""
 
 #: lite/includes/admin/settings.php:124
-msgid "By upgrading to MonsterInsights Pro, you can enable notifications."
+msgid "By upgrading to MonsterInsights Pro, you can adjust your Google Analytics bounce rate with MonsterInsights."
 msgstr ""
 
 #: lite/includes/admin/settings.php:133
-msgid ""
-"By upgrading to MonsterInsights Pro, you can add Ecommerce tracking to see "
-"who's buying your product, what's the most popular item on your store, the "
-"average order value, and tons more."
+msgid "By upgrading to MonsterInsights Pro, you can enable notifications."
+msgstr ""
+
+#: lite/includes/admin/settings.php:142
+msgid "By upgrading to MonsterInsights Pro, you can add Ecommerce tracking to see who's buying your product, what's the most popular item on your store, the average order value, and tons more."
 msgstr ""
 
 #: lite/includes/admin/tools.php:11
-msgid ""
-"By upgrading to MonsterInsights Pro, you can unlock the MonsterInsights URL "
-"builder that helps you better track your advertising and email marketing "
-"campaigns."
+msgid "By upgrading to MonsterInsights Pro, you can unlock the MonsterInsights URL builder that helps you better track your advertising and email marketing campaigns."
 msgstr ""
 
 #. Plugin Name of the plugin/theme
@@ -2848,17 +2692,13 @@ msgid "Google Analytics for WordPress by MonsterInsights"
 msgstr ""
 
 #. Plugin URI of the plugin/theme
-msgid ""
-"https://www.monsterinsights.com/?"
-"utm_source=wordpress&utm_medium=plugin&utm_campaign=wpmipluginpro&utm_content=v700"
+msgid "https://www.monsterinsights.com/?utm_source=liteplugin&utm_medium=pluginheader&utm_campaign=pluginurl&utm_content=7%2E0%2E0"
 msgstr ""
 
 #. Description of the plugin/theme
-msgid ""
-"The best Google Analytics plugin for WordPress. See how visitors find and "
-"use your website, so you can keep them coming back."
+msgid "The best Google Analytics plugin for WordPress. See how visitors find and use your website, so you can keep them coming back."
 msgstr ""
 
 #. Author URI of the plugin/theme
-msgid "https://www.monsterinsights.com/"
+msgid "https://www.monsterinsights.com/?utm_source=liteplugin&utm_medium=pluginheader&utm_campaign=authoruri&utm_content=7%2E0%2E0"
 msgstr ""

@@ -3,7 +3,7 @@ Contributors: deliciousbrains, bradt, SylvainDeaure
 Tags: email,ses,amazon,webservice,deliverability,newsletter,autoresponder,mail,wp_mail,smtp,service
 Requires at least: 3.0.0
 Tested up to: 4.9.1
-Requires PHP: 5.0+
+Requires PHP: 5.5+
 Stable tag: trunk
 
 WP SES sends all outgoing WordPress emails through Amazon Simple Email Service (SES) for maximum email deliverability
@@ -205,6 +205,9 @@ Yes, please do! It's easy.
 1. Settings screen
 
 == Changelog ==
+
+= 0.8.1 - 2018-06-06 =
+* Added dismissable admin notice that WP SES will soon require PHP 5.5+
 
 = 0.8 - 2017-12-28 =
 * WP SES has been acquired by [Delicious Brains Inc](https://deliciousbrains.com/?utm_campaign=WP%2BOffload%2BSES&utm_source=wordpress.org&utm_medium=free%2Bplugin%2Blisting) (big improvements on the way including a pro upgrade)

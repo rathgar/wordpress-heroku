@@ -1,8 +1,8 @@
 <?php
 /**
- * Author: Alin Marcu
- * Author URI: https://deconf.com
- * Copyright 2017 Alin Marcu
+ * Author: ExactMetrics team
+ * Author URI: https://exactmetrics.com
+ * Copyright 2018 ExactMetrics team
  * License: GPLv2 or later
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  */
@@ -475,7 +475,7 @@ if ( ! class_exists( 'GADWP_Tracking_GlobalSiteTag' ) ) {
 				$this->add( 'event', $fields, $fieldsobject );
 			}
 
-			do_action( 'gadwp_analytics_commands', $this );
+			do_action( 'gadwp_gtag_commands', $this );
 		}
 
 		/**
@@ -516,7 +516,7 @@ if ( ! class_exists( 'GADWP_Tracking_GlobalSiteTag' ) ) {
 				}
 			}
 
-			$tracking_script_path = apply_filters( 'gadwp_analytics_script_path', 'https://www.googletagmanager.com/gtag/js' );
+			$tracking_script_path = apply_filters( 'gadwp_gtag_script_path', 'https://www.googletagmanager.com/gtag/js' );
 
 			if ( $this->gadwp->config->options['ga_optout'] || $this->gadwp->config->options['ga_dnt_optout'] ) {
 				GADWP_Tools::load_view( 'front/views/analytics-optout-code.php', array( 'uaid' => $this->uaid, 'gaDntOptout' => $this->gadwp->config->options['ga_dnt_optout'], 'gaOptout' => $this->gadwp->config->options['ga_optout'] ) );

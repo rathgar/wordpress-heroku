@@ -1,9 +1,9 @@
-=== Follow Buttons by AddThis ===
-Contributors: abramsm, jgrodel, bradaddthis.com, addthis_paul, addthis_matt, ribin_addthis, addthis_elsa, addthisleland
-Tags: AddThis, follow buttons, follow buttons plugin, followers, social buttons, widget, plugin, shortcode, Facebook, Twitter, LinkedIn, Pinterest, Instagram
+=== WordPress Follow Buttons Plugin – AddThis ===
+Contributors: abramsm, jgrodel, bradaddthis.com, addthis_paul, addthis_matt, ribin_addthis, addthis_elsa, addthisleland, sirius226
+Tags: follow buttons, follow button plugin, social follow, social buttons, followers
 Requires at least: 3.0
-Tested up to: 4.9
-Stable tag: 4.1.2
+Tested up to: 4.9.8
+Stable tag: 4.1.8
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,9 +13,11 @@ AddThis Follow Buttons help visitors follow your social profiles on Facebook, Tw
 
 == Description ==
 
-Get more followers on social media by installing the AddThis Follow Buttons WordPress plugin. With AddThis, your users can easily follow you on the most popular social networks, such as Facebook, Twitter, Instagram, Pinterest, and more. Widgets and shortcodes are available for this follow button plugin. You can also use our optional analytics to discover what content is getting you the most new followers.
+The WordPress Follow Buttons Plugin from AddThis (absolutely FREE) is the easiest way to add follow buttons to your website and increase your followers on social media. Our quick-loading Follow Buttons Plugin makes it simple to directly connect to over 65+ social channels including Instagram, Pinterest, Messenger, Twitter, Facebook, and many more.
 
-With the AddThis Follow Buttons WordPress plugin, you get:
+Widgets and shortcodes are available for this follow button plugin. You can also use our analytics dashboard at <a href="https://www.addthis.com">AddThis.com</a> to discover what content is getting you the most followers.
+
+AddThis is trusted by over 15,000,000 websites with over 2 billion unique users, sharing content all over the world, in more than sixty languages.
 
 = Follow Header Buttons =
 
@@ -33,129 +35,95 @@ With the AddThis Follow Buttons WordPress plugin, you get:
 * Customize the services you’d like to display
 * Supports all major social networks and RSS subscription
 
-= Custom Follow Buttons =
+= Analytics: =
 
-The Custom Follow Buttons are available to AddThis Pro and Business account holders. With AddThis Custom Follow Buttons, you can match the look and feel of your site.
+* Want to see which services are driving the most followers to your social media channels? Or which pieces of content are converting visitors into fans? <a href="https://www.addthis.com/register">Sign up</a> for a free AddThis.com account to access your website analytics.
 
-* Pick which button shape you prefer
-* Choose from a range of available colors or set your own
-* Customize the services you’d like to display
-* Supports all major social networks and RSS subscription
+= Support: =
 
-Want to see which services are driving the most new followers? Or which pieces of content are converting visitors into fans? <a href="Sign up">Sign up</a> for a free AddThis.com account to access your AddThis website tool analytics.
+We strive to provide best-in-class support with a response time of around two hours, and a customer satisfaction rate of over 98%. To get in touch with our team, head to <a href=http://www.addthis.com/support>http://www.addthis.com/support</a>.
 
-AddThis also has a <a href="https://wordpress.org/plugins/addthis/">share button plugin</a> for WordPress, which is a great tool for getting more of your content shared on social media, and increasing traffic back to your website.
+= Check out our other plugins to help you grow and engage your audience! =
 
-<a href="http://www.addthis.com/academy/">AddThis Academy</a> | <a href="http://www.addthis.com/privacy">Privacy Policy</a>
+* <a href="https://wordpress.org/plugins/addthis">Share Buttons</a>: Make it simple for website visitors to share your content. Connect directly to 200+ social networks, including Facebook, Twitter, and more.
 
+* <a href="https://wordpress.org/plugins/addthis-related-posts">Related Posts</a>: Boost your on-site engagement with our Related Posts tool, which recommends content not only by what's popular, but also what's most relevant.
+
+Want more? <a href="https://www.addthis.com/wordpress">Visit our website</a> to learn how you can activate our Email List Building and Link Promotion Tools.
+
+<a href="https://www.addthis.com/academy/">AddThis Academy</a> | <a href="http://www.addthis.com/privacy">Privacy Policy</a>
 
 
 == Installation ==
 
-For an automatic installation through WordPress:
+[youtube https://youtu.be/EIG5PT5ZQ9A]
 
-1. Go to the 'Add New' plugins screen in your WordPress admin area
-1. Search for 'AddThis'
-1. Click 'Install Now' and activate the plugin
+<br/>
 
-For a manual installation via FTP:
+= Installing AddThis directly to WordPress: =
 
-1. Upload the addthis folder to the `/wp-content/plugins/` directory
-1. Activate the plugin through the 'Plugins' screen in your WordPress admin area
+1. Sign up for AddThis at: <a href="https://www.addthis.com/register">https://www.addthis.com/register</a>
 
-To upload the plugin through WordPress, instead of FTP:
+2. Go to your **Get the Code** tab and copy the code that looks similar to:
 
-1. Upload the downloaded zip file on the 'Add New' plugins screen (see the 'Upload' tab) in your WordPress admin area and activate.
+`<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-###############"></script>`
 
+3. Go to your WordPress Admin Dashboard, hover over Appearance => Editor and click on the **footer.php** template file
+
+4. Paste the AddThis code you just copied right above the closing </body> tag
+
+5. Save the file changes
+
+= For an automatic installation through WordPress: =
+
+1. In your WordPress admin sidebar, go to **Plugins** and then click on **Add New**
+
+2. Search for **AddThis Follow**
+
+3. Click **Install Now** and activate the plugin
+
+= For a manual installation via FTP: =
+
+1. Go to <a href="https://wordpress.org/plugins/addthis-follow">https://wordpress.org/plugins/addthis-follow</a> and click on **Download** to download the AddThis zipped plugin files
+
+2. Unzip the plugin files 
+
+3. In FTP, upload the entire **addthis-follow** plugin folder you've just unzipped to your `/wp-content/plugins` directory
+
+4. Go back to your WordPress dashboard, click on **Plugins** in the sidebar, find the AddThis plugin you've just uploaded and click **Activate**
+
+= To upload the plugin through WordPress, instead of FTP: =
+
+1. Go to <a href=https://wordpress.org/plugins/addthis-follow>https://wordpress.org/plugins/addthis-follow</a> and click on **Download** to download the AddThis zipped plugin files (do not unzip this file)
+
+2. Go back to your WordPress admin dashboard, go to **Plugins** and click on **Add New** => **Upload Plugin**
+
+3. Upload the zip plugin files you've just downloaded and click on **Install Now**
+
+4. Once WordPress is done uploading the files, just click on **Activate Plugin**
 
 
 == Frequently Asked Questions ==
 
-= What services does AddThis support? =
-
-As of release 2.0.2, this plugin supports follow buttons for the services below. This plugin's services will automatically update as AddThis' follow tools support new ones.
-
-* 500px
-* About.me
-* Bandcamp
-* Behance
-* BitBucket
-* Blogger (user, blog)
-* DeviantArt
-* Digg
-* Disqus
-* Dribbble
-* Ello
-* Email (mailto link)
-* Etsy
-* Facebook
-* Flickr
-* Foursquare
-* GitHub
-* GitLab
-* Google Follow
-* Hacker News
-* Houzz
-* Instragram
-* JSFiddle
-* Letterboxd
-* LinkedIn (person, group, company, education)
-* Medium
-* MixCloud
-* Myspace
-* Odnoklassniki
-* Periscope
-* Pinterest
-* Pocket
-* Quora
-* Ravelry
-* Reddit
-* Renren
-* RSS
-* Scoop.it
-* Sina Weibo
-* Skype
-* SlashDot
-* SlideShare
-* Snapchat
-* SoundCloud
-* Spotify
-* Stack Exchange
-* Stack Overflow
-* Steam
-* StumbleUpon
-* Tumblr
-* Twitch
-* Twitter
-* Untappd
-* Vimeo
-* Vine
-* Vkontakte
-* WordPress
-* XING
-* Yelp
-* YouTube (user, channel, custom URL)
-* Yummly
-
 = Is AddThis free? =
 
-Many of our tools are free, but Pro users get the benefit of exclusive widgets, priority support and deeper analytics.
+Yes, AddThis is free for all users!
 
 = Do I need to create an account? =
 
-No, you do not need to create an account in order to control a limited number of AddThis follow tools from within WordPress. In order to use more AddThis tools, more options and see your site's analytics you will need to create an account with AddThis. It requires an email address and name, but that's it.
+No, you do not need to create an account in order to control a limited number of AddThis sharing tools from within WordPress. In order to use more AddThis tools and see your site's analytics you will need to create an account with AddThis. It requires an email address and name, but that's it.
 
 = Is JavaScript required? =
 
 All AddThis website tools require JavaScript. JavaScript must be enabled. We load the actual interface via JavaScript at run-time, which allows us to upgrade the core functionality of the menu itself automatically everywhere whenever a new social sharing services comes out.
 
 = Why use AddThis? =
-
 1. Ease of use. AddThis is easy to install, customize and localize. We've worked hard to make a suite of simple and beautiful website tools on the internet.
-1. Performance. The AddThis menu code is tiny and fast. We constantly optimize its behavior and design to make sharing a snap.
-1. Peace of mind. AddThis gathers the best services on the internet so you don't have to, and backs them up with industrial strength analytics, code caching, active tech support and a thriving developer community.
-1. Flexibility. AddThis can be customized via an API, and served securely via SSL. Share just about anything, anywhere ­­your way.
-1. Global reach. AddThis sends content to 200+ sharing services 60+ languages, to over 2 billion unique users in countries all over the world.
+2. Performance. The AddThis menu code is tiny and fast. We constantly optimize its behavior and design to make sharing a snap.
+3. Peace of mind. AddThis gathers the best services on the internet so you don't have to, and backs them up with industrial strength analytics, code caching, active tech support and a thriving developer community.
+4. Flexibility. AddThis can be customized via API, and served securely via SSL. You can roll your own sharing toolbars with our toolbox. Share just about anything, anywhere ­­ your way.
+5. Global reach. AddThis sends content to 200+ sharing services 60+ languages, to over 2 billion unique users in countries all over the world.
+6. GDPR compliant – All of our website tools are GDPR compliant.
 
 = What PHP version is required? =
 
@@ -171,8 +139,10 @@ This plugin requires PHP 5.2.4 or greater and is tested on the following version
 * 7.1.8
 
 = Who else uses AddThis? =
-
 Over 15,000,000 sites have installed AddThis. With over 2 billion unique users, AddThis is helping share content all over the world, in more than sixty languages.
+
+= How do I remove AddThis from a page =
+In the screen options you can enable the AddThis meta box. Check the box and save if you've already published that page or post to disable AddThis on that page or post.
 
 = Are there filters? =
 
@@ -180,27 +150,42 @@ Yes! There are lots of filters in this plugin.
 
 Filters allow developers to hook into this plugin's functionality in upgrade-safe ways to define very specific behavior by writing their own PHP code snippets.
 
-Developer <a href="https://plugins.svn.wordpress.org/addthis-all/trunk/documentation.filters.md">documentation</a> on our filters is available. This documentation lists all the filters for our plugins. This plugin does not include filters for sharing tools or recommended content.
+Developer <a href="https://plugins.svn.wordpress.org/addthis-all/trunk/documentation.filters.md">documentation</a> on our filters is available. This documentation lists all the filters for our plugins. This plugin does not include filters for follow tools or related post tools.
 
 = Are there widgets? =
 
 Yes! There are widgets available for all AddThis inline tools (the ones that don't float on the page).
 
-If you register with an AddThis Pro account, you'll also see widgets for our Pro tools.
-
-Developer <a href="https://plugins.svn.wordpress.org/addthis-all/trunk/documentation.widgets.md">documentation</a> on our widgets is also available. This documentation lists all the widgets for our plugins. This plugin does not include widgets for sharing tools or recommended content.
+Developer <a href="https://plugins.svn.wordpress.org/addthis-all/trunk/documentation.widgets.md">documentation</a> on our widgets is also available. This documentation lists all the widgets for our plugins. This plugin does not include widgets for follow tools or related post tools.
 
 = Are there shortcodes? =
 
 Yes! There are lots of shortcodes in this plugin. There are shortcodes are available for all AddThis inline tools (the ones that don't float on the page).
 
-If you register with an AddThis Pro account, the shortcodes for our Pro tools will work for you, too.
-
-See our <a href="https://plugins.svn.wordpress.org/addthis-all/trunk/documentation.shortcodes.md">documentation</a> on our shortcodes. This documentation lists all the shortcodes for our plugins. This plugin does not include shortcodes for sharing tools or recommended content.
+See our <a href="https://plugins.svn.wordpress.org/addthis-all/trunk/documentation.shortcodes.md">documentation</a> on our shortcodes. This documentation lists all the shortcodes for our plugins. This plugin does not include shortcodes for share tools or related post tools.
 
 
 
 == Changelog ==
+
+= 4.1.8 =
+* Fixed a bug where a script tag causes browser errors in certain circumstances
+
+= 4.1.7 =
+* Fixed a bug where previewing a new post may remove tools
+
+= 4.1.6 =
+* Removed Pro features and country dropdown menu for registration page
+
+= 4.1.5 =
+* Updated yaml configs and added script tag to login page
+
+= 4.1.4 =
+* Remove uninstallation hook
+
+= 4.1.3 =
+* Added actviation/deactivation/uninstallation hook
+* Upadate readme.txt and screenshots
 
 = 4.1.2 =
 * Updated error messaging that is no longer relevant regarding related post tools
@@ -300,6 +285,25 @@ See our <a href="https://plugins.svn.wordpress.org/addthis-all/trunk/documentati
 
 
 == Upgrade Notice ==
+
+= 4.1.7 =
+* Fixed a bug where previewing a new post may remove tools
+
+= 4.1.6 =
+* Removed Pro features and country dropdown menu for registration page
+
+= 4.1.5 =
+* Updated yaml configs and added script tag to login page
+
+= 4.1.4 =
+* Remove uninstallation hook
+
+= 4.1.3 =
+* Added actviation/deactivation/uninstallation hook
+* Upadate readme.txt and screenshots
+
+= 4.1.2 =
+* Updated messaging and tested compatibility with Wordpress 4.9
 
 = 4.1.1 =
 Fix for PHP notice from AddThisPlugin.php on line 610. Changing the permission capability used for determining when users can edit AddThis settings from activate_plugins to manage_options. This will allow most admins on multi-site instances to edit settings. <a href="https://codex.wordpress.org/Roles_and_Capabilities">More information on WordPress roles and capabilities.</a>

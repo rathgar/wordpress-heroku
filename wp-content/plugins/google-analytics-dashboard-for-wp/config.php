@@ -1,8 +1,8 @@
 <?php
 /**
- * Author: Alin Marcu
- * Author URI: https://deconf.com
- * Copyright 2013 Alin Marcu
+ * Author: ExactMetrics
+ * Author URI: https://exactmetrics.com
+ * Copyright 2018 ExactMetrics team
  * License: GPLv2 or later
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  */
@@ -98,7 +98,12 @@ if ( ! class_exists( 'GADWP_Config' ) ) {
 								'backend_realtime_report',
 								'ga_optout',
 								'ga_dnt_optout',
+								'tm_optout',
+								'tm_dnt_optout',
 								'ga_with_gtag',
+								'usage_tracking',
+								'hide_am_notices',
+								'network_hide_am_notices',
 			);
 			foreach ( $numerics as $key ) {
 				if ( isset( $options[$key] ) ) {
@@ -295,6 +300,11 @@ if ( ! class_exists( 'GADWP_Config' ) ) {
 								'ga_dnt_optout', //v5.2.3
 								'ga_with_gtag', //v5.3
 								'frontend_item_reports',
+								'tm_optout', //v5.3.1.2
+								'tm_dnt_optout', //v5.3.1.2
+								'usage_tracking', //v5.3.4
+								'hide_am_notices', //v5.3.4
+								'network_hide_am_notices', //v5.3.4
 			);
 			foreach ( $zeros as $key ) {
 				if ( ! isset( $this->options[$key] ) ) {

@@ -110,6 +110,15 @@
     content: "\e06a"
 }
 
+.socicon-beatport {
+    background-color: #94d500;
+    color: #94d500;
+}
+
+.socicon-beatport:before {
+    content: "\e955"
+}
+
 .socicon-bebo {
     background-color: #EF1011;
     color: #EF1011;
@@ -281,6 +290,15 @@
     content: "\e063"
 }
 
+.socicon-ello {
+    background-color: #000;
+    color: #000;
+}
+
+.socicon-ello:before {
+    content: "\e006"
+}
+
 .socicon-envato {
     background-color: #82B540;
     color: #82B540;
@@ -296,7 +314,7 @@
 }
 
 .socicon-eyeem:before {
-    content: "\e901"
+    content: "\e902"
 }
 
 .socicon-facebook {
@@ -422,7 +440,7 @@
 }
 
 .socicon-hellocoton:before {
-    content: "\e900"
+    content: "\e901"
 }
 
 .socicon-houzz {
@@ -452,6 +470,15 @@
     content: "\e057"
 }
 
+.socicon-itunes {
+    background-color: #ff5e51;
+    color: #ff5e51;
+}
+
+.socicon-itunes:before {
+    content: "\e0ae"
+}
+
 .socicon-lanyrd {
     background-color: #3c80c9;
     color: #3c80c9;
@@ -468,6 +495,15 @@
 
 .socicon-lastfm:before {
     content: "\e050"
+}
+
+.socicon-line {
+    background-color: #00BA27;
+    color: #00BA27;
+}
+
+.socicon-line:before {
+    content: "\e900"
 }
 
 .socicon-linkedin {
@@ -495,6 +531,15 @@
 
 .socicon-mail:before {
     content: "\e01f"
+}
+
+.socicon-mastodon {
+    background-color: #2B8BD0;
+    color: #2B8BD0;
+}
+
+.socicon-mastodon:before {
+    content: "\e913"
 }
 
 .socicon-medium {
@@ -659,6 +704,15 @@
     content: "\e078"
 }
 
+.socicon-reverbnation {
+    background-color: #000;
+    color: #000;
+}
+
+.socicon-reverbnation:before {
+    content: "\e07b"
+}
+
 .socicon-rss {
     background-color: #f26109;
     color: #f26109;
@@ -675,6 +729,15 @@
 
 .socicon-skype:before {
     content: "\e046"
+}
+
+.socicon-slack {
+    background-color: #4B6BC6;
+    color: #4B6BC6;
+}
+
+.socicon-slack:before {
+    content: "\e918"
 }
 
 .socicon-slideshare {
@@ -702,6 +765,15 @@
 
 .socicon-snapchat:before {
     content: "\e03f"
+}
+
+.socicon-songkick {
+    background-color: #F80046;
+    color: #F80046;
+}
+
+.socicon-songkick:before {
+    content: "\e07a"
 }
 
 .socicon-soundcloud {
@@ -1116,4 +1188,35 @@
 .zoom-social-icons-list {
     margin: 0;
     padding: 0;
+}
+
+.zoom-social-icons-widget .zoom-social-icons-list--align-left {
+    text-align: left;
+}
+
+.zoom-social-icons-widget .zoom-social-icons-list--align-right {
+    text-align: right;
+}
+
+.zoom-social-icons-widget .zoom-social-icons-list--align-center {
+    text-align: center;
+}
+
+
+/*
+Text meant only for screen readers.
+Provides support for themes that do not bundle this CSS yet.
+@see https://make.wordpress.org/accessibility/2015/02/09/hiding-text-for-screen-readers-with-wordpress-core/
+***********************************/
+.screen-reader-text {
+    border: 0;
+    clip: rect(1px, 1px, 1px, 1px);
+    clip-path: inset(50%);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute ! important;
+    width: 1px;
+    word-wrap: normal ! important;
 }

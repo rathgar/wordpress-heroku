@@ -2,7 +2,7 @@
 
 /*
   Plugin Name: WP SES
-  Version: 0.8
+  Version: 0.8.1
   Plugin URI: https://wordpress.org/plugins/wp-ses/
   Description: Uses Amazon SES for sending all site email
   Author: Delicious Brains Inc
@@ -51,6 +51,63 @@ function wpses_init() {
 
 add_filter('wp_mail_from', 'wpses_from', 1);
 add_filter('wp_mail_from_name', 'wpses_from_name', 1);
+
+function wpses_php_warning() {
+    if ( version_compare( PHP_VERSION, '5.5', '<' ) ) {
+        $capability = is_multisite() ? 'manage_network_options' : 'manage_options';
+
+        if ( ! current_user_can( $capability ) ) {
+            return;
+        }
+
+        $user_id = get_current_user_id();
+        
+        if ( get_user_meta( $user_id, 'wpses_dismissed_php_warning_notice' ) ) {
+            return;
+        }
+
+        $message = sprintf(
+            __( '<strong>WP SES Warning</strong> &mdash; This site is running on PHP %1$s. In the near future we will release a new version of WP SES that will require PHP 5.5 or later. It will not work on PHP %1$s. We recommend you contact the company who hosts this web site and have them move it to a server running PHP 5.5 or later. We currently recommend PHP 7.2.'),
+            PHP_MAJOR_VERSION . '.' . PHP_MINOR_VERSION
+        );
+
+        ?>
+        <div class="notice notice-warning wpses-notice is-dismissible">
+            <p><?php echo $message; ?></p>
+        </div>
+        <?php
+    }
+}
+add_action( 'admin_notices', 'wpses_php_warning' );
+
+function wpses_dismiss_php_notice() {
+    if ( ! is_admin() || ! wp_verify_nonce( sanitize_key( $_POST['_nonce'] ), sanitize_key( $_POST['action'] ) ) ) {
+        wp_die( __( 'Cheatin&#8217; eh?', 'wp-ses' ) );
+    }
+
+    if ( ! current_user_can( 'manage_options' ) ) {
+        wp_die( __( 'You do not have sufficient permissions to access this page.', 'wp-ses' ) );
+    }
+
+    $user_id = get_current_user_id();
+
+    add_user_meta( $user_id, 'wpses_dismissed_php_warning_notice', 1 );
+
+    wp_send_json( array( 'success' => 1 ) );
+}
+add_action( 'wp_ajax_wp-ses-dismiss-notice', 'wpses_dismiss_php_notice' );
+
+function wpses_enqueue_admin_notice() {
+    $src = wpses_get_asset_url( 'js/script.js' );
+    wp_enqueue_script( 'wp-ses-script', $src, array( 'jquery' ), false, true );
+
+
+    wp_localize_script( 'wp-ses-script', 'wpses', array(
+        'dismiss_notice_nonce' => wp_create_nonce( 'wp-ses-dismiss-notice' ),
+        'dismiss_notice_error' => __( 'Error dismissing notice.', 'wp-ses')
+    ) );
+}
+add_action( 'admin_enqueue_scripts', 'wpses_enqueue_admin_notice' );
 
 function wpses_install() {
     global $wpdb, $wpses_options;
