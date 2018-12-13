@@ -41,15 +41,17 @@ article {
 }
 
 .wp-caption-text {
-  border: 1px outset #fcfcfc;
-  background-color: #fff;
-  margin: 15px 0;
-  max-width: 100%;
-  padding: 1em 2em;
-  font-family: Raleway, sans-serif;
-  text-align: left;
-  display: inline-block;
-  /*white-space: pre;*/
+  -moz-box-shadow:    4px 4px 3px 0px #ccc;
+  -webkit-box-shadow: 4px 4px 3px 0px #ccc;
+  box-shadow:         4px 4px 3px 0px #ccc;
+  border:             1px outset #fff;
+  background-color:   #fff;
+  margin:             15px 0;
+  max-width:          100%;
+  padding:            1em 2em;
+  font-family:        Raleway, sans-serif;
+  text-align:         left;
+  display:            inline-block;
 }
 
 .wp-caption {
@@ -79,13 +81,20 @@ figure.artwork img {
   max-height: 500px;
 }
 figure.wp-caption .artwork-meta {
+  text-align: right;
+  font-size: smaller;
   border-bottom: solid black 2px;
 }
 
 figcaption.artwork-caption {
-  width: 55%;
   max-width: 500px;
   padding-bottom: 2em;
+}
+
+@media screen and (min-width: 500px) {
+  figcaption.artwork-caption {
+    width: 55%;
+  }
 }
 
 .hfeed a img.wp-post-image {
@@ -94,7 +103,6 @@ figcaption.artwork-caption {
   height: 150px;
 }
 p.for-sale {
-  font-weight: bold;
   background: url(library/images/blue_dot.svg) left 4px top 0.5em no-repeat, #fff;
   background-size: 10px;
   padding-left: 25px;
