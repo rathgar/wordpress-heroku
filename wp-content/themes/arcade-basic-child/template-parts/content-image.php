@@ -29,9 +29,9 @@
           <?php the_content( __( 'Read more', 'arcade-basic-child') ); ?>
 
           <?php if (has_category('for-sale')): ?>
-            <p class="for-sale">"<?php echo $post->post_title; ?>" may still be available for sale - <a href="/index.php/artwork-enquiry?artwork-id=<?php echo urlencode(get_the_ID()); ?>&artwork-title=<?php echo urlencode($post->post_title); ?>">make an enquiry</a>.</p>
+            <p class="note">&ldquo;<?php echo $post->post_title; ?>&rdquo; may still be available for sale - <a href="/contact/artwork-enquiry?artwork-id=<?php echo urlencode(get_the_ID()); ?>&artwork-title=<?php echo urlencode($post->post_title); ?>">make an enquiry</a>.</p>
           <?php else: ?>
-
+            <p class="note">&ldquo;<?php echo $post->post_title; ?>&rdquo; is no longer available. Why not <a href="/contact/commissions/">commission something</a>.</p>
           <?php endif ?>
         </figcaption>
       </figure>

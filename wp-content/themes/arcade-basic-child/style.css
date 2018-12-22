@@ -102,10 +102,10 @@ figcaption.artwork-caption {
   width: 150px;
   height: 150px;
 }
-p.for-sale {
-  background: url(library/images/blue_dot.svg) left 4px top 0.5em no-repeat, #fff;
-  background-size: 10px;
-  padding-left: 25px;
-  margin-top: 2em;
+p.note {
+  border-top: 1px solid gray;
+  padding-top: 1rem;
+  margin-top: 3rem;
   font-style: italic;
+  font-size: smaller;
 }
