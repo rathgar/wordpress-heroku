@@ -5,7 +5,7 @@
  * @since
  */
 ?>
-<article id="post-<?php the_ID(); ?>" <?php post_class( 'clearfix' ); ?>>
+<article id="post-<?php the_ID(); ?>" <?php post_class( ['clearfix', (has_category('for-sale'))? 'for-sale' : 'not-for-sale'] ); ?>>
   <?php
   // Display a thumbnail if one exists and not on single post
   bavotasan_display_post_thumbnail();
@@ -30,6 +30,8 @@
 
           <?php if (has_category('for-sale')): ?>
             <p class="for-sale">"<?php echo $post->post_title; ?>" may still be available for sale - <a href="/index.php/artwork-enquiry?artwork-id=<?php echo urlencode(get_the_ID()); ?>&artwork-title=<?php echo urlencode($post->post_title); ?>">make an enquiry</a>.</p>
+          <?php else: ?>
+
           <?php endif ?>
         </figcaption>
       </figure>

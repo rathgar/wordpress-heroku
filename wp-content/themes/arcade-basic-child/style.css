@@ -72,7 +72,7 @@ article {
     background-color: black;
 }
 
-article.tag-sold .wp-caption-text {
+article.not-for-sale .wp-caption-text {
   background: url(library/images/red_dot.svg) right 4px top 4px no-repeat, #fff;
   background-size: 10px;
 }
