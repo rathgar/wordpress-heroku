@@ -87,13 +87,13 @@ figure.wp-caption .artwork-meta {
 }
 
 figcaption.artwork-caption {
-  max-width: 500px;
+  max-width: 600px;
   padding-bottom: 2em;
 }
 
 @media screen and (min-width: 500px) {
   figcaption.artwork-caption {
-    width: 55%;
+    width: 65%;
   }
 }
 
