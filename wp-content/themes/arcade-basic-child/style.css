@@ -117,3 +117,7 @@ figcaption.artwork-caption {
 }
 
 .basic a.btn:hover { color: white; }
+
+.call-to-action {
+  margin-top: 2rem;
+}

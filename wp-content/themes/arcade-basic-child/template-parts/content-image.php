@@ -29,7 +29,7 @@
           <?php the_content( __( 'Read more', 'arcade-basic-child') ); ?>
 
           <?php if (has_category('for-sale')): ?>
-            <p><a href="/contact/artwork-enquiry?artwork-id=<?php echo urlencode(get_the_ID()); ?>&artwork-title=<?php echo urlencode($post->post_title); ?>" class="btn btn-primary">Enquire about this work</a></p>
+            <div class="call-to-action"><a href="/contact/artwork-enquiry?artwork-id=<?php echo urlencode(get_the_ID()); ?>&artwork-title=<?php echo urlencode($post->post_title); ?>" class="btn btn-primary alignright">Enquire about this work</a></div>
           </div>
             <!--
               <p>This work is no longer available. Why not <a href="/contact/commissions/" class="btn btn-primary">commission something</a></p>
