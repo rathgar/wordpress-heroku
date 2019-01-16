@@ -5,7 +5,7 @@ if ( !defined( 'ABSPATH' ) ) exit;
     Class: ChildThemeConfiguratorUI
     Plugin URI: http://www.childthemeconfigurator.com/
     Description: Handles the plugin User Interface
-    Version: 2.3.0.4
+    Version: 2.4.0
     Author: Lilaea Media
     Author URI: http://www.lilaeamedia.com/
     Text Domain: chld_thm_cfg
@@ -282,6 +282,7 @@ class ChildThemeConfiguratorUI {
             'child'                     => $this->css()->get_prop( 'child' ),
             'addl_css'                  => $this->css()->get_prop( 'addl_css' ),
             'forcedep'                  => $this->css()->get_prop( 'forcedep' ),
+            'swappath'                  => $this->css()->get_prop( 'swappath' ),
             'imports'                   => $this->css()->get_prop( 'imports' ),
             'converted'                 => $this->css()->get_prop( 'converted' ),
             'is_debug'                  => $this->ctc()->is_debug,

@@ -6,7 +6,7 @@ if ( !defined( 'ABSPATH' ) ) exit;
     Class: ChildThemeConfiguratorCSS
     Plugin URI: http://www.childthemeconfigurator.com/
     Description: Handles all CSS input, output, parsing, normalization and storage
-    Version: 2.3.0.4
+    Version: 2.3.1
     Author: Lilaea Media
     Author URI: http://www.lilaeamedia.com/
     Text Domain: chld_thm_cfg
@@ -49,6 +49,7 @@ class ChildThemeConfiguratorCSS {
     var $parnt_deps;        // 
     var $child_deps;        //
     var $forcedep;
+    var $swappath;
     var $addl_css;
     var $cssunreg;
     var $csswphead;
@@ -95,6 +96,7 @@ class ChildThemeConfiguratorCSS {
     var $configvars = array(
         'addl_css',
         'forcedep',
+        'swappath',
         'cssunreg',
         'csswphead',
         'cssnotheme',
@@ -167,7 +169,7 @@ class ChildThemeConfiguratorCSS {
         $this->parnt            = '';
         $this->ignoreparnt      = 0;
         $this->qpriority        = 10;
-        $this->version          = '2.3.0.4';
+        $this->version          = '2.4.0';
         
         // do not set enqueue, not being set is used to flag old versions
 
@@ -183,6 +185,7 @@ class ChildThemeConfiguratorCSS {
     function ctc() {
         return ChildThemeConfigurator::ctc();
     }
+    
     function mem_chk() {
         $currmemory = $this->memory;
 		if ( function_exists( 'memory_get_peak_usage' ) ) {
@@ -337,6 +340,8 @@ class ChildThemeConfiguratorCSS {
                 return empty( $this->parnt_imp ) ? array() : $this->parnt_imp;
             case 'forcedep': // v2.1.3
                 return empty( $this->forcedep ) ? array() : array_keys( $this->forcedep );
+            case 'swappath': // v2.3.1
+                return empty( $this->swappath ) ? array() : (array) $this->swappath;
             case 'parnt_deps':
                 return empty( $this->parnt_deps ) ? array() : $this->quotify_dependencies( 'parnt_deps' );
             case 'child_deps':
@@ -1922,17 +1927,17 @@ class ChildThemeConfiguratorCSS {
             switch ( $dict ):
                 case 'dict_seq':
                 case 'dict_token':
-                    continue;
+                    break;
                 case 'sel_ndx':
                     $this->{ $dict } = array();
-                    continue;
+                    break;
                 case 'val_ndx':
                     foreach ( $this->val_ndx as $qsid => $rulearr ):
                         foreach ( $rulearr as $ruleid => $valarr )
                             $this->convert_ruleval_array( $this->val_ndx[ $qsid ][ $ruleid ] );
                         $this->pack_val_ndx( $qsid, $this->val_ndx[ $qsid ] );
                     endforeach;
-                    continue;
+                    break;
                 case 'dict_qs':
                     $qsarr = array();
                     foreach ( $this->dict_qs as $qsid => $arr ):
@@ -1940,7 +1945,7 @@ class ChildThemeConfiguratorCSS {
                         $qsarr[ $qsid ] = $qs;
                     endforeach;
                     $this->dict_qs = $qsarr;
-                    continue;
+                    break;
                 default:
                     $this->{ $dict } = array_flip( $this->{ $dict } );
                     foreach ( $this->{ $dict } as $key => $val ):

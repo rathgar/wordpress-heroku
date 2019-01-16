@@ -6,7 +6,7 @@ if ( !defined( 'ABSPATH' ) ) exit;
     Class: ChildThemeConfiguratorAdmin
     Plugin URI: http://www.childthemeconfigurator.com/
     Description: Main Controller Class
-    Version: 2.3.0.4
+    Version: 2.3.1
     Author: Lilaea Media
     Author URI: http://www.lilaeamedia.com/
     Text Domain: child-theme-configurator
@@ -634,13 +634,15 @@ class ChildThemeConfiguratorAdmin {
                 $this->evaluate_signals();
             endif;
             
-            // v2.1.3 - force dependency for specific stylesheets
+            // v2.1.3 - remove dependency for specific stylesheets
             $this->css->forcedep = array();
             if ( isset( $_POST[ 'ctc_forcedep' ] ) && is_array( $_POST[ 'ctc_forcedep' ] ) ): 
-                foreach ( $_POST[ 'ctc_forcedep' ] as $handle )
+                foreach ( $_POST[ 'ctc_forcedep' ] as $handle ):
                     $this->css->forcedep[ sanitize_text_field( $handle ) ] = 1;
+                    $this->debug( 'Removing dependency: ' . $handle, __FUNCTION__, __CLASS__ );
+                endforeach;
             endif;
-
+        
             // roll back CTC Pro Genesis handling option
             if ( $this->genesis ):
                 $handling       = 'separate';
@@ -883,6 +885,17 @@ if ( !defined( 'ABSPATH' ) ) exit;
         $this->debug( 'forcedep: ' . print_r( $this->get( 'forcedep' ), TRUE ) . ' deps: ' . print_r( $deps, TRUE ) . ' enq: ' . $enq . ' handling: ' . $handling
             . ' hasstyles: ' . $hasstyles . ' parntloaded: ' . $parntloaded . ' childloaded: ' . $childloaded . ' reorder: ' . $reorder
             . ' ignoreparnt: ' . $ignoreparnt . ' priority: ' . $priority . ' childtype: ' . $this->childtype, __FUNCTION__, __CLASS__ );
+        // add RTL handler
+        $code .= "
+if ( !function_exists( 'chld_thm_cfg_locale_css' ) ):
+    function chld_thm_cfg_locale_css( \$uri ){
+        if ( empty( \$uri ) && is_rtl() && file_exists( get_template_directory() . '/rtl.css' ) )
+            \$uri = get_template_directory_uri() . '/rtl.css';
+        return \$uri;
+    }
+endif;
+add_filter( 'locale_stylesheet_uri', 'chld_thm_cfg_locale_css' );
+";
          // enqueue parent stylesheet 
         if ( 'enqueue' == $enq && $hasstyles && !$parntloaded && !$ignoreparnt ):
             // Sanity check: remove dependency to parent css handle to avoid loop v2.3.0
@@ -925,7 +938,15 @@ add_action( 'wp_head', 'chld_thm_cfg_add_parent_dep', 2 );
             endforeach;
         endif;
         
+        // deregister and re-register swaps
+        foreach ( $this->get( 'swappath' ) as $sphandle => $sppath ):
+            $enqueues[] = "        if ( !file_exists( trailingslashit( get_stylesheet_directory() ) . '" . $sppath . "' ) ):";
+            $enqueues[] = "            wp_deregister_style( '" . $sphandle . "' );";
+            $enqueues[] = "            wp_register_style( '" . $sphandle . "', trailingslashit( get_template_directory_uri() ) . '" . $sppath . "' );";
+            $enqueues[] = "        endif;";
+        endforeach;
         
+        //die( print_r( $enqueues, TRUE ) );
         // if child not loaded, enqueue it and add it to dependencies
         if ( 'separate' != $handling && ( ( $csswphead || $cssunreg || $cssnotheme ) 
             || ( 'new' != $this->childtype && !$childloaded ) 
@@ -1014,6 +1035,9 @@ defined( 'CHLD_THM_CFG_IGNORE_PARENT' ) or define( 'CHLD_THM_CFG_IGNORE_PARENT',
         $phpopen    = 0;
         $in_comment = 0;
         $foundit = FALSE;
+        if ( $getexternals ):
+            $this->debug( 'Read only, returning.', __FUNCTION__, __CLASS__ );
+        endif;
         if ( $markerdata ):
             $state = TRUE;
             foreach ( $markerdata as $n => $markerline ):
@@ -1045,6 +1069,14 @@ defined( 'CHLD_THM_CFG_IGNORE_PARENT' ) or define( 'CHLD_THM_CFG_IGNORE_PARENT',
                     if ( preg_match( "/wp_enqueue_style.+?'chld_thm_cfg_ext\d+'.+?'(.+?)'/", $markerline, $matches ) ):
                         $this->debug( 'external link found : ' . $matches[ 1 ] );
                         $this->convert_enqueue_to_import( $matches[ 1 ] );
+                    // look for deregister/register link paths for swapping parent/child
+                    elseif ( preg_match( "/wp_register_style[^']+'(.+?)'[^']+'(.+?)'/", $markerline, $matches ) ):
+                        $this->debug( 'link swap found : ' . $matches[ 1 ] . ' => ' . $matches[ 2 ] );
+                        
+                        $handle = sanitize_text_field( $matches[ 1 ] );
+                        $path   = sanitize_text_field( $matches[ 2 ] );
+                        $this->css->swappath[ $handle ] = $path;
+                        
                     endif;
                 endif;
                 if ( strpos( $markerline, '// END ' . $marker ) !== FALSE ):
@@ -1790,7 +1822,35 @@ defined( 'CHLD_THM_CFG_IGNORE_PARENT' ) or define( 'CHLD_THM_CFG_IGNORE_PARENT',
     // so we need cases for active parent, active child or neither
     function copy_theme_mods( $from, $to ) {
         if ( strlen( $from ) && strlen( $to ) ):
-            $this->set_theme_mods( $to, $this->get_theme_mods( $from ) );
+        
+            // get parent theme settings
+            $mods = $this->get_theme_mods( $from );
+        
+            // handle custom css
+            $css = wp_get_custom_css( $from );
+            $r = wp_update_custom_css_post( $css, array(
+                'stylesheet' => $to
+            ) );
+        
+            // if ok, set id in child theme mods
+            if ( !( $r instanceof WP_Error ) ):
+                $post_id = $r->ID;
+                $mods[ 'custom_css_post_id' ] = $post_id;
+            endif;
+        
+            // set new mods based on parent
+            $this->set_theme_mods( $to, $mods );
+        
+            // handle randomized custom headers
+            $headers = get_posts( array( 
+                'post_type'     => 'attachment', 
+                'meta_key'      => '_wp_attachment_is_custom_header', 
+                'meta_value'    => $from, 
+                'orderby'       => 'none', 
+                'nopaging'      => true ) );
+            foreach ( $headers as $header )
+                add_post_meta( $header->ID, '_wp_attachment_is_custom_header', $to );
+            
             do_action( 'chld_thm_cfg_copy_theme_mods', $from, $to );
         endif;
     }
@@ -2066,10 +2126,9 @@ defined( 'CHLD_THM_CFG_IGNORE_PARENT' ) or define( 'CHLD_THM_CFG_IGNORE_PARENT',
     function evaluate_signals() {
         if ( !isset( $_POST[ 'ctc_analysis' ] ) ) return;
         $analysis   = json_decode( urldecode( $_POST[ 'ctc_analysis' ] ) );
-        //die( print_r( $analysis, TRUE ) );
+        //die( '<pre><code><small>' . print_r( $analysis, TRUE ) . '</small></code></pre>' );
         // stylesheets loaded outside wp_styles queue
         $unregs     = array( 'thm_past_wphead', 'thm_unregistered', 'dep_unregistered', 'css_past_wphead', 'dep_past_wphead' );
-        //echo '<pre><code>' . print_r( $analysis, TRUE ) . "</code></pre>\n";
         
         // if this is a self-contained child theme ( e.g., Genesis ) use child as baseline
         $baseline = $this->get( 'ignoreparnt' ) ? 'child' : 'parnt';
@@ -2087,6 +2146,21 @@ defined( 'CHLD_THM_CFG_IGNORE_PARENT' ) or define( 'CHLD_THM_CFG_IGNORE_PARENT',
                 $this->css->addl_css[] = sanitize_text_field( $import );
             endforeach;
         endif;
+        
+        // store any detected swaps
+        foreach ( $analysis->parnt->swaps as $swap ):
+            if ( ( $handle = sanitize_text_field( $swap[ 0 ] ) ) && ( $path = sanitize_text_field( $swap[ 1 ] ) ) ):
+                $this->css->swappath[ $handle ] = $path;
+                $this->debug( 'Setting link swap: ' . $handle . ' => ' . $path, __FUNCTION__, __CLASS__ );
+            endif;
+        endforeach;
+        
+        //echo ( print_r( $this->css->swappath, TRUE ) );
+        
+        /*
+        die( '<pre><code>Baseline: ' . $baseline . PHP_EOL . print_r( $analysis, TRUE ) . PHP_EOL
+            . 'Swap Paths: ' . print_r( $this->css->swappath, TRUE ) . '</code></pre>' );
+            */
 
         // store stylesheet dependencies
         if ( isset( $analysis->{ $baseline } ) ):

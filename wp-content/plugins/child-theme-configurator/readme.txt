@@ -4,8 +4,8 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: child, theme, child theme, child themes, custom styles, customize styles, customize theme, css, responsive, css editor, child theme editor, child theme generator, child theme creator, style, stylesheet, customizer, childtheme, childthemes
 Requires at least: 4.0
 Requires PHP: 5.6.36
-Tested up to: 4.9
-Stable tag: 2.3.0.4
+Tested up to: 5.0.3
+Stable tag: 2.4.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -288,6 +288,10 @@ https://www.youtube.com/watch?v=iBiiAgsK4G4
 7. Files tab
 
 == Changelog ==
+= 2.4.0 =
+* Automatically add action parent RTL stylesheet when child theme does not have one.
+* Handle case where parent theme changes queue action incorrectly points to non-existent child theme stylesheet.
+* Correctly copies customizer css to child theme.
 = 2.3.0.4 =
 * strip scripts during template scan to prevent false positives
 = 2.3.0.3 =
