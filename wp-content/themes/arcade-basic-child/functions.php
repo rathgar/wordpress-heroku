@@ -42,4 +42,7 @@ function hook_favicons() {
 EOT;
   echo $output;
 }
+
+// Register Custom Navigation Walker
+require_once('wp_bootstrap_pagination.php');
 ?>
