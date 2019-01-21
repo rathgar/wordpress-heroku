@@ -34,7 +34,7 @@ if ( !defined( 'CHLD_THM_CFG_PRO_VERSION' ) ):
 <li><h3><?php _e( 'Online Documentation', 'child-theme-configurator' ); ?></h3></li>
 <li><h3><?php _e( 'Tutorial Videos', 'child-theme-configurator' ); ?></h3></li>
 </ul>
-<h1>Upgrade Offer</h1>
+<h1><?php _e( 'Upgrade Offer', 'child-theme-configurator' ); ?></h1>
 <p class="larger"><?php _e( 'Use coupon code', 'child-theme-configurator' ); ?><code><strong><?php _e( 'wordpress-org', 'child-theme-configurator' ); ?></strong></code><?php _e( 'and get <strong>20% off entire order</strong>.', 'child-theme-configurator' ); ?></p>
 <h3><a target="_blank" href="<?php echo LILAEAMEDIA_URL; ?>/cart/?add-to-cart=4549" title="<?php _e( 'Order Now', 'child-theme-configurator' ); ?>"><?php _e( 'Order Now', 'child-theme-configurator' ); ?></a></h3><small><?php _e( '*Prices and offers subject to change.', 'child-theme-configurator' ); ?></small>
 </div>

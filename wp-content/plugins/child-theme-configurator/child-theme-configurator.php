@@ -6,7 +6,7 @@ if ( !defined( 'ABSPATH' ) ) exit;
     Plugin Name: Child Theme Configurator
     Plugin URI: http://www.childthemeconfigurator.com
     Description: When using the Customizer is not enough - Create child themes and customize styles, templates, functions and more.
-    Version: 2.4.0
+    Version: 2.4.1
     Author: Lilaea Media
     Author URI: http://www.lilaeamedia.com
     Text Domain: child-theme-configurator
@@ -42,9 +42,16 @@ if ( isset( $_GET['preview_ctc'] ) ):
 endif; 
 
 // append timestamp to linked stylesheets to force cache refresh
-add_filter( 'style_loader_src', 'chld_thm_cfg_version', 10, 2 );
+add_action( 'init', 'chld_thm_cfg_link_timestamp' );
+
+function chld_thm_cfg_link_timestamp(){
+    // only filter for admin users when child theme is active
+    if ( is_child_theme() && current_user_can( 'edit_theme_options' ) )
+        add_filter( 'style_loader_src', 'chld_thm_cfg_version', 10, 2 );
+}
 
 function chld_thm_cfg_version( $src, $handle ) {
+    // only filter links for current theme
     if ( strstr( $src, get_stylesheet() ) ):
         $src = preg_replace( "/ver=(.*?)(\&|$)/", 'ver=' . wp_get_theme()->Version . "$2", $src );
     endif;

@@ -5,7 +5,7 @@ Tags: child, theme, child theme, child themes, custom styles, customize styles, 
 Requires at least: 4.0
 Requires PHP: 5.6.36
 Tested up to: 5.0.3
-Stable tag: 2.4.0
+Stable tag: 2.4.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -131,6 +131,14 @@ Learn more at http://www.lilaeamedia.com/plugins/intelliwidget-responsive-menu
 10. IMPORTANT: Always test child themes with Live Preview (theme customizer) before activating!
 
 == Frequently Asked Questions ==
+
+= How do I move changes I have already made to my theme into a Child Theme? =
+
+Follow these steps: http://www.childthemeconfigurator.com/how-to-use/#child_from_modified_parent
+
+= When I run the analyzer I get "Constants Already Defined" notice in PHP Debug Output =
+
+This is a misconfiguration created by the Bluehost auto-installer. http://www.childthemeconfigurator.com/child-theme-faqs/#constants" class="scroll-to">How to fix.</a></p>
 
 = Is there a tutorial? =
 
@@ -288,10 +296,14 @@ https://www.youtube.com/watch?v=iBiiAgsK4G4
 7. Files tab
 
 == Changelog ==
+= 2.4.1 =
+* Fixed localization issues (thanks @alexclassroom for identifying these)
+* Modified style_loader_src hook to only add timestamp under certain conditions to prevent loading delay for most requests. (thanks @anthony750)
 = 2.4.0 =
 * Automatically add action parent RTL stylesheet when child theme does not have one.
 * Handle case where parent theme changes queue action incorrectly points to non-existent child theme stylesheet.
 * Correctly copies customizer css to child theme.
+= Fixed PHP 7.3 compatability issue (thanks @forest-skills for identifying this)
 = 2.3.0.4 =
 * strip scripts during template scan to prevent false positives
 = 2.3.0.3 =

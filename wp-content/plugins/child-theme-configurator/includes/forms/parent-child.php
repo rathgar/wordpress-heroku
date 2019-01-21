@@ -99,7 +99,7 @@ if ( !defined( 'ABSPATH' ) )exit;
                     <?php _e( 'Analyze Parent Theme', 'child-theme-configurator' ); ?>
                 </strong>
                 <p class="howto indent">
-                    <?php _e( 'Click "Analyze" to determine stylesheet dependencies and other potential issues.' ); ?>
+                    <?php _e( 'Click "Analyze" to determine stylesheet dependencies and other potential issues.', 'child-theme-configurator' ); ?>
                 </p>
                 </span>
             </div>

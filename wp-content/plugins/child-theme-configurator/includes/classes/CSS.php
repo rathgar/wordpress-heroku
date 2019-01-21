@@ -169,7 +169,7 @@ class ChildThemeConfiguratorCSS {
         $this->parnt            = '';
         $this->ignoreparnt      = 0;
         $this->qpriority        = 10;
-        $this->version          = '2.4.0';
+        $this->version          = '2.4.1';
         
         // do not set enqueue, not being set is used to flag old versions
 
