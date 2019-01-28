@@ -64,7 +64,7 @@ function wp_bootstrap_pagination( $args = array() ) {
       $echo .= '<li class="page-item' . $disabled . '"><a class="' . $args['a_class'] . '" href="' . $firstpage . '">' . __( 'First', 'text-domain' ) . '</a></li>';
     }
 
-    $disabled = ( $previous && (1 != $page) ) ? '' : $args['disabled_class'];
+    $disabled = ( $previous && (1 != $page) );
     $echo .= '<li class="' . join(' ', [$args['li_class'], $disabled]) . '"><a class="' . $args['a_class'] . '" href="' . $previous . '" title="' . __( 'previous', 'text-domain') . '">' . $args['previous_string'] . '</a></li>';
 
     if ( !empty($min) && !empty($max) ) {
@@ -87,4 +87,13 @@ function wp_bootstrap_pagination( $args = array() ) {
 
     if ( isset($echo) )
         echo $args['before_output'] . $echo . $args['after_output'];
+}
+
+function wp_bootstrap_link($attrs=[],$text='',$before='',$after='') {
+  $output = '<a ';
+  foreach ($attrs as $attr => $value) {
+    $output .= "{$attr}=\"{$value}\" ";
+  }
+  $output .= ">{$text}</a>";
+  return $before . $output . $after;
 }
