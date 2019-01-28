@@ -45,4 +45,18 @@ EOT;
 
 // Register Custom Navigation Walker
 require_once('wp_bootstrap_pagination.php');
+
+function posts_link_next_class($format){
+     $format = str_replace('href=', 'class="btn btn-light" href=', $format);
+     return $format;
+}
+add_filter('next_post_link', 'posts_link_next_class');
+
+function posts_link_prev_class($format) {
+     $format = str_replace('href=', 'class="btn btn-light" href=', $format);
+     return $format;
+}
+add_filter('previous_post_link', 'posts_link_prev_class');
+
+
 ?>

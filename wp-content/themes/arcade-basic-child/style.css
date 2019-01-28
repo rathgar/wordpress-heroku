@@ -121,3 +121,28 @@ figcaption.artwork-caption {
 .call-to-action {
   margin-top: 2rem;
 }
+
+.basic a.btn-light {
+  color: #212529 !important;
+  background-color: #e8e9ea;
+  border-color: #f8f9fa;
+}
+.basic a.btn-light:hover {
+  color: #212529 !important;
+  background-color: #e2e6ea;
+  border-color: #dae0e5;
+}
+
+.panel {
+  margin-bottom: 20px;
+  background-color: #fff;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
+  box-shadow: 0 1px 1px rgba(0,0,0,.05);
+}
+
+.panel-default {
+  border-color: #ddd;
+}
+
