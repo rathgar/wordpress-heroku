@@ -12,7 +12,6 @@
   get_template_part( 'template-parts/content', 'header' ); ?>
 
   <div class="entry-content description clearfix">
-
     <?php if ( is_singular() && ! is_front_page() ) : ?>
       <figure class="wp-caption artwork">
         <?php the_post_thumbnail(); ?>
@@ -26,23 +25,21 @@
             <dt>Dimensions (mm)</dt>
             <dd><?php echo $post->dimensions; ?></dd><?php } ?>
           </dl>
-          <?php the_content( __( 'Read more', 'arcade-basic-child') ); ?>
+          <?php the_content( __( 'Read more', 'arcade-basic') ); ?>
 
-          <?php if (has_category('for-sale')): ?>
-            <div class="call-to-action"><a href="/contact/artwork-enquiry?artwork-id=<?php echo urlencode(get_the_ID()); ?>&artwork-title=<?php echo urlencode($post->post_title); ?>" class="btn btn-primary alignright">Enquire about this work</a></div>
-          </div>
+          <?php if (has_category('for-sale')) { ?>
+            <div class="clearfix call-to-action"><a href="/contact/artwork-enquiry?artwork-id=<?php echo urlencode(get_the_ID()); ?>&artwork-title=<?php echo urlencode($post->post_title); ?>" class="btn btn-light alignright">Enquire about this work</a></div>
             <!--
               <p>This work is no longer available. Why not <a href="/contact/commissions/" class="btn btn-primary">commission something</a></p>
             //-->
-          <?php endif ?>
-
+          <?php } ?>
+          <?php
+          else :
+            echo get_the_excerpt();
+          endif;
+          ?>
         </figcaption>
       </figure>
-    <?php
-      else :
-        the_excerpt();
-      endif;
-    ?>
   </div><!-- .entry-content -->
   <?php if ( is_singular() && ! is_front_page() )
     get_template_part( 'template-parts/content', 'footer' ); ?>
