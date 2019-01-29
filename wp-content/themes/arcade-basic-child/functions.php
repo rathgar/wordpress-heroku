@@ -168,4 +168,23 @@ class BSTags_Widget extends WP_Widget {
 
 } // class BSTags_Widget
 
+
+
+function the_artwork_meta($before = '', $after = '', $id = 0) {
+  $post = get_post($id);
+  $content = $before;
+  $content .= '<dl class="artwork-meta">';
+  if ($post->media != NULL) {
+    $content .= '<dt>Media</dt>';
+    $content .= '<dd>'.$post->media.'</dd>';
+  }
+  if ($post->dimensions != NULL) {
+    $content .= '<dt>Dimensions (mm)</dt>';
+    $content .= '<dd>'.$post->dimensions.'</dd>';
+   }
+  $content .= '</dl>';
+  $content .= $after;
+  echo $content;
+}
+
 ?>
