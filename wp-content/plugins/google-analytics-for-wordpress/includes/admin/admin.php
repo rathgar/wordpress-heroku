@@ -116,6 +116,7 @@ add_filter( 'admin_body_class', 'monsterinsights_add_admin_body_class', 10, 1 );
  */
 function monsterinsights_add_admin_body_class_tools_page( $classes ) {
     $screen = function_exists( 'get_current_screen' ) ? get_current_screen() : false;
+
     if ( empty( $screen ) || empty( $screen->id ) || strpos( $screen->id, 'monsterinsights_tools' ) === false || 'insights_page_monsterinsights_tools' === $screen->id  ) {
         return $classes;
     }

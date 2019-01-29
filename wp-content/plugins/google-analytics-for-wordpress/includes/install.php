@@ -231,6 +231,8 @@ class MonsterInsights_Install {
 			'custom_code'               => '',
 			'save_settings'             => array( 'administrator' ),
 			'view_reports'              => array( 'administrator', 'editor' ),
+			'events_mode'               => 'js',
+			'tracking_mode'             => 'analytics',
 		);
 	}
 

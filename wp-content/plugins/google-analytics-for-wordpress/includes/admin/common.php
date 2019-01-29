@@ -34,11 +34,11 @@ function monsterinsights_is_settings_page() {
     if ( $current_screen->id === 'insights_page_monsterinsights_settings' ) {
         $settings_page = true;
     }
-	
+
 	if ( strpos( $current_screen->id, 'monsterinsights_settings' ) !== false ) {
         $settings_page = true;
 	}
-		
+
     if ( ! empty( $current_screen->base ) && strpos( $current_screen->base, 'monsterinsights_network' ) !== false ) {
         $settings_page = true;
     }
@@ -196,7 +196,7 @@ function monsterinsights_admin_scripts() {
 				'ajax'                 => admin_url( 'admin-ajax.php' ),
 				'nonce'                => wp_create_nonce( 'mi-admin-nonce' ),
 				'network'              => is_network_admin(),
-				'translations'         => wp_get_jed_locale_data( 'mi-vue-app' ),
+				'translations'         => wp_get_jed_locale_data( monsterinsights_is_pro_version() ? 'ga-premium' : 'google-analytics-for-wordpress' ),
 				'assets'               => plugins_url( $version_path . '/assets/vue', MONSTERINSIGHTS_PLUGIN_FILE ),
 				'roles'                => monsterinsights_get_roles(),
 				'roles_manage_options' => monsterinsights_get_manage_options_roles(),
