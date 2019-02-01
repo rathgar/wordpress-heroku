@@ -1,4 +1,3 @@
-# BEGIN WordPress
 <IfModule mod_rewrite.c>
 RewriteEngine On
 # Redirect all requests to the new domain
@@ -6,7 +5,11 @@ RewriteCond %{HTTP_HOST} ^rue.co.uk$ [OR]
 RewriteCond %{HTTP_HOST} ^www.rue.co.uk$ [OR]
 RewriteCond %{HTTP_HOST} ^art.rue.co.uk$
 RewriteRule ^(.*)$ http://rue.uk/$1 [R=301,L]
+</IfModule>
 
+# BEGIN WordPress
+<IfModule mod_rewrite.c>
+RewriteEngine On
 RewriteBase /
 RewriteRule ^index\.php$ - [L]
 RewriteCond %{REQUEST_FILENAME} !-f
