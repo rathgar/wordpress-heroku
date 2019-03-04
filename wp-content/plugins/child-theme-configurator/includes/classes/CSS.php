@@ -6,7 +6,7 @@ if ( !defined( 'ABSPATH' ) ) exit;
     Class: ChildThemeConfiguratorCSS
     Plugin URI: http://www.childthemeconfigurator.com/
     Description: Handles all CSS input, output, parsing, normalization and storage
-    Version: 2.3.1
+    Version: 2.4.4
     Author: Lilaea Media
     Author URI: http://www.lilaeamedia.com/
     Text Domain: chld_thm_cfg
@@ -43,6 +43,7 @@ class ChildThemeConfiguratorCSS {
     var $enqueue;           // whether or not to load parent theme
     var $ignoreparnt;       // no not parse or enqueue parent
     var $qpriority;
+    var $mpriority;
     var $hasstyles;
     var $parntloaded;
     var $childloaded;
@@ -108,6 +109,7 @@ class ChildThemeConfiguratorCSS {
         'childloaded',
         'ignoreparnt',
         'qpriority',
+        'mpriority',
         'enqueue',
         'handling',
         'templates',
@@ -169,7 +171,8 @@ class ChildThemeConfiguratorCSS {
         $this->parnt            = '';
         $this->ignoreparnt      = 0;
         $this->qpriority        = 10;
-        $this->version          = '2.4.1';
+        $this->mpriority        = 10;
+        $this->version          = '2.4.4';
         
         // do not set enqueue, not being set is used to flag old versions
 
@@ -352,6 +355,8 @@ class ChildThemeConfiguratorCSS {
                 return empty( $this->ignoreparnt ) ? 0 : 1;
             case 'qpriority':
                 return empty( $this->qpriority ) ? 10 : $this->qpriority;
+            case 'mpriority':
+                return empty( $this->mpriority ) ? 10 : $this->mpriority;
             case 'parntloaded':
                 return empty( $this->parntloaded ) ? FALSE : $this->parntloaded;
             case 'childloaded':
@@ -798,17 +803,6 @@ class ChildThemeConfiguratorCSS {
             $this->imports[ 'child' ] = array();
             $this->styles = $this->parse_css_input( $_POST[ 'ctc_child_imports' ] );
             $this->parse_css( 'child' );
-        // process ANALYZER SIGNAL inputs
-        elseif ( isset( $_POST[ 'ctc_analysis' ] ) ):
-            
-            if ( $this->ctc()->cache_updates ):
-                $this->ctc()->updates[] = array(
-                    'obj'  => 'analysis',
-                    'data' => array(),
-                );
-            endif;
-            
-            $this->ctc()->evaluate_signals( $this->get_prop( 'ignoreparnt' ) );
         // process CONFIGURE inputs
         elseif ( isset( $_POST[ 'ctc_configtype' ] ) ):
             ob_start();
@@ -972,7 +966,7 @@ class ChildThemeConfiguratorCSS {
         endif;
 
         // update enqueue function if imports have not been converted or new imports passed
-        if ( isset( $_POST[ 'ctc_analysis' ] ) || isset( $_POST[ 'ctc_child_imports' ] ) || !$this->get_prop( 'converted' ) )
+        if ( isset( $_POST[ 'ctc_child_imports' ] ) || !$this->get_prop( 'converted' ) )
             add_action( 'chld_thm_cfg_addl_files',   array( $this->ctc(), 'enqueue_parent_css' ), 15, 2 );
     }
     
@@ -1360,17 +1354,26 @@ class ChildThemeConfiguratorCSS {
             // write new stylesheet:
             // try direct write first, then wp_filesystem write
             // stylesheet must already exist and be writable by web server
-            if ( $this->ctc()->is_ajax && is_writable( $stylesheet_verified ) ):
-                if ( FALSE === @file_put_contents( $stylesheet_verified, $output ) ): 
-                    $this->ctc()->debug( 'Ajax write failed.', __FUNCTION__, __CLASS__ );
+            if ( $this->ctc()->is_ajax ):
+                if ( is_writable( $stylesheet_verified ) ):
+                    $this->ctc()->debug( 'Attempting Ajax write...', __FUNCTION__, __CLASS__ );
+                    if ( FALSE === @file_put_contents( $stylesheet_verified, $output ) ): 
+                        $this->ctc()->debug( 'Ajax write failed.', __FUNCTION__, __CLASS__ );
+                        return FALSE;
+                    endif;
+                else:
+                    $this->ctc()->debug( 'File not writable.', __FUNCTION__, __CLASS__ );
                     return FALSE;
                 endif;
             elseif ( FALSE === $wp_filesystem->put_contents( $this->ctc()->fspath( $stylesheet_verified ), $output, $mode ) ):
                 $this->ctc()->debug( 'Filesystem write failed.', __FUNCTION__, __CLASS__ );
                 return FALSE;
             endif;
+            $this->ctc()->debug( 'No write failure reported.', __FUNCTION__, __CLASS__ );
             return TRUE;
-        endif;   
+        endif;
+        $this->ctc()->debug( 'File NOT ok.', __FUNCTION__, __CLASS__ );
+
         return FALSE;
     }
     

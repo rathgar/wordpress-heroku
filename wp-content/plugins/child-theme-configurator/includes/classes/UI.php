@@ -269,6 +269,7 @@ class ChildThemeConfiguratorUI {
             'ssl'                       => is_ssl(),
             'homeurl'                   => home_url( '/' ) . '?ModPagespeed=off&' . ( defined( 'WP_ROCKET_VERSION' ) ? '' : 'ao_noptimize=1&' ) . 'preview_ctc=1', // WP Rocket serves cached page when ao_nooptimize is present v2.3.0
             'ajaxurl'                   => admin_url( 'admin-ajax.php' ),
+            'customizerurl'             => admin_url( 'customize.php' ),
             'theme_uri'                 => get_theme_root_uri(),
             'theme_dir'                 => basename( get_theme_root_uri() ),
             'page'                      => CHLD_THM_CFG_MENU,
@@ -284,6 +285,7 @@ class ChildThemeConfiguratorUI {
             'swappath'                  => $this->css()->get_prop( 'swappath' ),
             'imports'                   => $this->css()->get_prop( 'imports' ),
             'converted'                 => $this->css()->get_prop( 'converted' ),
+            'copy_mods'                 => $this->ctc()->copy_mods,
             'is_debug'                  => $this->ctc()->is_debug,
             '_background_url_txt'       => __( 'URL/None', 'child-theme-configurator' ),
             '_background_origin_txt'    => __( 'Origin', 'child-theme-configurator' ),

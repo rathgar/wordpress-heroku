@@ -36,12 +36,12 @@ if ( isset( $_GET[ 'error' ] ) || count( $this->ctc()->errors )  ):
     if ( $writable_error ):
         $this->render_notices( 'writable' );
     endif;
-elseif ( isset( $_GET[ 'updated' ] ) ):
+elseif ( $msg = $this->ctc()->msg ):
     $child_theme = wp_get_theme( $this->ctc()->get( 'child' ) );
 ?>
 <div class="updated notice is-dismissible">
     <?php
-    switch ( $_GET[ 'updated' ] ):
+    switch ( $msg ):
         case '4':
         ?>
     <p>

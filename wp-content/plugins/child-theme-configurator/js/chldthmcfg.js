@@ -2,7 +2,7 @@
  *  Script: chldthmcfg.js
  *  Plugin URI: http://www.childthemeconfigurator.com/
  *  Description: Handles jQuery, AJAX and other UI
- *  Version: 2.4.1
+ *  Version: 2.4.4
  *  Author: Lilaea Media
  *  Author URI: http://www.lilaeamedia.com/
  *  License: GPLv2
@@ -1161,7 +1161,6 @@
             // console.log( 'ajax_post: ' + obj );
             // console.log( data );
             // console.log( window.ctcAjax.ajaxurl );
-            // console.log( window.ctcAjax.ajaxurl );
             // get ajax url from localized object
             $.ajax( { 
                 url:        window.ctcAjax.ajaxurl,  
@@ -2034,7 +2033,7 @@
                 // test for rtl because it may occur past test.css boundary and flag false positive
                 } else if ( stylesheetpath.match( /rtl.*?\.css$/ ) ) {
                     self.analysis[ themetype ].signals.thm_rtl = 1;
-                } else if ( 'ctc-test.css' === stylesheetpath ) { // flag test stylesheet link
+                } else if ( stylesheetpath.match( /ctc\-test.*?\.css$/ ) ) { // flag test stylesheet link
                     // console.log( 'end of queue reached' );
                     testloaded = 1; // flag that test queue has been detected ( end of wp_head )
                 } else {
@@ -2089,19 +2088,15 @@
                     errlist:    '',
                     msg:        $.chldthmcfg.getxt( 'anlz7' )
                 },
-                resubmit    = 0,
                 resubmitdata= {},
                 anlz,
                 debugtxt    = '',
                 dep_inputs,
-                swap_inputs,
                 errflags    = {};
             // test if CTC is unable to load theme page at all
             if ( self.analysis[ themetype ].signals.failure || 
                 ( self.analysis[ themetype ].signals.thm_noqueue && !self.phperr[ themetype ].length ) ) {
-                //if ( $( '#ctc_is_debug' ).is( ':checked' ) ) {
                     debugtxt = $.chldthmcfg.getxt( 'anlz33' ).replace(/%1/, '<a href="' + self.analysis[ themetype ].url + '" target="_new">' ).replace( /%2/, '</a>' );
-                //}
                 notice.notices.push( {
                     headline:   $.chldthmcfg.getxt( 'anlz4', name ),
                     msg: $.chldthmcfg.getxt( 'anlz5' ) + debugtxt,
@@ -2177,11 +2172,16 @@
                         }
                     }
                     if ( 'child' === themetype ) {
+                        // test if theme mods should be copied
+                        if ( window.ctcAjax.copy_mods && window.ctcAjax.copy_mods.length > 1 ){
+                            //console.log( 'copy theme mods', window.ctcAjax.copy_mods );
+                            resubmitdata.ctc_copy_mods = 1;
+                            resubmitdata.ctc_copy_from = window.ctcAjax.copy_mods[ 0 ];
+                            resubmitdata.ctc_copy_to = window.ctcAjax.copy_mods[ 1 ];
+                        }
                         // test for reorder flag
                         if ( self.analysis.child.signals.ctc_parnt_reorder ) {
                             // console.log( 'reorder flag detected, resubmitting.' );
-                            // console.log( 'resubmitting 1' ); 
-                            resubmit = 1;
                         }
                         // test for presence of a child theme stylesheet
                         if ( !self.analysis.child.signals.ctc_child_loaded &&
@@ -2192,8 +2192,6 @@
                                 style: 'notice-warning',
                                 msg: $.chldthmcfg.getxt( 'anlz14' )
                             } );
-                            // console.log( 'resubmitting 2' ); 
-                            resubmit = 1;
                         }
                         // test for deprecated Genesis methods
                         if ( self.analysis[ themetype ].signals.ctc_gen_loaded ) {
@@ -2215,8 +2213,6 @@
                                 style: 'notice-warning',
                                 msg: $.chldthmcfg.getxt( 'anlz16' )
                             } );
-                            // console.log( 'resubmitting 3' ); 
-                            resubmit = 1;
                         }
                         // test for redundant stylesheet link (old CTC version)
                         if ( self.analysis.child.signals.thm_unregistered &&
@@ -2241,8 +2237,6 @@
                                 style: 'notice-warning'
                             } );
                         }
-                        
-                        
                     }
 
                     // test for additional stylesheets that switched from parent to child
@@ -2256,8 +2250,6 @@
                                 //console.log( 'link path changed', el, el2 );
                                 self.analysis.parnt.swaps.push( el2 );
                                 window.ctcAjax.swappath[ el2[ 0 ] ] = el2[ 1 ];
-                                // console.log( 'resubmitting 7' ); 
-                                resubmit = 1;
                             }
                         } );                         
                     } );
@@ -2293,8 +2285,6 @@
                         // resubmit if this requires a change
                         if ( !$( '#ctc_enqueue_none' ).is( ':checked' ) ) {
                             $( '#ctc_enqueue_none' ).prop( 'checked', true );
-                            // console.log( 'resubmitting 4' ); 
-                            resubmit = 1;
                             resubmitdata.ctc_enqueue = 'none';
                         }
                     } else {
@@ -2323,16 +2313,12 @@
                     }
                     // test if theme is already loading parent stylesheet from child theme and resubmit
                     if ( 'child' === themetype && self.analysis[ themetype ].signals.thm_parnt_loaded ) {
-                        //if ( !$( '#ctc_enqueue_none' ).is( ':checked' ) ) {
                             notice.notices.push( {
                                 headline: $.chldthmcfg.getxt( 'anlz25' ),
                                 msg: $.chldthmcfg.getxt( 'anlz26' ),
                                 style: 'updated'
                             } );
-                        //}
                         $( '#ctc_enqueue_none' ).prop( 'checked', true );
-                        // console.log( 'resubmitting 5' ); 
-                        resubmit = 1;
                         resubmitdata.ctc_enqueue = 'none';
                     }
                     // test if no parent styles, no need to enqueue and resubmit
@@ -2345,8 +2331,6 @@
                             } );
                         //}
                         $( '#ctc_enqueue_none' ).prop( 'checked', true );
-                        // console.log( 'resubmitting 6' ); 
-                        resubmit = 1;
                         resubmitdata.ctc_enqueue = 'none';
                     }
                 }
@@ -2354,20 +2338,21 @@
             
             /**
              * Auto-configure parameters
-             * Some configuration must be done based on theme-specific signals 
-             * These are passed back as hidden inputs
+             * After initial configuration, the parent and child themes are analyzed again
+             * and resubmitted to save any changes that occur in the child theme.
              */
-            // parent has styles
             hidden = encodeURIComponent( JSON.stringify( self.analysis ) );
             
             $( 'input[name="ctc_analysis"]' ).val( hidden );
-            resubmitdata.ctc_analysis = hidden;
             
-            if ( self.is_success() && resubmit && !self.resubmitting ){
+            if ( self.is_success() 
+                && !self.resubmitting ){
+                resubmitdata.ctc_analysis = hidden;
                 self.resubmitting = 1;
                 self.resubmit( resubmitdata );
                 return;
             } else {
+            
                 self.resubmitting = 0;
                 self.hide_loading();
                 $.each( notice.notices, function( ndx, notice ){
@@ -2442,17 +2427,20 @@
             self.show_loading( true );
             data.action = 'ctc_update';
             data._wpnonce = $( '#_wpnonce' ).val();
-            // console.log( '=====>>> RESUBMIT CALLED! <<<=====' );
-            // console.log( data );
-            // console.log( self.analysis );
+            //console.log( '=====>>> RESUBMIT CALLED! <<<=====' );
+            //console.log( data );
+            //console.log( self.analysis );
             $.ajax( { 
                 url:        window.ctcAjax.ajaxurl,  
                 data:       data,
-                //dataType:   'json',
+                dataType:   'json',
                 type:       'POST'
-            } ).done( function() { // response ) {
+            } ).done( function( res ) { // response ) {
                 // console.log( 'resubmit done:' );
-                // console.log( response );
+                //console.log( res )
+                if ( res.length > 1 ) {
+                    $( '#ctc_debug_box' ).val( $( '#ctc_debug_box' ).val() + res[ 1 ].data );
+                }
                 self.hide_loading();
                 self.do_analysis();
             } ).fail( function() { // xhr, status, err ) {
@@ -2460,7 +2448,7 @@
                 self.hide_loading();
                 // console.log( status + ' ' + err );
                 // FIXME: handle failure
-            } );  
+            } );//.always( self.update.debug );  
         },
         do_analysis: function() {
             var self            = this;
@@ -2490,7 +2478,16 @@
             self.show_loading( false );
             self.analyze_theme( 'parnt' );
             if ( $.chldthmcfg.existing ) {
-                self.analyze_theme( 'child' );
+                // run customizer to initialize new theme
+                if ( self.resubmitting ){
+                    self.analyze_theme( 'child' );
+                } else {
+                    // console.log( 'calling ' + window.ctcAjax.customizerurl + '?theme=' + $.chldthmcfg.currchild + ' ...' );
+                    $.get( window.ctcAjax.customizerurl + '?theme=' + $.chldthmcfg.currchild, function(){ //data ){
+                        self.analyze_theme( 'child' );
+                    //console.log( data );
+                    } );//.done().fail();
+                }
             }
             //$( '#ctc_enqueue_enqueue' ).prop( 'checked', true );
             //$( '#ctc_handling_primary' ).prop( 'checked', true );

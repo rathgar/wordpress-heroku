@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the Child Theme Configurator package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Child Theme Configurator 2.4.1\n"
+"Project-Id-Version: Child Theme Configurator 2.4.2\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/child-theme-configurator\n"
-"POT-Creation-Date: 2019-01-20 01:05:21+00:00\n"
+"POT-Creation-Date: 2019-02-17 01:46:27+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 
-#. #-#-#-#-#  child-theme-configurator.pot (Child Theme Configurator 2.4.1)  #-#-#-#-#
+#. #-#-#-#-#  child-theme-configurator.pot (Child Theme Configurator 2.4.2)  #-#-#-#-#
 #. Plugin Name of the plugin/theme
 #: includes/classes/Core.php:97 includes/classes/Core.php:108
 #: includes/forms/main.php:35
@@ -41,124 +41,124 @@ msgstr ""
 msgid "Click here to edit template files using the Theme Editor"
 msgstr ""
 
-#: includes/classes/UI.php:288
+#: includes/classes/UI.php:290
 msgid "URL/None"
 msgstr ""
 
-#: includes/classes/UI.php:289
+#: includes/classes/UI.php:291
 msgid "Origin"
 msgstr ""
 
-#: includes/classes/UI.php:290
+#: includes/classes/UI.php:292
 msgid "Color 1"
 msgstr ""
 
-#: includes/classes/UI.php:291
+#: includes/classes/UI.php:293
 msgid "Color 2"
 msgstr ""
 
-#: includes/classes/UI.php:292
+#: includes/classes/UI.php:294
 msgid "Width/None"
 msgstr ""
 
-#: includes/classes/UI.php:293
+#: includes/classes/UI.php:295
 msgid "Style"
 msgstr ""
 
-#: includes/classes/UI.php:294
+#: includes/classes/UI.php:296
 msgid "Color"
 msgstr ""
 
-#: includes/classes/UI.php:296
+#: includes/classes/UI.php:298
 msgid ""
 "Are you sure you wish to RESET? This will destroy any work you have done in "
 "the Configurator."
 msgstr ""
 
-#: includes/classes/UI.php:297
+#: includes/classes/UI.php:299
 msgid "<span style=\"font-size:10px\">!</span>"
 msgstr ""
 
-#: includes/classes/UI.php:298 includes/forms/rule-value.php:33
+#: includes/classes/UI.php:300 includes/forms/rule-value.php:33
 msgid "Selectors"
 msgstr ""
 
-#: includes/classes/UI.php:299
+#: includes/classes/UI.php:301
 msgid "Close"
 msgstr ""
 
-#: includes/classes/UI.php:300
+#: includes/classes/UI.php:302
 msgid "Edit Selector"
 msgstr ""
 
-#: includes/classes/UI.php:301
+#: includes/classes/UI.php:303
 msgid "Cancel"
 msgstr ""
 
-#: includes/classes/UI.php:302
+#: includes/classes/UI.php:304
 msgid "Rename"
 msgstr ""
 
-#: includes/classes/UI.php:303
+#: includes/classes/UI.php:305
 msgid "The stylesheet cannot be displayed."
 msgstr ""
 
-#: includes/classes/UI.php:304
+#: includes/classes/UI.php:306
 msgid "(Child Only)"
 msgstr ""
 
-#: includes/classes/UI.php:305
+#: includes/classes/UI.php:307
 msgid "Please enter a valid Child Theme."
 msgstr ""
 
-#: includes/classes/UI.php:306
+#: includes/classes/UI.php:308
 msgid "Please enter a valid Child Theme name."
 msgstr ""
 
-#: includes/classes/UI.php:307
+#: includes/classes/UI.php:309
 msgid "<strong>%s</strong> exists. Please enter a different Child Theme"
 msgstr ""
 
-#: includes/classes/UI.php:308
+#: includes/classes/UI.php:310
 msgid "The page could not be loaded correctly."
 msgstr ""
 
-#: includes/classes/UI.php:309
+#: includes/classes/UI.php:311
 msgid ""
 "Conflicting or out-of-date jQuery libraries were loaded by another plugin:"
 msgstr ""
 
-#: includes/classes/UI.php:310
+#: includes/classes/UI.php:312
 msgid "Deactivating or replacing plugins may resolve this issue."
 msgstr ""
 
-#: includes/classes/UI.php:311
+#: includes/classes/UI.php:313
 msgid "%sWhy am I seeing this?%s"
 msgstr ""
 
-#: includes/classes/UI.php:314
+#: includes/classes/UI.php:316
 msgid "No Styles Available. Check Parent/Child settings."
 msgstr ""
 
-#: includes/classes/UI.php:315
+#: includes/classes/UI.php:317
 msgid "Updating"
 msgstr ""
 
-#: includes/classes/UI.php:316
+#: includes/classes/UI.php:318
 msgid "Checking"
 msgstr ""
 
-#: includes/classes/UI.php:317
+#: includes/classes/UI.php:319
 msgid "The theme \"%s\" generated unexpected PHP debug output."
 msgstr ""
 
-#: includes/classes/UI.php:318
+#: includes/classes/UI.php:320
 msgid ""
 "The theme \"%s\" could not be analyzed because the preview did not render "
 "correctly."
 msgstr ""
 
-#: includes/classes/UI.php:319
+#: includes/classes/UI.php:321
 msgid ""
 "<p>First, verify you can <a href=\"%s\">preview your home page with the "
 "Customizer</a> and try analyzing again.</p><p>If that does not work, try "
@@ -166,11 +166,11 @@ msgid ""
 "<strong>force redirects between HTTP and HTTPS</strong>.</p>"
 msgstr ""
 
-#: includes/classes/UI.php:320
+#: includes/classes/UI.php:322
 msgid "Click to show/hide PHP debug output"
 msgstr ""
 
-#: includes/classes/UI.php:322
+#: includes/classes/UI.php:324
 msgid ""
 "<p><strong>PLEASE NOTE:</strong></p><p><em>The analyzer reveals errors that "
 "may otherwise go undetected. Unless this is a fatal error, WordPress may "
@@ -183,28 +183,28 @@ msgid ""
 "faqs/\" target=\"_blank\">CTC documentation</a>.</em></p>"
 msgstr ""
 
-#: includes/classes/UI.php:323
+#: includes/classes/UI.php:325
 msgid "Do Not Activate \"%s\"! A PHP FATAL ERROR has been detected."
 msgstr ""
 
-#: includes/classes/UI.php:324
+#: includes/classes/UI.php:326
 msgid "This theme loads stylesheets after the wp_styles queue."
 msgstr ""
 
-#: includes/classes/UI.php:325
+#: includes/classes/UI.php:327
 msgid ""
 "<p>This makes it difficult for plugins to override these styles. You can try "
 "to resolve this using the  \"Repair header template\" option (Step 6, "
 "\"Additional handling options\", below).</p>"
 msgstr ""
 
-#: includes/classes/UI.php:326
+#: includes/classes/UI.php:328
 msgid ""
 "This theme loads the parent theme's <code>style.css</code> file outside the "
 "wp_styles queue."
 msgstr ""
 
-#: includes/classes/UI.php:327
+#: includes/classes/UI.php:329
 msgid ""
 "<p>This is common with older themes but requires the use of <code>@import</"
 "code>, which is no longer recommended. You can try to resolve this using the "
@@ -212,41 +212,41 @@ msgid ""
 "\", below).</p>"
 msgstr ""
 
-#: includes/classes/UI.php:328
+#: includes/classes/UI.php:330
 msgid "This child theme does not load a Configurator stylesheet."
 msgstr ""
 
-#: includes/classes/UI.php:329
+#: includes/classes/UI.php:331
 msgid ""
 "<p>If you want to customize styles using this plugin, please click "
 "\"Configure Child Theme\" again to add this to the settings.</p>"
 msgstr ""
 
-#: includes/classes/UI.php:330
+#: includes/classes/UI.php:332
 msgid ""
 "This child theme uses the parent stylesheet but does not load the parent "
 "theme's <code>style.css</code> file."
 msgstr ""
 
-#: includes/classes/UI.php:331
+#: includes/classes/UI.php:333
 msgid ""
 "<p>Please select a stylesheet handling method or check \"Ignore parent theme "
 "stylesheets\" (see step 6, below).</p>"
 msgstr ""
 
-#: includes/classes/UI.php:332
+#: includes/classes/UI.php:334
 msgid "This child theme appears to be functioning correctly."
 msgstr ""
 
-#: includes/classes/UI.php:333
+#: includes/classes/UI.php:335
 msgid "This theme appears OK to use as a Child theme."
 msgstr ""
 
-#: includes/classes/UI.php:334
+#: includes/classes/UI.php:336
 msgid "This Child Theme has not been configured for this plugin."
 msgstr ""
 
-#: includes/classes/UI.php:335
+#: includes/classes/UI.php:337
 msgid ""
 "<p>The Configurator makes significant modifications to the child theme, "
 "including stylesheet changes and additional php functions. Please consider "
@@ -254,105 +254,105 @@ msgid ""
 "original as a backup.</p>"
 msgstr ""
 
-#: includes/classes/UI.php:336
+#: includes/classes/UI.php:338
 msgid ""
 "This child theme uses <code>@import</code> to load the parent theme's "
 "<code>style.css</code> file."
 msgstr ""
 
-#: includes/classes/UI.php:337
+#: includes/classes/UI.php:339
 msgid ""
 "<p>Please consider selecting \"Use the WordPress style queue\" for the "
 "parent stylesheet handling option (see step 6, below).</p>"
 msgstr ""
 
-#: includes/classes/UI.php:338
+#: includes/classes/UI.php:340
 msgid ""
 "This theme loads additional stylesheets after the <code>style.css</code> "
 "file:"
 msgstr ""
 
-#: includes/classes/UI.php:339
+#: includes/classes/UI.php:341
 msgid ""
 "<p>Consider saving new custom styles to a \"Separate stylesheet\" (see step "
 "5, below) so that you can customize these styles.</p>"
 msgstr ""
 
-#: includes/classes/UI.php:340
+#: includes/classes/UI.php:342
 msgid ""
 "The parent theme's <code>style.css</code> file is being loaded automatically."
 msgstr ""
 
-#: includes/classes/UI.php:341
+#: includes/classes/UI.php:343
 msgid ""
 "<p>The Configurator selected \"Do not add any parent stylesheet handling\" "
 "for the \"Parent stylesheet handling\" option (see step 6, below).</p>"
 msgstr ""
 
-#: includes/classes/UI.php:342
+#: includes/classes/UI.php:344
 msgid ""
 "This theme does not require the parent theme's <code>style.css</code> file "
 "for its appearance."
 msgstr ""
 
-#: includes/classes/UI.php:343
+#: includes/classes/UI.php:345
 msgid ""
 "This Child Theme was configured to accomodate a hard-coded stylesheet link."
 msgstr ""
 
-#: includes/classes/UI.php:344
+#: includes/classes/UI.php:346
 msgid ""
 "<p>This workaround was used in earlier versions of CTC and can be eliminated "
 "by using the \"Repair header template\" option (see step 6, \"Additional "
 "handling options\", below).</p>"
 msgstr ""
 
-#: includes/classes/UI.php:345
+#: includes/classes/UI.php:347
 msgid ""
 "Click to show/hide raw analysis data. Please include contents below with any "
 "support requests."
 msgstr ""
 
-#: includes/classes/UI.php:346
+#: includes/classes/UI.php:348
 msgid ""
 "This child theme was configured using the CTC Pro \"Genesis stylesheet "
 "handling\" method."
 msgstr ""
 
-#: includes/classes/UI.php:347
+#: includes/classes/UI.php:349
 msgid ""
 "<p>This method has been replaced by the \"Separate stylesheet\" and \"Ignore "
 "Parent Theme\" options ( selected below ) for broader framework "
 "compatability.</p>"
 msgstr ""
 
-#: includes/classes/UI.php:348
+#: includes/classes/UI.php:350
 msgid "<p>%1Click Here%2 to view the theme as viewed by the Analyzer.</p>"
 msgstr ""
 
-#: includes/classes/UI.php:349
+#: includes/classes/UI.php:351
 msgid ""
 "This theme uses a RTL (right-to-left) stylesheet that is not being loaded in "
 "the child theme."
 msgstr ""
 
-#: includes/classes/UI.php:350
+#: includes/classes/UI.php:352
 msgid ""
 "Use the Web Fonts tab to add a link to the parent RTL stylesheet. See the "
 "documentation for more information.</p>"
 msgstr ""
 
-#: includes/classes/UI.php:351
+#: includes/classes/UI.php:353
 msgid "Both WP Rocket and Autoptimize plugins are enabled."
 msgstr ""
 
-#: includes/classes/UI.php:352
+#: includes/classes/UI.php:354
 msgid ""
 "The combination of these two plugins interferes with the Analysis results. "
 "Please temporarily deactivate one of them and Analyze again."
 msgstr ""
 
-#: includes/classes/UI.php:353
+#: includes/classes/UI.php:355
 msgid ""
 "<p><strong>The WordPress configuration file has been modified incorrectly.</"
 "strong> Please see <a href=\"http://www.childthemeconfigurator.com/child-"

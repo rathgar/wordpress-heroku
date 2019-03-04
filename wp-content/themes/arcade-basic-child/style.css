@@ -108,8 +108,9 @@ figcaption.artwork-caption {
 
 .hfeed a img.wp-post-image {
   object-fit: cover;
-  width: 150px;
-  height: 150px;
+  width: 200px;
+  height: 200px;
+  max-width: 40%;
 }
 
 #category-header {
