@@ -80,19 +80,30 @@ function posts_link_prev_class($format) {
 add_filter('previous_post_link', 'posts_link_prev_class');
 
 
-function rue_trim_excerpt( $text ) {
-  	if ( is_singular() )
-  		return $text;
 
-  	return '<p class="excerpt">' . $text . ' <a href="' . get_permalink( get_the_ID() ) . '" class="btn btn-light btn-sm">' . __( 'Read more', 'arcade-basic' ) . '</a></p>';
-  }
+
+function rue_excerpt_more( $text ) {
+  if ( is_singular() )
+    return $text;
+
+  return '<p class="excerpt">' . $text . ' <a href="' . get_permalink( get_the_ID() ) . '" title="' . __( 'Read more', 'arcade-basic' ).'" class="btn btn-light btn-sm">…</a></p>';
+}
+
+function rue_excerpt( $more ) {
+	return '';
+}
+
+
+
+
 
 add_action( 'init', 'rue_setup' );
 function rue_setup( ) {
   remove_filter( 'wp_trim_excerpt', 'bavotasan_excerpt_more' );
   remove_filter( 'the_content_more_link', 'bavotasan_content_more_link' );
   remove_filter( 'excerpt_more', 'bavotasan_excerpt' );
-  // add_filter( 'wp_trim_excerpt', 'rue_trim_excerpt' );
+  add_filter( 'wp_trim_excerpt', 'rue_excerpt_more' );
+  add_filter( 'excerpt_more', 'rue_excerpt' );
 }
 
 
