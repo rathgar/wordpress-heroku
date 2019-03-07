@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the WordPress - 5.1.x - Development - Administration package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2019-02-09 08:41:09+0000\n"
+"PO-Revision-Date: 2019-03-06 05:35:57+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -272,14 +272,6 @@ msgstr "Copy this section to clipboard"
 msgid "My Network"
 msgstr "My Network"
 
-#: wp-admin/includes/class-wp-plugin-install-list-table.php:670
-msgid "This plugin doesn&#8217;t work with your version of PHP. "
-msgstr "This plugin doesn&#8217;t work with your version of PHP. "
-
-#: wp-admin/includes/class-wp-plugin-install-list-table.php:661
-msgid "This plugin doesn&#8217;t work with your version of WordPress. "
-msgstr "This plugin doesn&#8217;t work with your version of WordPress. "
-
 #. translators: %s: "Update PHP" page URL
 #: wp-admin/includes/class-wp-plugin-install-list-table.php:655
 #: wp-admin/includes/class-wp-plugin-install-list-table.php:674
@@ -297,10 +289,6 @@ msgstr "<a href=\"%s\">Please update WordPress</a>."
 msgid "<a href=\"%1$s\">Please update WordPress</a>, and then <a href=\"%2$s\">learn more about updating PHP</a>."
 msgstr "<a href=\"%1$s\">Please update WordPress</a>, and then <a href=\"%2$s\">learn more about updating PHP</a>."
 
-#: wp-admin/includes/class-wp-plugin-install-list-table.php:637
-msgid "This plugin doesn&#8217;t work with your versions of WordPress and PHP. "
-msgstr "This plugin doesn&#8217;t work with your versions of WordPress and PHP. "
-
 #: wp-admin/includes/class-wp-plugin-install-list-table.php:532
 #: wp-admin/includes/plugin-install.php:823
 msgctxt "plugin"
@@ -312,6 +300,18 @@ msgstr "Cannot Install"
 #: wp-admin/update-core.php:75 wp-admin/upgrade.php:85
 msgid "https://wordpress.org/support/wordpress-version/version-%s/"
 msgstr "https://wordpress.org/support/wordpress-version/version-5.0/"
+
+#: wp-admin/includes/class-wp-plugin-install-list-table.php:670
+msgid "This plugin doesn&#8217;t work with your version of PHP."
+msgstr "This plugin doesn&#8217;t work with your version of PHP."
+
+#: wp-admin/includes/class-wp-plugin-install-list-table.php:661
+msgid "This plugin doesn&#8217;t work with your version of WordPress."
+msgstr "This plugin doesn&#8217;t work with your version of WordPress."
+
+#: wp-admin/includes/class-wp-plugin-install-list-table.php:637
+msgid "This plugin doesn&#8217;t work with your versions of WordPress and PHP."
+msgstr "This plugin doesn&#8217;t work with your versions of WordPress and PHP."
 
 #. translators: %s: default category
 #: wp-admin/edit-tags.php:588
