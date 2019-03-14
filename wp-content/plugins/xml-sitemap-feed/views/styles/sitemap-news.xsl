@@ -11,7 +11,7 @@
 <head>
 	<title>Google News Sitemap Feed</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<style type="text/css">body{font-family:"Lucida Grande","Lucida Sans Unicode",Tahoma,Verdana,sans-serif;font-size:13px}#header,#footer{padding:2px;margin:10px;font-size:8pt;color:gray}a{color:black}td{font-size:11px}th{text-align:left;padding-right:30px;font-size:11px}tr.high{background-color:whitesmoke}#footer img{vertical-align:bottom}</style>
+	<style type="text/css">body{font-family:"Lucida Grande","Lucida Sans Unicode",Tahoma,Verdana,sans-serif;font-size:13px}#header,#footer{padding:2px;margin:10px;font-size:8pt;color:gray}a{color:black}td{font-size:11px}th{text-align:left;padding-right:30px;font-size:11px}tr.high{background-color:whitesmoke}#footer img{vertical-align:middle}</style>
 </head>
 <body>
 	<h1>Google News Sitemap Feed</h1>
@@ -27,6 +27,8 @@
 				<th>Title</th>
 				<th>Language</th>
 				<th>Image(s)</th>
+				<th>Keyword(s)</th>
+				<th>Stock(s)</th>
 				<th>Publication Date (GMT)</th>
 			</tr>
 <xsl:variable name="lower" select="'abcdefghijklmnopqrstuvwxyz'"/>
@@ -39,6 +41,8 @@
 				</td>
 				<td><xsl:value-of select="news:news/news:publication/news:language"/></td>
 				<td><xsl:value-of select="count(image:image)"/></td>
+				<td><xsl:value-of select="news:news/news:keywords"/></td>
+				<td><xsl:value-of select="news:news/news:stock_tickers"/></td>
 				<td><xsl:value-of select="concat(substring(news:news/news:publication_date,0,11),concat(' ', substring(news:news/news:publication_date,12,8)))"/></td>
 			</tr>
 </xsl:for-each>

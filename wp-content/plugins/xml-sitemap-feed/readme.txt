@@ -4,8 +4,8 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=ravan
 Tags: sitemap, xml sitemap, news sitemap, sitemap.xml, robots.txt, Google, Google News, Yahoo, Bing, Yandex, Baidu, seo, feed, Polylang, WPML, image sitemap
 Requires at least: 4.4
 Requires PHP: 5.4
-Tested up to: 5.0
-Stable tag: 5.0.7
+Tested up to: 5.1
+Stable tag: 5.1
 
 XML and Google News Sitemaps to feed the hungry spiders. Multisite, WP Super Cache, Polylang and WPML compatible.
 
@@ -279,18 +279,26 @@ Yes. In fact, it has been designed for it. Tested on WPMU 2.9.2 and WPMS 3+ both
 
 == Upgrade Notice ==
 
-= 5.0.7 =
+= 5.1 =
 
-Bugfix release.
+New filter and action hooks. Bugfixes and admin UI improvements.
 
 
 == Changelog ==
 
 = 5.1 =
 * SEOPress and Catch Box incompatibility admin messages
-* bbPress compatibility
-TODO better bbPress compat: "Update the Last Changed date on each new comment" for topics (on forum pages) and replies on topic pages
+* FIX bbPress incompatibility
 * FIX failing last modified date for taxonomy sitemaps
+* FIX sitemap showing when only private posts
+* FIX possible sitemaps for no longer existing post types in index
+* Admin interface improvements: highlighting and scroll
+* Upgrade routines in own class only to be included when needed
+* Moved metabox methods to dedicated classes
+* NEW Respond to .gz requests (with ob_gzhandler output buffering if needed)
+* NEW filters xmlsf_disabled_taxonomies, xmlsf_news_keywords, xmlsf_news_stock_tickers
+* NEW action xmlsf_ping
+* NEW Tools: Ping search engines and Flush rewrite rules
 
 = 5.0.7 =
 * Allowed domains back to Settings > Reading

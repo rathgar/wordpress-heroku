@@ -9,6 +9,17 @@ class XMLSitemapFeed {
 	private $defaults = array();
 
 	/**
+	 * Defaults
+	 * @var array
+	 */
+	public $default_news_tags = array(
+		'name' => '',
+		'post_type' => array('post'),
+		'categories' => '',
+		'image' => 'featured'
+	);
+
+	/**
 	 * Front pages
 	 *
 	 * @var null/array $frontpages
@@ -59,14 +70,6 @@ class XMLSitemapFeed {
 	 * @var bool $plain_permalinks
 	 */
 	private $plain_permalinks = null;
-
-	/**
-	 * Excluded post types
-	 *
-	 * post format taxonomy is disabled
-	 * @var array
-	 */
-	private $disabled_post_types = array('attachment','reply');
 
 	/**
 	 * Excluded taxonomies
@@ -154,7 +157,7 @@ class XMLSitemapFeed {
 				),
 				'taxonomies' => '',
 				'taxonomy_settings' => array(
-					'active' => '1',
+					'active' => '',
 					'priority' => '0.3',
 					'dynamic_priority' => '1',
 					'term_limit' => '5000'
@@ -168,20 +171,6 @@ class XMLSitemapFeed {
 				'custom_sitemaps' => '',
 				'domains' => ''
 			);
-
-			$post_types = apply_filters( 'xmlsf_post_types', get_post_types(array('public'=>true,'_builtin'=>false),'names') );
-
-			// append public post_types defaults
-			if ( is_array($post_types) )
-				foreach ( $post_types as $name )
-					$this->defaults['post_types'][$name] = array(
-						//'name' => $name,
-						'active' => '',
-						'archive' => '',
-						'priority' => '0.5',
-						'dynamic_priority' => '',
-						'tags' => array( 'image' => 'attached' )
-					);
 
 		endif;
 
@@ -242,8 +231,6 @@ class XMLSitemapFeed {
 		return $this->blog_language;
 	}
 
-
-
 	/**
 	 * Get scheme
 	 * @return string
@@ -259,18 +246,11 @@ class XMLSitemapFeed {
 	}
 
 	/**
-	 * Get disabled post types
-	 * @return array
-	 */
-	public function disabled_post_types() {
-		return $this->disabled_post_types;
-	}
-
-	/**
 	 * Get disabled taxonomies
 	 * @return array
 	 */
 	public function disabled_taxonomies() {
-		return $this->disabled_taxonomies;
+		return apply_filters( 'xmlsf_disabled_taxonomies', $this->disabled_taxonomies );
 	}
+
 }

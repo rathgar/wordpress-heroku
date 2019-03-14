@@ -29,9 +29,17 @@
     ?>
 	<span class="description">
         &nbsp;&ndash;&nbsp;
-        <a href="<?php echo admin_url('options-general.php'); ?>?page=xmlsf-news" id="xmlsf_news_link"><?php echo translate('Settings'); ?></a> |
+        <a href="<?php echo admin_url('options-general.php'); ?>?page=xmlsf_news" id="xmlsf_news_link"><?php echo translate('Settings'); ?></a> |
         <a href="<?php echo $news_url; ?>" target="_blank"><?php echo translate('View'); ?></a>
     </span>
     <?php } ?>
 
 </fieldset>
+<script>
+jQuery( 'document' ).ready( function( $ ) {
+	if ( window.location.hash === '#xmlsf_sitemaps' ) {
+		$( '#xmlsf_sitemaps' ).closest( 'td' ).addClass( 'highlight' );
+		$( 'html, body' ).animate( { scrollTop: $("#xmlsf_sitemaps").offset().top-40 }, 800 );
+	}
+} );
+</script>

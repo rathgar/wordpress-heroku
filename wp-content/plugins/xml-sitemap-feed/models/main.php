@@ -14,8 +14,7 @@ function xmlsf_filter_request( $request ) {
 		// make sure we have the proper locale setting for calculations
 		setlocale( LC_NUMERIC, 'C' );
 
-		require_once XMLSF_DIR . '/controllers/public/shared.php';
-		require_once XMLSF_DIR . '/models/public/shared.php';
+		require XMLSF_DIR . '/models/public/shared.php';
 
 		// set the sitemap conditional flag
 		xmlsf()->is_sitemap = true;
@@ -30,7 +29,8 @@ function xmlsf_filter_request( $request ) {
 		$request['update_post_term_cache'] = false;
 		$request['update_post_meta_cache'] = false;
 
-		// Polylang compat
+		// PLUGIN COMPATIBILITIES
+		// Polylang
 		$request['lang'] = '';
 		// WPML compat
 		global $wpml_query_filter;
@@ -39,19 +39,24 @@ function xmlsf_filter_request( $request ) {
 			remove_filter( 'posts_where', array( $wpml_query_filter, 'posts_where_filter' ) );
 			add_action( 'the_post', 'xmlsf_wpml_language_switcher' );
 		}
+		// bbPress
+		remove_filter( 'bbp_request', 'bbp_request_feed_trap' );
 
-		if ( $request['feed'] == 'sitemap-news' ) {
+		// check for gz request
+		if ( substr($request['feed'], -3) == '.gz' ) {
+			$request['feed'] = substr($request['feed'], 0, -3);
+			xmlsf_ob_gzhandler();
+		}
+
+		if ( strpos($request['feed'],'sitemap-news') === 0 ) {
 			// set the news sitemap conditional flag
 			xmlsf()->is_news = true;
 
-			require_once XMLSF_DIR . '/controllers/public/sitemap-news.php';
-			require_once XMLSF_DIR . '/models/public/sitemap-news.php';
-			$request = xmlsf_sitemap_news_filter_request( $request );
+			require XMLSF_DIR . '/models/public/sitemap-news.php';
+			$request = xmlsf_sitemap_news_parse_request( $request );
 		} else {
-			require_once XMLSF_DIR . '/controllers/public/sitemap.php';
 			require_once XMLSF_DIR . '/models/public/sitemap.php';
-			xmlsf_feed_templates();
-			$request = xmlsf_sitemap_filter_request( $request );
+			$request = xmlsf_sitemap_parse_request( $request );
 		}
 
 	endif;
@@ -74,33 +79,94 @@ function xmlsf_untrailingslash( $request ) {
 }
 
 /**
- * Filter sitemap post types
+ * Ping
  *
- * @since 5.0
- * @param $post_types array
- * @return array
+ * @since 5.1
+ * @param $se google|bing
+ * @param $sitemap sitemap
+ * @param $interval seconds
+ * @return string ping response|999 (postponed)
  */
-function xmlsf_filter_post_types( $post_types ) {
-	foreach ( xmlsf()->disabled_post_types() as $post_type ) {
-		if ( isset( $post_types[$post_type]) )
-			unset( $post_types[$post_type] );
+function xmlsf_ping( $se, $sitemap, $interval ) {
+	if ( 'google' == $se ) {
+		$url = 'https://www.google.com/ping';
+	} elseif ( 'bing' == $se ) {
+		$url = 'https://www.bing.com/ping';
+	} else {
+		return '';
+	}
+	$url = add_query_arg( 'sitemap', urlencode( trailingslashit( get_bloginfo( 'url' ) ) . $sitemap ), $url );
+
+	// check if we did not ping already within the interval
+	if ( false === get_transient( 'xmlsf_ping_'.$se.'_'.$sitemap ) ) {
+		// Ping !
+		$response = wp_remote_request( $url );
+		$code = wp_remote_retrieve_response_code( $response );
+		if ( 200 === $code ) {
+			set_transient( 'xmlsf_ping_'.$se.'_'.$sitemap, '', $interval );
+		}
+
+		if ( defined('WP_DEBUG') && WP_DEBUG == true ) {
+			error_log( 'Pinged '. $url .' with response code: ' . $code );
+		}
+	} else {
+		$code = 999;
+		if ( defined('WP_DEBUG') && WP_DEBUG == true ) {
+			error_log( 'Ping '. $se .' skipped.' );
+		}
 	}
 
-	return array_filter( $post_types );
+	do_action( 'xmlsf_ping', $se, $sitemap, $url, $code );
+
+	return $code;
 }
 
 /**
- * Filter news post types
+ * Nginx helper purge urls
+ * adds sitemap urls to the purge array.
  *
- * @since 5.0
- * @param $post_types array
- * @return array
+ * @param $urls array
+ * @param $redis bool|false
+ *
+ * @return $urls array
  */
-function xmlsf_news_filter_post_types( $post_types ) {
-	foreach ( array('attachment','page') as $post_type ) {
-		if ( isset( $post_types[$post_type]) )
-			unset( $post_types[$post_type] );
+function xmlsf_nginx_helper_purge_urls( $urls = array(), $redis = false ) {
+
+	if ( $redis ) {
+		// wildcard allowed, this makes everything simple
+		$urls[] = '/sitemap*.xml';
+	} else {
+		// no wildcard, go through the motions
+		$sitemaps = get_option( 'xmlsf_sitemaps' );
+
+		if ( !empty( $sitemaps['sitemap-news'] ) ) {
+			$urls[] = '/sitemap-news.xml';
+		}
+
+		if ( !empty( $sitemaps['sitemap'] ) ) {
+			$urls[] = '/sitemap.xml';
+			$urls[] = '/sitemap-home.xml';
+			$urls[] = '/sitemap-custom.xml';
+
+			require_once XMLSF_DIR . '/models/public/sitemap.php';
+
+			// add public post types sitemaps
+			$post_types = get_option( 'xmlsf_post_types' );
+			if ( is_array($post_types) )
+				foreach ( $post_types as $post_type => $settings ) {
+					$archive = !empty($settings['archive']) ? $settings['archive'] : '';
+					foreach ( xmlsf_get_archives($post_type,$archive) as $url )
+						 $urls[] = parse_url( $url, PHP_URL_PATH);
+				};
+
+			// add public post taxonomies sitemaps
+			$taxonomies = get_option('xmlsf_taxonomies');
+			if ( is_array($taxonomies) )
+				foreach ( $taxonomies as $taxonomy ) {
+					$urls[] = parse_url( xmlsf_get_index_url('taxonomy',$taxonomy), PHP_URL_PATH);
+				};
+		}
 	}
 
-	return array_filter( $post_types );
+	return $urls;
 }

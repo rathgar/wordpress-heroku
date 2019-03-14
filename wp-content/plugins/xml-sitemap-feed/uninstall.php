@@ -53,7 +53,7 @@ class XMLSitemapFeed_Uninstall {
 	function uninstall($blog_id = false)
 	{
 		// remove plugin settings
-		delete_option('xmlsf_static_files');
+		delete_transient('xmlsf_static_files');
 		delete_option('xmlsf_version');
 		delete_option('xmlsf_sitemaps');
 		delete_option('xmlsf_post_types');
@@ -66,8 +66,9 @@ class XMLSitemapFeed_Uninstall {
 		delete_option('xmlsf_domains');
 		delete_option('xmlsf_news_tags');
 
-		// make rewrite rules update at the appropriate time
-		delete_option('rewrite_rules');
+		// remove filter and flush rules
+		remove_filter( 'rewrite_rules_array', 'xmlsf_rewrite_rules', 1, 1 );
+		flush_rewrite_rules();
 
 		// Kilroy was here
 		if ( defined('WP_DEBUG') && WP_DEBUG ) {
