@@ -5,7 +5,7 @@ Tags: sitemap, xml sitemap, news sitemap, sitemap.xml, robots.txt, Google, Googl
 Requires at least: 4.4
 Requires PHP: 5.4
 Tested up to: 5.1
-Stable tag: 5.1
+Stable tag: 5.1.2
 
 XML and Google News Sitemaps to feed the hungry spiders. Multisite, WP Super Cache, Polylang and WPML compatible.
 
@@ -53,6 +53,16 @@ Please read the FAQ's for info on how to get your articles listed on Google News
 * Optionally include Image tags with caption and title for featured images or attached images.
 * Options to: set a different News Publication Name, include custom post types or limit inclusion to certain post categories.
 * Pings both Google and Bing on new publications.
+
+= Pro Features =
+
+**[Google News Advanced](https://premium.status301.net/downloads/google-news-advanced/)**
+
+* Multiple post types - Include more than one post type in the same News Sitemap.
+* Keywords - Add the keywords tag to your News Sitemap. Keywords can be created from Tags, Categories or a dedicated Keywords taxonomy.
+* Stock tickers - Add stock tickers tag to your News Sitemap. A dedicated Stock Tickers taxonomy will be available to manage them.
+* Ping log - Keep a log of the latest pings to Google with exact date and response status.
+
 
 = Privacy / GDPR =
 
@@ -279,12 +289,27 @@ Yes. In fact, it has been designed for it. Tested on WPMU 2.9.2 and WPMS 3+ both
 
 == Upgrade Notice ==
 
-= 5.1 =
+= 5.2 =
 
-New filter and action hooks. Bugfixes and admin UI improvements.
+Huge query reduction by using meta data and meta cache. Some bugfixes.
 
 
 == Changelog ==
+
+= 5.2 =
+* TODO uninstall remove all meta data!
+* Image query optimization and meta caching
+* FIX: possible division by zero
+* FIX: update_term_modified_meta
+
+= 5.1.2 =
+* FIX: admin notice dismiss button failing
+* FIX: date archive redirect notice showing for inactive post types
+* Plugin support and rate links on plugins page
+
+= 5.1.1 =
+* FIX options page not found
+* FIX news sitemap only ping
 
 = 5.1 =
 * SEOPress and Catch Box incompatibility admin messages
