@@ -219,6 +219,7 @@
                             'mailto': 'mail',
                             'viber': 'viber',
                             'skype': 'skype',
+                            'tg': 'tg',
                             'tel': 'mobile',
                             'sms': 'comments',
                             'fax': 'fax',
@@ -227,7 +228,9 @@
                         };
 
                         var domains = {
-                            'feedburner.google.com': 'rss'
+                            'feedburner.google.com': 'rss',
+                            'ok.ru':'odnoklassniki',
+                            't.me':'telegram'
                         };
 
                         var domain = uri.domain() !== undefined ? uri.domain().split('.').shift() : uri.scheme();
@@ -360,6 +363,20 @@
 
             if (validSelector && $instance.attr('data-instance') && !$instance.closest('.widget').hasClass('ui-draggable')) {
                 VueInstance('#' + selector, instanceData);
+            }
+        });
+
+        // hook for init js in Beaver builder.
+        $('body').on('fl-builder.preview-init', function (e, previewObj) {
+
+            var data = $(previewObj.elements.settings).find('.form-instance').data('instance');
+
+            if (data) {
+                $(previewObj.elements.settings).find('.form-instance').each(function (index, el) {
+                    var selector = 'wpz-form-class-' + index;
+                    $(this).addClass(selector);
+                    VueInstance('.' + selector, data);
+                });
             }
         });
 

@@ -1,126 +1,62 @@
-=== WP SES ===
+=== WP Offload SES Lite ===
 Contributors: deliciousbrains, bradt, SylvainDeaure
 Tags: email,ses,amazon,webservice,deliverability,newsletter,autoresponder,mail,wp_mail,smtp,service
-Requires at least: 3.0.0
-Tested up to: 5.0
+Requires at least: 5.0
+Tested up to: 5.2
 Requires PHP: 5.5+
-Stable tag: trunk
+Stable tag: 1.1
 
-WP SES sends all outgoing WordPress emails through Amazon Simple Email Service (SES) for maximum email deliverability
+WP Offload SES Lite sends all outgoing WordPress emails through Amazon Simple Email Service (SES) instead of the local wp_mail() function.
 
 == Description ==
 
-The WP SES plugin has been acquired by [Delicious Brains Inc](https://deliciousbrains.com/?utm_campaign=WP%2BOffload%2BSES&utm_source=wordpress.org&utm_medium=free%2Bplugin%2Blisting). Big improvements are on the way, but for now we’ve just tidied up the UI a bit.
-
-WP SES sends all outgoing WordPress emails through Amazon Simple Email Service (SES) instead of the local `wp_mail()` function.
+WP SES is now WP Offload SES Lite. WP Offload SES Lite sends all outgoing WordPress emails through Amazon Simple Email Service (SES) instead of the local wp_mail() function.
 
 This ensures high email deliverability, email traffic statistics and a powerful managed infrastructure.
 
-Multisite features are so far experimental.
+With WP Offload SES Lite, you can:
 
-Current features are:
+* Effortlessly configure your site to send all email via Amazon SES with our step-by-step setup wizard
+* Configure the default email address and name that WordPress uses for notifications
+* Send verification requests for new domains and email addresses
+* Send a test email to make sure everything is working before enabling site-wide email sending
+* View statistics on your Amazon SES send rate
+* Set up a custom "Reply To" and "Return Path" address
+* Configure multisite subsites to use different email settings, or enforce the same settings for your whole network
+* Integrate with your favorite form and newsletter plugins, including Ninja Forms, Contact Form 7, Gravity Forms, Email Subscribers & Newsletters, and more
 
-* Ability to adjust WordPress default sender email and name
-* Validation of Amazon API credentials
-* Request confirmation for sender emails
-* Test message within Amazon Sandbox mode
-* Full integration as seamless replacement for `wp_mail()` internal function
-* Dashboard panel with quota and statistics
-* Ability to customize return path for delivery failure notifications
-* Custom Reply-To and From headers
-* Default config values for centralized multisite setups
-* SES region selection
-* Emails with attachments are supported (Compatible with Contact Form 7)
-* File logging feature (may be verbose and insecure, do not use as is in production for a long period of time)
-* English, French, Spanish, Serbo-Croatian translations (fell free to send your mo/po files to support more languages)
+**Upgrade for Email Support and More Features**
 
-**PRO Version with Email Support and More Features**
+https://www.youtube.com/watch?v=gUH3fMlrU10&rel=0
 
 Get email open and click tracking for all your Amazon SES emails with the following features and more:
 
-* Track email opens and link clicks
-* Log sent emails and failures
+* View reports for email opens and link clicks
 * Queue email to handle rate limits and retry failures
-* Step-by-step setup wizard encouraging best practices
 * Email support
+* More features coming soon!
 
-[Compare pro vs free →](https://deliciousbrains.com/wp-offload-ses/upgrade/?utm_campaign=WP%2BOffload%2BSES&utm_source=wordpress.org&utm_medium=free%2Bplugin%2Blistingee%2Bplugin%2Blisting)
+[Compare WP Offload SES Lite and WP Offload SES →](https://deliciousbrains.com/wp-offload-ses/upgrade/?utm_campaign=WP%2BOffload%2BSES&utm_source=wordpress.org&utm_medium=free%2Bplugin%2Blisting)
 
 == Installation ==
 
 = Basic Setup =
 
 1. Install and activate the plugin
-1. Go to Settings > WP SES in the WordPress dashboard menu
-1. Fill the email address and name to use as the sender for all emails
-
-= Amazon API Keys and Permissions =
-
-1. Sign up for AWS if you haven't already
-1. Visit the [IAM console](https://console.aws.amazon.com/iam/)
-1. Create a new IAM user or grant an existing user the following permissions: ListIdentities, SendEmail, SendRawEmail, VerifyEmailIdentity, DeleteIdentity, GetSendQuota, GetSendStatistics
-1. In the plugin settings, fill in the Amazon API Keys
-
-IAM User Inline Policy:
-
-	{
-	    "Version": "2012-10-17",
-	    "Statement": [
-	        {
-	            "Sid": "Stmt1461433902000",
-	            "Effect": "Allow",
-	            "Action": [
-	                "ses:DeleteIdentity",
-	                "ses:GetSendQuota",
-	                "ses:GetSendStatistics",
-	                "ses:ListIdentities",
-	                "ses:SendEmail",
-	                "ses:SendRawEmail",
-	                "ses:VerifyEmailIdentity"
-	            ],
-	            "Resource": [
-	                "*"
-	            ]
-	        }
-	    ]
-	}
-
-= Verify Sender Email Address =
-
-Amazon SES requires that the sender of emails sent through its service confirm that they are the owners of the sender email address.
-
-Email verification is per region, so **if you change regions, you will need to confirm your sender email address again.**
-
-1. Visit the [Amazon SES console](https://console.aws.amazon.com/ses/)
-1. Verify the sender email address
-1. Confirm by visiting the link you get by email from Amazon SES
-
-= Sending a Test Email =
-
-If this is the first time you're using Amazon SES, your account will be in sandbox mode, which means you can only send emails to the verified sender email address.
-
-1. In the plugin settings, make sure to save changes (important!)
-1. Scroll down and click the Send Test Email button
-
-= Turning It On =
-
-Once you get the test email working, you can send AWS a request to increase the sending limit and put your account in production mode, allowing you to send emails to anyone.
-
-1. Visit the [Sending Statistics screen](https://console.aws.amazon.com/ses/#dashboard:) in the Amazon SES console
-1. Click the *Request a Sending Limit Increase* button, fill out the form and submit
-1. Once AWS grants your request, click the *Turn On* button in the plugin settings
+1. Go to Settings > WP Offload SES in the WordPress dashboard menu
+1. Follow the steps in the setup wizard to configure your AWS account and WP Offload SES Lite
 
 == Frequently Asked Questions ==
 
 = Where can I get support for the plugin? =
 
-If you upgrade to [WP Offload SES](https://deliciousbrains.com/wp-offload-ses/upgrade/?utm_campaign=WP%2BOffload%2BSES&utm_source=wordpress.org&utm_medium=free%2Bplugin%2Blistingee%2Bplugin%2Blisting), we will gladly provide you with email support. We take pride in delivering exceptional customer support. We do not provide email support for the free version.
+If you upgrade to [WP Offload SES](https://deliciousbrains.com/wp-offload-ses/upgrade/?utm_campaign=WP%2BOffload%2BSES&utm_source=wordpress.org&utm_medium=free%2Bplugin%2Blisting), we will gladly provide you with email support. We take pride in delivering exceptional customer support. We do not provide email support for the free version.
 
 = What are the minimum requirements? =
 
-* WordPress 3.0+
-* PHP 5 and cURL PHP extension
-* MySQL 5.0+
+* Latest version of WordPress or the one previous
+* PHP 5.5+ compiled with the cURL extension
+* MySQL 5.5+
 * Apache 2+ or Nginx 1.4+
 * Amazon Web Services account
 
@@ -129,62 +65,43 @@ If you upgrade to [WP Offload SES](https://deliciousbrains.com/wp-offload-ses/up
 We are not otherwise linked to Amazon or Amazon Web Services.
 Please direct your specific Amazon questions to Amazon support.
 
-= How can I setup default values for a multisite install? =
+= How does this work on WordPress Multisite? =
 
-Please test using the UI first, then if all works as expected, try using the following constants.
+You can configure the entire network to use the same settings by configuring the plugin via the Network Admin settings screen. If a subsite should have different settings, you can override some or all of the network settings by going to the WP Offload SES Lite settings page for that subsite.
 
-Edit the wp-config.php file and add any of the following constants:
+You can also use the `WPOSES_SETTINGS` constant to define settings that will be applied to all subsites and can’t be overridden via the UI:
 
-	// AWS Access Key ID
-	define('WP_SES_ACCESS_KEY','blablablakey');
+	define( 'WPOSES_SETTINGS', serialize( array(
+		// Send site emails via Amazon SES.
+		'send-via-ses'          => true,
+		// Enable open tracking.
+		'enable-open-tracking'  => true,
+		// Enable click tracking.
+		'enable-click-tracking' => true,
+		// Amazon SES region (e.g. 'us-east-1' - leave blank for default region).
+		'region'                => 'us-east-1',
+		// Changes the default email address used by WordPress
+		'default-email'         => 'your-email@example.com',
+		// Changes the default email name used by WordPress.
+		'default-email-name'    => 'Your Name Here',
+		// Sets the "Reply-To" header for all outgoing emails.
+		'reply-to'              => 'your-email@example.com',
+		// Sets the "Return-Path" header used by Amazon SES.
+		'return-path'           => 'your-email@example.com',
+		// Amount of days to keep email logs (e.g. 30, 60, 90, 180, 365, 730)
+		'log-duration'          => '30',
+	) ) );
 
-	// AWS Secret Access Key
-	define('WP_SES_SECRET_KEY','blablablasecret');
+See our [documentation](https://deliciousbrains.com/wp-offload-ses/doc/settings-constants/?utm_campaign=WP%2BOffload%2BSES&utm_source=wordpress.org&utm_medium=free%2Bplugin%2Blisting) on this for more information.
 
-	// From mail (optional) must be an Amazon SES validated email
-	// hard coded email, leave empty or comment out to allow custom setting via panel
-	define('WP_SES_FROM','me@....');
+= Do you have a hook that is fired when an email is sent? =
 
-	// Return path for bounced emails (optional)
-	// hard coded email, leave empty or comment out to allow custom setting via panel
-	define('WP_SES_RETURNPATH','return@....');
+Yes, the `wposes_mail_sent` hook could be used to log emails, or post email info to an API or database:
 
-	// ReplyTo (optional) - This will get the replies from the recipients.
-	// hard coded email, or 'headers' for using the 'replyto' from the headers.
-	// Leave empty or comment out to allow custom setting via panel
-	define('WP_SES_REPLYTO','headers');
-
-	// Hide list of verified emails (optional)
-	define('WP_SES_HIDE_VERIFIED',true);
-
-	// Hide SES Stats panel (optional)
-	define('WP_SES_HIDE_STATS',true);
-
-	// Auto activate the plugin for all sites (optional)
-	define('WP_SES_AUTOACTIVATE',true);
-
-	When using defines to hardcode your setting, don't forget to define the SES endpoints, too :
-
-	define('WP_SES_ENDPOINT', 'email.us-east-1.amazonaws.com');
-	OR
-	define('WP_SES_ENDPOINT', 'email.us-west-2.amazonaws.com');
-	OR
-	define('WP_SES_ENDPOINT', 'email.eu-west-1.amazonaws.com');
-
-= How to do other actions on mail sent? =
-
-I was asked to add a hook once mail is sent.
-Could be used to log emails, or post email info to an API or database.
-
-wpses_mailsent hook is available for that use.
-
-In your code, define a callback function :
-
-function myMailSentHook($to, $subject, $message, $headers, $attachments ) { ... }
-// params are the same as the wp_mail() function.
-
-// Then add your action :
-add_action('wpses_mailsent','myMailSentHook',10,5);
+	function myMailSentHook( $to, $subject, $message, $headers, $attachments ) {
+		// Your code here.
+	}
+	add_action( 'wposes_mail_sent', 'myMailSentHook', 10, 5 );
 
 = Can I create a translation for your plugin? =
 
@@ -193,32 +110,37 @@ Yes, please do! It's easy.
 1. Visit [translate.wordpress.org](https://translate.wordpress.org)
 1. Choose your locale
 1. Click on *Plugins*
-1. Search for *wp ses*
-1. Click on WP SES
+1. Search for *WP Offload SES Lite*
+1. Click on WP Offload SES Lite
 1. Translate!
 
-= I installed WP SES on my WP install and was able to get everything tested and the test emails work great. The only thing is I can’t get it to intercept the emails my contact form sends. They end up going through the normal SMTP route and not SES. This is the function for the mail: mail($to, $subject, $message, $header); =
+= Will WP Offload SES Lite work with other plugins that send email? =
 
-Looks like your contact form uses the PHP `mail()` function instead of the WordPress `wp_mail()` function, so WP SES won’t be able to send the mail.
+Yes, WP Offload SES should be compatible with any plugin that uses the standard `wp_mail()` function for sending email. If you’ve found a plugin that isn’t using that function for sending mail, you may want to reach out to the plugin developer and see if that can be changed.
 
-Please ask the plugin developer to change it to the following:
+= Why aren't my AWS access keys working? =
 
-`wp_mail($to,$subject,$message,$header);`
-
-= I used my ID and secret and repeatedly put them into WP SES, but it didn’t work, I also generated a new ID and secret too, but to no avail it still didn’t work. =
-
-Did you use these keys before with another service (like S3), and if so, did they work with that service?
-
-Did you sign up for the Amazon SES service?
-
-Then, please inspectthe error message you get when trying to verify a sender address (at the top of the screen). This message should explain what is wrong with your keys (bad authentication, no SES subscription , etc.).
-Amazon also requires that your server time is close enough to Amazon’s server time, so that might be worth checking as well.
+Please double check the credentials match up with the credentials you received when creating your IAM user, and that your IAM user has the `AmazonSESFullAccess` permission.
 
 == Screenshots ==
 
-1. Settings screen
+1. Setup wizard
+2. Main settings page
+3. Verified senders
 
 == Changelog ==
+
+= 1.1 - 2019-05-07 =
+* New: Multisite network level setting to enable subsite settings
+* New: Multisite subsite level setting to override network settings
+* Improvement: Increase default log retention to 90 days
+
+= 1.0 - 2019-04-17 =
+* New: Redesigned UI
+* New: Setup wizard
+* New: Codebase rewritten from the ground up
+* New: Verify any domain or email address
+* New: Requires PHP 5.5+
 
 = 0.8.2 - 2019-01-09 =
 * Add discount for launch of WP Offload SES

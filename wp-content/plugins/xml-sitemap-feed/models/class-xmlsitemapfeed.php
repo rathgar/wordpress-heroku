@@ -9,14 +9,13 @@ class XMLSitemapFeed {
 	private $defaults = array();
 
 	/**
-	 * Defaults
+	 * News defaults
 	 * @var array
 	 */
 	public $default_news_tags = array(
 		'name' => '',
 		'post_type' => array('post'),
-		'categories' => '',
-		'image' => 'featured'
+		'categories' => ''
 	);
 
 	/**
@@ -101,6 +100,13 @@ class XMLSitemapFeed {
 	public $timespan = 0;
 
 	/**
+	 * Post type total approved comment count
+	 *
+	 * @var int $comment_count
+	 */
+	public $comment_count = 0;
+
+	/**
 	 * Blog pages
 	 *
 	 * @var null/array $blogpages
@@ -123,8 +129,8 @@ class XMLSitemapFeed {
 	 * @param $key
 	 * @return array
 	 */
-	public function defaults( $key = false ) {
-
+	public function defaults( $key = false )
+	{
 		if ( empty($this->defaults) ) :
 
 			// sitemaps
@@ -141,7 +147,7 @@ class XMLSitemapFeed {
 						'priority' => '0.7',
 						'dynamic_priority' => '1',
 						'tags' => array(
-							'image' => 'attached'
+							'image' => 'featured'
 							/*'video' => ''*/
 						)
 					),
@@ -187,7 +193,8 @@ class XMLSitemapFeed {
 	 * Get domain
 	 * @return string
 	 */
-	public function get_allowed_domains() {
+	public function get_allowed_domains()
+	{
 		// allowed domain
 		if ( null === $this->domains ) {
 
@@ -210,7 +217,8 @@ class XMLSitemapFeed {
 	 *
 	 * @return bool
 	 */
-	public function plain_permalinks() {
+	public function plain_permalinks()
+	{
 		if ( null === $this->plain_permalinks ) {
 			$permalink_structure = get_option('permalink_structure');
 			$this->plain_permalinks = ('' == $permalink_structure || 0 === strpos($permalink_structure,'/index.php') ) ? true : false;
@@ -222,7 +230,8 @@ class XMLSitemapFeed {
 	 * Get scheme
 	 * @return string
 	 */
-	public function blog_language() {
+	public function blog_language()
+	{
 		if ( $this->blog_language === null ) {
 			// get site language for default language
 			$this->blog_language = xmlsf_parse_language_string( get_bloginfo('language') );
@@ -235,7 +244,8 @@ class XMLSitemapFeed {
 	 * Get scheme
 	 * @return string
 	 */
-	public function scheme() {
+	public function scheme()
+	{
 		// scheme to use
 		if ( empty($this->scheme) ) {
 			$scheme = parse_url( home_url(), PHP_URL_SCHEME );
@@ -249,7 +259,8 @@ class XMLSitemapFeed {
 	 * Get disabled taxonomies
 	 * @return array
 	 */
-	public function disabled_taxonomies() {
+	public function disabled_taxonomies()
+	{
 		return apply_filters( 'xmlsf_disabled_taxonomies', $this->disabled_taxonomies );
 	}
 

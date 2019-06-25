@@ -7,8 +7,9 @@
 
 if ( ! defined( 'WPINC' ) ) die;
 
+// do xml tag via echo or SVN parser is going to freak out
 echo '<?xml version="1.0" encoding="' . get_bloginfo('charset') . '"?>
-<?xml-stylesheet type="text/xsl" href="' . plugins_url('views/styles/sitemap-index.xsl',XMLSF_BASENAME) . '?ver=' . XMLSF_VERSION . '"?>
+<?xml-stylesheet type="text/xsl" href="' . plugins_url('assets/styles/sitemap-index.xsl',XMLSF_BASENAME) . '?ver=' . XMLSF_VERSION . '"?>
 '; ?>
 <?php xmlsf_generator(); ?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
@@ -17,11 +18,11 @@ echo '<?xml version="1.0" encoding="' . get_bloginfo('charset') . '"?>
 		http://www.sitemaps.org/schemas/sitemap/0.9/siteindex.xsd">
 	<sitemap>
 		<loc><?php echo xmlsf_get_index_url('home'); ?></loc>
-		<lastmod><?php echo mysql2date('Y-m-d\TH:i:s+00:00', get_lastpostdate( 'gmt' ), false); ?></lastmod>
+		<lastmod><?php echo mysql2date( DATE_W3C, get_lastpostdate( 'blog' ) ); ?></lastmod>
 	</sitemap>
 <?php
 // add rules for public post types
-$post_types = apply_filters( 'xmlsf_post_types', get_option( 'xmlsf_post_types' ) );
+$post_types = apply_filters( 'xmlsf_post_types', (array) get_option( 'xmlsf_post_types', array() ) );
 if ( is_array($post_types) ) :
 	foreach ( $post_types as $post_type => $settings ) {
 		if ( empty($settings['active']) || ! post_type_exists( $post_type ) )
@@ -33,7 +34,7 @@ if ( is_array($post_types) ) :
 ?>
 	<sitemap>
 		<loc><?php echo $url; ?></loc>
-		<lastmod><?php echo mysql2date('Y-m-d\TH:i:s+00:00', get_lastmodified( 'gmt', $post_type, $m ), false); ?></lastmod>
+		<lastmod><?php echo mysql2date( DATE_W3C, get_lastmodified( 'blog', $post_type, $m ) ); ?></lastmod>
 	</sitemap>
 <?php
 		}
@@ -44,7 +45,7 @@ endif;
 foreach ( xmlsf_get_taxonomies() as $taxonomy ) : ?>
 	<sitemap>
 		<loc><?php echo xmlsf_get_index_url('taxonomy',$taxonomy); ?></loc>
-<?php if ( $lastmod = xmlsf_get_lastmod('taxonomy',$taxonomy) ) { ?>
+<?php if ( $lastmod = xmlsf_get_taxonomy_modified( $taxonomy ) ) { ?>
 		<lastmod><?php echo $lastmod; ?></lastmod>
 <?php } ?>
 	</sitemap>

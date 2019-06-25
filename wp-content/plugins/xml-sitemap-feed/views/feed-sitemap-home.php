@@ -7,8 +7,9 @@
 
 if ( ! defined( 'WPINC' ) ) die;
 
+// do xml tag via echo or SVN parser is going to freak out
 echo '<?xml version="1.0" encoding="' . get_bloginfo('charset') . '"?>
-<?xml-stylesheet type="text/xsl" href="' . plugins_url('views/styles/sitemap.xsl',XMLSF_BASENAME) . '?ver=' . XMLSF_VERSION . '"?>
+<?xml-stylesheet type="text/xsl" href="' . plugins_url('assets/styles/sitemap.xsl',XMLSF_BASENAME) . '?ver=' . XMLSF_VERSION . '"?>
 '; ?>
 <?php xmlsf_generator(); ?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"

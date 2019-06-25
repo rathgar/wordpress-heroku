@@ -1,9 +1,9 @@
 === WordPress Follow Buttons Plugin – AddThis ===
-Contributors: abramsm, jgrodel, bradaddthis.com, addthis_paul, addthis_matt, ribin_addthis, addthis_elsa, addthisleland, sirius226
+Contributors: abramsm, jgrodel, bradaddthis.com, addthis_paul, addthis_matt, ribin_addthis, addthis_elsa, addthisleland, sirius226, addthisjhilts
 Tags: follow buttons, follow button plugin, social follow, social buttons, followers
 Requires at least: 3.0
-Tested up to: 4.9.8
-Stable tag: 4.1.8
+Tested up to: 5.1.1
+Stable tag: 4.2.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -167,6 +167,19 @@ See our <a href="https://plugins.svn.wordpress.org/addthis-all/trunk/documentati
 
 
 == Changelog ==
+
+= 4.2.3 =
+* Removed notices regarding AMP
+
+= 4.2.2 =
+* Added compatibility detection with official AMP plugin
+
+= 4.2.1 =
+* Fixed an incompatibility with PHP < 5.4
+
+= 4.2.0 =
+* Added support for AMP in registered mode when used in conjunction with the official AMP plugin
+* Removed references for Google+
 
 = 4.1.8 =
 * Fixed a bug where a script tag causes browser errors in certain circumstances

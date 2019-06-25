@@ -1,9 +1,10 @@
 === Jetpack by WordPress.com ===
 Contributors: automattic, adamkheckler, aduth, akirk, allendav, alternatekev, andy, annezazu, apeatling, azaozz, batmoo, barry, beaulebens, blobaugh, cainm, cena, cfinke, chaselivingston, chellycat, clickysteve, csonnek, danielbachhuber, davoraltman, daniloercoli, designsimply, dllh, drawmyface, dsmart, dzver, ebinnion, eliorivero, enej, eoigal, erania-pinnera, ethitter, gcorne, georgestephanis, gibrown, goldsounds, hew, hugobaeta, hypertextranch, iammattthomas, iandunn, jblz, jasmussen, jeffgolenski, jeherve, jenhooks, jenia, jessefriedman, jgs, jkudish, jmdodd, joanrho, johnjamesjacoby, jshreve, keoshi, koke, kraftbj, lancewillett, lschuyler, macmanx, martinremy, matt, matveb, mattwiebe, maverick3x6, mcsf, mdawaffe, MichaelArestad, migueluy, mikeyarce, mkaz, nancythanki, nickmomrik, obenland, oskosk, pento, professor44, rachelsquirrel, rdcoll, ryancowles, richardmuscat, richardmtl, roccotripaldi, samhotchkiss, scarstocea, sdquirk, stephdau, tmoorewp, tyxla, Viper007Bond, westi, yoavf, zinigor
 Tags: Jetpack, WordPress.com, backup, security, related posts, CDN, speed, anti-spam, social sharing, SEO, video, stats
-Stable tag: 7.2.1
-Requires at least: 5.0
-Tested up to: 5.1
+Stable tag: 7.4.1
+Requires at least: 5.1
+Requires PHP: 5.3
+Tested up to: 5.2
 
 The ideal plugin for stats, related posts, search engine optimization, social sharing, protection, backups, security, and more.
 
@@ -88,80 +89,88 @@ There are opportunities for developers at all levels to contribute. [Learn more 
 
 == Screenshots ==
 
-1. Security: Protection against brute force attacks, spam, and malware. On-demand backups and restores.
-2. Downtime Monitoring: Know right away if and when your site goes down.
-3. Performance: Free high-speed content delivery network for your images.
-4. Analytics: Concise site stats and traffic insights.
-5. Themes: Hundreds of customizable, professional themes.
-6. Apps: Update your site from any device with the free WordPress apps.
-7. Revenue: Sell products and take payments with simple payment buttons.
-8. Sharing: Connect your site to social networks for automated social sharing.
+1. Keep hackers out with brute force attack protection, malware scanning, spam filtering, and downtime monitoring. Secure your site data with on-demand backups and restores.
+2. Load pages faster, and serve your images and static files from our massive global content delivery network.
+3. Customize your website with professionally-designed WordPress themes, blocks, and widgets.
+4. Promote your newest posts, pages, and products across your social media channels.
 
 == Changelog ==
 
-= 7.2.1 =
-* Release date: April 04, 2019
-* Release post: https://wp.me/p1moTy-h7o
+= 7.4.1 =
 
-* Feature Hints: display suggestions only for features available under the site's current plan.
-* Feature Hints: improve visual display to make more distinct from search results.
-* Feature Hints: disable hints once administrators have dismissed three hints.
-* Slideshow Block: resolve an issue that broke navigating between images.
+* Release date: June 17, 2019
+* Release post: https://wp.me/p1moTy-kvz
 
-= 7.2 =
+**Bug fix**
 
-* Release date: April 02, 2019
-* Release post: https://wp.me/p1moTy-foe
+* Contact Form Block: avoid errors when trying to edit a form block, when using the Gutenberg plugin.
 
-**Major Enhancements**
+= 7.4 =
 
-* Adds a Repeat Visitor block that controls block visibility based on how often a visitor has viewed the page.
-* New option to disable Ads blocks for visitors on mobile devices.
-
+* Release date: June 4, 2019
+* Release post: https://wp.me/p1moTy-jgZ
 
 **Enhancements**
 
-* Admin Dashboard: improve text and design to make your administration experience all the better.
-* Jumpstart: streamline what features are suggested to be activated when setting up Jetpack for the first time.
-* Password Checker: adds a password checker class that will help Jetpack let you know if you're using a weak password. More about this coming in a future release!
-* Plans: refactor how Jetpack Plans are coded within Jetpack to improve performance and help prevent any future bugs.
-* Post Images: provide the image itself when requesting an attachment's post image.
-* REST API: Enable Likes and Sharing meta field for all post types.
-* Related Posts: improve HTML markup for related posts, with emphasis on accessibility.
-* Search: add an easy way to see the raw Jetpack Search query results in the search page's source code.
-* Shortcodes: allow links in Quiz shortcode explanations.
-* Widgets: improve the text for the Blog Stats widget when stats data can not be retrieved from WordPress.com.
+* About Page: remove submenu and add link to page in the footer of Jetpack's dashboard.
+* Admin Page: remove Themes card on Plans tab.
+* Admin Page: consolidate the look of the different discussion settings.
+* Admin Page: add Security Checklist information.
+* Business Hours Block: improve the display of Business Hours.
+* Business Hours Block: Simplify hours format.
+* Comment Form: use HTTP 4xx status codes for comment errors.
+* Contact Form Block: improve styles for better display on mobile devices.
+* General: introduce a new Jetpack Logo package, to make it easier to share and re-use.
+* Multisite: Use modern `wp_initialize_site` hook when automatically connecting new sites.
+* Recurring Payments Block: automatically add button to the post content once you create it.
+* Recurring Payments Block: improve the display of the renewal frequency in button list.
+* Recurring Payments Block: require a paid plan to use the button.
+* Recurring Payments Block: improve the look of the payment modal on mobile devices.
+* Search: add new option for cross-site search permissions.
+* Sharing: update default sharing settings to include buttons.
+* Sitemaps: rename the `jetpack_sitemap_generate` and `jetpack_news_sitemap_generate` filters to the more accurate `jetpack_sitemap_include_in_robotstxt` and `jetpack_news_sitemap_include_in_robotstxt`.
+* Slideshow Block: depending on viewport, display prev/next arrows.
+* Slideshow Block: remove outline when focussing on the block.
+* Sync: offer posts, comments, and comment meta checksums when providing sync status.
+* Tiled Galleries: add `srcset` in the editor for an improved editing experience.
+* WordPress.com Block Editor: allow managing reusable blocks in the WordPress.com interface.
+* WordPress.com Toolbar: display hamburger icon in toolbar when in the block editor.
+* WordPress.com Toolbar: display a link to exit recovery mode when it is active on the site.
 
 **Improved compatibility**
 
-* General: require WordPress 5.0! To celebrate, we cleaned out some compatibility code that supported older versions. We know how to party.
-* General: update various parts of Jetpack to fully align with WordPress coding standards to make developing Jetpack easier!
-* Connection: notify site owners when a plugin or theme is double-encoding URL redirects.
-* Shortcodes: update the Ustream shortcode to use the HTML5 player for a better experience on all browsers.
-* Shortcodes: add AMP support for Crowdsignal polls and shortcodes.
-* Sitemaps: add thumbnails to video sitemaps to improve compatibility with Google Search Console. Props Adam Heckler!
-* Sync: improve performance when using the VIP Legacy Redirect plugin.
-* Twenty Nineteen Compatibility: prevent sharing buttons overlapping with the Like button. Props Torres!
-* VideoPress: update right-to-left language CSS to remove extra styles only used on browsers no longer supported.
-* Widgets: improve rendering of Contact Info widget map when using the AMP plugin.
+* Display Posts Widget: remove overly opinionated CSS.
+* General: Jetpack now requires PHP 5.3.2, and will display a notice if your site uses an older version of PHP.
+* General: display a notice and log an error if your version of WordPress is not supported by Jetpack.
+* General: Update `Jetpack::get_content_width()` to ensure that only numeric values are used.
+* GIF Block: improve compatibility with the AMP plugin.
+* Shortcodes: bring more of our shortcodes to meet current WordPress Coding Standards to help us maintain these features in the future.
+* Site Health: improve Jetpack errors' messaging in WordPress' new Site Health tools.
 
 **Bug fixes**
 
-* Admin Dashboard: fix an error that you'd see in the console when changing your Carousel settings.
-* Blocks: fix an issue where sometimes we would attempt to register a particular block twice. I'm looking at you, Related Posts.
-* Blocks: display all Business Hours details, even if they're the default set.
-* Blocks: fix an error that occurred when loading some translations in the Block Editor.
-* Blocks: resolve a conflict between the Ads block and infinite scroll that would cause new posts to sometimes not load.
-* General: ensure the proper Jetpack plan is reflected throughout Jetpack and the administrative dashboard.
-* Plugin Search: display Akismet and VaultPress plugin cards when WordPress.org suggests them.
-* Publicize: remove unused assets, like images and JavaScript that aren't needed anymore.
-* Related Posts: restore use of the jetpack_relatedposts_filter_options filter.
-* Security: Improvements to the Likes feature and the Slideshow block.
-* Sharing: update WhatsApp to be more consistent with the other sharing buttons.
-* Shortcodes: remove Lytro service, which closed in March.
-* Stats: properly handle an error from the REST API that sometimes caused issues with the Stats Dashboard.
-* Widgets: display all characters in an address from Contact Info correctly when sometimes we encoded those that we'd expect in an URL.
-* Widgets: improve the performance of the Contact Info widget by eliminating unused JavaScript.
+* Admin Page: make sure the Jetpack Dashboard is displayed properly in IE11.
+* Admin Page: do not show Plugin Autoupdates card on admin searches.
+* Carousel: avoid scrolling back to the top of the page when you close the Carousel view.
+* Connect Flow: sanitize from parameter when building connection URL.
+* Mobile Themes: fix "View Full Site" and "View Mobile Site" links when WordPress lives in a subdirectory.
+* Recurring Payments Block: avoid invalid subscription amounts.
+* Recurring Payments Block: allow line breaks in the payment button.
+* Related Posts: do not add markup to attachment pages by default.
+* SEO Tools: support taxonomy archive pages in page titles.
+* Sharing: make sure the Whatsapp button works well in all browsers, including Firefox on desktop.
+* Shortcodes: update embed type detection for Medium Collections.
+* Social Icons SVG: switch to the presentation role for better accessibility.
+* Subscriptions: display checkboxes above the comment submit button.
+* Sync: add new WP Cli commands to help in monitoring and updating sync settings.
+* Tracks: limit the length of the strings saved for feature searches.
+* Unit Tests: add support for testing using VVV 3.0.
+* Verification Tools: make sure the feature can be disabled by override.
+* WooCommerce Analytics: remove duplicate self-executing anonymous function.
+* WordPress.com Interface: make sure navigation menu items match the one available in the WordPress.com interface.
+* WordPress.com Toolbar: restore the previous layout.
+* WordPress.com Toolbar: ensure you are properly logged out of your WordPress.com account when you sign out of your site using the toolbar.
+* WP Cli: ensure that WP Cli commands added by Jetpack include translator comments when necessary, to help with translations.
 
 --------
 

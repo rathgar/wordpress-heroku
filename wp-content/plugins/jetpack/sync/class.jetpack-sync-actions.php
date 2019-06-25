@@ -69,15 +69,7 @@ class Jetpack_Sync_Actions {
 		 */
 		if ( apply_filters(
 			'jetpack_sync_sender_should_load',
-			(
-				( isset( $_SERVER['REQUEST_METHOD'] ) && 'POST' === $_SERVER['REQUEST_METHOD'] )
-				||
-				current_user_can( 'manage_options' )
-				||
-				is_admin()
-				||
-				defined( 'PHPUNIT_JETPACK_TESTSUITE' )
-			)
+			self::should_initialize_sender()
 		) ) {
 			self::initialize_sender();
 			add_action( 'shutdown', array( self::$sender, 'do_sync' ) );
@@ -85,12 +77,51 @@ class Jetpack_Sync_Actions {
 		}
 	}
 
+	static function should_initialize_sender() {
+		if ( Jetpack_Constants::is_true( 'DOING_CRON' ) ) {
+			return self::sync_via_cron_allowed();
+		}
+
+		if ( isset( $_SERVER['REQUEST_METHOD'] ) && 'POST' === $_SERVER['REQUEST_METHOD'] ) {
+			return true;
+		}
+
+		if ( current_user_can( 'manage_options' ) ) {
+			return true;
+		}
+
+		if ( is_admin() ) {
+			return true;
+		}
+
+		if ( defined( 'PHPUNIT_JETPACK_TESTSUITE' ) ) {
+			return true;
+		}
+
+		return false;
+	}
+
 	static function sync_allowed() {
+		if ( defined( 'PHPUNIT_JETPACK_TESTSUITE' ) ) {
+			return true;
+		}
 		require_once dirname( __FILE__ ) . '/class.jetpack-sync-settings.php';
-		return ( ! Jetpack_Sync_Settings::get_setting( 'disable' )
-				 && ( doing_action( 'jetpack_user_authorized' ) || Jetpack::is_active() )
-				 && ! ( Jetpack::is_development_mode() || Jetpack::is_staging_site() ) )
-			   || defined( 'PHPUNIT_JETPACK_TESTSUITE' );
+		if ( ! Jetpack_Sync_Settings::is_sync_enabled() ) {
+			return false;
+		}
+		if ( Jetpack::is_development_mode() ) {
+			return false;
+		}
+		if ( Jetpack::is_staging_site() ) {
+			return false;
+		}
+		if ( ! Jetpack::is_active() ) {
+			if ( ! doing_action( 'jetpack_user_authorized' ) ) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	static function sync_via_cron_allowed() {
@@ -424,7 +455,13 @@ class Jetpack_Sync_Actions {
 		}
 	}
 
-	static function get_sync_status() {
+	/**
+	 * Get the sync status
+	 *
+	 * @param string|null $fields A comma-separated string of the fields to include in the array from the JSON response.
+	 * @return array
+	 */
+	static function get_sync_status( $fields = null ) {
 		self::initialize_sender();
 
 		$sync_module     = Jetpack_Sync_Modules::get_module( 'full-sync' );
@@ -433,9 +470,32 @@ class Jetpack_Sync_Actions {
 		$cron_timestamps = array_keys( _get_cron_array() );
 		$next_cron       = $cron_timestamps[0] - time();
 
+		$checksums = array();
+
+		if ( ! empty( $fields ) ) {
+			require_once JETPACK__PLUGIN_DIR . 'sync/class.jetpack-sync-wp-replicastore.php';
+			$store         = new Jetpack_Sync_WP_Replicastore();
+			$fields_params = array_map( 'trim', explode( ',', $fields ) );
+
+			if ( in_array( 'posts_checksum', $fields_params, true ) ) {
+				$checksums['posts_checksum'] = $store->posts_checksum();
+			}
+			if ( in_array( 'comments_checksum', $fields_params, true ) ) {
+				$checksums['comments_checksum'] = $store->comments_checksum();
+			}
+			if ( in_array( 'post_meta_checksum', $fields_params, true ) ) {
+				$checksums['post_meta_checksum'] = $store->post_meta_checksum();
+			}
+			if ( in_array( 'comment_meta_checksum', $fields_params, true ) ) {
+				$checksums['comment_meta_checksum'] = $store->comment_meta_checksum();
+			}
+		}
+
 		$full_sync_status = ( $sync_module ) ? $sync_module->get_status() : array();
+
 		return array_merge(
 			$full_sync_status,
+			$checksums,
 			array(
 				'cron_size'            => count( $cron_timestamps ),
 				'next_cron'            => $next_cron,
@@ -467,4 +527,3 @@ add_action( 'plugins_loaded', array( 'Jetpack_Sync_Actions', 'init' ), 90 );
 // We need to define this here so that it's hooked before `updating_jetpack_version` is called
 add_action( 'updating_jetpack_version', array( 'Jetpack_Sync_Actions', 'cleanup_on_upgrade' ), 10, 2 );
 add_action( 'jetpack_user_authorized', array( 'Jetpack_Sync_Actions', 'do_initial_sync' ), 10, 0 );
-

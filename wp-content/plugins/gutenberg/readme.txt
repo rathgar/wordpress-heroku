@@ -1,8 +1,8 @@
 === Gutenberg ===
 Contributors: matveb, joen, karmatosed
-Requires at least: 5.0.0
-Tested up to: 5.1
-Stable tag: 5.3.0
+Requires at least: 5.1.0
+Tested up to: 5.2
+Stable tag: 5.9.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -79,91 +79,116 @@ See also <a href="https://github.com/WordPress/gutenberg/blob/master/CONTRIBUTIN
 
 == Changelog ==
 
-For 5.4.0.
+For 5.9.2:
 
-= Features =
+### Bug Fixes
 
-- Add [vertical alignment support for the columns](https://github.com/WordPress/gutenberg/pull/13899) [block](https://github.com/WordPress/gutenberg/pull/14614).
-- Add [playsinline support](https://github.com/WordPress/gutenberg/pull/14500) for the video block.
+ - Fix Regression for blocks using InnerBlocks.Content from the editor package (support forwardRef components in the block serializer).
 
-= Enhancements =
+For 5.9.1:
 
-- Add the [Media Library button](https://github.com/WordPress/gutenberg/issues/8309) to the gallery block appender.
-- Improve appearance of the block [hover state on colored backgrounds](https://github.com/WordPress/gutenberg/pull/14501).
-- Move the [color and font size caption styles](https://github.com/WordPress/gutenberg/pull/14366) into theme styles.
-- Replace the [verse block icon](https://github.com/WordPress/gutenberg/pull/14622).
-- Standardize [align and className attributes](https://github.com/WordPress/gutenberg/pull/14533) for dynamic blocks.
-- Remove the [title from mobile inserters](https://github.com/WordPress/gutenberg/pull/14493).
-- Capitalize [button labels](https://github.com/WordPress/gutenberg/pull/14591).
-- [Remove menu toggling](https://github.com/WordPress/gutenberg/pull/14456) on checkbox, radio buttons clicks.
-- Make the [invisible image resize handlers](https://github.com/WordPress/gutenberg/pull/14481) bigger.
-- Improve the [alt text field description](https://github.com/WordPress/gutenberg/pull/14668).
+### Bug Fixes
 
-= Bug Fixes =
+* Fix the issue where [statics for deprecated components were not hoisted](https://github.com/WordPress/gutenberg/pull/16152)
 
-- Improve the [format boundary styles](https://github.com/WordPress/gutenberg/pull/14519).
-- [Convert void blocks properly](https://github.com/WordPress/gutenberg/pull/14536) when converting or pasting content.
-- Fix the [ClipboardButton](https://github.com/WordPress/gutenberg/pull/7106) component behavior in Safari.
-- Fix [expanding the text selection](https://github.com/WordPress/gutenberg/pull/14487) when using shift + vertical arrows.
-- Fix the alignment of the [third-party block settings items](https://github.com/WordPress/gutenberg/pull/14569).
-- Fix [invalid HTML](https://github.com/WordPress/gutenberg/pull/14423) [in](https://github.com/WordPress/gutenberg/pull/14599) some more menu items.
-- Fix [JavaScript error in the columns](https://github.com/WordPress/gutenberg/pull/14605) block.
-- Fix [radio button](https://github.com/WordPress/gutenberg/pull/14624) [appearance](https://github.com/WordPress/gutenberg/pull/14684) on small screens.
-- Save [line breaks in the preformatted](https://github.com/WordPress/gutenberg/pull/14653) block.
-- Fix edge case in the [is_gutenberg_page](https://github.com/WordPress/gutenberg/pull/14558) plugin function.
-- Fix [toolbar position](https://github.com/WordPress/gutenberg/pull/14669) in full size aligned blocks on small screens.
-- Fix [double scrollbar issue](https://github.com/WordPress/gutenberg/pull/14677) in Full Screen mode.
-- Fix JavaScript error when [downgrading to an old Gutenberg version](https://github.com/WordPress/gutenberg/pull/14691).
-- Fix the [WordPress embed block](https://github.com/WordPress/gutenberg/pull/14658) resolution.
-- Fix embedding [links with trailing slashes](https://github.com/WordPress/gutenberg/pull/14705).
-- Fix the [preloading apiFetch middleware](https://github.com/WordPress/gutenberg/pull/14714) when initialized empty.
-- Fix php notice when using [widgets without](https://github.com/WordPress/gutenberg/pull/14587) [description](https://github.com/WordPress/gutenberg/pull/14615).
-- Better [horizontal edge detection](https://github.com/WordPress/gutenberg/pull/14462) to fix the arrow key navigation in the table block.
-- Fix error in [API Fetch initialization](https://github.com/WordPress/gutenberg/pull/14714).
-- Fix [unwanted margin](https://github.com/WordPress/gutenberg/pull/14614) in Column block.
-- Fixes [issue where emoji would be destroyed](https://github.com/WordPress/gutenberg/pull/14411).
+For 5.9.0:
 
-= Documentation =
+### Features
 
-- Document the [block editor module](https://github.com/WordPress/gutenberg/pull/14566).
-- Add design documentation for the [Panel](https://github.com/WordPress/gutenberg/pull/14504) component.
-- Document [webpack config extensibility](https://github.com/WordPress/gutenberg/pull/14590).
-- Clarify [experimental and unstable API](https://github.com/WordPress/gutenberg/pull/14557) guidelines.
-- Setup automatic [API documentation for the data](https://github.com/WordPress/gutenberg/pull/14277) module.
-- Improve the [automatic](https://github.com/WordPress/gutenberg/pull/14549) [API](https://github.com/WordPress/gutenberg/pull/14656) documentation tool.
-- Enhance the components documentation:
-  - [FormFileUpload](https://github.com/WordPress/gutenberg/pull/14661) component.
-  - [MediaPlaceholder](https://github.com/WordPress/gutenberg/pull/14645) component.
-  - [Notice](https://github.com/WordPress/gutenberg/pull/14514) component.
-  - [TextControl](https://github.com/WordPress/gutenberg/pull/14710) component.
-- Updates the [blocks creation tutorial](https://github.com/WordPress/gutenberg/pull/14584).
-- Typos & tweaks: [1](https://github.com/WordPress/gutenberg/pull/14490), [2](https://github.com/WordPress/gutenberg/pull/14516), [3](https://github.com/WordPress/gutenberg/pull/14530), [4](https://github.com/WordPress/gutenberg/pull/14565), [5](https://github.com/WordPress/gutenberg/pull/14597), [6](https://github.com/WordPress/gutenberg/pull/14368), [7](https://github.com/WordPress/gutenberg/pull/14666), [8](https://github.com/WordPress/gutenberg/pull/14686), [9](https://github.com/WordPress/gutenberg/pull/14690).
+*   Allow [grouping/ungrouping blocks](https://github.com/WordPress/gutenberg/pull/14908) using the Group block.
 
-= Various =
+### Enhancements
 
-- Implement a built-in static [Gutenberg Playground](https://github.com/WordPress/gutenberg/pull/14497).
-- [Override core block server-side code](https://github.com/WordPress/gutenberg/pull/13521) when using the plugin.
-- Make the [block](https://github.com/WordPress/gutenberg/pull/14527) [editor](https://github.com/WordPress/gutenberg/pull/14387) [module](https://github.com/WordPress/gutenberg/pull/14548) [more](https://github.com/WordPress/gutenberg/pull/14678) reusable.
-- Expose the [lazy and Suspence](https://github.com/WordPress/gutenberg/pull/14412) React features in the element package.
-- Avoid assuming persisted [preferences state shape](https://github.com/WordPress/gutenberg/pull/14692).
-- Remove dead code from the [calendar block renderer](https://github.com/WordPress/gutenberg/pull/14546).
-- Extract [global CSS resets](https://github.com/WordPress/gutenberg/pull/14509) [into](https://github.com/WordPress/gutenberg/pull/14572) reusable mixins.
-- Replace [image urls by base 64 encoded images](https://github.com/WordPress/gutenberg/pull/14544) in reusable CSS files.
-- Add default empty implementation for the [block types save](https://github.com/WordPress/gutenberg/pull/14510) [function](https://github.com/WordPress/gutenberg/pull/14529).
-- Add a new data action to [replace the inner blocks](https://github.com/WordPress/gutenberg/pull/14291).
-- Support [parent data registry inheritance](https://github.com/WordPress/gutenberg/pull/14369) in the data module.
-- Add [extra props support for the Dashicon](https://github.com/WordPress/gutenberg/pull/14631) component.
-- Add a [BaseControl.VisualLabel](https://github.com/WordPress/gutenberg/pull/14179) component for purely visual labels.
-- Refactor [setupEditor effects to actions](https://github.com/WordPress/gutenberg/pull/14513).
-- Refactor the [core/data store](https://github.com/WordPress/gutenberg/pull/14634) to be independent from the registry object.
-- Remove [componentWillMount](https://github.com/WordPress/gutenberg/pull/14637) usage from LatestPostEdit component.
-- Add a generic [e2e test for block transforms](https://github.com/WordPress/gutenberg/pull/12336) and work on its [stability](https://github.com/WordPress/gutenberg/pull/14632).
-- Allow e2e test failures for [php versions lower than 5.6](https://github.com/WordPress/gutenberg/pull/14541).
-- Add eslint rule to prevent [incorrect truthy length property](https://github.com/WordPress/gutenberg/pull/14579/) checks.
-- Add eslint rule to [prevent unsafe setTimeout usage](https://github.com/WordPress/gutenberg/pull/14650) in components.
-- Run the local gutenberg environment in [debug mode](https://github.com/WordPress/gutenberg/pull/14371).
-- Disable [debug mode in local e2e tests](https://github.com/WordPress/gutenberg/pull/14638).
-- [Exclude test files](https://github.com/WordPress/gutenberg/pull/14468) while rebuilding packages.
-- [Make E2E tests resilient](https://github.com/WordPress/gutenberg/pull/14632) against transforms added by plugins.
-- Add [LGPL](https://github.com/WordPress/gutenberg/pull/14734) as an OSS license.
+*   Improve the selection of inner blocks: [Clickthrough selection](https://github.com/WordPress/gutenberg/pull/15537).
+*   Introduce the [snackbar notices](https://github.com/WordPress/gutenberg/pull/15594) and use them for the save success notices.
+*   Use [consistent colors in the different menus](https://github.com/WordPress/gutenberg/pull/15531) items.
+*   [Consolidate the different dropdown menus](https://github.com/WordPress/gutenberg/pull/14843) to use the DropdownMenu component.
+*   Expand the [**prefered-reduced-motion** support](https://github.com/WordPress/gutenberg/pull/15850) to all the animations.
+*   Add a subtle [animation to the snackbar](https://github.com/WordPress/gutenberg/pull/15908) notices and provide new React hooks for media queries.
+*   Redesign the [Table block placeholder](https://github.com/WordPress/gutenberg/pull/15903).
+*   [Always show the side inserter](https://github.com/WordPress/gutenberg/pull/15864) on the last empty paragraph block.
+*   Widgets Screen:
+    *   Add the [in progress state](https://github.com/WordPress/gutenberg/pull/16019) to the save button.
+    *   Add the RichText [Format Library](https://github.com/WordPress/gutenberg/pull/15948).
+*   Improve the [Group and Ungroup icons](https://github.com/WordPress/gutenberg/pull/16001).
+*   The [Spacer block clears all](https://github.com/WordPress/gutenberg/pull/15874) the previous floated blocks.
+
+### Bug Fixes
+
+*   [Focus the Button blockâ€™s input](https://github.com/WordPress/gutenberg/pull/15951) upon creation.
+*   Prevent [Embed block crashes](https://github.com/WordPress/gutenberg/pull/15866) when used inside locked containers.
+*   Properly [center the default appender placeholder](https://github.com/WordPress/gutenberg/pull/15868).
+*   Correct [default appender icon transition jump](https://github.com/WordPress/gutenberg/pull/15892) in Safari.
+*   Only apply [appender margins](https://github.com/WordPress/gutenberg/pull/15888) when the appender is inside of a block.
+*   Avoid loading [reusable blocks editor styles](https://github.com/WordPress/gutenberg/pull/14607) in the frontend.
+*   Correct [position of the "Remove Featured Image" button](https://github.com/WordPress/gutenberg/pull/15928) on small screens.
+*   Allow the [legacy widget block to render core widgets](https://github.com/WordPress/gutenberg/pull/15396).
+*   A11y:
+    *   Fix [wrong tab order in the data picker](https://github.com/WordPress/gutenberg/pull/15936) component.
+    *   Remove the [access keyboard shortcuts](https://github.com/WordPress/gutenberg/pull/15191) from the Format Library.
+*   Bail early in [createUpgradedEmbedBlock](https://github.com/WordPress/gutenberg/pull/15885) for invalid block types.
+*   Fix [DateTimePicker styles](https://github.com/WordPress/gutenberg/pull/15389) when used outside the WordPress context.
+*   Prevent the [Spacer block from being deselected](https://github.com/WordPress/gutenberg/pull/15884) when resized.
+*   Remove the [word breaking from the Media & Text](https://github.com/WordPress/gutenberg/pull/15871) block.
+*   [Keep the seconds value untouched](https://github.com/WordPress/gutenberg/pull/15495) when editing dates using the DateTimePicker component.
+*   Fix [tooltips styles](https://github.com/WordPress/gutenberg/pull/16043) specificity.
+*   Fix php errors happening when [calling get_current_screen](https://github.com/WordPress/gutenberg/pull/15983).
+
+### Various
+
+*   Introduce [useSelect](https://github.com/WordPress/gutenberg/pull/15737) and [useDispatch](https://github.com/WordPress/gutenberg/pull/15896) hooks to the data module.
+*   Adding embedded [performance tests](https://github.com/WordPress/gutenberg/pull/14506) to the repository.
+*   Support the [full plugin release process](https://github.com/WordPress/gutenberg/pull/15848) in the automated release tool.
+*   Speed up the [packages build](https://github.com/WordPress/gutenberg/pull/15230) [tool](https://github.com/WordPress/gutenberg/pull/15920) script and the [Gutenberg plugin build](https://github.com/WordPress/gutenberg/pull/15226) config.
+*   Extract media upload logic part into a new [@wordpress/media-utils package](https://github.com/WordPress/gutenberg/pull/15521).
+*   Introduce [**Milestone-It** Github Action](https://github.com/WordPress/gutenberg/pull/15826) to auto-assign milestones to merged PRs.
+*   Move the [transformStyles function](https://github.com/WordPress/gutenberg/pull/15572) to the block-editor package to use in the widgets screen.
+*   Allow plugin authors to [override the default anchor attribute](https://github.com/WordPress/gutenberg/pull/15959) definition.
+*   Add [overlayColor classname to cover blocks](https://github.com/WordPress/gutenberg/pull/15939) editor markup.
+*   [Skip downloading chromium](https://github.com/WordPress/gutenberg/pull/15886) when building the plugin zip.
+*   Add an [e2e test to check the heading colors](https://github.com/WordPress/gutenberg/pull/15784) [feature](https://github.com/WordPress/gutenberg/pull/15917).
+*   [Lint the ESlint config file](https://github.com/WordPress/gutenberg/pull/15887) (meta).
+*   Fix [i18n ESlint rules](https://github.com/WordPress/gutenberg/pull/15839) and use them in the [Gutenberg setup](https://github.com/WordPress/gutenberg/pull/15877).
+*   Fix error in the [plugin release tool](https://github.com/WordPress/gutenberg/pull/15840) when switching branches.
+*   Remove [unused stylesheet file](https://github.com/WordPress/gutenberg/pull/15845).
+*   Improve the setup of the WordPress packages [package.json files](https://github.com/WordPress/gutenberg/pull/15879).
+*   Remove the use of [popular plugins in e2e tests](https://github.com/WordPress/gutenberg/pull/15940).
+*   Ignore [linting files located in build](https://github.com/WordPress/gutenberg/pull/15977) folders by default.
+*   Add [default file patterns for the lint command](https://github.com/WordPress/gutenberg/pull/15890) of @wordpress/scripts.
+*   Extract the [ServerSideRender](https://github.com/WordPress/gutenberg/pull/15635) component to an independent package.
+*   Refactor the [HoverArea component as a React Hook](https://github.com/WordPress/gutenberg/pull/15038) instead.
+*   Remove [useless dependency](https://github.com/WordPress/gutenberg/pull/16034) from the @wordpress/edit-post package.
+*   [Deprecate components/selectors and actions](https://github.com/WordPress/gutenberg/pull/15770) moved to the editor package.
+*   Update [browserslist](https://github.com/WordPress/gutenberg/pull/16066) dependency.
+
+### Documentation
+
+*   Document the [remaining APIs](https://github.com/WordPress/gutenberg/pull/15176) of the data module.
+*   Add an [ESNext example](https://github.com/WordPress/gutenberg/pull/15828) to the i18n docs.
+*   Fix inline docs and add tests for [color utils](https://github.com/WordPress/gutenberg/pull/15861).
+*   Document missing [MenuItem prop](https://github.com/WordPress/gutenberg/pull/16061).
+*   Typos and tweaks: [1](https://github.com/WordPress/gutenberg/pull/15835), [2](https://github.com/WordPress/gutenberg/pull/15836), [3](https://github.com/WordPress/gutenberg/pull/15831), [4](https://github.com/WordPress/gutenberg/pull/15697), [5](https://github.com/WordPress/gutenberg/pull/14841), [6](https://github.com/WordPress/gutenberg/pull/15717), [7](https://github.com/WordPress/gutenberg/pull/15942), [8](https://github.com/WordPress/gutenberg/pull/15950), [9](https://github.com/WordPress/gutenberg/pull/16059).
+
+### Mobile
+
+*   Fix [caret position](https://github.com/WordPress/gutenberg/pull/15833) when splitting text blocks.
+*   Fix the initial value of the [â€œOpen in New Tabâ€ toggle](https://github.com/WordPress/gutenberg/pull/15812).
+*   Fix [Video block crash](https://github.com/WordPress/gutenberg/pull/15857) on drawing on Android.
+*   Fix caret position after [inline paste](https://github.com/WordPress/gutenberg/pull/15701).
+*   [Focus the RichText component](https://github.com/WordPress/gutenberg/pull/15878) on block mount.
+*   Port [KeyboardAvoidingView, KeyboardAwareFlatList and ReadableContentView](https://github.com/WordPress/gutenberg/pull/15913) to the @wordpress/components package.
+*   Fix [press of Enter on post title](https://github.com/WordPress/gutenberg/pull/15944).
+*   Move the [native unit tests](https://github.com/WordPress/gutenberg/pull/15589) to the Gutenberg repository.
+*   Improve the [styling of the Quote block](https://github.com/WordPress/gutenberg/pull/15990).
+*   Share [RichText line separator logic](https://github.com/WordPress/gutenberg/pull/15946) between web and native implementations.
+*   Fix [Video block showing a black background](https://github.com/WordPress/gutenberg/pull/15991) when upload is in progress or upload has failed.
+*   Allow passing a [style prop to the Icon](https://github.com/WordPress/gutenberg/pull/15778) component.
+*   Enable [sound on the Video block](https://github.com/WordPress/gutenberg/pull/15997).
+*   [Start playback immediately](https://github.com/WordPress/gutenberg/pull/15998) after video goes full screen.
+*   Fix [mobile quotes](https://github.com/WordPress/gutenberg/pull/16013) insertion and removal of empty lines.
+*   Move [unselected block accessibility handling](https://github.com/WordPress/gutenberg/pull/15225) to block-holder.
+*   Make the [More block ready-only](https://github.com/WordPress/gutenberg/pull/16005).
+*   Fix crash when [deleting all content of RichText](https://github.com/WordPress/gutenberg/pull/16018) based block.
+*   Fix for [extra BR tag on Title field](https://github.com/WordPress/gutenberg/pull/16021) on Android.
+*   Open [Video, Quote and More blocks](https://github.com/WordPress/gutenberg/pull/16031) to public.
 

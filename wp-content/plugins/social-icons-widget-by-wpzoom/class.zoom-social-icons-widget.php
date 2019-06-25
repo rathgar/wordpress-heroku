@@ -262,7 +262,7 @@ class Zoom_Social_Icons_Widget extends WP_Widget {
 			array(
 				'icon'     => 'instagram',
 				'category' => array( 'photography', 'social-media' ),
-				'color'    => '#E1306C'
+				'color'    => '#e4405f'
 			),
             array(
                 'icon'     => 'itunes',
@@ -344,6 +344,11 @@ class Zoom_Social_Icons_Widget extends WP_Widget {
 				'category' => array( 'social-media' ),
 				'color'    => '#f48420'
 			),
+            array(
+                'icon'     => 'ok',
+                'category' => array( 'social-media' ),
+                'color'    => '#f48420'
+            ),
 			array(
 				'icon'     => 'outlook',
 				'category' => array( 'communication', 'web-tools' ),
@@ -489,6 +494,11 @@ class Zoom_Social_Icons_Widget extends WP_Widget {
 				'category' => array( 'communication', 'software' ),
 				'color'    => '#0088cc'
 			),
+            array(
+                'icon'     => 'tg',
+                'category' => array( 'communication', 'software' ),
+                'color'    => '#0088cc'
+            ),
             array(
                 'icon'     => 'tidal',
                 'category' => array( 'music' ),
@@ -9326,6 +9336,7 @@ class Zoom_Social_Icons_Widget extends WP_Widget {
 	 */
 	protected $protocols = array(
 		'skype',
+        'tg',
 		'viber',
 		'http',
 		'https',
@@ -9363,6 +9374,121 @@ class Zoom_Social_Icons_Widget extends WP_Widget {
 		//Hooks to enqueue javascript file in SiteOrigin builder.
 		add_action( 'siteorigin_panel_enqueue_admin_scripts', array( $this, 'admin_scripts' ) );
 		add_action( 'siteorigin_panel_enqueue_admin_scripts', array( $this, 'admin_js_templates' ) );
+
+		// Hooks to enqueue javascript for beaver builder.
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts_for_beaver' ) );
+		add_action( 'wp_footer', array( $this, 'admin_js_templates_for_beaver' ) );
+
+
+	}
+
+	function admin_js_templates_for_beaver() {
+		if ( ( class_exists( 'FLBuilderModel' ) && FLBuilderModel::is_builder_active() ) ) {
+			$this->admin_js_templates();
+		}
+	}
+
+	function enqueue_scripts_for_beaver() {
+
+		if ( ! ( class_exists( 'FLBuilderModel' ) && FLBuilderModel::is_builder_active() ) ) {
+			return;
+		}
+
+		wp_enqueue_style( 'social-icons-widget-admin', plugin_dir_url( $this->plugin_file ) . 'assets/css/social-icons-widget-admin.css', array( 'socicon' ), '20190406' );
+		wp_enqueue_style( 'wp-color-picker' );
+
+		wp_enqueue_script(
+			'iris',
+			admin_url( 'js/iris.min.js' ),
+			array(
+				'jquery-ui-draggable',
+				'jquery-ui-slider',
+				'jquery-touch-punch'
+			),
+			false,
+			1
+		);
+
+		wp_enqueue_script(
+			'wp-color-picker',
+			admin_url( 'js/color-picker.min.js' ),
+			array( 'iris' ),
+			false,
+			1
+		);
+
+		$colorpicker_l10n = array(
+			'clear'         => __( 'Clear' ),
+			'defaultString' => __( 'Default' ),
+			'pick'          => __( 'Select Color' ),
+			'current'       => __( 'Current Color' ),
+		);
+		wp_localize_script(
+			'wp-color-picker',
+			'wpColorPickerL10n',
+			$colorpicker_l10n
+		);
+
+
+		wp_enqueue_media();
+
+		wp_enqueue_script(
+			'zoom-social-icons-widget-vue-js',
+			plugin_dir_url( $this->plugin_file ) . 'assets/js/vue.js',
+			array(),
+			'20170209',
+			true
+		);
+
+		wp_enqueue_script(
+			'zoom-social-icons-widget-sortable-js',
+			plugin_dir_url( $this->plugin_file ) . 'assets/js/sortable.min.js',
+			array(),
+			'20170209',
+			true
+		);
+
+		wp_enqueue_script(
+			'zoom-social-icons-widget-vue-sortable-js',
+			plugin_dir_url( $this->plugin_file ) . 'assets/js/vue-sortable.js',
+			array( 'zoom-social-icons-widget-sortable-js' ),
+			'20190521',
+			true
+		);
+
+		wp_enqueue_script(
+			'zoom-social-icons-widget-uri-js',
+			plugin_dir_url( $this->plugin_file ) . 'assets/js/URI.min.js',
+			array(),
+			'20170209',
+			true
+		);
+
+		wp_enqueue_script(
+			'zoom-social-icons-widget-scroll-to',
+			plugin_dir_url( $this->plugin_file ) . 'assets/js/jquery.scrollTo.min.js',
+			array( 'jquery' ),
+			'20170209',
+			true
+		);
+
+		wp_enqueue_script(
+			'zoom-social-icons-widget',
+			plugin_dir_url( $this->plugin_file ) . 'assets/js/social-icons-widget-backend.js',
+			array(
+				'jquery',
+				'underscore',
+				'wp-util',
+				'wp-color-picker'
+			),
+			'20190521',
+			true
+		);
+
+		wp_localize_script( 'zoom-social-icons-widget', 'zoom_social_widget_data', array(
+			'icons'      => $this->get_icons_pack(),
+			'categories' => $this->get_icon_categories()
+		) );
 
 	}
 
@@ -9505,7 +9631,7 @@ class Zoom_Social_Icons_Widget extends WP_Widget {
 	public function admin_scripts() {
 
 		wp_enqueue_style( 'socicon', plugin_dir_url( $this->plugin_file ) . 'assets/css/socicon.css', array(), '20190406' );
-		wp_enqueue_style( 'social-icons-widget-admin', plugin_dir_url( $this->plugin_file ) . 'assets/css/social-icons-widget-admin.css', array( 'socicon' ), '20190406' );
+		wp_enqueue_style( 'social-icons-widget-admin', plugin_dir_url( $this->plugin_file ) . 'assets/css/social-icons-widget-admin.css', array( 'socicon' ), '20190521' );
 		wp_enqueue_style( 'genericons', plugin_dir_url( $this->plugin_file ) . 'assets/css/genericons.css', array(), '20180625' );
         wp_enqueue_style( 'academicons', plugin_dir_url( $this->plugin_file ) . 'assets/css/academicons.min.css', array(), '20190406' );
 		wp_enqueue_style( 'fontawesome', plugin_dir_url( $this->plugin_file ) . 'assets/css/font-awesome.min.css', array(), '20180625' );
@@ -10411,9 +10537,13 @@ class Zoom_Social_Icons_Widget extends WP_Widget {
 
 				<?php
 				$rule        = ( $instance['icon_style'] === 'with-canvas' ) ? 'background-color' : 'color';
-				$hover_style = empty( $field['color_picker_hover'] ) ? '' : 'data-hover-rule="' . $rule . '" data-hover-color="' . $field['color_picker_hover'] . '"'; ?>
+				$hover_style = empty( $field['color_picker_hover'] ) ? '' : 'data-hover-rule="' . $rule . '" data-hover-color="' . $field['color_picker_hover'] . '"';
+				$rel_tag = 'true' == $instance['no_follow'] ? 'nofollow' : '';
+				$rel_tag .= 'true' == $instance['no_opener'] ? ' noopener' : '';
+				$rel_tag .= 'true' == $instance['no_referrer'] ? ' noreferrer' : '';
+				?>
 				<li class="zoom-social_icons-list__item">
-					<a class="zoom-social_icons-list__link" href="<?php echo esc_url( $field['url'], $this->protocols ); ?>" <?php echo( $instance['open_new_tab'] === 'true' ? 'target="_blank"' : '' ); ?> <?php echo( $instance['no_follow'] === 'true' ? 'rel="nofollow"' : '' ); ?> <?php echo( $instance['no_opener'] === 'true' ? 'rel="noopener"' : '' ); ?> <?php echo( $instance['no_referrer'] === 'true' ? 'rel="noreferrer"' : '' ); ?>>
+					<a class="zoom-social_icons-list__link" href="<?php echo esc_url( $field['url'], $this->protocols ); ?>" <?php echo( $instance['open_new_tab'] === 'true' ? 'target="_blank"' : '' ); ?> <?php echo( strlen($rel_tag) > 0 ? 'rel="'.$rel_tag.'"' : '' ); ?>>
 						<?php if ( ! empty( $field['icon'] ) && ! empty( $field['icon_kit'] ) && ! empty( $field['color_picker'] ) ) {
 							$class = $field['icon_kit'] . ' ' . $field['icon_kit'] . '-' . $field['icon'];
 							$style = $rule . ' : ' . $field['color_picker'];

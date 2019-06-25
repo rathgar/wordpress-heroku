@@ -191,6 +191,13 @@ class Jetpack_Core_Json_Api_Endpoints {
 			'permission_callback' => array( $site_endpoint , 'can_request' ),
 		) );
 
+		// Get Activity Log data for this site.
+		register_rest_route( 'jetpack/v4', '/site/activity', array(
+			'methods' => WP_REST_Server::READABLE,
+			'callback' => __CLASS__ . '::get_site_activity',
+			'permission_callback' => __CLASS__ . '::manage_modules_permission_check',
+		) );
+
 		// Confirm that a site in identity crisis should be in staging mode
 		register_rest_route( 'jetpack/v4', '/identity-crisis/confirm-safe-mode', array(
 			'methods' => WP_REST_Server::EDITABLE,
@@ -1074,7 +1081,7 @@ class Jetpack_Core_Json_Api_Endpoints {
 		if ( ! is_wp_error( $rewind_data ) ) {
 			return rest_ensure_response( array(
 					'code' => 'success',
-					'message' => esc_html__( 'Rewind data correctly received.', 'jetpack' ),
+					'message' => esc_html__( 'Backup & Scan data correctly received.', 'jetpack' ),
 					'data' => wp_json_encode( $rewind_data ),
 				)
 			);
@@ -1090,7 +1097,7 @@ class Jetpack_Core_Json_Api_Endpoints {
 
 		return new WP_Error(
 			'error_get_rewind_data',
-			esc_html__( 'Could not retrieve Rewind data.', 'jetpack' ),
+			esc_html__( 'Could not retrieve Backup & Scan data.', 'jetpack' ),
 			array( 'status' => 500 )
 		);
 	}
@@ -1334,10 +1341,18 @@ class Jetpack_Core_Json_Api_Endpoints {
 		$site_id = Jetpack_Options::get_option( 'id' );
 
 		if ( ! $site_id ) {
-			 new WP_Error( 'site_id_missing' );
+			new WP_Error( 'site_id_missing' );
 		}
 
-		$response = Jetpack_Client::wpcom_json_api_request_as_blog( sprintf( '/sites/%d', $site_id ) .'?force=wpcom', '1.1' );
+		$args = array( 'headers' => array() );
+
+		// Allow use a store sandbox. Internal ref: PCYsg-IA-p2.
+		if ( isset( $_COOKIE ) && isset( $_COOKIE['store_sandbox'] ) ) {
+			$secret                    = $_COOKIE['store_sandbox'];
+			$args['headers']['Cookie'] = "store_sandbox=$secret;";
+		}
+
+		$response = Jetpack_Client::wpcom_json_api_request_as_blog( sprintf( '/sites/%d', $site_id ) .'?force=wpcom', '1.1', $args );
 
 		if ( 200 !== wp_remote_retrieve_response_code( $response ) ) {
 			return new WP_Error( 'site_data_fetch_failed' );
@@ -1374,6 +1389,57 @@ class Jetpack_Core_Json_Api_Endpoints {
 		if ( $site_data->get_error_code() === 'site_id_missing' ) {
 			return new WP_Error( 'site_id_missing', esc_html__( 'The ID of this site does not exist.', 'jetpack' ), array( 'status' => 404 ) );
 		}
+	}
+
+	/**
+	 * Fetch AL data for this site and return it.
+	 *
+	 * @since 7.4
+	 *
+	 * @return array|WP_Error
+	 */
+	public static function get_site_activity() {
+		$site_id = Jetpack_Options::get_option( 'id' );
+
+		if ( ! $site_id ) {
+			return new WP_Error(
+				'site_id_missing',
+				esc_html__( 'Site ID is missing.', 'jetpack' ),
+				array( 'status' => 400 )
+			);
+		}
+
+		$response = Jetpack_Client::wpcom_json_api_request_as_user( "/sites/$site_id/activity", '2', array(
+			'method'  => 'GET',
+			'headers' => array(
+				'X-Forwarded-For' => Jetpack::current_user_ip( true ),
+			),
+		), null, 'wpcom' );
+		$response_code = wp_remote_retrieve_response_code( $response );
+
+		if ( 200 !== $response_code ) {
+			return new WP_Error(
+				'activity_fetch_failed',
+				esc_html__( 'Could not retrieve site activity.', 'jetpack' ),
+				array( 'status' => $response_code )
+			);
+		}
+
+		$data = json_decode( wp_remote_retrieve_body( $response ) );
+
+		if ( ! isset( $data->current->orderedItems ) ) {
+			return new WP_Error(
+				'activity_not_found',
+				esc_html__( 'No activity found', 'jetpack' ),
+				array( 'status' => 204 ) // no content
+			);
+		}
+
+		return rest_ensure_response( array(
+				'code' => 'success',
+				'data' => $data->current->orderedItems,
+			)
+		);
 	}
 
 	/**
@@ -2051,113 +2117,6 @@ class Jetpack_Core_Json_Api_Endpoints {
 				'jp_group'          => 'related-posts',
 			),
 
-			// Spelling and Grammar - After the Deadline
-			'onpublish' => array(
-				'description'       => esc_html__( 'Proofread when a post or page is first published.', 'jetpack' ),
-				'type'              => 'boolean',
-				'default'           => 0,
-				'validate_callback' => __CLASS__ . '::validate_boolean',
-				'jp_group'          => 'after-the-deadline',
-			),
-			'onupdate' => array(
-				'description'       => esc_html__( 'Proofread when a post or page is updated.', 'jetpack' ),
-				'type'              => 'boolean',
-				'default'           => 0,
-				'validate_callback' => __CLASS__ . '::validate_boolean',
-				'jp_group'          => 'after-the-deadline',
-			),
-			'Bias Language' => array(
-				'description'       => esc_html__( 'Bias Language', 'jetpack' ),
-				'type'              => 'boolean',
-				'default'           => 0,
-				'validate_callback' => __CLASS__ . '::validate_boolean',
-				'jp_group'          => 'after-the-deadline',
-			),
-			'Cliches' => array(
-				'description'       => esc_html__( 'Clichés', 'jetpack' ),
-				'type'              => 'boolean',
-				'default'           => 0,
-				'validate_callback' => __CLASS__ . '::validate_boolean',
-				'jp_group'          => 'after-the-deadline',
-			),
-			'Complex Expression' => array(
-				'description'       => esc_html__( 'Complex Phrases', 'jetpack' ),
-				'type'              => 'boolean',
-				'default'           => 0,
-				'validate_callback' => __CLASS__ . '::validate_boolean',
-				'jp_group'          => 'after-the-deadline',
-			),
-			'Diacritical Marks' => array(
-				'description'       => esc_html__( 'Diacritical Marks', 'jetpack' ),
-				'type'              => 'boolean',
-				'default'           => 0,
-				'validate_callback' => __CLASS__ . '::validate_boolean',
-				'jp_group'          => 'after-the-deadline',
-			),
-			'Double Negative' => array(
-				'description'       => esc_html__( 'Double Negatives', 'jetpack' ),
-				'type'              => 'boolean',
-				'default'           => 0,
-				'validate_callback' => __CLASS__ . '::validate_boolean',
-				'jp_group'          => 'after-the-deadline',
-			),
-			'Hidden Verbs' => array(
-				'description'       => esc_html__( 'Hidden Verbs', 'jetpack' ),
-				'type'              => 'boolean',
-				'default'           => 0,
-				'validate_callback' => __CLASS__ . '::validate_boolean',
-				'jp_group'          => 'after-the-deadline',
-			),
-			'Jargon Language' => array(
-				'description'       => esc_html__( 'Jargon', 'jetpack' ),
-				'type'              => 'boolean',
-				'default'           => 0,
-				'validate_callback' => __CLASS__ . '::validate_boolean',
-				'jp_group'          => 'after-the-deadline',
-			),
-			'Passive voice' => array(
-				'description'       => esc_html__( 'Passive Voice', 'jetpack' ),
-				'type'              => 'boolean',
-				'default'           => 0,
-				'validate_callback' => __CLASS__ . '::validate_boolean',
-				'jp_group'          => 'after-the-deadline',
-			),
-			'Phrases to Avoid' => array(
-				'description'       => esc_html__( 'Phrases to Avoid', 'jetpack' ),
-				'type'              => 'boolean',
-				'default'           => 0,
-				'validate_callback' => __CLASS__ . '::validate_boolean',
-				'jp_group'          => 'after-the-deadline',
-			),
-			'Redundant Expression' => array(
-				'description'       => esc_html__( 'Redundant Phrases', 'jetpack' ),
-				'type'              => 'boolean',
-				'default'           => 0,
-				'validate_callback' => __CLASS__ . '::validate_boolean',
-				'jp_group'          => 'after-the-deadline',
-			),
-			'guess_lang' => array(
-				'description'       => esc_html__( 'Use automatically detected language to proofread posts and pages', 'jetpack' ),
-				'type'              => 'boolean',
-				'default'           => 0,
-				'validate_callback' => __CLASS__ . '::validate_boolean',
-				'jp_group'          => 'after-the-deadline',
-			),
-			'ignored_phrases' => array(
-				'description'       => esc_html__( 'Add Phrase to be ignored', 'jetpack' ),
-				'type'              => 'string',
-				'default'           => '',
-				'sanitize_callback' => 'esc_html',
-				'jp_group'          => 'after-the-deadline',
-			),
-			'unignore_phrase' => array(
-				'description'       => esc_html__( 'Remove Phrase from being ignored', 'jetpack' ),
-				'type'              => 'string',
-				'default'           => '',
-				'sanitize_callback' => 'esc_html',
-				'jp_group'          => 'after-the-deadline',
-			),
-
 			// Verification Tools
 			'google' => array(
 				'description'       => esc_html__( 'Google Search Console', 'jetpack' ),
@@ -2373,15 +2332,6 @@ class Jetpack_Core_Json_Api_Endpoints {
 					'installWooCommerce' => false,
 				),
 				'validate_callback' => __CLASS__ . '::validate_onboarding',
-				'jp_group'          => 'settings',
-			),
-
-			// Show welcome for newly purchased plan
-			'show_welcome_for_new_plan' => array(
-				'description'       => '',
-				'type'              => 'boolean',
-				'default'           => 0,
-				'validate_callback' => __CLASS__ . '::validate_boolean',
 				'jp_group'          => 'settings',
 			),
 
@@ -2928,21 +2878,6 @@ class Jetpack_Core_Json_Api_Endpoints {
 					$current_value = get_option( $key, $default_value );
 					$options[ $key ]['current_value'] = self::cast_value( $current_value, $options[ $key ] );
 				}
-				break;
-
-			case 'after-the-deadline':
-				if ( ! function_exists( 'AtD_get_options' ) ) {
-					include_once( JETPACK__PLUGIN_DIR . 'modules/after-the-deadline.php' );
-				}
-				$atd_options = array_merge( AtD_get_options( get_current_user_id(), 'AtD_options' ), AtD_get_options( get_current_user_id(), 'AtD_check_when' ) );
-				unset( $atd_options['name'] );
-				foreach ( $atd_options as $key => $value ) {
-					$options[ $key ]['current_value'] = self::cast_value( $value, $options[ $key ] );
-				}
-				$atd_options = AtD_get_options( get_current_user_id(), 'AtD_guess_lang' );
-				$options['guess_lang']['current_value'] = self::cast_value( isset( $atd_options['true'] ), $options[ 'guess_lang' ] );
-				$options['ignored_phrases']['current_value'] = AtD_get_setting( get_current_user_id(), 'AtD_ignored_phrases' );
-				unset( $options['unignore_phrase'] );
 				break;
 
 			case 'stats':
