@@ -108,9 +108,20 @@ figcaption.artwork-caption {
 
 .hfeed a img.wp-post-image {
   object-fit: cover;
-  width: 175px;
-  height: 175px;
+  width: 100%;
+  height: 200px;
 }
+
+
+@media only screen and (min-width: 768px) {
+  .hfeed a img.wp-post-image {
+    object-fit: cover;
+    width: 200px;
+    height: 200px;
+    max-width: 40%;
+  }
+}
+
 
 #category-header {
   margin-bottom: 20px;
