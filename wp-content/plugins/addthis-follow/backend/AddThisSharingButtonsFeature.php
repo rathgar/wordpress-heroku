@@ -19,6 +19,7 @@
  * +--------------------------------------------------------------------------+
  */
 
+require_once 'AddThisAmp.php';
 require_once 'AddThisFeature.php';
 require_once 'AddThisSharingButtonsFloatingTool.php';
 require_once 'AddThisSharingButtonsInlineTool.php';
@@ -66,6 +67,96 @@ if (!class_exists('AddThisSharingButtonsFeature')) {
         );
 
         public $contentFiltersEnabled = true;
+
+        /**
+         * Registers hooks for the insertion of AMP tools
+         *
+         * @return null
+         */
+        public function registerAmpHooks() {
+            $gooSettings = $this->globalOptionsObject->getConfigs();
+            if ($gooSettings['amp_disable'] == false) {
+                add_filter('amp_post_template_data', array($this, 'addFilterAmpPostTemplateData'));
+                add_action('amp_post_template_footer', array($this, 'addHtmlAmpFloating'));
+                add_action('wp_footer', array($this, 'addHtmlAmpFloating'));
+            }
+        }
+
+        /**
+         * Callback for AMP hooks
+         *
+         * Modifies AMP classic/reader template data to ensure that the amp-addthis
+         * extension script is loaded
+         *
+         * @param array $data template data
+         *
+         * @return array
+         */
+        public function addFilterAmpPostTemplateData($data) {
+            if (AddThisAmp::isAmpCompatible()) {
+                if (!is_array($data['amp_component_scripts'])) {
+                    $data['amp_component_scripts'] = array();
+                }
+
+                if (!$data['amp_component_scripts']['amp-addthis']) {
+                    $data['amp_component_scripts']['amp-addthis'] = true;
+                }
+            }
+
+            return $data;
+        }
+
+        /**
+         * Callback for AMP hooks
+         *
+         * Inserts element for floating share tools when using AMP
+         *
+         * @return null
+         */
+        public function addHtmlAmpFloating() {
+            if (AddThisAmp::inAmpMode()) {
+                if ($this->globalOptionsObject->inRegisteredMode()) {
+                    $profileId = $this->globalOptionsObject->getUsableProfileId();
+                    echo AddThisAmp::getFloatingHtml($profileId);
+                } else {
+                    echo AddThisAmp::getFloatingHtml(null);
+                }
+            }
+        }
+
+        /**
+         * Returns HTML that AddThis client code will pick up and replace, using
+         * layers
+         *
+         * @param array $class the class that will identify the tool
+         * @param array $track Optional. Used by reference. If the
+         * filter changes the value in any way the filter's name will be pushed
+         *
+         * @return string this should be valid html
+         */
+        public function getHtmlForFilter($class, &$track = false) {
+            if (AddThisAmp::inAmpMode() && !empty($class)) {
+                $gooSettings = $this->globalOptionsObject->getConfigs();
+
+                if ($gooSettings['amp_disable']) {
+                    return '';
+                }
+
+                $widgetType = 'shin';
+                $width = $gooSettings['amp_inline_share_width'];
+                $height = $gooSettings['amp_inline_share_height'];
+
+                if ($this->globalOptionsObject->inRegisteredMode()) {
+                    $profileId = $this->globalOptionsObject->getUsableProfileId();
+
+                    return AddThisAmp::getAmpHtml($profileId, null, $widgetType, $class, $width, $height);
+                } else {
+                    return AddThisAmp::getAmpHtmlByClass($class, $widgetType, $width, $height);
+                }
+            }
+
+            return parent::getHtmlForFilter($class, $track);
+        }
 
         /**
          * Builds the class used for sharing buttons above and below content on

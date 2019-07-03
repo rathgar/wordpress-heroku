@@ -371,7 +371,9 @@ if (!class_exists('AddThisPlugin')) {
                     array($this, 'printJavascriptForAdminUi')
                 );
             } else {
-                $this->addScripts();
+                // add scripts at "parse_query" action to ensure that AMP endpoint is
+                // properly detected
+                add_action('parse_query', array($this, 'addScripts'));
             }
 
             add_action('widgets_init', array($this, 'registerWidgets'));
@@ -445,13 +447,32 @@ if (!class_exists('AddThisPlugin')) {
         }
 
         /**
+         * This must be public as it's used for a callback for the
+         * wp action
+         *
+         * Performs any AMP initialization necessary for tools
+         * configured in anonymous mode
+         *
+         * @return null
+         */
+        public function initAnonymousAmpTools() {
+            AddThisAmp::initConfiguredTools(
+                $this->sharingButtonsObject->getConfigs(),
+                $this->globalOptionsObject
+            );
+        }
+
+        /**
+         * This must be public as it's used for a callback for the
+         * parse_query action
+         *
          * Setup out scripts to enqueue (if async is off), adds an action that
          * echos our script onto page if async is turned on, and adds an action
          * to enqueue our styles late. For all public pages.
          *
          * @return null
          */
-        protected function addScripts()
+        public function addScripts()
         {
             $gooConfigs = $this->globalOptionsObject->getConfigs();
 
@@ -463,7 +484,18 @@ if (!class_exists('AddThisPlugin')) {
                 $pageScriptHook = 'wp_head';
             }
 
-            if (empty($gooConfigs['enqueue_local_settings']) ||
+            // Based on AMP mode, queue anonymous tool init or queue widget scripts.
+            // It is not necessary to print widget scripts in AMP mode as
+            // they will be scrubbed by the HTML filter
+            if (AddThisAmp::inAmpMode()) {
+                if ($this->globalOptionsObject->inAnonymousMode()) {
+                    // initialize on the "wp" action, this is the earliest point at which the
+                    // post object exists and it can be determined if a tool is allowed on a
+                    // given template
+                    add_action('wp', array($this, 'initAnonymousAmpTools'));
+                }
+            } else if (
+                empty($gooConfigs['enqueue_local_settings']) ||
                 empty($gooConfigs['enqueue_client'])
             ) {
                 add_action(
@@ -736,10 +768,6 @@ if (!class_exists('AddThisPlugin')) {
             $javaScript .=   'window.wp_product_version = "' . $this->getProductVersion() . '"; ';
             $javaScript .= '} ';
 
-            $javaScript .= 'if (window.wp_blog_version === undefined) { ';
-            $javaScript .=   'window.wp_blog_version = "' . $this->getCmsVersion() . '"; ';
-            $javaScript .= '} ';
-
             $javaScript .= 'if (window.addthis_share === undefined) { ';
             $javaScript .=   'window.addthis_share = ' . $shareJson . '; ';
             $javaScript .= '} ';
@@ -856,11 +884,6 @@ if (!class_exists('AddThisPlugin')) {
                 $pluginInfo['plugin_mode'] = 'AddThis';
             }
             $pluginInfo['anonymous_profile_id'] = $this->globalOptionsObject->getAnonymousProfileId();
-
-            if ($this->globalOptionsObject->checkForEditPermissions(false)) {
-                $pluginInfo['php_version'] = phpversion();
-                $pluginInfo['cms_version'] = $this->getCmsVersion();
-            }
 
             // post specific stuff that requires wp_query
             global $wp_query;
@@ -1226,38 +1249,48 @@ if (!class_exists('AddThisPlugin')) {
          */
         public function getInlineCodeForShortCode($cssClass)
         {
-            $gooConfigs = $this->globalOptionsObject->getConfigs();
+            $html = '';
+            $gooSettings = $this->globalOptionsObject->getConfigs();
 
             if (AddThisAmp::inAmpMode()) {
-                $profileId = $this->globalOptionsObject->getUsableProfileId();
-                $widgetId = null;
+                if ($gooSettings['amp_disable']) {
+                    return '';
+                }
+
                 $widgetType = 'shin';
                 $width = $gooSettings['amp_inline_share_width'];
                 $height = $gooSettings['amp_inline_share_height'];
 
-                if (!empty($cssClass)) {
-                    preg_match($this->shortcodeIdPattern, $cssClass, $matches);
-                    if (count($matches) >= 3) {
-                        $widgetId = $matches[2];
+                if ($this->globalOptionsObject->inRegisteredMode()) {
+                    $profileId = $this->globalOptionsObject->getUsableProfileId();
+                    $widgetId = null;
+
+                    if (!empty($cssClass)) {
+                        preg_match($this->shortcodeIdPattern, $cssClass, $matches);
+                        if (count($matches) >= 3) {
+                            $widgetId = $matches[2];
+                        }
                     }
+
+                    $html = AddThisAmp::getAmpHtml($profileId, $widgetId, $widgetType, $cssClass, $width, $height);
+                } else if (!empty($cssClass)) {
+                    $html = AddThisAmp::getAmpHtmlByClass($cssClass, $widgetType, $width, $height);
+                }
+            } else {
+                $html  = '<!-- Created with a shortcode from an AddThis plugin -->';
+
+                if (!empty($cssClass)) {
+                    $html .= '<div class="'.$cssClass.' addthis_tool"></div>';
+                } else {
+                    $html .= '<!-- No CSS class provided. Nothing to do here.-->';
                 }
 
-                return AddThisAmp::getAmpHtml($profileId, $widgetId, $widgetType, $cssClass, $width, $height);
+                if (!empty($gooSettings['ajax_support'])) {
+                    $html .= '<script>if (typeof window.atnt !== \'undefined\') { window.atnt(); }</script>';
+                }
+
+                $html .= '<!-- End of short code snippet -->';
             }
-
-            $html  = '<!-- Created with a shortcode from an AddThis plugin -->';
-
-            if (!empty($cssClass)) {
-                $html .= '<div class="'.$cssClass.' addthis_tool"></div>';
-            } else {
-                $html .= '<!-- No CSS class provided. Nothing to do here.-->';
-            }
-
-            if (!empty($gooSettings['ajax_support'])) {
-                $html .= '<script>if (typeof window.atnt !== \'undefined\') { window.atnt(); }</script>';
-            }
-
-            $html .= '<!-- End of short code snippet -->';
 
             return $html;
         }

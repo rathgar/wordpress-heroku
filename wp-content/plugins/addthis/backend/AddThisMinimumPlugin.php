@@ -35,7 +35,7 @@ if (!class_exists('AddThisMinimumPlugin')) {
      */
     class AddThisMinimumPlugin extends AddThisPlugin
     {
-        protected $version = '3.2.3';
+        protected $version = '3.2.5';
         protected $name = 'Website Tools by AddThis';
         protected $productPrefix = 'wpwt';
         protected $pluginSlug = 'addthis-all';
@@ -67,6 +67,7 @@ if (!class_exists('AddThisMinimumPlugin')) {
                 if (!$enabledByPlugin) {
                     $this->$objectVariable->registerContentFilters();
                     $this->$objectVariable->registerExcerptFilters();
+                    $this->$objectVariable->registerAmpHooks();
                     add_action('widgets_init', array($this, 'registerWidgets'));
                 }
             }

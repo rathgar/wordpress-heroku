@@ -109,7 +109,8 @@ function gutenberg_render_block_core_rss( $attributes ) {
  * Registers the `core/rss` block on server.
  */
 function gutenberg_register_block_core_rss() {
-	register_block_type( 'core/rss',
+	register_block_type(
+		'core/rss',
 		array(
 			'attributes'      => array(
 				'align'          => array(

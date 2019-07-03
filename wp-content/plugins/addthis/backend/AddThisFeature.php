@@ -19,8 +19,6 @@
  * +--------------------------------------------------------------------------+
  */
 
-require_once 'AddThisAmp.php';
-
 if (!class_exists('AddThisFeature')) {
     /**
      * AddThis' root parent class for all its features
@@ -293,7 +291,8 @@ if (!class_exists('AddThisFeature')) {
 
             $this->registerContentFilters();
             $this->registerExcerptFilters();
-            $this->registerFooterFilters();
+
+            $this->registerAmpHooks();
         }
 
         /**
@@ -1249,6 +1248,14 @@ if (!class_exists('AddThisFeature')) {
         }
 
         /**
+         * Registers hooks for the insertion of AMP tools. Default for base, override on
+         * individual features
+         *
+         * @return null
+         */
+        public function registerAmpHooks() { }
+
+        /**
          * This must be public because the Minimum plugin will need to call it
          * directly
          *
@@ -1293,16 +1300,6 @@ if (!class_exists('AddThisFeature')) {
             ) {
                 add_filter('wp_trim_excerpt', array($this, 'addHtmlFilterWpTrimExcerpt'), $priority);
             }
-        }
-
-        /**
-         * Registers filters for HTML filtering or insertion into the footer
-         *
-         * @return null
-         */
-        public function registerFooterFilters() {
-            add_filter('wp_footer', array($this, 'addHtmlFilterAmpFloating'));
-            add_filter('amp_post_template_footer', array($this, 'addHtmlFilterAmpFloating'));
         }
 
         /**
@@ -1371,18 +1368,6 @@ if (!class_exists('AddThisFeature')) {
             $filterName = 'wp_trim_excerpt';
             $outputHtml = $this->addHtmlFilter($inputHtml, $filterName);
             return $outputHtml;
-        }
-
-        /**
-         * Inserts element for floating share tools when using AMP
-         *
-         * @return null
-         */
-        public function addHtmlFilterAmpFloating() {
-            if (AddThisAmp::inAmpMode()) {
-                $profileId = $this->globalOptionsObject->getUsableProfileId();
-                echo AddThisAmp::getFloatingHtml($profileId);
-            }
         }
 
         /**
@@ -1522,21 +1507,11 @@ if (!class_exists('AddThisFeature')) {
          */
         public function getHtmlForFilter($class, &$track = false)
         {
-            $gooSettings = $this->globalOptionsObject->getConfigs();
-
-            if (AddThisAmp::inAmpMode()) {
-                $profileId = $this->globalOptionsObject->getUsableProfileId();
-                $widgetType = 'shin';
-                $width = $gooSettings['amp_inline_share_width'];
-                $height = $gooSettings['amp_inline_share_height'];
-
-                return AddThisAmp::getAmpHtml($profileId, null, $widgetType, $class, $width, $height);
-            }
-
             $htmlTemplate = '<div class="%1$s addthis_tool" %2$s></div>';
             $attrString = $this->getInlineLayersAttributes($track);
             $html = sprintf($htmlTemplate, $class, $attrString);
 
+            $gooSettings = $this->globalOptionsObject->getConfigs();
             if (!empty($gooSettings['ajax_support'])) {
                 $html .= '<script>if (typeof window.atnt !== \'undefined\') { window.atnt(); }</script>';
             }

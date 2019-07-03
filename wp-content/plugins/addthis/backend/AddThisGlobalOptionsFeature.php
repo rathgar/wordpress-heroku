@@ -19,6 +19,7 @@
  * +--------------------------------------------------------------------------+
  */
 
+require_once 'AddThisAmp.php';
 require_once 'AddThisFeature.php';
 require_once 'AddThisGlobalOptionsTool.php';
 require_once 'AddThisGlobalOptionsCustomHtmlTool.php';
@@ -111,6 +112,7 @@ if (!class_exists('AddThisGlobalOptionsFeature')) {
             'addthis_config_trending_json',
             'addthis_config_welcome_json',
             // AMP options
+            'amp_disable',
             'amp_inline_share_width',
             'amp_inline_share_height',
         );
@@ -168,8 +170,9 @@ if (!class_exists('AddThisGlobalOptionsFeature')) {
             'addthis_config_trending_json'          => '',
             'addthis_config_welcome_json'           => '',
             // AMP options
-            'amp_inline_share_width'                => 380,
-            'amp_inline_share_height'               => 65,
+            'amp_disable'                           => false,
+            'amp_inline_share_width'                => AddThisAmp::TOOL_DEF_WIDTH,
+            'amp_inline_share_height'               => AddThisAmp::TOOL_DEF_HEIGHT,
         );
 
         // require the files with the tool and widget classes at the top of this
@@ -409,6 +412,11 @@ if (!class_exists('AddThisGlobalOptionsFeature')) {
                 unset($output['html']);
             }
 
+            // Remove empty-key setting that sometimes gets saved
+            if (isset($output[''])) {
+                unset($output['']);
+            }
+
             $checkboxFields = array(
                 'addthis_508',
                 'addthis_addressbar',
@@ -424,6 +432,7 @@ if (!class_exists('AddThisGlobalOptionsFeature')) {
                 'filter_the_excerpt',
                 'filter_wp_trim_excerpt',
                 'xmlns_attrs',
+                'amp_disable',
             );
 
             foreach ($checkboxFields as $field) {

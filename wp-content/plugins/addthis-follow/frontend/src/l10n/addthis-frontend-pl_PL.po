@@ -990,6 +990,16 @@ msgstr "AMP Options"
 msgid "advanced_settings_amp_options_description"
 msgstr "In this section, you can override some options for AMP tools."
 
+#. Advanced Settings >> AMP Options disable AMP features label
+#, include in addthis-wordpress-plugin domain
+msgid "advanced_settings_amp_disable_label"
+msgstr "Disable AddThis Plugin AMP Features"
+
+#. Advanced Settings >> AMP Options disable AMP features description
+#, include in addthis-wordpress-plugin domain
+msgid "advanced_settings_amp_disable_description"
+msgstr "Disable automatic insertion of amp-addthis tags. Use this option if there are issues with installed AMP features, such as a plugin that is not compatible with AddThis plugins."
+
 #. Advanced Settings >> AMP Options inline width label
 #, include in addthis-wordpress-plugin domain
 msgid "advanced_settings_amp_inline_width_label"

@@ -541,6 +541,8 @@
    "advanced_settings_enqueue_local_settings_description": "advanced_settings_enqueue_local_settings_description",
    "advanced_settings_amp_options_header": "advanced_settings_amp_options_header",
    "advanced_settings_amp_options_description": "advanced_settings_amp_options_description",
+   "advanced_settings_amp_disable_label": "advanced_settings_amp_disable_label",
+   "advanced_settings_amp_disable_description": "advanced_settings_amp_disable_description",
    "advanced_settings_amp_inline_width_label": "advanced_settings_amp_inline_width_label",
    "advanced_settings_amp_inline_width_description": "advanced_settings_amp_inline_width_description",
    "advanced_settings_amp_inline_height_label": "advanced_settings_amp_inline_height_label",

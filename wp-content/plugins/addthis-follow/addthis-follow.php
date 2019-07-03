@@ -1,7 +1,7 @@
 <?php
 /*
  * +--------------------------------------------------------------------------+
- * | Copyright (c) 2008-2017 Add This, LLC                                    |
+ * | Copyright (c) 2008-2019 Add This, LLC                                    |
  * +--------------------------------------------------------------------------+
  * | This program is free software; you can redistribute it and/or modify     |
  * | it under the terms of the GNU General Public License as published by     |
@@ -28,7 +28,7 @@
  * Plugin Name: Follow Buttons by AddThis
  * Plugin URI:  https://wordpress.org/plugins/addthis-follow/
  * Text Domain: addthis-backend
- * Version:     4.2.3
+ * Version:     4.2.5
  * Description: Generate followers for your social networks and track what pages are generating the most followers. Set up follow tools from AddThis right in WordPress. With AddThis you can see how your users are engaging with your content, provide a personalized experience for each user and encourage them to share your content in their social networks. Sharing tools, recommended content, conversion tools and social analytics available to registered accounts at addthis.com.
  */
 

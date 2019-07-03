@@ -2,8 +2,8 @@
 Contributors: abramsm, jgrodel, bradaddthis.com, addthis_paul, addthis_matt, ribin_addthis, addthis_elsa, addthisleland, sirius226, addthisjhilts
 Tags: follow buttons, follow button plugin, social follow, social buttons, followers
 Requires at least: 3.0
-Tested up to: 5.1.1
-Stable tag: 4.2.3
+Tested up to: 5.2.2
+Stable tag: 4.2.5
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -167,6 +167,13 @@ See our <a href="https://plugins.svn.wordpress.org/addthis-all/trunk/documentati
 
 
 == Changelog ==
+
+= 4.2.5 =
+* Fixed an incompability with AMP for WP plugin
+
+= 4.2.4 =
+* Added AMP support for tools made in anonymous mode
+* Added configuration option to disable AMP support
 
 = 4.2.3 =
 * Removed notices regarding AMP

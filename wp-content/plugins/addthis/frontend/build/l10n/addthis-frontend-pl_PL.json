@@ -147,6 +147,8 @@
    "widget_title_input_label": "Tytuł:",
    "advanced_settings_amp_options_header": "AMP Options",
    "advanced_settings_amp_options_description": "In this section, you can override some options for AMP tools.",
+   "advanced_settings_amp_disable_label": "Disable AddThis Plugin AMP Features",
+   "advanced_settings_amp_disable_description": "Disable automatic insertion of amp-addthis tags. Use this option if there are issues with installed AMP features, such as a plugin that is not compatible with AddThis plugins.",
    "advanced_settings_amp_inline_width_label": "Inline Width",
    "advanced_settings_amp_inline_width_description": "Override the width of Inline Sharing Tools on AMP",
    "advanced_settings_amp_inline_height_label": "Inline Height",

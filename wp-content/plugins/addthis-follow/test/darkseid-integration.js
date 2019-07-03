@@ -410,7 +410,7 @@ describe('WordPress registration process on existing account', function() {
     .get('/publisher/' + cuidish + '/application')
     .set('Authorization', 'gibberish_for_integration_test')
     .set('Accept', json)
-    .expect(404, done);
+    .expect(403, done);
   });
 
   // not yet used in production
@@ -598,7 +598,7 @@ describe('WordPress registration process on new account ', function() {
     .get('/publisher/' + cuidish + '/application')
     .set('Authorization', 'gibberish_for_integration_test')
     .set('Accept', json)
-    .expect(404, done);
+    .expect(403, done);
   });
 
   // not yet used in production
