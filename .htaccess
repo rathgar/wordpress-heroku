@@ -4,7 +4,7 @@ RewriteEngine On
 RewriteCond %{HTTP_HOST} ^rue.co.uk$ [OR]
 RewriteCond %{HTTP_HOST} ^www.rue.co.uk$ [OR]
 RewriteCond %{HTTP_HOST} ^art.rue.co.uk$
-RewriteRule ^(.*)$ https://rue.uk/$1 [R=301,L]
+RewriteRule ^(.*)$ http://rue.uk/$1 [R=301,L]
 </IfModule>
 # BEGIN WordPress
 <IfModule mod_rewrite.c>
