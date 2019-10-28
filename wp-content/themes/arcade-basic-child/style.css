@@ -156,3 +156,9 @@ figcaption.artwork-caption {
 .panel-default {
   border-color: #ddd;
 }
+
+
+.blocks-gallery-item figcaption {
+  a { color: white; }
+  a:hover { color: white; }
+}
