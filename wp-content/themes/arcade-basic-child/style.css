@@ -158,7 +158,5 @@ figcaption.artwork-caption {
 }
 
 
-.blocks-gallery-item figcaption {
-  a { color: white; }
-  a:hover { color: white; }
-}
+.blocks-gallery-item figcaption a { color: white; }
+.blocks-gallery-item figcaption a:hover { color: white; }
