@@ -25,6 +25,13 @@ class WC_Stripe_Webhook_Handler extends WC_Stripe_Payment_Gateway {
 	public $testmode;
 
 	/**
+	 * The secret to use when verifying webhooks.
+	 *
+	 * @var string
+	 */
+	protected $secret;
+
+	/**
 	 * Constructor.
 	 *
 	 * @since 4.0.0
@@ -34,6 +41,9 @@ class WC_Stripe_Webhook_Handler extends WC_Stripe_Payment_Gateway {
 		$this->retry_interval = 2;
 		$stripe_settings      = get_option( 'woocommerce_stripe_settings', array() );
 		$this->testmode       = ( ! empty( $stripe_settings['testmode'] ) && 'yes' === $stripe_settings['testmode'] ) ? true : false;
+		$secret_key           = ( $this->testmode ? 'test_' : '' ) . 'webhook_secret';
+		$this->secret         = ! empty( $stripe_settings[ $secret_key ] ) ? $stripe_settings[ $secret_key ] : false;
+
 		add_action( 'woocommerce_api_wc_stripe', array( $this, 'check_for_webhook' ) );
 	}
 
@@ -71,7 +81,6 @@ class WC_Stripe_Webhook_Handler extends WC_Stripe_Payment_Gateway {
 	 *
 	 * @since 4.0.0
 	 * @version 4.0.0
-	 * @todo Implement proper webhook signature validation. Ref https://stripe.com/docs/webhooks#signatures
 	 * @param string $request_headers The request headers from Stripe.
 	 * @param string $request_body The request body from Stripe.
 	 * @return bool
@@ -83,6 +92,29 @@ class WC_Stripe_Webhook_Handler extends WC_Stripe_Payment_Gateway {
 
 		if ( ! empty( $request_headers['USER-AGENT'] ) && ! preg_match( '/Stripe/', $request_headers['USER-AGENT'] ) ) {
 			return false;
+		}
+
+		if ( ! empty( $this->secret ) ) {
+			// Check for a valid signature.
+			$signature_format = '/^t=(?P<timestamp>\d+)(?P<signatures>(,v\d+=[a-z0-9]+){1,2})$/';
+			if ( empty( $request_headers['STRIPE-SIGNATURE'] ) || ! preg_match( $signature_format, $request_headers['STRIPE-SIGNATURE'], $matches ) ) {
+				return false;
+			}
+
+			// Verify the timestamp.
+			$timestamp = intval( $matches['timestamp'] );
+			if ( abs( $timestamp - time() ) > 5 * MINUTE_IN_SECONDS ) {
+				return;
+			}
+
+			// Generate the expected signature.
+			$signed_payload     = $timestamp . '.' . $request_body;
+			$expected_signature = hash_hmac( 'sha256', $signed_payload, $this->secret );
+
+			// Check if the expected signature is present.
+			if ( ! preg_match( '/,v\d+=' . preg_quote( $expected_signature, '/' ) . '/', $matches['signatures'] ) ) {
+				return false;
+			}
 		}
 
 		return true;
@@ -503,11 +535,20 @@ class WC_Stripe_Webhook_Handler extends WC_Stripe_Payment_Gateway {
 	 * @param object $notification
 	 */
 	public function process_review_opened( $notification ) {
-		$order = WC_Stripe_Helper::get_order_by_charge_id( $notification->data->object->charge );
+		if ( isset( $notification->data->object->payment_intent ) ) {
+			$order = WC_Stripe_Helper::get_order_by_intent_id( $notification->data->object->payment_intent );
 
-		if ( ! $order ) {
-			WC_Stripe_Logger::log( 'Could not find order via charge ID: ' . $notification->data->object->charge );
-			return;
+			if ( ! $order ) {
+				WC_Stripe_Logger::log( '[Review Opened] Could not find order via intent ID: ' . $notification->data->object->payment_intent );
+				return;
+			}
+		} else {
+			$order = WC_Stripe_Helper::get_order_by_charge_id( $notification->data->object->charge );
+
+			if ( ! $order ) {
+				WC_Stripe_Logger::log( '[Review Opened] Could not find order via charge ID: ' . $notification->data->object->charge );
+				return;
+			}
 		}
 
 		/* translators: 1) The URL to the order. 2) The reason type. */
@@ -527,11 +568,20 @@ class WC_Stripe_Webhook_Handler extends WC_Stripe_Payment_Gateway {
 	 * @param object $notification
 	 */
 	public function process_review_closed( $notification ) {
-		$order = WC_Stripe_Helper::get_order_by_charge_id( $notification->data->object->charge );
+		if ( isset( $notification->data->object->payment_intent ) ) {
+			$order = WC_Stripe_Helper::get_order_by_intent_id( $notification->data->object->payment_intent );
 
-		if ( ! $order ) {
-			WC_Stripe_Logger::log( 'Could not find order via charge ID: ' . $notification->data->object->charge );
-			return;
+			if ( ! $order ) {
+				WC_Stripe_Logger::log( '[Review Closed] Could not find order via intent ID: ' . $notification->data->object->payment_intent );
+				return;
+			}
+		} else {
+			$order = WC_Stripe_Helper::get_order_by_charge_id( $notification->data->object->charge );
+
+			if ( ! $order ) {
+				WC_Stripe_Logger::log( '[Review Closed] Could not find order via charge ID: ' . $notification->data->object->charge );
+				return;
+			}
 		}
 
 		/* translators: 1) The reason type. */
@@ -610,16 +660,16 @@ class WC_Stripe_Webhook_Handler extends WC_Stripe_Payment_Gateway {
 			return;
 		}
 
+		if ( 'pending' !== $order->get_status() && 'failed' !== $order->get_status() ) {
+			return;
+		}
+
 		if ( $this->lock_order_payment( $order, $intent ) ) {
 			return;
 		}
 
 		$order_id = WC_Stripe_Helper::is_wc_lt( '3.0' ) ? $order->id : $order->get_id();
 		if ( 'payment_intent.succeeded' === $notification->type || 'payment_intent.amount_capturable_updated' === $notification->type ) {
-			if ( 'pending' !== $order->get_status() && 'failed' !== $order->get_status() ) {
-				return;
-			}
-
 			$charge = end( $intent->charges->data );
 			WC_Stripe_Logger::log( "Stripe PaymentIntent $intent->id succeeded for order $order_id" );
 
@@ -635,6 +685,43 @@ class WC_Stripe_Webhook_Handler extends WC_Stripe_Payment_Gateway {
 			$order->update_status( 'failed', sprintf( __( 'Stripe SCA authentication failed. Reason: %s', 'woocommerce-gateway-stripe' ), $error_message ) );
 
 			do_action( 'wc_gateway_stripe_process_webhook_payment_error', $order, $notification );
+
+			$this->send_failed_order_email( $order_id );
+		}
+
+		$this->unlock_order_payment( $order );
+	}
+
+	public function process_setup_intent( $notification ) {
+		$intent = $notification->data->object;
+		$order = WC_Stripe_Helper::get_order_by_setup_intent_id( $intent->id );
+
+		if ( ! $order ) {
+			WC_Stripe_Logger::log( 'Could not find order via setup intent ID: ' . $intent->id );
+			return;
+		}
+
+		if ( 'pending' !== $order->get_status() && 'failed' !== $order->get_status() ) {
+			return;
+		}
+
+		if ( $this->lock_order_payment( $order, $intent ) ) {
+			return;
+		}
+
+		$order_id = WC_Stripe_Helper::is_wc_lt( '3.0' ) ? $order->id : $order->get_id();
+		if ( 'setup_intent.succeeded' === $notification->type ) {
+			WC_Stripe_Logger::log( "Stripe SetupIntent $intent->id succeeded for order $order_id" );
+			if ( WC_Stripe_Helper::is_pre_orders_exists() && WC_Pre_Orders_Order::order_contains_pre_order( $order ) ) {
+				WC_Pre_Orders_Order::mark_order_as_pre_ordered( $order );
+			} else {
+				$order->payment_complete();
+			}
+		} else {
+			$error_message = $intent->last_setup_error ? $intent->last_setup_error->message : "";
+
+			/* translators: 1) The error message that was received from Stripe. */
+			$order->update_status( 'failed', sprintf( __( 'Stripe SCA authentication failed. Reason: %s', 'woocommerce-gateway-stripe' ), $error_message ) );
 
 			$this->send_failed_order_email( $order_id );
 		}
@@ -693,6 +780,11 @@ class WC_Stripe_Webhook_Handler extends WC_Stripe_Payment_Gateway {
 			case 'payment_intent.payment_failed':
 			case 'payment_intent.amount_capturable_updated':
 				$this->process_payment_intent_success( $notification );
+				break;
+
+			case 'setup_intent.succeeded':
+			case 'setup_intent.setup_failed':
+				$this->process_setup_intent( $notification );
 
 		}
 	}

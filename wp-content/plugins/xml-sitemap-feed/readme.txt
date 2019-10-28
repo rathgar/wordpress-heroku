@@ -4,8 +4,8 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=ravan
 Tags: sitemap, xml sitemap, news sitemap, sitemap.xml, robots.txt, Google, Google News, Yahoo, Bing, Yandex, Baidu, seo, feed, Polylang, WPML, image sitemap
 Requires at least: 4.4
 Requires PHP: 5.4
-Tested up to: 5.2
-Stable tag: 5.2.3
+Tested up to: 5.3
+Stable tag: 5.2.6
 
 XML and Google News Sitemaps to feed the hungry spiders. Multisite, WP Super Cache, Polylang and WPML compatible.
 
@@ -43,7 +43,7 @@ Please read the FAQ's for info on how to get your articles listed on Google News
 * Works out-of-the-box, even on **Multisite** installations.
 * Optionally include Image tags with caption and title for featured images or attached images.
 * Pings Google, Bing & Yahoo on new post publication, once per hour.
-* Options to define which post types and if taxonomies get included in the sitemap
+* Options to define which post types and taxonomies get included in the sitemap
 * Updates Lastmod on post modification or on comments.
 * Set Priority per post type, per taxonomy and per individual post.
 * Exclude individual posts and pages.
@@ -291,12 +291,25 @@ Yes. In fact, it has been designed for it. Tested on WPMU 2.9.2 and WPMS 3+ both
 
 == Upgrade Notice ==
 
-= 5.2.3 =
+= 5.2.6 =
 
-Bugfix release.
+New action hooks, taxonomy selection bugfix and relative path stylesheets.
 
 
 == Changelog ==
+
+= 5.2.7 =
+* NEW: Ad Inserter compatibility check
+
+= 5.2.6 =
+* NEW: xmlsf_tags_after, xmlsf_url_after and xmlsf_news_url_after action hooks
+* Make stylesheet paths relative to prevent exclusion when using different language domains
+* FIX: Taxonomy selection not available to new installs
+
+= 5.2.4 =
+* NEW Rank Math incompatibility admin warnings
+* FIX undefined index
+* FIX invalid form control
 
 = 5.2.3 =
 * FIX Cannot use return value in write context
@@ -371,7 +384,7 @@ Bugfix release.
 * NEW Filters for post types: xmlsf_post_types and xmlsf_news_post_types
 * NEW Filters for priority values: xmlsf_post_priority and xmlsf_term_priority
 * Removal of Genre, Keywords and Access tags as Google dropped support
-* Taxonomy term sitemaps speed improvent: get lastmod date from database
+* Taxonomy term sitemaps speed improvement: get lastmod date from database
 * Exclude Woocommerce product_shipping_class taxonomy
 * PHP 7.2+ compat: create_function deprecated
 * No more domain filtering for custom URLs and sitemaps

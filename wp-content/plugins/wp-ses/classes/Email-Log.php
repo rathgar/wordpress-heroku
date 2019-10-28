@@ -72,7 +72,7 @@ class Email_Log {
 		);
 
 		if ( is_multisite() ) {
-			$args['subsite_id'] = get_current_blog_id();
+			$args['subsite_id'] = isset( $atts['subsite_id'] ) ? $atts['subsite_id'] : get_current_blog_id();
 		}
 
 		$result = $this->database->insert(
@@ -288,8 +288,10 @@ class Email_Log {
 				`email_open_count` INT DEFAULT '0',
 				`email_first_open_date` DATETIME,
 				`email_last_open_date` DATETIME,
-				`email_created` datetime NOT NULL,
-				PRIMARY KEY  (email_id)
+				`email_created` DATETIME NOT NULL,
+				`email_sent` DATETIME,
+				PRIMARY KEY  (email_id),
+				INDEX email_subject (email_subject)
 				) $charset_collate;";
 		dbDelta( $sql );
 	}

@@ -34,7 +34,7 @@ if (!class_exists('AddThisFollowButtonsPlugin')) {
      */
     class AddThisFollowButtonsPlugin extends AddThisPlugin
     {
-        protected $version = '4.2.5';
+        protected $version = '4.2.6';
         protected $name = 'Follow Buttons by AddThis';
         protected $productPrefix = 'wpf';
         protected $pluginSlug = 'addthis-follow';

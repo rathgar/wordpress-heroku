@@ -2,6 +2,8 @@
 
 namespace DeliciousBrains\WP_Offload_SES;
 
+use \Datetime;
+
 class Utils {
 
 	/**
@@ -185,7 +187,7 @@ class Utils {
 	 */
 	public static function get_wordpress_default_email( $apply_filter = true ) {
 		// Get the site domain and get rid of www.
-		$sitename = strtolower( $_SERVER['SERVER_NAME'] ); // phpcs:ignore
+		$sitename = wp_parse_url( network_home_url(), PHP_URL_HOST );
 
 		if ( substr( $sitename, 0, 4 ) == 'www.' ) {
 			$sitename = substr( $sitename, 4 );
@@ -212,7 +214,7 @@ class Utils {
 			 * Workaround - `is_network_admin()` won't work w/ AJAX.
 			 * https://core.trac.wordpress.org/ticket/22589
 			 */
-			if ( false !== strpos( $_SERVER['HTTP_REFERER'], 'wp-admin/network' ) ) {
+			if ( isset( $_SERVER['HTTP_REFERER'] ) && false !== strpos( $_SERVER['HTTP_REFERER'], 'wp-admin/network' ) ) {
 				return true;
 			}
 
@@ -220,6 +222,31 @@ class Utils {
 		}
 
 		return is_network_admin();
+	}
+
+	/**
+	 * Gets the formatted date & time from a MySQL timestamp.
+	 *
+	 * @param string $timestamp The timestamp.
+	 *
+	 * @return array
+	 */
+	public static function get_date_and_time( $timestamp ) {
+		$datetime    = new Datetime( $timestamp );
+		$date_format = str_replace( 'F', 'M', get_option( 'date_format', 'm/d/Y' ) );
+		$time_format = get_option( 'time_format', 'g:i a' );
+
+		$date = $datetime->format( $date_format );
+		$time = $datetime->format( $time_format );
+
+		if ( ! $date || ! $time ) {
+			return false;
+		}
+
+		return array(
+			'date' => $date,
+			'time' => $time,
+		);
 	}
 
 }

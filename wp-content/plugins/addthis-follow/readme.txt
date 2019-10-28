@@ -3,7 +3,7 @@ Contributors: abramsm, jgrodel, bradaddthis.com, addthis_paul, addthis_matt, rib
 Tags: follow buttons, follow button plugin, social follow, social buttons, followers
 Requires at least: 3.0
 Tested up to: 5.2.2
-Stable tag: 4.2.5
+Stable tag: 4.2.6
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -167,6 +167,9 @@ See our <a href="https://plugins.svn.wordpress.org/addthis-all/trunk/documentati
 
 
 == Changelog ==
+
+= 4.2.6 =
+* Fixed a bug which caused unneccessary errors in log when in AMP mode
 
 = 4.2.5 =
 * Fixed an incompability with AMP for WP plugin

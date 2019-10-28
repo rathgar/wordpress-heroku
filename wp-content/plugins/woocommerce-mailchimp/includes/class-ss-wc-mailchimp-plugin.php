@@ -15,7 +15,7 @@ final class SS_WC_MailChimp_Plugin {
 	 *
 	 * @var string
 	 */
-	private static $version = '2.1.19';
+	private static $version = '2.3.3';
 
 	/**
 	 * Plugin singleton instance
@@ -229,7 +229,7 @@ final class SS_WC_MailChimp_Plugin {
 	}
 
 	/**
-	 * Returns selected MailChimp interest groups.
+	 * Returns selected Mailchimp interest groups.
 	 *
 	 * @access public
 	 * @return array
@@ -237,6 +237,76 @@ final class SS_WC_MailChimp_Plugin {
 	public function interest_groups() {
 		return $this->settings['interest_groups'];
 	}
+
+	/**
+	 * Returns selected Mailchimp tags.
+	 *
+	 * @access public
+	 * @return array
+	 */
+	public function tags() {
+		return $this->settings['tags'];
+	}
+
+	/**
+	 * Get the global subscribe options for the passed $order_id
+	 *
+	 * @since  2.3.2
+	 * @access public
+	 * @param  $order_id int The order id.
+	 */
+	public function get_subscribe_options_for_order( $order_id ) {
+
+		// Get WC order
+		$order = wc_get_order( $order_id );
+
+		$order_id = method_exists( $order, 'get_id' ) ? $order->get_id() : $order->id;
+		$email = method_exists( $order, 'get_billing_email' ) ? $order->get_billing_email() : $order->billing_email;
+		$first_name = method_exists( $order, 'get_billing_first_name' ) ? $order->get_billing_first_name() : $order->billing_first_name;
+		$last_name = method_exists( $order, 'get_billing_last_name' ) ? $order->get_billing_last_name() : $order->billing_last_name;
+
+		$list_id = $this->get_list();
+
+		if ( ! $email ) {
+			return; // Email is required.
+		}
+
+		$merge_tags = array(
+			'FNAME' => $first_name,
+			'LNAME' => $last_name,
+		);
+
+		$interest_groups = $this->interest_groups();
+
+		if ( ! empty( $interest_groups ) ) {
+			$interest_groups = array_fill_keys( $interest_groups, true );
+		}
+
+		$tags = $this->tags();
+
+		$mc_tags = $this->mailchimp()->get_tags( $list_id );
+
+		$tags = array_map( function( $tag ) use ( $mc_tags ) {
+			return array(
+				'name' => $mc_tags[$tag],
+				'status' => 'active',
+			);
+		}, $tags );
+
+		// Set subscription options.
+		$subscribe_options = array(
+			'list_id'           => $list_id,
+			'email'             => $email,
+			'merge_tags'      	=> $merge_tags,
+			'interest_groups'   => $interest_groups,
+			'tags'              => $tags,
+			'email_type'        => 'html',
+			'double_opt_in'     => $this->double_opt_in(),
+		);
+
+		return $subscribe_options;
+
+	} //end function get_subscribe_options_for_order
 
 	/**
 	 * Whether or not an api key has been set.
@@ -316,13 +386,13 @@ final class SS_WC_MailChimp_Plugin {
 	private function define_constants() {
 
 		// Minimum supported version of WordPress.
-		$this->define( 'SS_WC_MAILCHIMP_MIN_WP_VERSION', '3.5.1' );
+		$this->define( 'SS_WC_MAILCHIMP_MIN_WP_VERSION', '4.7.0' );
 
 		// Minimum supported version of WooCommerce.
-		$this->define( 'SS_WC_MAILCHIMP_MIN_WC_VERSION', '2.2.0' );
+		$this->define( 'SS_WC_MAILCHIMP_MIN_WC_VERSION', '3.5.0' );
 
 		// Minimum supported version of PHP.
-		$this->define( 'SS_WC_MAILCHIMP_MIN_PHP_VERSION', '5.4.0' );
+		$this->define( 'SS_WC_MAILCHIMP_MIN_PHP_VERSION', '5.6.0' );
 
 		// Plugin version.
 		$this->define( 'SS_WC_MAILCHIMP_VERSION', self::version() );
@@ -393,7 +463,7 @@ final class SS_WC_MailChimp_Plugin {
 
 			add_filter( 'plugin_action_links_' . plugin_basename( SS_WC_MAILCHIMP_FILE ), array( $this, 'action_links' ) );
 
-			//add_filter( 'plugin_row_meta', array( $this, 'plugin_row_meta' ), 10, 2 );
+			add_filter( 'plugin_row_meta', array( $this, 'plugin_row_meta' ), 10, 2 );
 
 			add_filter( 'woocommerce_get_settings_pages', array( $this, 'add_mailchimp_settings' ) );
 
@@ -476,16 +546,14 @@ final class SS_WC_MailChimp_Plugin {
 	public static function plugin_row_meta( $links, $file ) {
 		if ( plugin_basename( SS_WC_MAILCHIMP_FILE ) === $file ) {
 			$row_meta = array(
-				'docs'    => '<a href="' . esc_url( apply_filters( 'ss_wc_mailchimp_docs_url', 'https://docs.woocommerce.com/documentation/plugins/woocommerce/' ) ) . '" aria-label="' . esc_attr__( 'View WooCommerce MailChimp documentation', 'woocommerce-mailchimp' ) . '">' . esc_html__( 'Documentation', 'woocommerce-mailchimp' ) . '</a>',
+				'docs' => '<a href="' . esc_url( apply_filters( 'ss_wc_mailchimp_docs_url', 'https://support.saintsystems.com/hc/en-us/sections/201959566' ) ) . '" aria-label="' . esc_attr__( 'View WooCommerce Mailchimp documentation', 'woocommerce-mailchimp' ) . '" target="_blank">' . esc_html__( 'Documentation', 'woocommerce-mailchimp' ) . '</a>',
 			);
 
 			if ( ! function_exists( 'SSWCMCPRO' ) ) {
-				$row_meta[] = array(
-					'upgrade' => '<a href="' . esc_url( apply_filters( 'ss_wc_mailchimp_support_url', 'https://www.saintsystems.com/products/woocommerce-mailchimp-pro/#utm_source=wp-plugin&utm_medium=woocommerce-mailchimp&utm_campaign=plugins-upgrade-link' ) ) . '" aria-label="' . esc_attr__( 'Upgrade to WooCommerce MailChimp Pro', 'woocommerce-mailchimp' ) . '" target="_blank">' . esc_html__( 'Upgrade to Pro', 'woocommerce-mailchimp' ) . '</a>',
-				);
+				$row_meta['upgrade'] = '<a href="' . esc_url( apply_filters( 'ss_wc_mailchimp_support_url', 'https://www.saintsystems.com/products/woocommerce-mailchimp-pro/#utm_source=wp-plugin&utm_medium=woocommerce-mailchimp&utm_campaign=plugins-upgrade-link' ) ) . '" aria-label="' . esc_attr__( 'Upgrade to WooCommerce Mailchimp Pro', 'woocommerce-mailchimp' ) . '" target="_blank">' . esc_html__( 'Upgrade to Pro', 'woocommerce-mailchimp' ) . '</a>';
 			}
 
-			return array_merge( $row_meta, $links );
+			return array_merge( $links, $row_meta );
 		}
 
 		return (array) $links;
@@ -523,11 +591,14 @@ final class SS_WC_MailChimp_Plugin {
 
 		// Localize javascript messages.
 		$translation_array = array(
-			'connecting_to_mailchimp'     => __( 'Connecting to MailChimp', 'woocommerce-mailchimp' ),
+			'connecting_to_mailchimp'     => __( 'Connecting to Mailchimp', 'woocommerce-mailchimp' ),
 			'error_loading_account'       => __( 'Error. Please check your api key.', 'woocommerce-mailchimp' ),
-			'error_loading_groups'        => __( 'Error loading groups. Please check your MailChimp Interest Groups for the selected list.', 'woocommerce-mailchimp' ),
+			'error_loading_groups'        => __( 'Error loading groups. Please check your Mailchimp Interest Groups for the selected list.', 'woocommerce-mailchimp' ),
 			'select_groups_placeholder'   => __( 'Select one or more groups (optional)', 'woocommerce-mailchimp' ),
 			'interest_groups_not_enabled' => __( 'This list does not have interest groups enabled', 'woocommerce-mailchimp' ),
+			'error_loading_tags'          => __( 'Error loading tags. Please check your Mailchimp tags for the selected list.', 'woocommerce-mailchimp' ),
+			'select_tags_placeholder'     => __( 'Select one or more tags (optional)', 'woocommerce-mailchimp' ),
+			'tags_not_enabled'            => __( 'This list does not have tags enabled', 'woocommerce-mailchimp' ),
 		);
 		wp_localize_script( 'woocommerce-mailchimp-admin', 'SS_WC_MailChimp_Messages', $translation_array );
 

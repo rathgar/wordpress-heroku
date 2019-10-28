@@ -68,8 +68,10 @@ class XMLSF_Admin_Sitemap extends XMLSF_Admin
 	 */
 	public function check_plugin_conflicts()
 	{
+    if ( wp_doing_ajax() || ! current_user_can( 'manage_options' ) ) return;
+
 		// TODO:
-		// W3TC static files 404 exclusion rules ? Said to be fixed in W3TC next veresion...
+		// W3TC static files 404 exclusion rules ? Said to be fixed in W3TC next version...
 		// Google (XML) Sitemaps Generator Plugin for WordPress and Google News sitemap incompatibility
 
 		// WP SEO conflict notices
@@ -123,6 +125,33 @@ class XMLSF_Admin_Sitemap extends XMLSF_Admin
 				}
 			}
 		}
+
+    // Rank Math conflict notices
+		if ( is_plugin_active('seo-by-rank-math/rank-math.php') ) {
+
+			// check date archive redirection
+			if ( !in_array( 'rankmath_date_redirect', parent::$dismissed ) ) {
+				$rankmath_titles = get_option( 'rank-math-options-titles' );
+				if ( ! empty( $rankmath_titles['disable_date_archives'] ) && $rankmath_titles['disable_date_archives'] == 'on' ) {
+					// check if Split by option is set anywhere
+					foreach ( (array) get_option( 'xmlsf_post_types', array() ) as $type => $settings ) {
+						if ( !empty( $settings['active'] ) && !empty( $settings['archive'] ) ) {
+							add_action( 'admin_notices', array( 'XMLSF_Admin_Notices', 'notice_rankmath_date_redirect' ) );
+							break;
+						}
+					}
+				}
+			}
+
+			// check rank math sitemap option
+			if ( !in_array( 'rankmath_sitemap', parent::$dismissed ) ) {
+				$rankmath_modules = (array) get_option( 'rank_math_modules' );
+				if ( in_array( 'sitemap', $rankmath_modules ) ) {
+					add_action( 'admin_notices', array( 'XMLSF_Admin_Notices', 'notice_rankmath_sitemap' ) );
+				}
+			}
+		}
+
 	}
 
 	/**
@@ -262,9 +291,7 @@ class XMLSF_Admin_Sitemap extends XMLSF_Admin
 		// taxonomies
 		add_settings_section( 'xml_sitemap_taxonomies_section', /*'<a name="xmlsf"></a>'.__('XML Sitemap','xml-sitemap-feed')*/ '', '', 'xmlsf_taxonomies' );
 		add_settings_field( 'xmlsf_taxonomy_settings', translate('General'), array($this,'taxonomy_settings_field'), 'xmlsf_taxonomies', 'xml_sitemap_taxonomies_section' );
-    $taxonomies = get_option( 'xmlsf_taxonomies' );
-    if ( apply_filters( 'xmlsf_taxonomies', ! empty( $taxonomies ) ) )
-			add_settings_field( 'xmlsf_taxonomies', __('Taxonomies','xml-sitemap-feed'), array($this,'taxonomies_field'), 'xmlsf_taxonomies', 'xml_sitemap_taxonomies_section' );
+    add_settings_field( 'xmlsf_taxonomies', __('Taxonomies','xml-sitemap-feed'), array($this,'taxonomies_field'), 'xmlsf_taxonomies', 'xml_sitemap_taxonomies_section' );
 
 		add_settings_section( 'xml_sitemap_advanced_section', /*'<a name="xmlsf"></a>'.__('XML Sitemap','xml-sitemap-feed')*/ '', '', 'xmlsf_advanced' );
 		// custom urls

@@ -371,9 +371,9 @@ if (!class_exists('AddThisPlugin')) {
                     array($this, 'printJavascriptForAdminUi')
                 );
             } else {
-                // add scripts at "parse_query" action to ensure that AMP endpoint is
+                // add scripts at "wp" action to ensure that AMP endpoint is
                 // properly detected
-                add_action('parse_query', array($this, 'addScripts'));
+                add_action('wp', array($this, 'addScripts'));
             }
 
             add_action('widgets_init', array($this, 'registerWidgets'));
@@ -447,15 +447,12 @@ if (!class_exists('AddThisPlugin')) {
         }
 
         /**
-         * This must be public as it's used for a callback for the
-         * wp action
-         *
          * Performs any AMP initialization necessary for tools
          * configured in anonymous mode
          *
          * @return null
          */
-        public function initAnonymousAmpTools() {
+        protected function initAnonymousAmpTools() {
             AddThisAmp::initConfiguredTools(
                 $this->sharingButtonsObject->getConfigs(),
                 $this->globalOptionsObject
@@ -464,7 +461,7 @@ if (!class_exists('AddThisPlugin')) {
 
         /**
          * This must be public as it's used for a callback for the
-         * parse_query action
+         * wp action
          *
          * Setup out scripts to enqueue (if async is off), adds an action that
          * echos our script onto page if async is turned on, and adds an action
@@ -476,39 +473,37 @@ if (!class_exists('AddThisPlugin')) {
         {
             $gooConfigs = $this->globalOptionsObject->getConfigs();
 
-            if (!empty($gooConfigs['script_location'])
-                && $gooConfigs['script_location'] == 'footer'
-            ) {
-                $pageScriptHook = 'wp_footer';
-            } else {
-                $pageScriptHook = 'wp_head';
-            }
-
             // Based on AMP mode, queue anonymous tool init or queue widget scripts.
             // It is not necessary to print widget scripts in AMP mode as
             // they will be scrubbed by the HTML filter
-            if (AddThisAmp::inAmpMode()) {
+            if (!$gooConfigs['amp_disable'] && AddThisAmp::inAmpMode()) {
                 if ($this->globalOptionsObject->inAnonymousMode()) {
-                    // initialize on the "wp" action, this is the earliest point at which the
-                    // post object exists and it can be determined if a tool is allowed on a
-                    // given template
-                    add_action('wp', array($this, 'initAnonymousAmpTools'));
+                    $this->initAnonymousAmpTools();
                 }
-            } else if (
-                empty($gooConfigs['enqueue_local_settings']) ||
-                empty($gooConfigs['enqueue_client'])
-            ) {
-                add_action(
-                    $pageScriptHook,
-                    array($this, 'printAddThisWidgetScript'),
-                    19
-                );
-            }
+            } else {
+                if (!empty($gooConfigs['script_location'])
+                    && $gooConfigs['script_location'] == 'footer'
+                ) {
+                    $pageScriptHook = 'wp_footer';
+                } else {
+                    $pageScriptHook = 'wp_head';
+                }
 
-            if (!empty($gooConfigs['enqueue_local_settings']) ||
-                !empty($gooConfigs['enqueue_client'])
-            ) {
-                add_action('wp_enqueue_scripts', array($this, 'enqueueScripts'));
+                if (empty($gooConfigs['enqueue_local_settings']) ||
+                    empty($gooConfigs['enqueue_client'])
+                ) {
+                    add_action(
+                        $pageScriptHook,
+                        array($this, 'printAddThisWidgetScript'),
+                        19
+                    );
+                }
+
+                if (!empty($gooConfigs['enqueue_local_settings']) ||
+                    !empty($gooConfigs['enqueue_client'])
+                ) {
+                    add_action('wp_enqueue_scripts', array($this, 'enqueueScripts'));
+                }
             }
 
             // we want this to get enqueued after the theme css, thus the 18
