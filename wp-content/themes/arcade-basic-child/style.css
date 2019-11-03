@@ -14,6 +14,14 @@ body {
   background-color: #f0f0f0;
 }
 
+.border {
+  border: 1px solid #dee2e6 !important;
+}
+
+.border-danger {
+  border-color: #dc3545 !important;
+}
+
 article.error404 .entry-title {
   font-size: 200%;
 }
@@ -171,3 +179,11 @@ figcaption.artwork-caption {
   padding: .2em .5em;
 }
 .blocks-gallery-item figcaption a:hover { color: white; }
+
+.sold-flag {
+  font-size: 1rem;
+  float: right;
+  text-transform: uppercase;
+  padding: 0.2em 0.5em;
+  transform: rotate(10deg);
+}

@@ -198,4 +198,13 @@ function the_artwork_meta($before = '', $after = '', $id = 0) {
   echo $content;
 }
 
+function sold_or_not($before = '', $after = '', $id = 0) {
+  if ( ! has_category('for-sale') ) {
+    $content = $before;
+    $content .= '<div class="sold-flag text-danger border border-danger">sold</div>';
+    $content .= $after;
+    echo $content;
+  }
+}
+
 ?>
