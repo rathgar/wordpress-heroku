@@ -1,4 +1,4 @@
-=== WooCommerce Mailchimp ===
+=== WP WooCommerce Mailchimp ===
 Contributors: saintsystems, anderly
 Donate link: http://ssms.us/hVdk
 Tags: woocommerce, mailchimp, ecommerce, email
@@ -6,19 +6,19 @@ Requires at least: 4.7.0
 Tested up to: 5.2.2
 WC tested up to: 3.7.0
 Requires PHP: 5.6
-Stable tag: 2.3.3
+Stable tag: 2.3.7
 License: GPLv3
 
 Simple and flexible Mailchimp integration for WooCommerce.
 
 == Description ==
 
-WooCommerce Mailchimp provides simple and flexible Mailchimp integration for WooCommerce.
+WP WooCommerce Mailchimp provides simple and flexible Mailchimp integration for WooCommerce.
 
 Automatically subscribe customers to a designated Mailchimp list and, optionally, Mailchimp interest groups and tags upon order creation or order completion.
 This can be done quietly or based on the user's consent with several opt-in settings that support international opt-in laws.
 
-Upgrade to [WooCommerce Mailchimp Pro](https://www.saintsystems.com/products/woocommerce-mailchimp-pro/) for more advanced features including WooCommerce Subscriptions support and the ability to set product-specific lists, groups and tags.
+Upgrade to [WP WooCommerce Mailchimp Pro](https://www.saintsystems.com/products/woocommerce-mailchimp-pro/) for more advanced features including WooCommerce Subscriptions support and the ability to set product-specific lists, groups and tags.
 
 = Features =
 
@@ -78,19 +78,19 @@ If no custom translations are present, languages will be loaded in the following
 
 = Requirements =
 
-WooCommerce Mailchimp requires PHP 5.6+ (PHP 7.0+ recommended). You'll also need to be running WordPress 4.7.0+ and have WooCommerce 3.5.0+.
+WP WooCommerce Mailchimp requires PHP 5.6+ (PHP 7.0+ recommended). You'll also need to be running WordPress 4.7.0+ and have WooCommerce 3.5.0+.
 
 = Documentation & Support =
 
 Online documentation and code samples are available via our [Help Center](https://support.saintsystems.com/hc/en-us/sections/201959566).
 
 Please visit the
-[WooCommerce MailChimp support forum on WordPress.org](https://wordpress.org/support/plugin/woocommerce-mailchimp) for basic support and help from other users. Since this is a free plugin, we respond to these as we have time.
+[WP WooCommerce MailChimp support forum on WordPress.org](https://wordpress.org/support/plugin/woocommerce-mailchimp) for basic support and help from other users. Since this is a free plugin, we respond to these as we have time.
 
-Dedicated support will is available for [WooCommerce MailChimp Pro](https://www.saintsystems.com/products/woocommerce-mailchimp-pro/) customers.
+Dedicated support will is available for [WP WooCommerce MailChimp Pro](https://www.saintsystems.com/products/woocommerce-mailchimp-pro/) customers.
 
 = Contribute =
-All development for WooCommerce MailChimp is [handled via GitHub](https://github.com/anderly/woocommerce-mailchimp). Opening new issues and submitting pull requests are welcome.
+All development for WP WooCommerce MailChimp is [handled via GitHub](https://github.com/anderly/woocommerce-mailchimp). Opening new issues and submitting pull requests are welcome.
 
 [Our public roadmap is available on Trello](https://trello.com/b/VWBdLVuI/woocommerce-mailchimp-development). We'd love it if you vote and comment on your favorite ideas.
 
@@ -118,6 +118,19 @@ Also, if you enjoy using the software [we'd love it if you could give us a revie
 2. WooCommerce Mailchimp troubleshooting screen.
 
 == Changelog ==
+
+#### 2.3.7 - October 31, 2019
+- Fix for opt-in checkbox not displaying.
+
+#### 2.3.6 - October 30, 2019
+- Fix json encode.
+
+#### 2.3.5 - October 30, 2019
+- WordPress coding standards updates.
+
+#### 2.3.4 - October 29, 2019
+- Change plugin display name.
+- Sanitize post data.
 
 #### 2.3.3 - August 29, 2019
 - Fix ActionScheduler 2.2.5 version.

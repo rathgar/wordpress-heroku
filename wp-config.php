@@ -13,6 +13,42 @@
  *
  * @package WordPress
  */
+
+ // ** START ENVIRONMENT SETUP
+ // ** Inspiration: https://gist.github.com/ifamily/1703e43490b50e943923
+ // Define Environments
+ $environments = array(
+     'development' => 'localhost',
+     // 'staging' => '',
+     'production' => 'rue.uk',
+ );
+ // Get Server name
+ $server_name = $_SERVER['SERVER_NAME'];
+
+ foreach($environments AS $key => $env){
+     if(strstr($server_name, $env)){
+         define('ENVIRONMENT', $key);
+         break;
+     }
+}
+
+// If no environment is set default to production
+if(!defined('ENVIRONMENT')) define('ENVIRONMENT', 'production');
+// Define different DB connection details depending on environment
+switch(ENVIRONMENT){
+  case 'development':
+    define('WP_DEBUG', false);
+    break;
+  case 'staging':
+    define('WP_DEBUG', false);
+    break;
+  case 'production':
+    define('WP_DEBUG', false);
+    break;
+}
+// ** END ENVIRONMENT SETUP
+
+
 // ** Heroku Postgres settings - from Heroku Environment ** //
 // $db = parse_url($_ENV["DATABASE_URL"]);
 $db = parse_url($_ENV["DATABASE_URL"] ? $_ENV["DATABASE_URL"] : "postgres://rturner@localhost:5432/wp_rue");
@@ -61,9 +97,9 @@ $table_prefix  = 'wp_';
  * It is strongly recommended that plugin and theme developers use WP_DEBUG
  * in their development environments.
  */
-define('WP_DEBUG', false);
+// define('WP_DEBUG', false);
 
-define('FORCE_SSL_ADMIN', true);
+define('FORCE_SSL_ADMIN', false);
 // in some setups HTTP_X_FORWARDED_PROTO might contain
 // a comma-separated list e.g. http,https
 // so check for https existence

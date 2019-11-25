@@ -576,8 +576,12 @@ abstract class WC_Stripe_Payment_Gateway extends WC_Payment_Gateway_CC {
 	 * @throws Exception When card was not added or for and invalid card.
 	 * @return object
 	 */
-	public function prepare_source( $user_id, $force_save_source = false ) {
-		$customer          = new WC_Stripe_Customer( $user_id );
+	public function prepare_source( $user_id, $force_save_source = false, $existing_customer_id = null ) {
+		$customer = new WC_Stripe_Customer( $user_id );
+		if ( ! empty( $existing_customer_id ) ) {
+			$customer->set_id( $existing_customer_id );
+		}
+
 		$force_save_source = apply_filters( 'wc_stripe_force_save_source', $force_save_source, $customer );
 		$source_object     = '';
 		$source_id         = '';
@@ -641,6 +645,8 @@ abstract class WC_Stripe_Payment_Gateway extends WC_Payment_Gateway_CC {
 		if ( ! $customer_id ) {
 			$customer->set_id( $customer->create_customer() );
 			$customer_id = $customer->get_id();
+		} else {
+			$customer->update_customer();
 		}
 
 		if ( empty( $source_object ) && ! $is_token ) {
@@ -1204,18 +1210,18 @@ abstract class WC_Stripe_Payment_Gateway extends WC_Payment_Gateway_CC {
 	 * @param stdClass $intent The intent that is being processed.
 	 * @return bool            A flag that indicates whether the order is already locked.
 	 */
-	public function lock_order_payment( $order, $intent ) {
+	public function lock_order_payment( $order, $intent = null ) {
 		$order_id       = WC_Stripe_Helper::is_wc_lt( '3.0' ) ? $order->id : $order->get_id();
 		$transient_name = 'wc_stripe_processing_intent_' . $order_id;
 		$processing     = get_transient( $transient_name );
 
 		// Block the process if the same intent is already being handled.
-		if ( $processing === $intent->id ) {
+		if ( "-1" === $processing || ( isset( $intent->id ) && $processing === $intent->id ) ) {
 			return true;
 		}
 
 		// Save the new intent as a transient, eventually overwriting another one.
-		set_transient( $transient_name, $intent->id, 5 * MINUTE_IN_SECONDS );
+		set_transient( $transient_name, empty( $intent ) ? '-1' : $intent->id, 5 * MINUTE_IN_SECONDS );
 
 		return false;
 	}

@@ -27,6 +27,7 @@ echo '<?xml version="1.0" encoding="' . get_bloginfo('charset') . '"?>
 '; ?>
 <?php xmlsf_generator(); ?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+<?php do_action('xmlsf_urlset', 'post_type'); ?>
 <?php echo $image_xmlns; ?>
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
@@ -77,11 +78,11 @@ if ( have_posts() ) :
 			}
 		endif;
 
-		do_action( 'xmlsf_tags_after' );
+		do_action( 'xmlsf_tags_after', 'post_type' );
 ?>
  	</url>
 <?php
-		do_action( 'xmlsf_url_after' );
+		do_action( 'xmlsf_url_after', 'post_type' );
   endwhile;
 endif;
 

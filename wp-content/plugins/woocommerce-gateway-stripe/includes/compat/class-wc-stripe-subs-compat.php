@@ -83,18 +83,21 @@ class WC_Stripe_Subs_Compat extends WC_Gateway_Stripe {
 	 * @since 4.1.11
 	 */
 	public function display_update_subs_payment_checkout() {
+		$subs_statuses = apply_filters( 'wc_stripe_update_subs_payment_method_card_statuses', array( 'active' ) );
 		if (
 			apply_filters( 'wc_stripe_display_update_subs_payment_method_card_checkbox', true ) &&
-			wcs_user_has_subscription( get_current_user_id(), '', 'active' ) &&
+			wcs_user_has_subscription( get_current_user_id(), '', $subs_statuses ) &&
 			is_add_payment_method_page()
 		) {
-			printf(
-				'<p class="form-row">
-					<input id="wc-%1$s-update-subs-payment-method-card" name="wc-%1$s-update-subs-payment-method-card" type="checkbox" value="true" style="width:auto;" />
-					<label for="wc-%1$s-update-subs-payment-method-card" style="display:inline;">%2$s</label>
-				</p>',
-				esc_attr( $this->id ),
-				esc_html( apply_filters( 'wc_stripe_save_to_subs_text', __( 'Update the Payment Method used for all of my active subscriptions (optional).', 'woocommerce-gateway-stripe' ) ) )
+			$label = esc_html( apply_filters( 'wc_stripe_save_to_subs_text', __( 'Update the Payment Method used for all of my active subscriptions.', 'woocommerce-gateway-stripe' ) ) );
+			$id    = sprintf( 'wc-%1$s-update-subs-payment-method-card', $this->id );
+			woocommerce_form_field(
+				$id,
+				array(
+					'type'    => 'checkbox',
+					'label'   => $label,
+					'default' => apply_filters( 'wc_stripe_save_to_subs_checked', false ),
+				)
 			);
 		}
 	}
@@ -109,10 +112,11 @@ class WC_Stripe_Subs_Compat extends WC_Gateway_Stripe {
 	public function handle_add_payment_method_success( $source_id, $source_object ) {
 		if ( isset( $_POST[ 'wc-' . $this->id . '-update-subs-payment-method-card' ] ) ) {
 			$all_subs = wcs_get_users_subscriptions();
+			$subs_statuses = apply_filters( 'wc_stripe_update_subs_payment_method_card_statuses', array( 'active' ) );
 
 			if ( ! empty( $all_subs ) ) {
 				foreach ( $all_subs as $sub ) {
-					if ( 'active' === $sub->get_status() ) {
+					if ( $sub->has_status( $subs_statuses ) ) {
 						update_post_meta( $sub->get_id(), '_stripe_source_id', $source_id );
 						update_post_meta( $sub->get_id(), '_payment_method', $this->id );
 						update_post_meta( $sub->get_id(), '_payment_method_title', $this->method_title );
@@ -247,8 +251,9 @@ class WC_Stripe_Subs_Compat extends WC_Gateway_Stripe {
 				$prepared_source->source = '';
 			}
 
-			$response = $this->create_and_confirm_intent_for_off_session( $renewal_order, $prepared_source, $amount );
+			$this->lock_order_payment( $renewal_order );
 
+			$response                   = $this->create_and_confirm_intent_for_off_session( $renewal_order, $prepared_source, $amount );
 			$is_authentication_required = $this->is_authentication_required_for_payment( $response );
 
 			// It's only a failed payment if it's an error and it's not of the type 'authentication_required'.
@@ -310,6 +315,8 @@ class WC_Stripe_Subs_Compat extends WC_Gateway_Stripe {
 
 				$this->process_response( end( $response->charges->data ), $renewal_order );
 			}
+
+			$this->unlock_order_payment( $renewal_order );
 		} catch ( WC_Stripe_Exception $e ) {
 			WC_Stripe_Logger::log( 'Error: ' . $e->getMessage() );
 

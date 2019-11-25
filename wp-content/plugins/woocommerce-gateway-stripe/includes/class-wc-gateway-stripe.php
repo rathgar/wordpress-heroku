@@ -578,7 +578,18 @@ class WC_Gateway_Stripe extends WC_Stripe_Payment_Gateway {
 				return $this->pre_orders->process_pre_order( $order_id );
 			}
 
-			$prepared_source = $this->prepare_source( get_current_user_id(), $force_save_source );
+			// Check whether there is an existing intent.
+			$intent = $this->get_intent_from_order( $order );
+			if ( isset( $intent->object ) && 'setup_intent' === $intent->object ) {
+				$intent = false; // This function can only deal with *payment* intents
+			}
+
+			$stripe_customer_id = null;
+			if ( $intent && ! empty( $intent->customer ) ) {
+				$stripe_customer_id = $intent->customer;
+			}
+
+			$prepared_source = $this->prepare_source( get_current_user_id(), $force_save_source, $stripe_customer_id );
 
 			$this->maybe_disallow_prepaid_card( $prepared_source );
 			$this->check_source( $prepared_source );
@@ -592,11 +603,6 @@ class WC_Gateway_Stripe extends WC_Stripe_Payment_Gateway {
 			$this->validate_minimum_order_amount( $order );
 
 			WC_Stripe_Logger::log( "Info: Begin processing payment for order $order_id for the amount of {$order->get_total()}" );
-
-			$intent = $this->get_intent_from_order( $order );
-			if ( isset( $intent->object ) && 'setup_intent' === $intent->object ) {
-				$intent = false; // This function can only deal with *payment* intents
-			}
 
 			if ( $intent ) {
 				$intent = $this->update_existing_intent( $intent, $order, $prepared_source );
@@ -1018,7 +1024,7 @@ class WC_Gateway_Stripe extends WC_Stripe_Payment_Gateway {
 		clean_post_cache( $order->get_id() );
 		$order = wc_get_order( $order->get_id() );
 
-		if ( 'pending' !== $order->get_status() && 'failed' !== $order->get_status() ) {
+		if ( ! $order->has_status( array( 'pending', 'failed' ) ) ) {
 			// If payment has already been completed, this function is redundant.
 			return;
 		}
@@ -1054,7 +1060,7 @@ class WC_Gateway_Stripe extends WC_Stripe_Payment_Gateway {
 	 */
 	public function failed_sca_auth( $order, $intent ) {
 		// If the order has already failed, do not repeat the same message.
-		if ( 'failed' === $order->get_status() ) {
+		if ( $order->has_status( 'failed' ) ) {
 			return;
 		}
 

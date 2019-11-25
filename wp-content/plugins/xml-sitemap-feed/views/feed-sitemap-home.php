@@ -13,6 +13,7 @@ echo '<?xml version="1.0" encoding="' . get_bloginfo('charset') . '"?>
 '; ?>
 <?php xmlsf_generator(); ?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+<?php do_action('xmlsf_urlset', 'home'); ?>
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
 		http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
@@ -23,8 +24,10 @@ foreach ( xmlsf_get_root_data() as $url => $data ) {
 		<loc><?php echo esc_url( $url ); ?></loc>
 		<priority><?php echo $data['priority']; ?></priority>
 		<lastmod><?php echo $data['lastmod']; ?></lastmod>
+<?php do_action( 'xmlsf_tags_after', 'home' ); ?>
 	</url>
 <?php
+	do_action( 'xmlsf_url_after', 'home' );
 }
 ?>
 </urlset>

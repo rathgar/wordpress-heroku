@@ -5,7 +5,7 @@ Tags: sitemap, xml sitemap, news sitemap, sitemap.xml, robots.txt, Google, Googl
 Requires at least: 4.4
 Requires PHP: 5.4
 Tested up to: 5.3
-Stable tag: 5.2.6
+Stable tag: 5.2.7
 
 XML and Google News Sitemaps to feed the hungry spiders. Multisite, WP Super Cache, Polylang and WPML compatible.
 
@@ -58,7 +58,7 @@ Please read the FAQ's for info on how to get your articles listed on Google News
 
 = Pro Features =
 
-**[Google News Advanced](https://premium.status301.net/downloads/google-news-advanced/)**
+**[Google News Advanced](https://premium.status301.com/downloads/google-news-advanced/)**
 
 * Multiple post types - Include more than one post type in the same News Sitemap.
 * Keywords - Add the keywords tag to your News Sitemap. Keywords can be created from Tags, Categories or a dedicated Keywords taxonomy.
@@ -291,15 +291,17 @@ Yes. In fact, it has been designed for it. Tested on WPMU 2.9.2 and WPMS 3+ both
 
 == Upgrade Notice ==
 
-= 5.2.6 =
+= 5.2.7 =
 
-New action hooks, taxonomy selection bugfix and relative path stylesheets.
+New action hooks, Ad Inserter compatibility check.
 
 
 == Changelog ==
 
 = 5.2.7 =
 * NEW: Ad Inserter compatibility check
+* NEW: xmlsf_urlset and xmlsf_news_urlset action hooks, thanks to Stanislav Khromov (@khromov)
+* Exclude hierarchical post types from news sitemap
 
 = 5.2.6 =
 * NEW: xmlsf_tags_after, xmlsf_url_after and xmlsf_news_url_after action hooks

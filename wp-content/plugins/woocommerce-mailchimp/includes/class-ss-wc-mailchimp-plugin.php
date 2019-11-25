@@ -15,7 +15,7 @@ final class SS_WC_MailChimp_Plugin {
 	 *
 	 * @var string
 	 */
-	private static $version = '2.3.3';
+	private static $version = '2.3.7';
 
 	/**
 	 * Plugin singleton instance
@@ -103,7 +103,7 @@ final class SS_WC_MailChimp_Plugin {
 
 		if ( empty( $this->settings ) || true === $refresh ) {
 
-			$defaults = require( SS_WC_MAILCHIMP_DIR . 'config/default-settings.php' );
+			$defaults = require SS_WC_MAILCHIMP_DIR . 'config/default-settings.php';
 			$defaults = apply_filters( 'ss_wc_mailchimp_default_settings', $defaults );
 			$settings = array();
 
@@ -253,17 +253,17 @@ final class SS_WC_MailChimp_Plugin {
 	 *
 	 * @since  2.3.2
 	 * @access public
-	 * @param  $order_id int The order id.
+	 * @param  int $order_id The order id.
 	 */
 	public function get_subscribe_options_for_order( $order_id ) {
 
-		// Get WC order
+		// Get WC order.
 		$order = wc_get_order( $order_id );
 
-		$order_id = method_exists( $order, 'get_id' ) ? $order->get_id() : $order->id;
-		$email = method_exists( $order, 'get_billing_email' ) ? $order->get_billing_email() : $order->billing_email;
+		$order_id   = method_exists( $order, 'get_id' ) ? $order->get_id() : $order->id;
+		$email      = method_exists( $order, 'get_billing_email' ) ? $order->get_billing_email() : $order->billing_email;
 		$first_name = method_exists( $order, 'get_billing_first_name' ) ? $order->get_billing_first_name() : $order->billing_first_name;
-		$last_name = method_exists( $order, 'get_billing_last_name' ) ? $order->get_billing_last_name() : $order->billing_last_name;
+		$last_name  = method_exists( $order, 'get_billing_last_name' ) ? $order->get_billing_last_name() : $order->billing_last_name;
 
 		$list_id = $this->get_list();
 
@@ -288,20 +288,20 @@ final class SS_WC_MailChimp_Plugin {
 
 		$tags = array_map( function( $tag ) use ( $mc_tags ) {
 			return array(
-				'name' => $mc_tags[$tag],
+				'name'   => $mc_tags[ $tag ],
 				'status' => 'active',
 			);
 		}, $tags );
 
 		// Set subscription options.
 		$subscribe_options = array(
-			'list_id'           => $list_id,
-			'email'             => $email,
-			'merge_tags'      	=> $merge_tags,
-			'interest_groups'   => $interest_groups,
-			'tags'              => $tags,
-			'email_type'        => 'html',
-			'double_opt_in'     => $this->double_opt_in(),
+			'list_id'         => $list_id,
+			'email'           => $email,
+			'merge_tags'      => $merge_tags,
+			'interest_groups' => $interest_groups,
+			'tags'            => $tags,
+			'email_type'      => 'html',
+			'double_opt_in'   => $this->double_opt_in(),
 		);
 
 		return $subscribe_options;
@@ -370,7 +370,7 @@ final class SS_WC_MailChimp_Plugin {
 			$api_key = $api_key ? $api_key : $settings['api_key'];
 			$debug   = $debug ? $debug : $settings['debug'];
 
-			require_once( SS_WC_MAILCHIMP_DIR . 'includes/class-ss-wc-mailchimp.php' );
+			require_once SS_WC_MAILCHIMP_DIR . 'includes/class-ss-wc-mailchimp.php';
 			$this->mailchimp = new SS_WC_MailChimp( $api_key, $debug );
 
 			delete_transient( 'sswcmc_lists' );
@@ -429,21 +429,21 @@ final class SS_WC_MailChimp_Plugin {
 	 */
 	public function includes() {
 
-		require_once( SS_WC_MAILCHIMP_DIR . 'includes/lib/class-ss-system-info.php' );
+		require_once SS_WC_MAILCHIMP_DIR . 'includes/lib/class-ss-system-info.php';
 
-		require_once( SS_WC_MAILCHIMP_DIR . 'includes/helper-functions.php' );
+		require_once SS_WC_MAILCHIMP_DIR . 'includes/helper-functions.php';
 
-		require_once( SS_WC_MAILCHIMP_DIR . 'includes/class-ss-wc-mailchimp-compatibility.php' );
+		require_once SS_WC_MAILCHIMP_DIR . 'includes/class-ss-wc-mailchimp-compatibility.php';
 
-		require_once( SS_WC_MAILCHIMP_DIR . 'includes/class-ss-wc-mailchimp-admin-notices.php' );
+		require_once SS_WC_MAILCHIMP_DIR . 'includes/class-ss-wc-mailchimp-admin-notices.php';
 
-		require_once( SS_WC_MAILCHIMP_DIR . 'includes/class-ss-wc-mailchimp-api.php' );
+		require_once SS_WC_MAILCHIMP_DIR . 'includes/class-ss-wc-mailchimp-api.php';
 
-		require_once( SS_WC_MAILCHIMP_DIR . 'includes/class-ss-wc-mailchimp.php' );
+		require_once SS_WC_MAILCHIMP_DIR . 'includes/class-ss-wc-mailchimp.php';
 
-		require_once( SS_WC_MAILCHIMP_DIR . 'includes/class-ss-wc-mailchimp-handler.php' );
+		require_once SS_WC_MAILCHIMP_DIR . 'includes/class-ss-wc-mailchimp-handler.php';
 
-		require_once( SS_WC_MAILCHIMP_DIR . 'includes/class-sswcmc-logger.php' );
+		require_once SS_WC_MAILCHIMP_DIR . 'includes/class-sswcmc-logger.php';
 
 	} //end function includes
 
@@ -497,10 +497,10 @@ final class SS_WC_MailChimp_Plugin {
 
 		$mofile = sprintf( '%1$s-%2$s.mo', 'woocommerce-mailchimp', $locale );
 
-		// Look for wp-content/languages/woocommerce-mailchimp/woocommerce-mailchimp-{lang}_{country}.mo
+		// Look for wp-content/languages/woocommerce-mailchimp/woocommerce-mailchimp-{lang}_{country}.mo.
 		$mofile_global1 = WP_LANG_DIR . '/woocommerce-mailchimp/' . $mofile;
 
-		// Look in wp-content/languages/plugins/woocommerce-mailchimp
+		// Look in wp-content/languages/plugins/woocommerce-mailchimp.
 		$mofile_global2 = WP_LANG_DIR . '/plugins/woocommerce-mailchimp/' . $mofile;
 
 		if ( file_exists( $mofile_global1 ) ) {
@@ -565,13 +565,13 @@ final class SS_WC_MailChimp_Plugin {
 	 * @param  array $settings  MailChimp settings.
 	 * @return array Settings.
 	 */
-	function add_mailchimp_settings( $settings ) {
+	public function add_mailchimp_settings( $settings ) {
 
 		if ( ! is_array( $settings ) ) {
 			$settings = array();
 		}
 
-		$settings[] = require_once( SS_WC_MAILCHIMP_DIR . 'includes/class-ss-wc-settings-mailchimp.php' );
+		$settings[] = require_once SS_WC_MAILCHIMP_DIR . 'includes/class-ss-wc-settings-mailchimp.php';
 
 		return $settings;
 
@@ -590,7 +590,7 @@ final class SS_WC_MailChimp_Plugin {
 		wp_register_style( 'woocommerce-mailchimp', SS_WC_MAILCHIMP_URL . 'assets/css/style.css', array(), self::version() );
 
 		// Localize javascript messages.
-		$translation_array = array(
+		$translations = array(
 			'connecting_to_mailchimp'     => __( 'Connecting to Mailchimp', 'woocommerce-mailchimp' ),
 			'error_loading_account'       => __( 'Error. Please check your api key.', 'woocommerce-mailchimp' ),
 			'error_loading_groups'        => __( 'Error loading groups. Please check your Mailchimp Interest Groups for the selected list.', 'woocommerce-mailchimp' ),
@@ -600,7 +600,21 @@ final class SS_WC_MailChimp_Plugin {
 			'select_tags_placeholder'     => __( 'Select one or more tags (optional)', 'woocommerce-mailchimp' ),
 			'tags_not_enabled'            => __( 'This list does not have tags enabled', 'woocommerce-mailchimp' ),
 		);
-		wp_localize_script( 'woocommerce-mailchimp-admin', 'SS_WC_MailChimp_Messages', $translation_array );
+
+		$nonces = array(
+			'get_account'         => wp_create_nonce( 'sswcmc_get_account' ),
+			'get_lists'           => wp_create_nonce( 'sswcmc_get_lists' ),
+			'get_interest_groups' => wp_create_nonce( 'sswcmc_get_interest_groups' ),
+			'get_tags'            => wp_create_nonce( 'sswcmc_get_tags' ),
+			'get_merge_fields'    => wp_create_nonce( 'sswcmc_merge_fields' ),
+		);
+
+		$sswcmc = array(
+			'messages' => $translations,
+			'nonces'   => $nonces,
+		);
+
+		wp_localize_script( 'woocommerce-mailchimp-admin', 'SSWCMC', $sswcmc );
 
 		// Scripts.
 		wp_enqueue_script( 'woocommerce-mailchimp-admin' );
@@ -620,11 +634,13 @@ final class SS_WC_MailChimp_Plugin {
 	 */
 	public function process_actions() {
 		if ( isset( $_POST['sswcmc-action'] ) ) {
-			do_action( 'sswcmc_' . $_POST['sswcmc-action'], $_POST );
+			$action = sanitize_key( $_POST['sswcmc-action'] );
+			do_action( 'sswcmc_' . $action, $_POST );
 		}
 
 		if ( isset( $_GET['sswcmc-action'] ) ) {
-			do_action( 'sswcmc_' . $_GET['sswcmc-action'], $_GET );
+			$action = sanitize_key( $_GET['sswcmc-action'] );
+			do_action( 'sswcmc_' . $action, $_GET );
 		}
 	}
 
@@ -635,7 +651,7 @@ final class SS_WC_MailChimp_Plugin {
 	 */
 	public static function update() {
 
-		require_once( 'class-ss-wc-mailchimp-migrator.php' );
+		require_once 'class-ss-wc-mailchimp-migrator.php';
 
 		SS_WC_MailChimp_Migrator::migrate( self::version() );
 
