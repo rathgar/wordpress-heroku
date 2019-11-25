@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Plugins - Google Analytics Dashboard for WP by ExactMetrics (formerly GADWP) - Stable (latest release) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2019-02-16 11:38:29+0000\n"
+"PO-Revision-Date: 2019-05-02 15:29:57+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -378,7 +378,7 @@ msgstr "Source:"
 msgid "URI:"
 msgstr "URI:"
 
-#: tools/gapi.php:579 admin/setup.php:196
+#: admin/setup.php:196 tools/gapi.php:579
 msgid "404 Errors"
 msgstr "404 Errors"
 
@@ -594,12 +594,12 @@ msgstr "CAMPAIGN"
 msgid "SOCIAL"
 msgstr "SOCIAL"
 
-#: tools/gapi.php:551 admin/setup.php:191
+#: admin/setup.php:191 tools/gapi.php:551
 msgid "Pages"
 msgstr "Pages"
 
-#: front/widgets.php:40 tools/gapi.php:423 tools/gapi.php:836
-#: admin/setup.php:185 admin/setup.php:204
+#: front/widgets.php:40 admin/setup.php:185 admin/setup.php:204
+#: tools/gapi.php:423 tools/gapi.php:836
 msgid "Sessions"
 msgstr "Sessions"
 
@@ -673,13 +673,13 @@ msgstr "Traffic Mediums"
 msgid "A JavaScript Error is blocking plugin resources!"
 msgstr "A JavaScript Error is blocking plugin resources!"
 
-#: front/setup.php:84 tools/gapi.php:650 admin/setup.php:193
-#: admin/setup.php:295
+#: front/setup.php:84 admin/setup.php:193 admin/setup.php:295
+#: tools/gapi.php:650
 msgid "Searches"
 msgstr "Searches"
 
-#: front/setup.php:83 tools/gapi.php:615 admin/setup.php:192
-#: admin/setup.php:294
+#: front/setup.php:83 admin/setup.php:192 admin/setup.php:294
+#: tools/gapi.php:615
 msgid "Referrers"
 msgstr "Referrers"
 
@@ -687,13 +687,15 @@ msgstr "Referrers"
 msgid "Location"
 msgstr "Location"
 
-#: front/setup.php:81 front/setup.php:97 tools/gapi.php:414 admin/setup.php:189
+#: front/setup.php:81 front/setup.php:97 admin/setup.php:189
 #: admin/setup.php:207 admin/setup.php:292 admin/setup.php:308
+#: tools/gapi.php:414
 msgid "Bounce Rate"
 msgstr "Bounce Rate"
 
-#: front/setup.php:80 front/setup.php:96 tools/gapi.php:411 admin/setup.php:188
+#: front/setup.php:80 front/setup.php:96 admin/setup.php:188
 #: admin/setup.php:206 admin/setup.php:291 admin/setup.php:307
+#: tools/gapi.php:411
 msgid "Page Views"
 msgstr "Page Views"
 
@@ -701,8 +703,9 @@ msgstr "Page Views"
 msgid "Organic"
 msgstr "Organic"
 
-#: front/setup.php:78 front/setup.php:95 tools/gapi.php:408 admin/setup.php:186
+#: front/setup.php:78 front/setup.php:95 admin/setup.php:186
 #: admin/setup.php:205 admin/setup.php:289 admin/setup.php:306
+#: tools/gapi.php:408
 msgid "Users"
 msgstr "Users"
 
@@ -813,7 +816,7 @@ msgstr "Automatic Updates"
 
 #: admin/settings.php:1479
 msgid "Theme Color:"
-msgstr "Theme Color:"
+msgstr "Theme Colour:"
 
 #: admin/settings.php:1464
 msgid "Lock Selection"
@@ -827,7 +830,7 @@ msgstr "Property not found"
 msgid "Select View:"
 msgstr "Select View:"
 
-#: admin/setup.php:43 admin/setup.php:69 admin/settings.php:1443
+#: admin/settings.php:1443 admin/setup.php:43 admin/setup.php:69
 msgid "General Settings"
 msgstr "General Settings"
 
@@ -1073,15 +1076,15 @@ msgstr "Permissions"
 msgid "Google Analytics Frontend Settings"
 msgstr "Google Analytics Frontend Settings"
 
-#: front/setup.php:104 admin/setup.php:214 admin/setup.php:315
-#: admin/settings.php:118 admin/settings.php:213 admin/settings.php:410
-#: admin/settings.php:1149 admin/settings.php:1376 admin/settings.php:1708
+#: front/setup.php:104 admin/settings.php:118 admin/settings.php:213
+#: admin/settings.php:410 admin/settings.php:1149 admin/settings.php:1376
+#: admin/settings.php:1708 admin/setup.php:214 admin/setup.php:315
 msgid "authorize the plugin"
 msgstr "authorise the plugin"
 
-#: admin/setup.php:47 admin/setup.php:70 admin/settings.php:118
-#: admin/settings.php:213 admin/settings.php:410 admin/settings.php:1149
-#: admin/settings.php:1376 admin/settings.php:1708
+#: admin/settings.php:118 admin/settings.php:213 admin/settings.php:410
+#: admin/settings.php:1149 admin/settings.php:1376 admin/settings.php:1708
+#: admin/setup.php:47 admin/setup.php:70
 msgid "Errors & Debug"
 msgstr "Errors & Debug"
 
