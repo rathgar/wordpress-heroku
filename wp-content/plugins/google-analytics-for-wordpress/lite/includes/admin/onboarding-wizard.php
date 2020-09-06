@@ -26,6 +26,7 @@ class MonsterInsights_Onboarding_Wizard {
 		add_action( 'admin_init', array( $this, 'maybe_load_onboarding_wizard' ) );
 
 		add_action( 'admin_menu', array( $this, 'add_dashboard_page' ) );
+		add_action( 'network_admin_menu', array( $this, 'add_dashboard_page' ) );
 
 		add_action( 'wp_ajax_monsterinsights_onboarding_wpforms_install', array(
 			$this,
@@ -99,10 +100,11 @@ class MonsterInsights_Onboarding_Wizard {
 
 		global $wp_version;
 		$version_path = monsterinsights_is_pro_version() ? 'pro' : 'lite';
+		$rtl          = is_rtl() ? '.rtl' : '';
 		if ( ! defined( 'MONSTERINSIGHTS_LOCAL_WIZARD_JS_URL' ) ) {
-			wp_enqueue_style( 'monsterinsights-vue-style-vendors', plugins_url( $version_path . '/assets/vue/css/chunk-vendors.css', MONSTERINSIGHTS_PLUGIN_FILE ), array(), monsterinsights_get_asset_version() );
-			wp_enqueue_style( 'monsterinsights-vue-style-common', plugins_url( $version_path . '/assets/vue/css/chunk-common.css', MONSTERINSIGHTS_PLUGIN_FILE ), array(), monsterinsights_get_asset_version() );
-			wp_enqueue_style( 'monsterinsights-vue-style', plugins_url( $version_path . '/assets/vue/css/wizard.css', MONSTERINSIGHTS_PLUGIN_FILE ), array(), monsterinsights_get_asset_version() );
+			wp_enqueue_style( 'monsterinsights-vue-style-vendors', plugins_url( $version_path . '/assets/vue/css/chunk-vendors' . $rtl . '.css', MONSTERINSIGHTS_PLUGIN_FILE ), array(), monsterinsights_get_asset_version() );
+			wp_enqueue_style( 'monsterinsights-vue-style-common', plugins_url( $version_path . '/assets/vue/css/chunk-common' . $rtl . '.css', MONSTERINSIGHTS_PLUGIN_FILE ), array(), monsterinsights_get_asset_version() );
+			wp_enqueue_style( 'monsterinsights-vue-style', plugins_url( $version_path . '/assets/vue/css/wizard' . $rtl . '.css', MONSTERINSIGHTS_PLUGIN_FILE ), array(), monsterinsights_get_asset_version() );
 			wp_enqueue_script( 'monsterinsights-vue-vendors', plugins_url( $version_path . '/assets/vue/js/chunk-vendors.js', MONSTERINSIGHTS_PLUGIN_FILE ), array(), monsterinsights_get_asset_version(), true );
 			wp_enqueue_script( 'monsterinsights-vue-common', plugins_url( $version_path . '/assets/vue/js/chunk-common.js', MONSTERINSIGHTS_PLUGIN_FILE ), array(), monsterinsights_get_asset_version(), true );
 			wp_register_script( 'monsterinsights-vue-script', plugins_url( $version_path . '/assets/vue/js/wizard.js', MONSTERINSIGHTS_PLUGIN_FILE ), array(
@@ -119,6 +121,8 @@ class MonsterInsights_Onboarding_Wizard {
 		}
 		wp_enqueue_script( 'monsterinsights-vue-script' );
 
+		$settings_page = is_network_admin() ? add_query_arg( 'page', 'monsterinsights_network', network_admin_url( 'admin.php' ) ) : add_query_arg( 'page', 'monsterinsights_settings', admin_url( 'admin.php' ) );
+
 		wp_localize_script(
 			'monsterinsights-vue-script',
 			'monsterinsights',
@@ -130,25 +134,17 @@ class MonsterInsights_Onboarding_Wizard {
 				'assets'               => plugins_url( $version_path . '/assets/vue', MONSTERINSIGHTS_PLUGIN_FILE ),
 				'roles'                => monsterinsights_get_roles(),
 				'roles_manage_options' => monsterinsights_get_manage_options_roles(),
-				'wizard_url'           => admin_url( 'index.php?page=monsterinsights-onboarding' ),
+				'wizard_url'           => is_network_admin() ? network_admin_url( 'index.php?page=monsterinsights-onboarding' ) : admin_url( 'index.php?page=monsterinsights-onboarding' ),
 				'is_eu'                => $this->should_include_eu_addon(),
 				'activate_nonce'       => wp_create_nonce( 'monsterinsights-activate' ),
 				'install_nonce'        => wp_create_nonce( 'monsterinsights-install' ),
-				'exit_url'             => add_query_arg( 'page', 'monsterinsights_settings', admin_url( 'admin.php' ) ),
+				'exit_url'             => $settings_page,
 				'shareasale_id'        => monsterinsights_get_shareasale_id(),
 				'shareasale_url'       => monsterinsights_get_shareasale_url( monsterinsights_get_shareasale_id(), '' ),
 				// Used to add notices for future deprecations.
-				'versions'             => array(
-					'php_version'          => phpversion(),
-					'php_version_below_54' => apply_filters( 'monsterinsights_temporarily_hide_php_52_and_53_upgrade_warnings', version_compare( phpversion(), '5.4', '<' ) ),
-					'php_version_below_56' => apply_filters( 'monsterinsights_temporarily_hide_php_54_and_55_upgrade_warnings', version_compare( phpversion(), '5.6', '<' ) ),
-					'php_update_link'      => monsterinsights_get_url( 'settings-notice', 'settings-page', 'https://www.monsterinsights.com/docs/update-php/' ),
-					'wp_version'           => $wp_version,
-					'wp_version_below_46'  => version_compare( $wp_version, '4.6', '<' ),
-					'wp_version_below_49'  => version_compare( $wp_version, '4.9', '<' ),
-					'wp_update_link'       => monsterinsights_get_url( 'settings-notice', 'settings-page', 'https://www.monsterinsights.com/docs/update-wordpress/' ),
-				),
+				'versions'             => monsterinsights_get_php_wp_version_warning_data(),
 				'plugin_version'       => MONSTERINSIGHTS_VERSION,
+				'migrated'             => monsterinsights_get_option( 'gadwp_migrated', false ),
 			)
 		);
 
@@ -166,6 +162,7 @@ class MonsterInsights_Onboarding_Wizard {
 			<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 			<title><?php esc_html_e( 'MonsterInsights &rsaquo; Onboarding Wizard', 'google-analytics-for-wordpress' ); ?></title>
 			<?php do_action( 'admin_print_styles' ); ?>
+			<?php do_action( 'admin_print_scripts' ); ?>
 			<?php do_action( 'admin_head' ); ?>
 		</head>
 		<body class="monsterinsights-onboarding">
@@ -176,7 +173,9 @@ class MonsterInsights_Onboarding_Wizard {
 	 * Outputs the content of the current step.
 	 */
 	public function onboarding_wizard_content() {
-		monsterinsights_settings_error_page( 'monsterinsights-vue-onboarding-wizard', '<a href="' . admin_url() . '">' . esc_html__( 'Return to Dashboard', 'google-analytics-for-wordpress' ) . '</a>' );
+		$admin_url = is_network_admin() ? network_admin_url() : admin_url();
+
+		monsterinsights_settings_error_page( 'monsterinsights-vue-onboarding-wizard', '<a href="' . $admin_url . '">' . esc_html__( 'Return to Dashboard', 'google-analytics-for-wordpress' ) . '</a>' );
 		monsterinsights_settings_inline_js();
 	}
 
@@ -273,12 +272,7 @@ class MonsterInsights_Onboarding_Wizard {
 		$download_url = $api->download_link;
 
 		$method = '';
-		$url    = add_query_arg(
-			array(
-				'page' => 'monsterinsights-settings',
-			),
-			admin_url( 'admin.php' )
-		);
+		$url    = is_network_admin() ? add_query_arg( 'page', 'monsterinsights_network', network_admin_url( 'admin.php' ) ) : add_query_arg( 'page', 'monsterinsights_settings', admin_url( 'admin.php' ) );
 		$url    = esc_url( $url );
 
 		ob_start();
@@ -299,9 +293,7 @@ class MonsterInsights_Onboarding_Wizard {
 		}
 
 		// We do not need any extra credentials if we have gotten this far, so let's install the plugin.
-		require_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
-		$base = MonsterInsights();
-		require_once plugin_dir_path( $base->file ) . '/includes/admin/licensing/skin.php';
+		monsterinsights_require_upgrader( false );
 
 		// Create the plugin upgrader with our custom skin.
 		$installer = new Plugin_Upgrader( new MonsterInsights_Skin() );
@@ -329,7 +321,8 @@ class MonsterInsights_Onboarding_Wizard {
 	 */
 	public function change_return_url( $siteurl ) {
 
-		$url = wp_parse_url( $siteurl );
+		$url       = wp_parse_url( $siteurl );
+		$admin_url = is_network_admin() ? network_admin_url() : admin_url();
 
 		if ( isset( $url['query'] ) ) {
 
@@ -337,7 +330,7 @@ class MonsterInsights_Onboarding_Wizard {
 
 			$parameters['return'] = rawurlencode( add_query_arg( array(
 				'page' => 'monsterinsights-onboarding',
-			), admin_url() ) );
+			), $admin_url ) );
 
 			$siteurl = str_replace( $url['query'], '', $siteurl );
 
@@ -360,11 +353,14 @@ class MonsterInsights_Onboarding_Wizard {
 	 */
 	public function change_success_url( $siteurl ) {
 
+		$admin_url   = is_network_admin() ? network_admin_url() : admin_url();
+		$return_step = is_network_admin() ? 'recommended_addons' : 'recommended_settings';
+
 		$siteurl = add_query_arg( array(
 			'page' => 'monsterinsights-onboarding',
-		), admin_url() );
+		), $admin_url );
 
-		$siteurl .= '#/recommended_settings';
+		$siteurl .= '#/' . $return_step;
 
 		return $siteurl;
 

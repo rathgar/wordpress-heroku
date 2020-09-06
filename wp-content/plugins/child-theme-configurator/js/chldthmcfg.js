@@ -2,7 +2,7 @@
  *  Script: chldthmcfg.js
  *  Plugin URI: http://www.childthemeconfigurator.com/
  *  Description: Handles jQuery, AJAX and other UI
- *  Version: 2.5.0
+ *  Version: 2.3.4
  *  Author: Lilaea Media
  *  Author URI: http://www.lilaeamedia.com/
  *  License: GPLv2
@@ -1450,11 +1450,10 @@
             // console.log( 'bind_dismiss' );
             var self = this,
                 $this = $( el ),
-                $button = $( '<button type="button" class="notice-dismiss"><span class="screen-reader-text"></span></button>' ),
-                btnText = window.commonL10n.dismiss || '';
+                $button = $( '<button type="button" class="notice-dismiss"><span class="screen-reader-text"></span></button>' );
     
             // Ensure plain text
-            $button.find( '.screen-reader-text' ).text( btnText );
+            $button.find( '.screen-reader-text' ).text( $.chldthmcfg.getxt( 'dismiss' ) );
     
             $this.append( $button );
     
@@ -1883,7 +1882,7 @@
                 }
             }
             // retrieve enqueued stylesheet ids 
-            if ( ( queue = body.match( /BEGIN WP QUEUE\n([\s\S]*?)\nEND WP QUEUE/ ) ) ) {
+            if ( ( queue = body.match( /BEGIN WP REGISTERED\n([\s\S]*?)\nEND WP REGISTERED/ ) ) ) {
                 self.analysis[ themetype ].queue = queue[ 1 ].split(/\n/);
                 // console.log( 'QUEUE:' );
                 // console.log( self.analysis[ themetype ].queue );

@@ -5,14 +5,18 @@ if ( !defined( 'CHLD_THM_CFG_PRO_VERSION' ) ):
 ?><div id="get_pro_panel" class="ctc-option-panel<?php echo 'get_pro' == $active_tab ? ' ctc-option-panel-active' : ''; ?>" >
 <div class="ctc-input-row clearfix">
 <div class="ctc-input-cell"><div style="padding:0 40px">
-<a target="_blank" href="<?php echo LILAEAMEDIA_URL; ?>/product/premium-support-install-set-troubleshoot/" title="<?php _e( 'Learn more about Premium Support', 'child-theme-configurator' ); ?>"><img src="<?php echo CHLD_THM_CFG_URL . 'css/ctc-support.jpg'; ?>" width="430" height="430" /></a>
-<p><?php _e( 'Maybe you are having trouble getting your child theme to work, or just don’t want to mess with it ... <strong>Let us set it up for you!</strong>', 'child-theme-configurator' ); ?> <a target="_blank" href="<?php echo LILAEAMEDIA_URL; ?>/product/premium-support-install-set-troubleshoot/" title="<?php _e( 'Learn more about Premium Support', 'child-theme-configurator' ); ?>">
-<?php _e( 'Learn more', 'child-theme-configurator'); ?><i class="dashicons dashicons-external" style="text-decoration:none"></i></a></p><hr style="margin:20px 0" />
-<a target="_blank" href="<?php echo LILAEAMEDIA_URL; ?>/product/hook-highlighter/" title="<?php _e( 'Learn more about Hook Highlighter', 'child-theme-configurator' ); ?>"><img src="<?php echo CHLD_THM_CFG_URL . 'css/hook-highlighter.jpg'; ?>" width="430" height="430" /></a>
-<p><?php _e( 'Hook Highlighter provides Administrators insight into the internal program flow of WordPress when activated on any front-facing page of a website.', 'child-theme-configurator' ); ?></p>
+<a target="_blank" href="<?php echo LILAEAMEDIA_URL; ?>/product/hook-highlighter/" title="<?php _e( 'Learn more about Hook Highlighter', 'child-theme-configurator' ); ?>">
+    <img src="<?php echo CHLD_THM_CFG_URL . 'css/hook-highlighter-box.png'; ?>" width="430" height="430" /></a>
+<p><?php _e( '<strong>Now with time and memory benchmarks!</strong>', 'child-theme-configurator' ); ?></p>
+<p><?php _e( 'Hook Highlighter provides insight into the internal program flow of WordPress when activated on any front-facing page of a website.', 'child-theme-configurator' ); ?></p>
 <p><?php _e( 'Display action and filter hooks, program files and backtrace information inline for the current page.', 'child-theme-configurator' ); ?></p>
 <p><a target="_blank" href="<?php echo LILAEAMEDIA_URL; ?>/product/hook-highlighter/" title="<?php _e( 'Learn more about Hook Highlighter', 'child-theme-configurator' ); ?>">
 <?php _e( 'Learn more', 'child-theme-configurator'); ?><i class="dashicons dashicons-external" style="text-decoration:none"></i></a></p>
+    <hr style="margin:20px 0" />
+    <a target="_blank" href="<?php echo LILAEAMEDIA_URL; ?>/product/premium-support-install-set-troubleshoot/" title="<?php _e( 'Learn more about Premium Support', 'child-theme-configurator' ); ?>"><img src="<?php echo CHLD_THM_CFG_URL . 'css/ctc-support.jpg'; ?>" width="430" height="430" /></a>
+<p><?php _e( 'Maybe you are having trouble getting your child theme to work, or just don’t want to mess with it ... <strong>Let us set it up for you!</strong>', 'child-theme-configurator' ); ?> <a target="_blank" href="<?php echo LILAEAMEDIA_URL; ?>/product/premium-support-install-set-troubleshoot/" title="<?php _e( 'Learn more about Premium Support', 'child-theme-configurator' ); ?>">
+<?php _e( 'Learn more', 'child-theme-configurator'); ?><i class="dashicons dashicons-external" style="text-decoration:none"></i></a></p>
+
 </div></div>
 <div class="ctc-input-cell-wide">
 <a target="_blank" href="<?php echo CHLD_THM_CFG_DOCS_URL; ?>/child-theme-configurator-pro/" title="<?php _e( 'Learn more about CTC Pro', 'child-theme-configurator' ); ?>"><img src="<?php echo CHLD_THM_CFG_URL . 'css/pro-banner.jpg'; ?>" width="610" height="197" /></a>

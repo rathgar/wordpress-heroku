@@ -11,7 +11,7 @@ if ( !defined( 'ABSPATH' ) ) exit;
 <?php 
 if ( 'parnt' == $template ): ?>
       <p class="howto">
-    <?php _e( 'Copy PHP templates from the parent theme by selecting them here. The Configurator defines a template as a Theme PHP file having no PHP functions or classes. Other PHP files cannot be safely overridden by a child theme.', 'child-theme-configurator' ); ?>
+    <?php _e( 'Copy PHP templates from the parent theme by selecting them here. The Configurator defines a template as a Theme PHP file having no PHP functions or classes. Non-template files cannot be inherited by a child theme.', 'child-theme-configurator' ); ?>
       </p>  
       <p class="howto"><strong>
         <?php _e( 'CAUTION: If your child theme is active, the child theme version of the file will be used instead of the parent immediately after it is copied.', 'child-theme-configurator' );?>

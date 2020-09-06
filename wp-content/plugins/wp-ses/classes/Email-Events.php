@@ -77,8 +77,9 @@ class Email_Events {
 			'wp-offload-ses/v1',
 			'/c/(?P<data>\S+)',
 			array(
-				'methods'  => 'GET',
-				'callback' => array( $this, 'update_clicks' ),
+				'methods'             => 'GET',
+				'callback'            => array( $this, 'update_clicks' ),
+				'permission_callback' => '__return_true',
 			)
 		);
 
@@ -86,8 +87,9 @@ class Email_Events {
 			'wp-offload-ses/v1',
 			'/o/(?P<data>\S+)',
 			array(
-				'methods'  => 'GET',
-				'callback' => array( $this, 'update_opens' ),
+				'methods'             => 'GET',
+				'callback'            => array( $this, 'update_opens' ),
+				'permission_callback' => '__return_true',
 			)
 		);
 	}
@@ -195,7 +197,7 @@ class Email_Events {
 
 		if ( $open_tracking ) {
 			// Add the tracking pixel.
-			$content .= '<img src="' . $this->get_open_tracking_url( $email_id ) . '" />';
+			$content .= '<img src="' . $this->get_open_tracking_url( $email_id ) . '" alt="" />';
 		}
 
 		if ( ! $click_tracking ) {
@@ -205,14 +207,19 @@ class Email_Events {
 		$dom = new \DOMDocument();
 
 		$libxml_previous_state = libxml_use_internal_errors( true );
-		$dom->loadHTML( mb_convert_encoding( $content, 'HTML-ENTITIES', get_bloginfo( 'charset' ) ) );
+
+		if ( function_exists( 'mb_convert_encoding' ) ) {
+			$content = mb_convert_encoding( $content, 'HTML-ENTITIES', get_bloginfo( 'charset' ) );
+		}
+
+		$dom->loadHTML( $content );
 
 		$links = $dom->getElementsByTagName( 'a' );
 
 		foreach ( $links as $link ) {
 			$url = $link->getAttribute( 'href' );
 
-			if ( '' === $url ) {
+			if ( '' === $url || '#' === substr( $url, 0, 1 ) ) {
 				continue;
 			}
 

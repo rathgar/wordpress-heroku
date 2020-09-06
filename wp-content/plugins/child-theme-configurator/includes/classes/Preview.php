@@ -17,6 +17,7 @@ class ChildThemeConfiguratorPreview {
     protected $priorities   = array();
     protected $handles      = array();
     protected $queued       = array();
+    protected $registered;
     
     public function __construct(){
         add_action( 'setup_theme',   array( $this, 'setup_theme' ) );
@@ -91,7 +92,10 @@ class ChildThemeConfiguratorPreview {
     public function parse_stylesheet() {
         echo '<script>/*<![CDATA[' . LF;
         $queue = implode( "\n", $this->queued );
+        global $wp_styles;
+        $registered = implode( "\n", array_keys( $wp_styles->registered ) );
         echo 'BEGIN WP QUEUE' . LF . $queue . LF . 'END WP QUEUE' . LF;
+        echo 'BEGIN WP REGISTERED' . LF . $registered . LF . 'END WP REGISTERED' . LF;
         if ( is_child_theme() ):
             // check for signals that indicate specific settings
             $file = get_stylesheet_directory() . '/style.css';

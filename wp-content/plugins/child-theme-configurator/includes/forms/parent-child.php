@@ -310,8 +310,8 @@ if ( !defined( 'ABSPATH' ) )exit;
                     <?php _e( 'Customize the Child Theme Name, Description, Author, Version, etc.:', 'child-theme-configurator' ); ?>
                 </strong>
             </div>
-            <div class="ctc-input-cell">
-                <input type="button" class="ctc-section-toggle button-secondary" value="<?php _e( 'Show/Hide Child Theme Attributes', 'child-theme-configurator' ); ?>" id="ctc_theme_attributes" title="<?php _e( 'Click to toggle form', 'child-theme-configurator' ); ?>" /></div>
+            <div class="ctc-input-cell-wide">
+                <button class="ctc-section-toggle button-secondary" id="ctc_theme_attributes" title="<?php _e( 'Click to toggle form', 'child-theme-configurator' ); ?>"><?php _e( 'Click to Edit Child Theme Attributes', 'child-theme-configurator' ); ?> &nbsp;</button></div>
             <div class="ctc-clear ctc-section-toggle-content" id="ctc_theme_attributes_content">
                 <div class="ctc-input-row clearfix ctc-themeonly-container" id="input_row_child_name">
                     <div class="ctc-input-cell">
@@ -396,10 +396,10 @@ if ( !defined( 'ABSPATH' ) )exit;
                 <label for="ctc_parent_mods">
           <input class="ctc_checkbox ctc-themeonly" id="ctc_parent_mods" name="ctc_parent_mods" type="checkbox" 
                 value="1" />
-          <strong>
-          <?php _e( 'NOTE:', 'child-theme-configurator' ); ?>
-          </strong>
-          <?php _e( "This option replaces the Child Theme's existing Menus, Widgets and other Customizer Settings with those from the Parent Theme. You should only need to use this option the first time you configure a Child Theme. <strong>Some themes use additional options that cannot be copied with the free verson of CTC. Click the \"Upgrade\" tab for more information.</strong>", 'child-theme-configurator' ); ?>
+          <?php _e( "This option replaces the Child Theme's existing Menus, Widgets and other Customizer Settings with those from the Parent Theme. You should only need to use this option the first time you configure a Child Theme.", 'child-theme-configurator' ); ?>
+          <h3>
+          <?php _e( 'IMPORTANT: Some "premium" themes use unsupported options that cannot be copied with the free verson of CTC. If you purchased this theme from a website such as "ThemeForest," child themes may not work correctly. Click the "Upgrade" tab for more information.', 'child-theme-configurator' ); ?>
+          </h3>
         </label>
             
 

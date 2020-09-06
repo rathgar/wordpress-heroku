@@ -317,7 +317,7 @@ class ChildThemeConfiguratorPacker {
         $o = '';
         $b = 0;
         for ( $i = 0; $i < $l; ++$i ):
-            $c = $this->dectab[ $d{ $i } ];
+            $c = $this->dectab[ substr( $d, $i, 1 ) ];
             if ( !isset( $c ) )
                 continue;
             if ( $v < 0 ):
@@ -346,7 +346,7 @@ class ChildThemeConfiguratorPacker {
         $o = '';
         $b = 0;
         for ( $i = 0; $i < $l; ++$i ):
-            $b |= ord( $d{ $i } ) << $n;
+            $b |= ord( substr( $d, $i, 1 ) ) << $n;
             $n += 8;
             if ( $n > 13 ):
                 $v = $b & 8191;

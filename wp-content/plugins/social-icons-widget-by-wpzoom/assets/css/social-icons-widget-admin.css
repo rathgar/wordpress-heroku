@@ -211,7 +211,7 @@ border-radius: 0;
 
 /* Fixes for Beaver builder */
 .fl-lightbox .socicon {
-    font-family: socicon;
+    font-family: 'wpzoom-socicon';
 }
 
 .fl-lightbox .genericon {
@@ -220,6 +220,10 @@ border-radius: 0;
 
 .fl-lightbox .academicons {
     font-family: 'Academicons';
+}
+
+.fl-lightbox .fa, .fl-widget .zoom-social_icons-list__item .fa {
+    font-family: 'FontAwesome';
 }
 
 .fl-lightbox .media-modal-content .icon-kit span {
@@ -261,4 +265,12 @@ border-radius: 0;
     background: #f7f7f7;
     box-shadow: 0 1px 0 #ccc;
     vertical-align: top;
+}
+
+.elementor-control-content .social-icon:before, .elementor-control-content .social-icon, .elementor-control-content .social-icon:after {
+    box-sizing: content-box !important;
+    -webkit-box-sizing: content-box !important;
+    padding: 4px !important;
+    margin: inherit !important;
+    text-align: center !important;
 }

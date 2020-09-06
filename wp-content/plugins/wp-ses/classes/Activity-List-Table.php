@@ -52,15 +52,6 @@ class Activity_List_Table extends \WP_List_Table {
 		$this->database     = $wpdb;
 		$this->emails_table = $this->database->base_prefix . 'oses_emails';
 
-		add_action( 'load-settings_page_wp-offload-ses', array( $this, 'load' ) );
-	}
-
-	/**
-	 * Construct WP_List_Table and set the screen options.
-	 */
-	public function load() {
-		global $status, $page;
-
 		/**
 		 * Construct the WP_List_Table parent class.
 		 *
@@ -461,7 +452,7 @@ class Activity_List_Table extends \WP_List_Table {
 				'per_page'    => $per_page,
 				'total_pages' => ceil( $total_items / $per_page ),
 				'orderby'     => ! empty( $_REQUEST['orderby'] ) && '' != $_REQUEST['orderby'] ? $_REQUEST['orderby'] : 'subject',
-				'oder'        => ! empty( $_REQUEST['order'] ) && '' != $_REQUEST['order'] ? $_REQUEST['order'] : 'desc',
+				'order'       => ! empty( $_REQUEST['order'] ) && '' != $_REQUEST['order'] ? $_REQUEST['order'] : 'desc',
 			)
 		);
 	}
@@ -519,8 +510,11 @@ class Activity_List_Table extends \WP_List_Table {
 		<?php
 		wp_nonce_field( 'wposes-activity-nonce', 'wposes_activity_nonce' );
 
-		echo '<input type="hidden" id="order" name="order" value="' . $this->pagination_args['order'] . '" />';
-		echo '<input type="hidden" id="orderby" name="orderby" value="' . $this->pagination_args['orderby'] . '" />';
+		$order   = ! empty( $this->_pagination_args['order'] ) ? $this->_pagination_args['order'] : 'desc';
+		$orderby = ! empty( $this->_pagination_args['orderby'] ) ? $this->_pagination_args['orderby'] : 'date';
+
+		echo '<input type="hidden" id="order" name="order" value="' . esc_attr( $order ) . '" />';
+		echo '<input type="hidden" id="orderby" name="orderby" value="' . esc_attr( $orderby ) . '" />';
 
 		parent::display();
 		?>

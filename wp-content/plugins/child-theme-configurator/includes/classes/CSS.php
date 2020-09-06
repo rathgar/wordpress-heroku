@@ -6,7 +6,7 @@ if ( !defined( 'ABSPATH' ) ) exit;
     Class: ChildThemeConfiguratorCSS
     Plugin URI: http://www.childthemeconfigurator.com/
     Description: Handles all CSS input, output, parsing, normalization and storage
-    Version: 2.5.0
+    Version: 2.5.6
     Author: Lilaea Media
     Author URI: http://www.lilaeamedia.com/
     Text Domain: chld_thm_cfg
@@ -172,7 +172,7 @@ class ChildThemeConfiguratorCSS {
         $this->ignoreparnt      = 0;
         $this->qpriority        = 10;
         $this->mpriority        = 10;
-        $this->version          = '2.5.0';
+        $this->version          = '2.5.6';
         
         // do not set enqueue, not being set is used to flag old versions
 
@@ -1189,7 +1189,8 @@ class ChildThemeConfiguratorCSS {
                 foreach ( explode( ';', $stuff ) as $ruleval ):
                     if ( FALSE === strpos( $ruleval, ':' ) ) continue;
                     list( $rule, $value ) = explode( ':', $ruleval, 2 );
-                    $rule   = trim( $rule );
+                    // trim, replace spaces with dashes, make lowercase
+                    $rule   = preg_replace( '/\s+/', '-', trim( strtolower( $rule ) ) );
                     $rule   = preg_replace_callback( "/[^\w\-]/", array( $this, 'to_ascii' ), $rule );
                     // handle base64 data
                     $value  = trim( str_replace( '%%semi%%', ';', $value ) );

@@ -164,7 +164,7 @@
 				var data = {
 					paged: wposes_activity_table.__query( query, 'paged' ) || '1',
 					order: wposes_activity_table.__query( query, 'order' ) || 'desc',
-					orderby: wposes_activity_table.__query( query, 'orderby' ) || 'emails_sent'
+					orderby: wposes_activity_table.__query( query, 'orderby' ) || 'date'
 				};
 				wposes_activity_table.update( data );
 			});
@@ -180,8 +180,8 @@
 				// This time we fetch the variables in inputs
 				var data = {
 					paged: parseInt( $( '#tab-activity input[name=paged]' ).val() ) || '1',
-					order: $( '#tab-activity input[name=order]' ).val() || 'asc',
-					orderby: $( '#tab-activity input[name=orderby]' ).val() || 'title'
+					order: $( '#tab-activity input[name=order]' ).val() || 'desc',
+					orderby: $( '#tab-activity input[name=orderby]' ).val() || 'date'
 				};
 				// Now the timer comes to use: we wait half a second after
 				// the user stopped typing to actually send the call. If
@@ -300,6 +300,68 @@
 	$( document ).ready( function() {
 		wposes_activity_table.init();
 
+		/**
+		 * View an email.
+		 *
+		 * @param {int} email_id
+		 */
+		function view_email( email_id ) {
+			if ( ! wposes.is_pro ) {
+				return false;
+			}
+
+			viewEmailPrompt.getEmail( email_id );
+		}
+
+		/**
+		 * Process a row action over AJAX.
+		 * @param {string} action
+		 * @param {int} email_id
+		 */
+		function ajax_row_action( action, email_id ) {
+			if ( ! wposes.is_pro ) {
+				return false;
+			}
+
+			$.ajax( {
+				url: ajaxurl,
+				type: 'POST',
+				dataType: 'JSON',
+				data: {
+					wposes_activity_nonce: $( '#wposes_activity_nonce' ).val(),
+					action: 'process_row_action',
+					email_id: email_id,
+					row_action: action
+				},
+				error: function( jqXHR, textStatus, errorThrown ) {
+					alert( 'error' + errorThrown );
+				},
+				success: function( response, textStatus, jqXHR ) {
+					show_email_action_notice( response.data );
+					wposes_activity_table.update();
+				}
+			} );
+		}
+
+		/**
+		 * Perform an action based on URL params.
+		 */
+		function url_actions() {
+			var params = new URL( location.href ).searchParams;
+			var email_id = params.get( 'view-email' );
+
+			if ( email_id ) {
+				view_email( email_id );
+			}
+
+			email_id = params.get( 'retry-email' );
+
+			if ( email_id ) {
+				ajax_row_action( 'resend', email_id );
+			}
+		}
+		url_actions();
+
 		if ( ! wposes.is_pro ) {
 			$( 'body' ).on( 'click', '.row-actions span a, #tab-activity .tablenav input, #tab-activity .tablenav select', function( e ) {
 				e.preventDefault();
@@ -349,47 +411,11 @@
 			wposes_activity_table.update( { paged: 1 } );
 		} );
 
-		// View an email.
+		// Listen for requests to view an email.
 		$( '#tab-activity' ).on( 'click', '.wposes-view-email', {}, function( e ) {
 			e.preventDefault();
-
-			if ( ! wposes.is_pro ) {
-				return;
-			}
-
-			var email = $( this ).data( 'email' );
-			viewEmailPrompt.getEmail( email );
+			view_email( $( this ).data( 'email' ) );
 		} );
-
-		/**
-		 * Process a row action over AJAX.
-		 * @param {string} action
-		 * @param {int} email_id
-		 */
-		function ajax_row_action( action, email_id ) {
-			if ( ! wposes.is_pro ) {
-				return false;
-			}
-
-			$.ajax( {
-				url: ajaxurl,
-				type: 'POST',
-				dataType: 'JSON',
-				data: {
-					wposes_activity_nonce: $( '#wposes_activity_nonce' ).val(),
-					action: 'process_row_action',
-					email_id: email_id,
-					row_action: action
-				},
-				error: function( jqXHR, textStatus, errorThrown ) {
-					alert( 'error' + errorThrown );
-				},
-				success: function( response, textStatus, jqXHR ) {
-					show_email_action_notice( response.data );
-					wposes_activity_table.update();
-				}
-			} );
-		}
 
 		// Resend an email.
 		$( 'body' ).on( 'click', '.wposes-resend-email', {}, function( e ) {

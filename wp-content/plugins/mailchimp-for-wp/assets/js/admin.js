@@ -1,10 +1,11 @@
-(function () { var require = undefined; var define = undefined; (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
-'use strict'; // dependencies
+(function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
+"use strict";
 
 var _tlite = _interopRequireDefault(require("tlite"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
+// dependencies
 var tabs = require('./admin/tabs.js');
 
 var settings = require('./admin/settings.js');
@@ -30,7 +31,7 @@ window.mc4wp.settings = settings;
 window.mc4wp.tabs = tabs;
 
 },{"./admin/fields/mailchimp-api-key.js":2,"./admin/helpers.js":3,"./admin/list-fetcher.js":4,"./admin/list-overview.js":5,"./admin/settings.js":6,"./admin/show-if.js":7,"./admin/tabs.js":8,"tlite":35}],2:[function(require,module,exports){
-'use strict';
+"use strict";
 
 function validate(evt) {
   var node = document.createElement('p');
@@ -53,15 +54,13 @@ if (field) {
 }
 
 },{}],3:[function(require,module,exports){
-'use strict';
+"use strict";
 
-var helpers = {}; // polling
-
-helpers.debounce = function (func, wait, immediate) {
+function debounce(func, wait, immediate) {
   var timeout;
   return function () {
-    var context = this,
-        args = arguments;
+    var context = this;
+    var args = arguments;
     var callNow = immediate && !timeout;
     clearTimeout(timeout);
     timeout = setTimeout(function () {
@@ -70,12 +69,14 @@ helpers.debounce = function (func, wait, immediate) {
     }, wait);
     if (callNow) func.apply(context, args);
   };
+}
+
+module.exports = {
+  debounce: debounce
 };
 
-module.exports = helpers;
-
 },{}],4:[function(require,module,exports){
-'use strict';
+"use strict";
 
 var config = window.mc4wp_vars;
 var i18n = window.mc4wp_vars.i18n;
@@ -94,8 +95,8 @@ function fetch(evt) {
   state.working = true;
   state.done = false;
   m.request({
-    method: "POST",
-    url: ajaxurl + "?action=mc4wp_renew_mailchimp_lists",
+    method: 'POST',
+    url: ajaxurl + '?action=mc4wp_renew_mailchimp_lists',
     timeout: 600000 // 10 minutes, matching max_execution_time
 
   }).then(function (data) {
@@ -117,14 +118,14 @@ function fetch(evt) {
 
 function view() {
   return m('form', {
-    method: "POST",
+    method: 'POST',
     onsubmit: fetch.bind(this)
   }, [m('p', [m('input', {
-    type: "submit",
+    type: 'submit',
     value: state.working ? i18n.fetching_mailchimp_lists : i18n.renew_mailchimp_lists,
-    className: "button",
+    className: 'button',
     disabled: !!state.working
-  }), m.trust(' &nbsp; '), state.working ? [m('span.mc4wp-loader', "Loading..."), m.trust(' &nbsp; ')] : '', state.done ? [state.success ? m('em.help.green', i18n.fetching_mailchimp_lists_done) : m('em.help.red', i18n.fetching_mailchimp_lists_error)] : ''])]);
+  }), m.trust(' &nbsp; '), state.working ? [m('span.mc4wp-loader', 'Loading...'), m.trust(' &nbsp; ')] : '', state.done ? [state.success ? m('em.help.green', i18n.fetching_mailchimp_lists_done) : m('em.help.red', i18n.fetching_mailchimp_lists_error)] : ''])]);
 }
 
 var mount = document.getElementById('mc4wp-list-fetcher');
@@ -141,7 +142,7 @@ if (mount) {
 }
 
 },{"mithril":13}],5:[function(require,module,exports){
-'use strict';
+"use strict";
 
 var ajaxurl = window.mc4wp_vars.ajaxurl;
 
@@ -160,8 +161,8 @@ function showDetails(evt) {
 
   if (next.style.display === 'none') {
     m.request({
-      method: "GET",
-      url: ajaxurl + "?action=mc4wp_get_list_details&ids=" + listID
+      method: 'GET',
+      url: ajaxurl + '?action=mc4wp_get_list_details&ids=' + listID
     }).then(function (details) {
       m.render(mount, view(details.shift()));
     });
@@ -202,9 +203,9 @@ if (table) {
 }
 
 },{"mithril":13}],6:[function(require,module,exports){
-'use strict';
+"use strict";
 
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 var context = document.getElementById('mc4wp-admin');
 var listInputs = context.querySelectorAll('.mc4wp-list-input');
@@ -226,11 +227,11 @@ function updateSelectedLists() {
   selectedLists = [];
   [].forEach.call(listInputs, function (input) {
     // skip unchecked checkboxes
-    if (typeof input.checked === "boolean" && !input.checked) {
+    if (typeof input.checked === 'boolean' && !input.checked) {
       return;
     }
 
-    if (_typeof(lists[input.value]) === "object") {
+    if (_typeof(lists[input.value]) === 'object') {
       selectedLists.push(lists[input.value]);
     }
   });
@@ -270,7 +271,7 @@ module.exports = {
 };
 
 },{}],7:[function(require,module,exports){
-'use strict';
+"use strict";
 
 var showIfElements = document.querySelectorAll('[data-showif]');
 [].forEach.call(showIfElements, function (element) {
@@ -281,12 +282,12 @@ var showIfElements = document.querySelectorAll('[data-showif]');
 
   function toggleElement() {
     // do nothing with unchecked radio inputs
-    if (this.getAttribute('type') === "radio" && !this.checked) {
+    if (this.type === 'radio' && !this.checked) {
       return;
     }
 
-    var value = this.getAttribute("type") === "checkbox" ? this.checked : this.value;
-    var conditionMet = value == config.value;
+    var value = this.type === 'checkbox' ? this.checked : this.value;
+    var conditionMet = String(value) === String(config.value);
 
     if (hide) {
       element.style.display = conditionMet ? '' : 'none';
@@ -297,7 +298,7 @@ var showIfElements = document.querySelectorAll('[data-showif]');
 
 
     [].forEach.call(inputs, function (inputElement) {
-      conditionMet ? inputElement.removeAttribute('readonly') : inputElement.setAttribute('readonly', 'readonly');
+      inputElement.readOnly = !conditionMet;
     });
   } // find checked element and call toggleElement function
 
@@ -309,7 +310,7 @@ var showIfElements = document.querySelectorAll('[data-showif]');
 });
 
 },{}],8:[function(require,module,exports){
-'use strict';
+"use strict";
 
 var URL = require('./url.js');
 
@@ -349,7 +350,7 @@ function get(id) {
 
 function _open(tab, updateState) {
   // make sure we have a tab object
-  if (typeof tab === "string") {
+  if (typeof tab === 'string') {
     tab = get(tab);
   }
 
@@ -372,14 +373,14 @@ function _open(tab, updateState) {
   }); // add `nav-tab-active` to this tab
 
   [].forEach.call(tab.nav, function (nav) {
-    nav.className += " nav-tab-active";
+    nav.className += ' nav-tab-active';
     nav.blur();
   }); // show target tab
 
   tab.element.style.display = 'block';
-  tab.element.className += " tab-active"; // create new URL
+  tab.element.className += ' tab-active'; // create new URL
 
-  var url = URL.setParameter(window.location.href, "tab", tab.id); // update hash
+  var url = URL.setParameter(window.location.href, 'tab', tab.id); // update hash
 
   if (history.pushState && updateState) {
     history.pushState(tab.id, '', url);
@@ -390,8 +391,8 @@ function _open(tab, updateState) {
 
   refererField.value = url; // if thickbox is open, close it.
 
-  if (typeof tb_remove === "function") {
-    tb_remove();
+  if (typeof window.tb_remove === 'function') {
+    window.tb_remove();
   } // refresh editor if open
 
 
@@ -404,7 +405,7 @@ function _open(tab, updateState) {
 
 function title(tab) {
   var title = document.title.split('-');
-  document.title = document.title.replace(title[0], tab.title + " ");
+  document.title = document.title.replace(title[0], tab.title + ' ');
 }
 
 function switchTab(evt) {
@@ -492,40 +493,45 @@ module.exports = {
 };
 
 },{"./url.js":9}],9:[function(require,module,exports){
-'use strict';
+"use strict";
 
-var URL = {
-  parse: function parse(url) {
-    var query = {};
-    var a = url.split('&');
+function parse(url) {
+  var query = {};
+  var a = url.split('&');
 
-    for (var i in a) {
-      if (!a.hasOwnProperty(i)) {
-        continue;
-      }
-
-      var b = a[i].split('=');
-      query[decodeURIComponent(b[0])] = decodeURIComponent(b[1]);
+  for (var i in a) {
+    if (!a.hasOwnProperty(i)) {
+      continue;
     }
 
-    return query;
-  },
-  build: function build(data) {
-    var ret = [];
-
-    for (var d in data) {
-      ret.push(d + "=" + encodeURIComponent(data[d]));
-    }
-
-    return ret.join("&");
-  },
-  setParameter: function setParameter(url, key, value) {
-    var data = URL.parse(url);
-    data[key] = value;
-    return URL.build(data);
+    var b = a[i].split('=');
+    query[decodeURIComponent(b[0])] = decodeURIComponent(b[1]);
   }
+
+  return query;
+}
+
+function build(data) {
+  var ret = [];
+
+  for (var d in data) {
+    ret.push(d + '=' + encodeURIComponent(data[d]));
+  }
+
+  return ret.join('&');
+}
+
+function setParameter(url, key, value) {
+  var data = parse(url);
+  data[key] = value;
+  return build(data);
+}
+
+module.exports = {
+  parse: parse,
+  build: build,
+  setParameter: setParameter
 };
-module.exports = URL;
 
 },{}],10:[function(require,module,exports){
 "use strict"
@@ -3033,4 +3039,3 @@ if (typeof module !== 'undefined' && module.exports) {
 }
 
 },{}]},{},[1]);
- })();
