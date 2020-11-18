@@ -5,6 +5,28 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## v8.0.2
+
+### Added
+- Added batching support to Conversions API. Create batched event requests by using BatchProcessor.
+
+### Added
+- `lead_id` field to the Conversions API `user_data` section.
+- Added HttpServiceInterface to enable the default request object to be overridden by a user-defined HTTP Request Service class. Can be used to create Conversions API event requests.
+
+## v8.0.1
+
+### Added
+- Added async support to Conversions API - Create event request promises by using EventRequestAsync.
+
+## v8.0.0
+
+### Changed
+- Graph API call upgrade to [v8.0](https://developers.facebook.com/docs/graph-api/changelog/version8.0)
+
+### Added
+- `delivery_category` field in custom_data section for Conversions API(formerly Serverside API).
+
 ## v7.0.2
 ### Added
 - Added support for data processing options in Serverside API. For more details see : https://developers.facebook.com/docs/marketing-apis/data-processing-options
@@ -80,3 +102,4 @@ All notable changes to this project will be documented in this file.
     $async_job = $async_job->getSelf();
   }
   ```
+

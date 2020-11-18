@@ -29,6 +29,7 @@ use FacebookAds\Cursor;
 use FacebookAds\Http\RequestInterface;
 use FacebookAds\TypeChecker;
 use FacebookAds\Object\Fields\CommerceMerchantSettingsFields;
+use FacebookAds\Object\Values\CommerceMerchantSettingsCtaValues;
 use FacebookAds\Object\Values\CommerceMerchantSettingsMerchantStatusValues;
 
 /**
@@ -51,6 +52,7 @@ class CommerceMerchantSettings extends AbstractCrudObject {
 
   protected static function getReferencedEnums() {
     $ref_enums = array();
+    $ref_enums['Cta'] = CommerceMerchantSettingsCtaValues::getInstance()->getValues();
     $ref_enums['MerchantStatus'] = CommerceMerchantSettingsMerchantStatusValues::getInstance()->getValues();
     return $ref_enums;
   }
@@ -254,6 +256,58 @@ class CommerceMerchantSettings extends AbstractCrudObject {
     return $pending ? $request : $request->execute();
   }
 
+  public function getShippingProfiles(array $fields = array(), array $params = array(), $pending = false) {
+    $this->assureId();
+
+    $param_types = array(
+      'reference_id' => 'string',
+    );
+    $enums = array(
+    );
+
+    $request = new ApiRequest(
+      $this->api,
+      $this->data['id'],
+      RequestInterface::METHOD_GET,
+      '/shipping_profiles',
+      new AbstractCrudObject(),
+      'EDGE',
+      array(),
+      new TypeChecker($param_types, $enums)
+    );
+    $request->addParams($params);
+    $request->addFields($fields);
+    return $pending ? $request : $request->execute();
+  }
+
+  public function createShippingProfile(array $fields = array(), array $params = array(), $pending = false) {
+    $this->assureId();
+
+    $param_types = array(
+      'handling_time' => 'map',
+      'is_default_shipping_profile' => 'bool',
+      'name' => 'string',
+      'reference_id' => 'string',
+      'shipping_destinations' => 'list<map>',
+    );
+    $enums = array(
+    );
+
+    $request = new ApiRequest(
+      $this->api,
+      $this->data['id'],
+      RequestInterface::METHOD_POST,
+      '/shipping_profiles',
+      new AbstractCrudObject(),
+      'EDGE',
+      array(),
+      new TypeChecker($param_types, $enums)
+    );
+    $request->addParams($params);
+    $request->addFields($fields);
+    return $pending ? $request : $request->execute();
+  }
+
   public function getTaxSettings(array $fields = array(), array $params = array(), $pending = false) {
     $this->assureId();
 
@@ -267,6 +321,35 @@ class CommerceMerchantSettings extends AbstractCrudObject {
       $this->data['id'],
       RequestInterface::METHOD_GET,
       '/tax_settings',
+      new AbstractCrudObject(),
+      'EDGE',
+      array(),
+      new TypeChecker($param_types, $enums)
+    );
+    $request->addParams($params);
+    $request->addFields($fields);
+    return $pending ? $request : $request->execute();
+  }
+
+  public function createWhatsappChannel(array $fields = array(), array $params = array(), $pending = false) {
+    $this->assureId();
+
+    $param_types = array(
+      'op' => 'op_enum',
+      'whatsapp_business_accounts' => 'list<string>',
+    );
+    $enums = array(
+      'op_enum' => array(
+        'ADD',
+        'REMOVE',
+      ),
+    );
+
+    $request = new ApiRequest(
+      $this->api,
+      $this->data['id'],
+      RequestInterface::METHOD_POST,
+      '/whatsapp_channel',
       new AbstractCrudObject(),
       'EDGE',
       array(),
@@ -305,12 +388,14 @@ class CommerceMerchantSettings extends AbstractCrudObject {
 
     $param_types = array(
       'contact_email' => 'string',
+      'cta' => 'cta_enum',
       'merchant_alert_email' => 'string',
       'merchant_status' => 'merchant_status_enum',
       'onsite_commerce_merchant' => 'Object',
       'terms' => 'string',
     );
     $enums = array(
+      'cta_enum' => CommerceMerchantSettingsCtaValues::getInstance()->getValues(),
       'merchant_status_enum' => CommerceMerchantSettingsMerchantStatusValues::getInstance()->getValues(),
     );
 

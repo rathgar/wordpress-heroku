@@ -1,0 +1,56 @@
+# Translation of Plugins - Official Facebook Pixel - Stable (latest release) in English (UK)
+# This file is distributed under the same license as the Plugins - Official Facebook Pixel - Stable (latest release) package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2020-04-12 15:34:53+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: GlotPress/3.0.0-alpha.2\n"
+"Language: en_GB\n"
+"Project-Id-Version: Plugins - Official Facebook Pixel - Stable (latest release)\n"
+
+#: core/FacebookWordpressSettingsPage.php:231
+msgid ""
+"Also send events directly from your web server to Facebook through the\n"
+"        server-side API. This can help you capture more events."
+msgstr ""
+"Also send events directly from your web server to Facebook through the\n"
+"        server-side API. This can help you capture more events."
+
+#: core/FacebookWordpressSettingsPage.php:205
+msgid ""
+"An access token is required to use the server-side API.<br>\n"
+"          <a href=\"%s\" target=\"_blank\"> Generate Access Token</a>"
+msgstr ""
+"An access token is required to use the server-side API.<br>\n"
+"          <a href=\"%s\" target=\"_blank\"> Generate Access Token</a>"
+
+#: core/FacebookWordpressSettingsPage.php:282
+msgid "Dismiss this notice."
+msgstr "Dismiss this notice."
+
+#: core/FacebookWordpressSettingsPage.php:263
+msgid "The Facebook Pixel plugin requires a Pixel ID. Click <a href=\"%s\">here</a> to configure the plugin."
+msgstr "The Facebook Pixel plugin requires a Pixel ID. Click <a href=\"%s\">here</a> to configure the plugin."
+
+#: core/FacebookWordpressSettingsPage.php:195
+msgid "Enabling Advanced Matching improves audience building."
+msgstr "Enabling advanced matching improves audience building."
+
+#: core/FacebookWordpressSettingsPage.php:170
+msgid "For businesses that operate in the European Union, you may need to take additional action. Read the <a href=\"%s\" target=\"_blank\">Cookie Consent Guide for Sites and Apps</a> for suggestions on complying with EU privacy requirements."
+msgstr "For businesses that operate in the European Union, you may need to take additional action. Read the <a href=\"%s\" target=\"_blank\">Cookie Consent Guide for Sites and Apps</a> for suggestions on complying with EU privacy requirements."
+
+#: core/FacebookWordpressSettingsPage.php:127
+msgid "The unique identifier for your Facebook pixel."
+msgstr "The unique identifier for your Facebook pixel."
+
+#: core/FacebookWordpressSettingsPage.php:121
+msgid "Please note that we are now also supporting lower funnel pixel events for Contact Form 7, Easy Digital Downloads, Ninja Forms and WP Forms"
+msgstr "Please note that we are now also supporting lower funnel pixel events for Contact Form 7, Easy Digital Downloads, Ninja Forms and WP Forms"
+
+#: core/FacebookWordpressSettingsPage.php:47
+msgid "You do not have sufficient permissions to access this page"
+msgstr "You do not have sufficient permissions to access this page"

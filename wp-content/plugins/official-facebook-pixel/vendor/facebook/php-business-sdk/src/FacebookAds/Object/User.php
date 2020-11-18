@@ -52,6 +52,7 @@ use FacebookAds\Object\Values\PermissionStatusValues;
 use FacebookAds\Object\Values\PhotoBackdatedTimeGranularityValues;
 use FacebookAds\Object\Values\PhotoTypeValues;
 use FacebookAds\Object\Values\PhotoUnpublishedContentTypeValues;
+use FacebookAds\Object\Values\ProfilePictureSourceBreakingChangeValues;
 use FacebookAds\Object\Values\ProfilePictureSourceTypeValues;
 use FacebookAds\Object\Values\UserFilteringValues;
 use FacebookAds\Object\Values\UserLocalNewsMegaphoneDismissStatusValues;
@@ -541,6 +542,7 @@ class User extends AbstractCrudObject {
     $this->assureId();
 
     $param_types = array(
+      'child_business_external_id' => 'string',
       'email' => 'string',
       'name' => 'string',
       'primary_page' => 'string',
@@ -820,29 +822,6 @@ class User extends AbstractCrudObject {
       new AbstractCrudObject(),
       'EDGE',
       array(),
-      new TypeChecker($param_types, $enums)
-    );
-    $request->addParams($params);
-    $request->addFields($fields);
-    return $pending ? $request : $request->execute();
-  }
-
-  public function getFriendLists(array $fields = array(), array $params = array(), $pending = false) {
-    $this->assureId();
-
-    $param_types = array(
-    );
-    $enums = array(
-    );
-
-    $request = new ApiRequest(
-      $this->api,
-      $this->data['id'],
-      RequestInterface::METHOD_GET,
-      '/friendlists',
-      new FriendList(),
-      'EDGE',
-      FriendList::getFieldsEnum()->getValues(),
       new TypeChecker($param_types, $enums)
     );
     $request->addParams($params);
@@ -1196,6 +1175,7 @@ class User extends AbstractCrudObject {
     $param_types = array(
       'content_tags' => 'list<string>',
       'description' => 'string',
+      'enable_backup_ingest' => 'bool',
       'encoding_settings' => 'string',
       'fisheye_video_cropped' => 'bool',
       'front_z_rotation' => 'float',
@@ -1207,7 +1187,6 @@ class User extends AbstractCrudObject {
       'privacy' => 'string',
       'projection' => 'projection_enum',
       'published' => 'bool',
-      'save_vod' => 'bool',
       'schedule_custom_profile_image' => 'file',
       'spatial_audio_format' => 'spatial_audio_format_enum',
       'status' => 'status_enum',
@@ -1289,6 +1268,29 @@ class User extends AbstractCrudObject {
       new User(),
       'EDGE',
       User::getFieldsEnum()->getValues(),
+      new TypeChecker($param_types, $enums)
+    );
+    $request->addParams($params);
+    $request->addFields($fields);
+    return $pending ? $request : $request->execute();
+  }
+
+  public function getOwnedProductCatalogs(array $fields = array(), array $params = array(), $pending = false) {
+    $this->assureId();
+
+    $param_types = array(
+    );
+    $enums = array(
+    );
+
+    $request = new ApiRequest(
+      $this->api,
+      $this->data['id'],
+      RequestInterface::METHOD_GET,
+      '/owned_product_catalogs',
+      new ProductCatalog(),
+      'EDGE',
+      ProductCatalog::getFieldsEnum()->getValues(),
       new TypeChecker($param_types, $enums)
     );
     $request->addParams($params);
@@ -1475,12 +1477,14 @@ class User extends AbstractCrudObject {
     $this->assureId();
 
     $param_types = array(
+      'breaking_change' => 'breaking_change_enum',
       'height' => 'int',
       'redirect' => 'bool',
       'type' => 'type_enum',
       'width' => 'int',
     );
     $enums = array(
+      'breaking_change_enum' => ProfilePictureSourceBreakingChangeValues::getInstance()->getValues(),
       'type_enum' => ProfilePictureSourceTypeValues::getInstance()->getValues(),
     );
 
@@ -1547,29 +1551,6 @@ class User extends AbstractCrudObject {
     return $pending ? $request : $request->execute();
   }
 
-  public function getTaggableFriends(array $fields = array(), array $params = array(), $pending = false) {
-    $this->assureId();
-
-    $param_types = array(
-    );
-    $enums = array(
-    );
-
-    $request = new ApiRequest(
-      $this->api,
-      $this->data['id'],
-      RequestInterface::METHOD_GET,
-      '/taggable_friends',
-      new UserTaggableFriend(),
-      'EDGE',
-      UserTaggableFriend::getFieldsEnum()->getValues(),
-      new TypeChecker($param_types, $enums)
-    );
-    $request->addParams($params);
-    $request->addFields($fields);
-    return $pending ? $request : $request->execute();
-  }
-
   public function getVideos(array $fields = array(), array $params = array(), $pending = false) {
     $this->assureId();
 
@@ -1614,6 +1595,7 @@ class User extends AbstractCrudObject {
       'composer_type' => 'string',
       'container_type' => 'container_type_enum',
       'content_category' => 'content_category_enum',
+      'creative_tools' => 'string',
       'description' => 'string',
       'direct_share_status' => 'unsigned int',
       'embeddable' => 'bool',
@@ -1672,6 +1654,7 @@ class User extends AbstractCrudObject {
       'upload_session_id' => 'string',
       'upload_setting_properties' => 'string',
       'video_file_chunk' => 'string',
+      'video_id_original' => 'string',
       'video_start_time_ms' => 'unsigned int',
       'waterfall_id' => 'string',
     );

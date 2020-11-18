@@ -20,7 +20,7 @@ namespace FacebookPixelPlugin\Core;
 defined('ABSPATH') or die('Direct access not allowed');
 
 class FacebookPluginConfig {
-  const PLUGIN_VERSION = '2.2.0';
+  const PLUGIN_VERSION = '2.2.1';
   const SOURCE = 'wordpress';
   const TEXT_DOMAIN = 'official-facebook-pixel';
 
@@ -37,11 +37,11 @@ class FacebookPluginConfig {
   const ADMIN_S2S_URL = 'https://developers.facebook.com/docs/marketing-api/conversions-api';
   const ADMIN_SECTION_ID = 'facebook_settings_section';
 
-  const DEFAULT_PIXEL_ID = 833116250861597;
+  const DEFAULT_PIXEL_ID = null;
   const PIXEL_ID_KEY = 'pixel_id';
   const SETTINGS_KEY = 'facebook_config';
   const USE_PII_KEY = 'use_pii';
-  const USE_ADVANCED_MATCHING_DEFAULT = true;
+  const USE_ADVANCED_MATCHING_DEFAULT = null;
   const USE_S2S_KEY = 'use_s2s';
   const DEFAULT_ACCESS_TOKEN = null;
   const ACCESS_TOKEN_KEY = 'access_token';
