@@ -61,7 +61,7 @@ class MonsterInsights_Popular_Posts_Inline extends MonsterInsights_Popular_Posts
 			return '';
 		}
 
-		if ( 'curated' === $this->sort ) {
+		if ( 'curated' === $this->sort && apply_filters( 'monsterinsights_popular_posts_inline_curated_shuffle', true ) ) {
 			// Randomize the order.
 			shuffle( $posts );
 		}
@@ -79,7 +79,7 @@ class MonsterInsights_Popular_Posts_Inline extends MonsterInsights_Popular_Posts
 
 		if ( ! empty( $theme_styles['image'] ) && ! empty( $posts[0]['image'] ) ) {
 			$html .= '<div class="monsterinsights-inline-popular-posts-image">';
-			$html .= '<img src="' . $posts[0]['image'] . '" srcset=" ' . $posts[0]['srcset'] . ' " />';
+			$html .= '<img src="' . $posts[0]['image'] . '" srcset=" ' . $posts[0]['srcset'] . ' " alt="' . esc_attr( $posts[0]['title'] ) . '" />';
 			$html .= '</div>';
 		}
 		$html .= '<div class="monsterinsights-inline-popular-posts-text">';
@@ -219,9 +219,9 @@ class MonsterInsights_Popular_Posts_Inline extends MonsterInsights_Popular_Posts
 			foreach ( $words as $index => $word ) {
 				$count ++;
 				if ( $count > $after_count ) {
-					$p_index = mb_strpos( $word, '</p>' );
+					$p_index = strpos( $word, '</p>' );
 					// Make sure the paragraph tag is not wrapped in another element like a blockquote.
-					if ( false !== $p_index && false === mb_strpos( $word, '</p></' ) ) {
+					if ( false !== $p_index && false === strpos( $word, '</p></' ) ) {
 						$words[ $index ] = substr_replace( $word, $this->shortcode_output( array() ), $p_index + 4, 0 );
 						$this->posts     = array();
 						break;

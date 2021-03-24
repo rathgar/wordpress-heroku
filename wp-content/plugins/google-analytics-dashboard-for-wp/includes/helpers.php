@@ -1255,10 +1255,10 @@ function exactmetrics_is_code_installed_frontend() {
 
 		$body            = wp_remote_retrieve_body( $request );
 		$current_ua_code = exactmetrics_get_ua_to_output();
-		$ua_limit        = 2;
+		$ua_limit        = 'gtag' === ExactMetrics()->get_tracking_mode() ? 4 : 2;
 		// If the ads addon is installed another UA is added to the page.
 		if ( class_exists( 'ExactMetrics_Ads' ) ) {
-			$ua_limit = 3;
+			$ua_limit++;
 		}
 		// Translators: The placeholders are for making the "We noticed you're using a caching plugin" text bold.
 		$cache_error = sprintf( esc_html__( '%1$sWe noticed you\'re using a caching plugin or caching from your hosting provider.%2$s Be sure to clear the cache to ensure the tracking appears on all pages and posts. %3$s(See this guide on how to clear cache)%4$s.', 'google-analytics-dashboard-for-wp' ), '<b>', '</b>', ' <a href="https://www.wpbeginner.com/beginners-guide/how-to-clear-your-cache-in-wordpress/" target="_blank">', '</a>' );
@@ -1632,7 +1632,7 @@ function exactmetrics_get_frontend_analytics_script_atts() {
 			if ( ! empty( $attr_name ) ) {
 				$attr_string .= ' ' . sanitize_key( $attr_name ) . '="' . esc_attr( $attr_value ) . '"';
 			} else {
-				$attr_string .= ' ' . sanitize_key( $attr_value );
+				$attr_string .= ' ' . esc_attr( $attr_value );
 			}
 		}
 	}
@@ -1651,22 +1651,62 @@ function exactmetrics_get_english_speaking_countries() {
 	return array(
 		'AG' => __( 'Antigua and Barbuda', 'google-analytics-dashboard-for-wp' ),
 		'AU' => __( 'Australia', 'google-analytics-dashboard-for-wp' ),
-		'BS' => __( 'The Bahamas', 'google-analytics-dashboard-for-wp' ),
 		'BB' => __( 'Barbados', 'google-analytics-dashboard-for-wp' ),
 		'BZ' => __( 'Belize', 'google-analytics-dashboard-for-wp' ),
+		'BW' => __( 'Botswana', 'google-analytics-dashboard-for-wp' ),
+		'BI' => __( 'Burundi', 'google-analytics-dashboard-for-wp' ),
+		'CM' => __( 'Cameroon', 'google-analytics-dashboard-for-wp' ),
 		'CA' => __( 'Canada', 'google-analytics-dashboard-for-wp' ),
 		'DM' => __( 'Dominica', 'google-analytics-dashboard-for-wp' ),
+		'FJ' => __( 'Fiji', 'google-analytics-dashboard-for-wp' ),
 		'GD' => __( 'Grenada', 'google-analytics-dashboard-for-wp' ),
 		'GY' => __( 'Guyana', 'google-analytics-dashboard-for-wp' ),
+		'GM' => __( 'Gambia', 'google-analytics-dashboard-for-wp' ),
+		'GH' => __( 'Ghana', 'google-analytics-dashboard-for-wp' ),
 		'IE' => __( 'Ireland', 'google-analytics-dashboard-for-wp' ),
+		'IN' => __( 'India', 'google-analytics-dashboard-for-wp' ),
 		'JM' => __( 'Jamaica', 'google-analytics-dashboard-for-wp' ),
+		'KE' => __( 'Kenya', 'google-analytics-dashboard-for-wp' ),
+		'KI' => __( 'Kiribati', 'google-analytics-dashboard-for-wp' ),
+		'LS' => __( 'Lesotho', 'google-analytics-dashboard-for-wp' ),
+		'LR' => __( 'Liberia', 'google-analytics-dashboard-for-wp' ),
+		'MW' => __( 'Malawi', 'google-analytics-dashboard-for-wp' ),
+		'MT' => __( 'Malta', 'google-analytics-dashboard-for-wp' ),
+		'MH' => __( 'Marshall Islands', 'google-analytics-dashboard-for-wp' ),
+		'MU' => __( 'Mauritius', 'google-analytics-dashboard-for-wp' ),
+		'FM' => __( 'Micronesia', 'google-analytics-dashboard-for-wp' ),
 		'NZ' => __( 'New Zealand', 'google-analytics-dashboard-for-wp' ),
+		'NA' => __( 'Namibia', 'google-analytics-dashboard-for-wp' ),
+		'NR' => __( 'Nauru', 'google-analytics-dashboard-for-wp' ),
+		'NG' => __( 'Nigeria', 'google-analytics-dashboard-for-wp' ),
+		'PK' => __( 'Pakistan', 'google-analytics-dashboard-for-wp' ),
+		'PW' => __( 'Palau', 'google-analytics-dashboard-for-wp' ),
+		'PG' => __( 'Papua New Guinea', 'google-analytics-dashboard-for-wp' ),
+		'PH' => __( 'Philippines', 'google-analytics-dashboard-for-wp' ),
+		'RW' => __( 'Rwanda', 'google-analytics-dashboard-for-wp' ),
+		'SG' => __( 'Singapore', 'google-analytics-dashboard-for-wp' ),
 		'KN' => __( 'St Kitts and Nevis', 'google-analytics-dashboard-for-wp' ),
 		'LC' => __( 'St Lucia', 'google-analytics-dashboard-for-wp' ),
 		'VC' => __( 'St Vincent and the Grenadines', 'google-analytics-dashboard-for-wp' ),
+		'SZ' => __( 'Swaziland', 'google-analytics-dashboard-for-wp' ),
+		'WS' => __( 'Samoa', 'google-analytics-dashboard-for-wp' ),
+		'SC' => __( 'Seychelles', 'google-analytics-dashboard-for-wp' ),
+		'SL' => __( 'Sierra Leone', 'google-analytics-dashboard-for-wp' ),
+		'SB' => __( 'Solomon Islands', 'google-analytics-dashboard-for-wp' ),
+		'ZA' => __( 'South Africa', 'google-analytics-dashboard-for-wp' ),
+		'SS' => __( 'South Sudan', 'google-analytics-dashboard-for-wp' ),
+		'SD' => __( 'Sudan', 'google-analytics-dashboard-for-wp' ),
 		'TT' => __( 'Trinidad and Tobago', 'google-analytics-dashboard-for-wp' ),
+		'BS' => __( 'The Bahamas', 'google-analytics-dashboard-for-wp' ),
+		'TZ' => __( 'Tanzania', 'google-analytics-dashboard-for-wp' ),
+		'TO' => __( 'Tonga', 'google-analytics-dashboard-for-wp' ),
+		'TV' => __( 'Tuvalu', 'google-analytics-dashboard-for-wp' ),
 		'GB' => __( 'United Kingdom', 'google-analytics-dashboard-for-wp' ),
 		'US' => __( 'United States of America', 'google-analytics-dashboard-for-wp' ),
+		'UG' => __( 'Uganda', 'google-analytics-dashboard-for-wp' ),
+		'VU' => __( 'Vanuatu', 'google-analytics-dashboard-for-wp' ),
+		'ZM' => __( 'Zambia', 'google-analytics-dashboard-for-wp' ),
+		'ZW' => __( 'Zimbabwe', 'google-analytics-dashboard-for-wp' ),
 	);
 }
 
@@ -1687,4 +1727,28 @@ function exactmetrics_can_install_plugins() {
 	}
 
 	return true;
+}
+
+/**
+ * Check if current date is between given dates. Date format: Y-m-d.
+ *
+ * @since 7.13.2
+ *
+ * @param string $start_date Start Date. Eg: 2021-01-01.
+ * @param string $end_date   End Date. Eg: 2021-01-14.
+ *
+ * @return bool
+ */
+function exactmetrics_date_is_between( $start_date, $end_date ) {
+
+	$current_date = current_time( 'Y-m-d' );
+
+	$start_date = date( 'Y-m-d', strtotime( $start_date ) );
+	$end_date   = date( 'Y-m-d', strtotime( $end_date ) );
+
+	if ( ( $current_date >= $start_date ) && ( $current_date <= $end_date ) ) {
+		return true;
+	}
+
+	return false;
 }

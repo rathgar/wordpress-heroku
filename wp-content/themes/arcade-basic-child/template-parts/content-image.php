@@ -28,13 +28,13 @@
           <?php the_artwork_meta(); ?>
           <?php the_content( __( 'Read more', 'arcade-basic') ); ?>
           <?php if (has_category('for-sale')) { ?>
-            <div class="clearfix call-to-action"><a href="/contact/artwork-enquiry?artwork-id=<?php echo urlencode(get_the_ID()); ?>&artwork-title=<?php echo urlencode($post->post_title); ?>" class="btn btn-light alignright">Enquire about this work</a></div>
+            <div class="clearfix call-to-action"><a href="/contact/artwork-enquiry?artwork-id=<?php echo urlencode(get_the_ID()); ?>&artwork-title=<?php echo urlencode($post->post_title); ?>" class="btn btn-primary alignright">Enquire about this work</a></div>
           <?php } ?>
         </figcaption>
       </figure>
-      <?php else :
-        echo get_the_excerpt();
-      ?>
+    <?php else :
+      echo get_the_excerpt();
+    ?>
     <?php endif; ?>
   </div><!-- .entry-content -->
 

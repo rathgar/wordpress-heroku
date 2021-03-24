@@ -43,8 +43,10 @@ class CommerceMerchantSettingsFields extends AbstractEnum {
   const CTA = 'cta';
   const DISABLE_CHECKOUT_URLS = 'disable_checkout_urls';
   const DISPLAY_NAME = 'display_name';
+  const EXTERNAL_MERCHANT_ID = 'external_merchant_id';
   const FACEBOOK_CHANNEL = 'facebook_channel';
   const HAS_DISCOUNT_CODE = 'has_discount_code';
+  const HAS_ONSITE_INTENT = 'has_onsite_intent';
   const ID = 'id';
   const INSTAGRAM_CHANNEL = 'instagram_channel';
   const MERCHANT_ALERT_EMAIL = 'merchant_alert_email';
@@ -69,8 +71,10 @@ class CommerceMerchantSettingsFields extends AbstractEnum {
       'cta' => 'string',
       'disable_checkout_urls' => 'bool',
       'display_name' => 'string',
+      'external_merchant_id' => 'string',
       'facebook_channel' => 'Object',
       'has_discount_code' => 'bool',
+      'has_onsite_intent' => 'bool',
       'id' => 'string',
       'instagram_channel' => 'Object',
       'merchant_alert_email' => 'string',

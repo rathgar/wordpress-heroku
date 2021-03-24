@@ -92,7 +92,6 @@ class Front_End_Integration implements Integration_Interface {
 		'Open_Graph\Article_Published_Time',
 		'Open_Graph\Article_Modified_Time',
 		'Open_Graph\Image',
-		'Open_Graph\FB_App_ID',
 	];
 
 	/**
@@ -210,6 +209,9 @@ class Front_End_Integration implements Integration_Interface {
 		// Filter the title for compatibility with other plugins and themes.
 		\add_filter( 'wp_title', [ $this, 'filter_title' ], 15 );
 
+		// Removes our robots presenter from the list when wp_robots is handling this.
+		\add_filter( 'wpseo_frontend_presenter_classes', [ $this, 'filter_robots_presenter' ] );
+
 		\add_action( 'wpseo_head', [ $this, 'present_head' ], -9999 );
 
 		\remove_action( 'wp_head', 'rel_canonical' );
@@ -238,6 +240,25 @@ class Front_End_Integration implements Integration_Interface {
 	}
 
 	/**
+	 * Filters our robots presenter, but only when wp_robots is attached to the wp_head action.
+	 *
+	 * @param array $presenters The presenters for current page.
+	 *
+	 * @return array The filtered presenters.
+	 */
+	public function filter_robots_presenter( $presenters ) {
+		if ( ! function_exists( 'wp_robots' ) ) {
+			return $presenters;
+		}
+
+		if ( ! \has_action( 'wp_head', 'wp_robots' ) ) {
+			return $presenters;
+		}
+
+		return \array_diff( $presenters, [ 'Yoast\\WP\\SEO\\Presenters\\Robots_Presenter' ] );
+	}
+
+	/**
 	 * Presents the head in the front-end. Resets wp_query if it's not the main query.
 	 *
 	 * @codeCoverageIgnore It just calls a WordPress function.
@@ -251,6 +272,7 @@ class Front_End_Integration implements Integration_Interface {
 
 		\do_action( 'wpseo_head' );
 
+		// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited -- Reason: we have to restore the query.
 		$GLOBALS['wp_query'] = $old_wp_query;
 	}
 

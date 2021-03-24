@@ -42,6 +42,7 @@ class ProductItemFields extends AbstractEnum {
   const ADDITIONAL_VARIANT_ATTRIBUTES = 'additional_variant_attributes';
   const AGE_GROUP = 'age_group';
   const APPLINKS = 'applinks';
+  const AR_DATA = 'ar_data';
   const AVAILABILITY = 'availability';
   const BRAND = 'brand';
   const CAPABILITY_TO_REVIEW_STATUS = 'capability_to_review_status';
@@ -65,12 +66,14 @@ class ProductItemFields extends AbstractEnum {
   const ID = 'id';
   const IMAGE_CDN_URLS = 'image_cdn_urls';
   const IMAGE_URL = 'image_url';
+  const IMAGES = 'images';
   const INVENTORY = 'inventory';
   const MANUFACTURER_PART_NUMBER = 'manufacturer_part_number';
   const MATERIAL = 'material';
   const MOBILE_LINK = 'mobile_link';
   const NAME = 'name';
   const ORDERING_INDEX = 'ordering_index';
+  const PARENT_PRODUCT_ID = 'parent_product_id';
   const PATTERN = 'pattern';
   const PRICE = 'price';
   const PRODUCT_CATALOG = 'product_catalog';
@@ -91,7 +94,7 @@ class ProductItemFields extends AbstractEnum {
   const START_DATE = 'start_date';
   const URL = 'url';
   const VISIBILITY = 'visibility';
-  const ADDITIONAL_IMAGE_FILES = 'additional_image_files';
+  const ADDITIONAL_UPLOADED_IMAGE_IDS = 'additional_uploaded_image_ids';
   const ANDROID_APP_NAME = 'android_app_name';
   const ANDROID_CLASS = 'android_class';
   const ANDROID_PACKAGE = 'android_package';
@@ -123,6 +126,7 @@ class ProductItemFields extends AbstractEnum {
       'additional_variant_attributes' => 'map<string, string>',
       'age_group' => 'AgeGroup',
       'applinks' => 'CatalogItemAppLinks',
+      'ar_data' => 'ProductItemARData',
       'availability' => 'Availability',
       'brand' => 'string',
       'capability_to_review_status' => 'map<Object, Object>',
@@ -146,12 +150,14 @@ class ProductItemFields extends AbstractEnum {
       'id' => 'string',
       'image_cdn_urls' => 'map<string, string>',
       'image_url' => 'string',
+      'images' => 'list<string>',
       'inventory' => 'int',
       'manufacturer_part_number' => 'string',
       'material' => 'string',
       'mobile_link' => 'string',
       'name' => 'string',
       'ordering_index' => 'int',
+      'parent_product_id' => 'string',
       'pattern' => 'string',
       'price' => 'string',
       'product_catalog' => 'ProductCatalog',
@@ -172,7 +178,7 @@ class ProductItemFields extends AbstractEnum {
       'start_date' => 'string',
       'url' => 'string',
       'visibility' => 'Visibility',
-      'additional_image_files' => 'list<file>',
+      'additional_uploaded_image_ids' => 'list<string>',
       'android_app_name' => 'string',
       'android_class' => 'string',
       'android_package' => 'string',

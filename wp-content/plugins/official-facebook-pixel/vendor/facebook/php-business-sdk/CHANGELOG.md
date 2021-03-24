@@ -5,6 +5,32 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## v9.0.2
+
+
+### Added
+- `action_source` field to Event for Conversions API.
+
+### Fixed
+- `opt_out` field was being removed when set to false for Conversions API.
+
+## v9.0.0
+
+
+### Added
+- `delivery_category` field to Content for Conversions API.
+
+### Changed
+- Add empty to the list of reserved keywords.
+- Change empty value enum name in AdsPixelFirstPartyCookieStatusValues and AdsPixelDataUseSettingValues
+
+## v8.0.3
+
+### Changed
+- Fixed a normalization issue for zero values in CustomData in Conversions API
+- Start passing in the appsecret_proof to Conversions API custom http_clients when an appsecret is set
+- A Conversions API EventRequest custom http_client must now be an object instead of a class name
+
 ## v8.0.2
 
 ### Added

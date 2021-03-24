@@ -160,6 +160,7 @@ a.ctc-recent-tab {
     display: block;
     margin-right: 8px;
     margin-bottom: 2em;
+	box-sizing: border-box;
 }
 .ctc-step-letter {
     color: #fff;

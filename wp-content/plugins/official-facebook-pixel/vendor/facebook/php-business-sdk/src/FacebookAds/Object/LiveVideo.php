@@ -62,12 +62,12 @@ class LiveVideo extends AbstractCrudObject {
 
   protected static function getReferencedEnums() {
     $ref_enums = array();
-    $ref_enums['BroadcastStatus'] = LiveVideoBroadcastStatusValues::getInstance()->getValues();
     $ref_enums['Projection'] = LiveVideoProjectionValues::getInstance()->getValues();
     $ref_enums['SpatialAudioFormat'] = LiveVideoSpatialAudioFormatValues::getInstance()->getValues();
     $ref_enums['Status'] = LiveVideoStatusValues::getInstance()->getValues();
     $ref_enums['StereoscopicMode'] = LiveVideoStereoscopicModeValues::getInstance()->getValues();
     $ref_enums['StreamType'] = LiveVideoStreamTypeValues::getInstance()->getValues();
+    $ref_enums['BroadcastStatus'] = LiveVideoBroadcastStatusValues::getInstance()->getValues();
     $ref_enums['Source'] = LiveVideoSourceValues::getInstance()->getValues();
     $ref_enums['LiveCommentModerationSetting'] = LiveVideoLiveCommentModerationSettingValues::getInstance()->getValues();
     return $ref_enums;
@@ -349,15 +349,7 @@ class LiveVideo extends AbstractCrudObject {
     $this->assureId();
 
     $param_types = array(
-      'ad_break_drop_live_stream' => 'bool',
-      'ad_break_duration' => 'unsigned int',
-      'ad_break_encoder_drops_live_stream' => 'bool',
-      'ad_break_intent' => 'bool',
-      'ad_break_start_now' => 'bool',
-      'ad_break_time_offset' => 'float',
       'allow_bm_crossposting' => 'bool',
-      'attribution_app_id' => 'string',
-      'commercial_break_durations' => 'list<unsigned int>',
       'content_tags' => 'list<string>',
       'crossposting_actions' => 'list<map>',
       'custom_labels' => 'list<string>',

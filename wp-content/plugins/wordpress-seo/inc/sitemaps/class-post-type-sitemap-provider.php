@@ -546,13 +546,12 @@ class WPSEO_Post_Type_Sitemap_Provider implements WPSEO_Sitemap_Provider {
 
 		$post_ids = [];
 
-		foreach ( $posts as $post ) {
-			$post->post_type   = $post_type;
-			$post->filter      = 'sample';
-			$post->ID          = (int) $post->ID;
-			$post->post_parent = (int) $post->post_parent;
-			$post->post_author = (int) $post->post_author;
-			$post_ids[]        = $post->ID;
+		foreach ( $posts as $post_index => $post ) {
+			$post->post_type      = $post_type;
+			$sanitized_post       = sanitize_post( $post, 'raw' );
+			$posts[ $post_index ] = new WP_Post( $sanitized_post );
+
+			$post_ids[] = $sanitized_post->ID;
 		}
 
 		update_meta_cache( 'post', $post_ids );
@@ -654,49 +653,5 @@ class WPSEO_Post_Type_Sitemap_Provider implements WPSEO_Sitemap_Provider {
 		}
 
 		return $url;
-	}
-
-	/* ********************* DEPRECATED METHODS ********************* */
-
-	/**
-	 * Get Home URL.
-	 *
-	 * @deprecated 11.5
-	 * @codeCoverageIgnore
-	 *
-	 * @return string
-	 */
-	protected function get_home_url() {
-		_deprecated_function( __METHOD__, 'WPSEO 11.5', 'WPSEO_Utils::home_url' );
-
-		return YoastSEO()->helpers->url->home();
-	}
-
-	/**
-	 * Get front page ID.
-	 *
-	 * @deprecated 11.5
-	 * @codeCoverageIgnore
-	 *
-	 * @return int
-	 */
-	protected function get_page_on_front_id() {
-		_deprecated_function( __METHOD__, 'WPSEO 11.5' );
-
-		return (int) get_option( 'page_on_front' );
-	}
-
-	/**
-	 * Get page for posts ID.
-	 *
-	 * @deprecated 11.5
-	 * @codeCoverageIgnore
-	 *
-	 * @return int
-	 */
-	protected function get_page_for_posts_id() {
-		_deprecated_function( __METHOD__, 'WPSEO 11.5' );
-
-		return (int) get_option( 'page_for_posts' );
 	}
 }

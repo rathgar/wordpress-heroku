@@ -38,14 +38,10 @@ use FacebookAds\Enum\AbstractEnum;
 class UserFields extends AbstractEnum {
 
   const ABOUT = 'about';
-  const ADDRESS = 'address';
-  const ADMIN_NOTES = 'admin_notes';
   const AGE_RANGE = 'age_range';
-  const AUTH_METHOD = 'auth_method';
   const BIRTHDAY = 'birthday';
   const COVER = 'cover';
   const CURRENCY = 'currency';
-  const DEVICES = 'devices';
   const EDUCATION = 'education';
   const EMAIL = 'email';
   const FAVORITE_ATHLETES = 'favorite_athletes';
@@ -74,7 +70,6 @@ class UserFields extends AbstractEnum {
   const PAYMENT_PRICEPOINTS = 'payment_pricepoints';
   const POLITICAL = 'political';
   const PROFILE_PIC = 'profile_pic';
-  const PUBLIC_KEY = 'public_key';
   const QUOTES = 'quotes';
   const RELATIONSHIP_STATUS = 'relationship_status';
   const RELIGION = 'religion';
@@ -90,19 +85,14 @@ class UserFields extends AbstractEnum {
   const VERIFIED = 'verified';
   const VIDEO_UPLOAD_LIMITS = 'video_upload_limits';
   const WEBSITE = 'website';
-  const WORK = 'work';
 
   public function getFieldTypes() {
     return array(
       'about' => 'string',
-      'address' => 'Location',
-      'admin_notes' => 'list<PageAdminNote>',
       'age_range' => 'AgeRange',
-      'auth_method' => 'string',
       'birthday' => 'string',
       'cover' => 'UserCoverPhoto',
       'currency' => 'Currency',
-      'devices' => 'list<UserDevice>',
       'education' => 'list<Object>',
       'email' => 'string',
       'favorite_athletes' => 'list<Experience>',
@@ -131,7 +121,6 @@ class UserFields extends AbstractEnum {
       'payment_pricepoints' => 'PaymentPricepoints',
       'political' => 'string',
       'profile_pic' => 'string',
-      'public_key' => 'string',
       'quotes' => 'string',
       'relationship_status' => 'string',
       'religion' => 'string',
@@ -147,7 +136,6 @@ class UserFields extends AbstractEnum {
       'verified' => 'bool',
       'video_upload_limits' => 'VideoUploadLimits',
       'website' => 'string',
-      'work' => 'list<Object>',
     );
   }
 }

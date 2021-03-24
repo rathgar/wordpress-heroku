@@ -115,6 +115,30 @@ class Business extends AbstractCrudObject {
     return $pending ? $request : $request->execute();
   }
 
+  public function deleteAdAccounts(array $fields = array(), array $params = array(), $pending = false) {
+    $this->assureId();
+
+    $param_types = array(
+      'adaccount_id' => 'string',
+    );
+    $enums = array(
+    );
+
+    $request = new ApiRequest(
+      $this->api,
+      $this->data['id'],
+      RequestInterface::METHOD_DELETE,
+      '/ad_accounts',
+      new AbstractCrudObject(),
+      'EDGE',
+      array(),
+      new TypeChecker($param_types, $enums)
+    );
+    $request->addParams($params);
+    $request->addFields($fields);
+    return $pending ? $request : $request->execute();
+  }
+
   public function getAdStudies(array $fields = array(), array $params = array(), $pending = false) {
     $this->assureId();
 
@@ -1176,6 +1200,42 @@ class Business extends AbstractCrudObject {
     return $pending ? $request : $request->execute();
   }
 
+  public function createFranchiseProgram(array $fields = array(), array $params = array(), $pending = false) {
+    $this->assureId();
+
+    $param_types = array(
+      'business_asset_group' => 'string',
+      'creative_folder' => 'string',
+      'creative_spec_template_data' => 'map',
+      'description' => 'string',
+      'end_date' => 'datetime',
+      'name' => 'string',
+      'program_approval_type' => 'program_approval_type_enum',
+      'shared_custom_audience' => 'string',
+      'start_date' => 'datetime',
+    );
+    $enums = array(
+      'program_approval_type_enum' => array(
+        'APPROVAL',
+        'PUBLIC',
+      ),
+    );
+
+    $request = new ApiRequest(
+      $this->api,
+      $this->data['id'],
+      RequestInterface::METHOD_POST,
+      '/franchise_programs',
+      new AbstractCrudObject(),
+      'EDGE',
+      array(),
+      new TypeChecker($param_types, $enums)
+    );
+    $request->addParams($params);
+    $request->addFields($fields);
+    return $pending ? $request : $request->execute();
+  }
+
   public function getInitiatedAudienceSharingRequests(array $fields = array(), array $params = array(), $pending = false) {
     $this->assureId();
 
@@ -1268,6 +1328,29 @@ class Business extends AbstractCrudObject {
       new InstagramUser(),
       'EDGE',
       InstagramUser::getFieldsEnum()->getValues(),
+      new TypeChecker($param_types, $enums)
+    );
+    $request->addParams($params);
+    $request->addFields($fields);
+    return $pending ? $request : $request->execute();
+  }
+
+  public function getInstagramBusinessAccounts(array $fields = array(), array $params = array(), $pending = false) {
+    $this->assureId();
+
+    $param_types = array(
+    );
+    $enums = array(
+    );
+
+    $request = new ApiRequest(
+      $this->api,
+      $this->data['id'],
+      RequestInterface::METHOD_GET,
+      '/instagram_business_accounts',
+      new IGUser(),
+      'EDGE',
+      IGUser::getFieldsEnum()->getValues(),
       new TypeChecker($param_types, $enums)
     );
     $request->addParams($params);
@@ -1711,12 +1794,10 @@ class Business extends AbstractCrudObject {
     $param_types = array(
       'catalog_segment_filter' => 'Object',
       'catalog_segment_product_set_id' => 'string',
-      'commerce_merchant_settings' => 'Object',
       'da_display_settings' => 'Object',
       'destination_catalog_settings' => 'map',
       'flight_catalog_settings' => 'map',
       'name' => 'string',
-      'onsite_commerce_merchant' => 'Object',
       'parent_catalog_id' => 'string',
       'store_catalog_settings' => 'map',
       'vertical' => 'vertical_enum',
@@ -1733,6 +1814,29 @@ class Business extends AbstractCrudObject {
       new ProductCatalog(),
       'EDGE',
       ProductCatalog::getFieldsEnum()->getValues(),
+      new TypeChecker($param_types, $enums)
+    );
+    $request->addParams($params);
+    $request->addFields($fields);
+    return $pending ? $request : $request->execute();
+  }
+
+  public function getOwnedWhatsAppBusinessAccounts(array $fields = array(), array $params = array(), $pending = false) {
+    $this->assureId();
+
+    $param_types = array(
+    );
+    $enums = array(
+    );
+
+    $request = new ApiRequest(
+      $this->api,
+      $this->data['id'],
+      RequestInterface::METHOD_GET,
+      '/owned_whatsapp_business_accounts',
+      new WhatsAppBusinessAccount(),
+      'EDGE',
+      WhatsAppBusinessAccount::getFieldsEnum()->getValues(),
       new TypeChecker($param_types, $enums)
     );
     $request->addParams($params);

@@ -8,6 +8,6 @@ namespace Yoast\WP\SEO\Actions\Indexing;
  * @deprecated 15.3 - Use \Yoast\WP\SEO\Actions\Indexing\Indexing_Prepare_Action instead.
  * @codeCoverageIgnore
  */
-class Indexable_Prepare_Indexation_Action extends \Yoast\WP\SEO\Actions\Indexing\Indexing_Prepare_Action {
+class Indexable_Prepare_Indexation_Action extends Indexing_Prepare_Action {
 
 }

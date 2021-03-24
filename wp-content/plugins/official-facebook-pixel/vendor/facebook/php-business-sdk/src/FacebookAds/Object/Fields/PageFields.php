@@ -60,6 +60,7 @@ class PageFields extends AbstractEnum {
   const CHECKINS = 'checkins';
   const COMPANY_OVERVIEW = 'company_overview';
   const CONNECTED_INSTAGRAM_ACCOUNT = 'connected_instagram_account';
+  const CONNECTED_PAGE_BACKED_INSTAGRAM_ACCOUNT = 'connected_page_backed_instagram_account';
   const CONTACT_ADDRESS = 'contact_address';
   const COPYRIGHT_WHITELISTED_IG_PARTNERS = 'copyright_whitelisted_ig_partners';
   const COUNTRY_PAGE_LIKES = 'country_page_likes';
@@ -78,6 +79,7 @@ class PageFields extends AbstractEnum {
   const FAN_COUNT = 'fan_count';
   const FEATURED_VIDEO = 'featured_video';
   const FEATURES = 'features';
+  const FOLLOWERS_COUNT = 'followers_count';
   const FOOD_STYLES = 'food_styles';
   const FOUNDED = 'founded';
   const GENERAL_INFO = 'general_info';
@@ -204,6 +206,7 @@ class PageFields extends AbstractEnum {
       'checkins' => 'unsigned int',
       'company_overview' => 'string',
       'connected_instagram_account' => 'IGUser',
+      'connected_page_backed_instagram_account' => 'IGUser',
       'contact_address' => 'MailingAddress',
       'copyright_whitelisted_ig_partners' => 'list<string>',
       'country_page_likes' => 'unsigned int',
@@ -222,6 +225,7 @@ class PageFields extends AbstractEnum {
       'fan_count' => 'unsigned int',
       'featured_video' => 'AdVideo',
       'features' => 'string',
+      'followers_count' => 'unsigned int',
       'food_styles' => 'list<string>',
       'founded' => 'string',
       'general_info' => 'string',

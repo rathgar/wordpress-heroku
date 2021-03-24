@@ -46,6 +46,7 @@ class GroupGroupTypeValues extends AbstractEnum {
   const DEALS = 'DEALS';
   const EPHEMERAL = 'EPHEMERAL';
   const EVENT_PLANNING = 'EVENT_PLANNING';
+  const FAITH = 'FAITH';
   const FAMILY = 'FAMILY';
   const FITNESS = 'FITNESS';
   const FOR_SALE = 'FOR_SALE';
@@ -68,6 +69,7 @@ class GroupGroupTypeValues extends AbstractEnum {
   const SCHOOL_CLASS = 'SCHOOL_CLASS';
   const SORORITY = 'SORORITY';
   const SPORTS = 'SPORTS';
+  const STREAMER = 'STREAMER';
   const STUDY_GROUP = 'STUDY_GROUP';
   const SUPPORT = 'SUPPORT';
   const TEAMMATES = 'TEAMMATES';

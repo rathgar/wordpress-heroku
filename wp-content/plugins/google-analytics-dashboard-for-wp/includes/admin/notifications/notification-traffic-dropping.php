@@ -8,9 +8,9 @@
  */
 final class ExactMetrics_Notification_Traffic_Dropping extends ExactMetrics_Notification_Event {
 
-	public $notification_id             = 'exactmetrics_notification_traffic_dropping';
-	public $notification_interval       = 30; // in days
-	public $notification_type           = array( 'basic', 'lite', 'master', 'plus', 'pro' );
+	public $notification_id = 'exactmetrics_notification_traffic_dropping';
+	public $notification_interval = 30; // in days
+	public $notification_type = array( 'basic', 'lite', 'master', 'plus', 'pro' );
 
 	/**
 	 * Build Notification
@@ -25,16 +25,17 @@ final class ExactMetrics_Notification_Traffic_Dropping extends ExactMetrics_Noti
 		$data['prev_sessions_difference'] = isset( $report['data']['infobox']['sessions']['prev'] ) ? $report['data']['infobox']['sessions']['prev'] : 0;
 
 		if ( ! empty( $data ) && $data['prev_sessions_difference'] < 0 ) {
-			$notification['title']   = __( 'Your Website Traffic Is Dropping', 'google-analytics-dashboard-for-wp' );
+			$notification['title'] = __( 'Your Website Traffic Is Dropping', 'google-analytics-dashboard-for-wp' );
 			// Translators: Traffic dropping notification content
-			$notification['content'] = sprintf( __( 'Your website traffic is decreasing and that’s a reason to take action now. Less traffic means less opportunities to make your brand known, make relationships and ultimately sell your service or product. <br><br>Follow the marketing hacks of %sthis article%s to start growing your traffic again.', 'google-analytics-dashboard-for-wp' ), '<a href="'. $this->build_external_link( 'https://www.exactmetrics.com/marketing-hacks-guaranteed-to-grow-your-traffic/' ) .'" target="_blank">', '</a>' );
+			$notification['content'] = sprintf( __( 'Your website traffic is decreasing and that’s a reason to take action now. Less traffic means less opportunities to make your brand known, make relationships and ultimately sell your service or product. <br><br>Follow the marketing hacks of %sthis article%s to start growing your traffic again.', 'google-analytics-dashboard-for-wp' ), '<a href="' . $this->build_external_link( 'https://www.exactmetrics.com/marketing-hacks-guaranteed-to-grow-your-traffic/' ) . '" target="_blank">', '</a>' );
 			$notification['btns']    = array(
 				"learn_more"  => array(
-					'url'  => $this->build_external_link( 'https://www.exactmetrics.com/marketing-hacks-guaranteed-to-grow-your-traffic/' ),
-					'text' => __( 'Learn More', 'google-analytics-dashboard-for-wp' )
+					'url'           => $this->build_external_link( 'https://www.exactmetrics.com/marketing-hacks-guaranteed-to-grow-your-traffic/' ),
+					'text'          => __( 'Learn More', 'google-analytics-dashboard-for-wp' ),
+					'is_external'   => true,
 				),
 				"view_report" => array(
-					'url'  => $this->get_view_url(),
+					'url'  => $this->get_view_url( 'exactmetrics-report-overview', 'exactmetrics_reports' ),
 					'text' => __( 'View Report', 'google-analytics-dashboard-for-wp' )
 				),
 			);

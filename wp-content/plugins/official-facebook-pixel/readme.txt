@@ -1,19 +1,19 @@
-=== Official Facebook Pixel ===
+=== Facebook for WordPress ===
 Contributors: facebook
-Tags: Facebook, Facebook Conversion Pixel, Facebook Pixel, Facebook Pixel Events, facebook retargeting, facebook standard events
+Tags: Facebook, Facebook Conversion Pixel, Facebook Pixel, Facebook Pixel Events, Conversions API, facebook retargeting, facebook standard events
 Requires at least: 4.4
-Tested up to: 7.4
+Tested up to: 5.7
 Requires PHP: 5.6
-Stable tag: 2.2.0
+Stable tag: 3.0.4
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Grow your business with Official Facebook Pixel!
+Grow your business with Facebook for WordPress!
 
 == Description ==
-This plugin will install a Facebook Pixel for your page so you can capture the actions people take when they interact with your page, such as Lead, ViewContent, AddToCart, InitiateCheckout and Purchase events. Version 2.0.0 also includes support for the Conversions API, which lets you send events directly from your page's server so you can capture a more of these events when they happen. This can help you better understand your customer's journey from the moment they show interest in your business to the moment they complete a conversion. You can use this information to create ad campaigns that are relevant to your audience. [Learn More](https://www.facebook.com/business/learn/facebook-ads-pixel)
+This plugin will install a Facebook Pixel for your page so you can capture the actions people take when they interact with your page, such as Lead, ViewContent, AddToCart, InitiateCheckout and Purchase events. It also includes support for the Conversions API, which lets you send events directly from your page's server so you can capture a more of these events when they happen. This can help you better understand your customer's journey from the moment they show interest in your business to the moment they complete a conversion. You can use this information to create ad campaigns that are relevant to your audience. [Learn More](https://www.facebook.com/business/learn/facebook-ads-pixel)
 
-This plugin also includes built-in support for these other WordPress plugins:
+This plugin includes built-in support for these other WordPress plugins:
 * Caldera Forms
 * Contact Form 7
 * Easy Digital Downloads
@@ -28,28 +28,63 @@ This plugin also includes built-in support for these other WordPress plugins:
 == Installation ==
 __To install from your WordPress site__ <br />
 1. Log in to your WordPress dashboard, navigate to the Plugins menu and click Add New. <br />
-2. In the search field, type 'Official Facebook Pixel' and click 'Search Plugins'. Select the plugin authored by 'Facebook'. You can install it by simply clicking 'Install Now'. <br />
+2. In the search field, type 'Facebook for WordPress' and click 'Search Plugins'. Select the plugin authored by 'Facebook'. You can install it by simply clicking 'Install Now'. <br />
 
 __To download and install plugin from Facebook Events Manager__ <br />
 [Facebook Help Page](https://www.facebook.com/business/help/881403525362441) <br />
 
 __Configure plugin for first use__ <br />
-After plugin installed, go to settings page of the plugin, input your pixel ID in the text box, check 'Enabling Advanced Matching improves audience building' if you want to enable Advanced Matching. <br />
+After plugin installed: <br />
+1. Go to settings page of the plugin. <br />
+2. Click Get Started. <br />
+3. Complete the Facebook Business Extension flow. <br />
+4. Agree to share your access token with your site. <br />
 
 == Frequently Asked Questions ==
 = Where can I find more information on Facebook Pixel? =
 You can find more information on the [Facebook Pixel](https://www.facebook.com/business/learn/facebook-ads-pixel).
 
-= Where can I find more information on Official Facebook Pixel plugin? =
+= Where can I find more information on Conversions API? =
+You can find more information on the [Conversions API](https://www.facebook.com/business/help/2041148702652965).
+
+= Where can I find more information on Facebook for WordPress plugin? =
 You can refer to [this page](https://www.facebook.com/business/help/881403525362441?helpref=faq_content)
 
 = Where can I find support? =
-If you get stuck, or have any questions, you can ask for help in the [Official Facebook Pixel plugin forum](https://wordpress.org/support/plugin/official-facebook-pixel).
+If you get stuck, or have any questions, you can ask for help in the [Facebook for WordPress plugin forum](https://wordpress.org/support/plugin/official-facebook-pixel).
 
 = I am a developer. Can I help improve the plugin? =
 Of course! This plugin is open sourced on the Facebook Incubator GitHub. You can find the code and contribution instructions in the [plugin repository](https://github.com/facebookincubator/Facebook-Pixel-for-WordPress).
 
 == Changelog ==
+
+= 2021-03-10 version 3.0.5 =
+* Support for WordPress 5.7
+* Fixing pixel events for Contact Form 7 in WP >= 5.7
+
+= 2021-02-17 version 3.0.4 =
+* Update Facebook Business SDK to v9.0.4
+* Validating, sanitizing and escaping plugin settings
+
+= 2021-02-12 version 3.0.3 =
+* Adding nonce parameter to requests changing plugin settings
+
+= 2021-02-09 version 3.0.2 =
+* Removing Guzzle dependency
+
+= 2021-01-28 version 3.0.1 =
+* Support for WordPress 5.6
+* Adding banner for plugin review
+* Adding action_source parameter to Conversions API events
+* Update Business SDK to v9.0.3
+
+= 2021-01-06 version 3.0.0 =
+* Adding Facebook Business Extension based configuration
+* Renaming to Facebook for WordPress
+
+= 2020-12-08 version 2.2.2 =
+* Update Business SDK to v9.0.1
+
 = 2020-11-04 version 2.2.1 =
 * Stop sending events for internal users
 * Fix Contact Form 7 integration bug, send events only on form submit success
