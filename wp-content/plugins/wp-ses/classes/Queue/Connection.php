@@ -183,18 +183,24 @@ class Connection extends DatabaseConnection {
 	/**
 	 * Get total jobs in the queue.
 	 *
+	 * @param bool $unreserved If we should just get the # of unreserved jobs.
+	 *
 	 * @return int
 	 */
-	public function jobs() {
+	public function jobs( $unreserved = false ) {
 		global $wp_offload_ses;
 
-		$sql = "SELECT COUNT(*) FROM {$this->jobs_table}";
+		$sql = "SELECT COUNT(*) FROM {$this->jobs_table} WHERE 1=1";
+
+		if ( $unreserved ) {
+			$sql .= ' AND reserved_at IS NULL';
+		}
 
 		if ( is_multisite() ) {
 			$subsite_settings_enabled = (bool) $wp_offload_ses->settings->get_setting( 'enable-subsite-settings', false );
 
 			if ( $subsite_settings_enabled ) {
-				$sql = $this->database->prepare( "SELECT COUNT(*) FROM {$this->jobs_table} WHERE subsite_id = %d", get_current_blog_id() );
+				$sql .= $this->database->prepare( ' AND subsite_id = %d', get_current_blog_id() );
 			}
 		}
 

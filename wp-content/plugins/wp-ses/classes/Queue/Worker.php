@@ -3,6 +3,7 @@
 namespace DeliciousBrains\WP_Offload_SES\Queue;
 
 use DeliciousBrains\WP_Offload_SES\Command_Pool;
+use DeliciousBrains\WP_Offload_SES\Error;
 
 /**
  * Class Worker
@@ -55,6 +56,21 @@ class Worker {
 		$exception = null;
 
 		if ( ! $job ) {
+			if ( 0 !== $this->connection->jobs( true ) ) {
+				/**
+				 * We couldn't get the job, but there are still unreserved jobs.
+				 * This shouldn't happen, so let's log an error and fire off the command pool just in case.
+				 */
+				new Error(
+					Error::$job_retrieval_failure,
+					__( 'There was an error retrieving the job while processing the queue.', 'wp-offload-ses')
+				);
+
+				if ( 0 !== count($this->command_pool->commands ) ) {
+					$this->command_pool->execute();
+				}
+			}
+
 			return false;
 		}
 

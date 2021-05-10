@@ -36,10 +36,10 @@ class Command_Pool {
 	 *
 	 * @var array
 	 */
-	private $commands = array();
+	public $commands = array();
 
 	/**
-	 * The maximum concurreny for the AWS CommandPool.
+	 * The maximum concurrency for the AWS CommandPool.
 	 *
 	 * @var int
 	 */
@@ -72,7 +72,8 @@ class Command_Pool {
 		$this->commands[] = $command;
 		$num_commands     = count( $this->commands );
 
-		if ( $this->get_concurrency() === $num_commands || $this->connection->jobs() === $num_commands ) {
+		// Execute if we've reached our max concurrency, or if there are no more unreserved jobs.
+		if ( $this->get_concurrency() <= $num_commands || 0 === $this->connection->jobs( true ) ) {
 			$this->execute();
 			$this->commands = array();
 		}
@@ -106,7 +107,7 @@ class Command_Pool {
 	/**
 	 * Create the command pool and execute the commands.
 	 */
-	private function execute() {
+	public function execute() {
 		/** @var WP_Offload_SES $wp_offload_ses */
 		global $wp_offload_ses;
 

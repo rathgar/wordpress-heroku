@@ -190,26 +190,45 @@ class WP_Offload_SES extends Plugin_Base {
 	 * Perform plugin upgrade routines.
 	 *
 	 * @param bool $skip_version_check If we should skip the version check.
+	 *
+	 * @return bool
 	 */
 	public function upgrade_routines( $skip_version_check = false ) {
 		$version = get_site_option( 'wposes_lite_version', '0.0.0' );
 
-		if ( $skip_version_check || version_compare( $version, $this->get_plugin_version(), '<' ) ) {
-			$this->get_email_log()->install_tables();
-			$this->get_email_events()->install_tables();
-			$this->get_email_queue()->install_tables();
-			$this->get_attachments()->install_tables();
-
-			if ( ! get_site_option( 'wposes_tracking_key' ) ) {
-				add_site_option( 'wposes_tracking_key', wp_generate_password( 20, true, true ) );
-			}
-
-			$this->maybe_migrate_from_wpses();
-
-			if ( ! $skip_version_check ) {
-				update_site_option( 'wposes_lite_version', $this->get_plugin_version() );
-			}
+		// Nothing to upgrade.
+		if ( ! $skip_version_check && ! version_compare( $version, $this->get_plugin_version(), '<' ) ) {
+			return false;
 		}
+
+		// Already doing an upgrade.
+		if ( get_site_option( 'wposes_doing_upgrade' ) ) {
+			return false;
+		}
+
+		// Start the upgrade.
+		update_site_option( 'wposes_doing_upgrade', true );
+
+		$this->get_email_log()->install_tables();
+		$this->get_email_events()->install_tables();
+		$this->get_email_queue()->install_tables();
+		$this->get_attachments()->install_tables();
+
+		if ( ! get_site_option( 'wposes_tracking_key' ) ) {
+			add_site_option( 'wposes_tracking_key', wp_generate_password( 20, true, true ) );
+		}
+
+		$this->maybe_migrate_from_wpses();
+
+		// If $skip_version_check is true, this upgrade was initiated by the pro version.
+		if ( ! $skip_version_check ) {
+			update_site_option( 'wposes_lite_version', $this->get_plugin_version() );
+		}
+
+		// All done!
+		delete_site_option( 'wposes_doing_upgrade' );
+
+		return true;
 	}
 
 	/**
@@ -1047,6 +1066,7 @@ class WP_Offload_SES extends Plugin_Base {
 		$message .= '<ul>';
 
 		foreach ( $unverified_senders as $sender ) {
+			$sender  = esc_html( $sender );
 			$message .= "<li>{$sender}</li>";
 		}
 

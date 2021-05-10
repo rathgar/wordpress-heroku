@@ -333,19 +333,28 @@ class Email {
 	 * @param string $type    Cc by default.
 	 */
 	private function header_cc( $content, $type = 'cc' ) {
-		$recipient = $this->maybe_split_recipient( $content );
+		// They could be in CSV format.
+		$ccs = explode( ',', $content );
 
-		try {
-			switch ( $type ) {
-				case 'cc':
-					$this->mail->addCC( $recipient['email'], $recipient['name'] );
-					break;
-				case 'bcc':
-					$this->mail->addBCC( $recipient['email'], $recipient['name'] );
-					break;
-			}
-		} catch ( \Exception $e ) {
+		if ( empty( $ccs ) ) {
 			return;
+		} 
+
+		foreach ( $ccs as $cc ) {
+			$recipient = $this->maybe_split_recipient( trim( $cc ) );
+
+			try {
+				switch ( $type ) {
+					case 'cc':
+						$this->mail->addCC( $recipient['email'], $recipient['name'] );
+						break;
+					case 'bcc':
+						$this->mail->addBCC( $recipient['email'], $recipient['name'] );
+						break;
+				}
+			} catch ( \Exception $e ) {
+				return;
+			}
 		}
 	}
 
@@ -500,6 +509,59 @@ class Email {
 	}
 
 	/**
+	 * Filters the email body to make it safe for viewing in the email modal.
+	 *
+	 * @param  string $unsafe The unsafe code for the email body.
+	 *
+	 * @return string The sanitized email, or an empty string on failure.
+	 */
+	public function sanitize_email_body( $unsafe ) {
+		if ( ! is_string( $unsafe ) ) {
+			return '';
+		}
+
+		/**
+		 * We first parse things manually here since `wp_kses()` removes
+		 * the offending tags, but leaves the content intact. While this wouldn't
+		 * be a big deal for JS since that is quite rare to see in legitimate emails, style tags
+		 * are becoming more common in HTML emails these days - and I don't wanna hear about
+		 * code showing up in the email modal in support!
+		 *
+		 * We can't just allow style tags in `wp_kses()` via the `wp_kses_allowed_html` filter
+		 * since there are technically some XSS attacks that use CSS as a vector, and `wp_kses()`
+		 * will only check style attributes, not entire inline stylesheets in style tags.
+		 */
+		$document              = new \DOMDocument();
+		$libxml_previous_state = libxml_use_internal_errors( true );
+		$loaded                = $document->loadHTML( $unsafe );
+
+		if ( false === $loaded ) {
+			return '';
+		}
+
+		$tags_to_remove = array( 'script', 'style', 'head' );
+
+		foreach ( $tags_to_remove as $tag ) {
+			$nodes = $document->getElementsByTagName( $tag );
+
+			while ( $node = $nodes->item( 0 ) ) {
+				$node->parentNode->removeChild( $node );
+			}
+		}
+
+		$still_unsafe = $document->saveHTML();
+
+		libxml_clear_errors();
+		libxml_use_internal_errors( $libxml_previous_state );
+
+		if ( false === $still_unsafe ) {
+			return '';
+		}
+
+		return wp_kses_post( $still_unsafe );
+	}
+
+	/**
 	 * View the email. Returns HTML used in modal.
 	 *
 	 * @param array $email_data Additional info about the email.
@@ -524,9 +586,11 @@ class Email {
 		$actions     = $wp_offload_ses->get_email_action_links( $email_data['id'], $email_data['status'] );
 		unset( $actions['view'] );
 
+		$body = $this->sanitize_email_body( $this->mail->Body );
+
 		// Maybe add HTML line breaks.
 		if ( 'text/html' !== $this->mail->ContentType ) {
-			$this->mail->Body = nl2br( $this->mail->Body );
+			$body = nl2br( $body );
 		}
 
 		if ( isset( $email_data['status_i18n'] ) ) {
@@ -575,7 +639,7 @@ class Email {
 			<span id="wposes-email-to"><?php printf( __( 'To: %s', 'wp-offload-ses' ), $to ); ?></span>
 			<span id="wposes-email-sent"><?php echo $sent; ?></span>
 
-			<div id="wposes-email-content"><?php echo $this->mail->Body; ?></div>
+			<div id="wposes-email-content"><?php echo $body; ?></div>
 
 			<span id="wposes-email-attachments"><?php echo $attachments; ?></span>
 

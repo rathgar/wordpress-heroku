@@ -2,9 +2,9 @@
 Contributors: deliciousbrains, bradt, SylvainDeaure
 Tags: amazon ses,smtp,email delivery,gmail smtp,newsletter
 Requires at least: 5.0
-Tested up to: 5.6
+Tested up to: 5.7
 Requires PHP: 5.5+
-Stable tag: 1.4.4
+Stable tag: 1.4.5
 
 Fix your email delivery problems by sending your WordPress emails through Amazon SES's powerful email sending infrastructure.
 
@@ -179,6 +179,12 @@ Please double check the credentials match up with the credentials you received w
 4. Activity tab
 
 == Changelog ==
+
+= 1.4.5 - 2021-04-01 =
+* Bug fix: Some fields of the Activity tab are not properly escaped which is an XSS risk
+* Bug fix: Emails occasionally failing due to "WorkerAttemptsExceededException"
+* Bug fix: Passing CC/BCC in CSV format not working correctly
+* Bug fix: Upgrade routines can be run more than once during an upgrade
 
 = 1.4.4 - 2020-12-14 =
 * New: WordPress 5.6 and PHP 8 compatible
