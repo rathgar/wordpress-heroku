@@ -49,7 +49,7 @@ switch(ENVIRONMENT){
 // ** END ENVIRONMENT SETUP
 
 
-$db = parse_url($_ENV["DATABASE_URL"] ? $_ENV["DATABASE_URL"] : "mysql://root@127.0.0.1:3306/rue-uk");
+$db = parse_url($_ENV["CLEARDB_DATABASE_URL"] ? $_ENV["CLEARDB_DATABASE_URL"] : "mysql://root@127.0.0.1:3306/rue-uk");
 // $db = parse_url($_ENV["DATABASE_URL"] ? $_ENV["DATABASE_URL"] : "postgres://rturner@localhost:5432/wp_rue");
 // ** MySQL settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
